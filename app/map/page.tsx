@@ -1,3 +1,4 @@
+import Link from "next/link";
 export default function MapPage() {
   const places = [
     {
@@ -65,72 +66,33 @@ export default function MapPage() {
 
             {places.map((place) => (
 
-  <div
-    key={place.id}
-    className="group bg-white rounded-[36px] overflow-hidden shadow-md hover:shadow-2xl hover:-translate-y-3 transition-all duration-500"
-  >
+              <div
+                key={place.name}
+                className="bg-white rounded-3xl p-6 shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all cursor-pointer"
+              >
 
-    <div className="overflow-hidden">
+                <p className="text-sm text-neutral-500">
+                  {place.type}
+                </p>
 
-      <img
-        src={place.image}
-        alt={place.name}
-        className="w-full h-72 object-cover group-hover:scale-110 transition duration-700"
-      />
+                <h2 className="text-2xl font-semibold mt-2">
+                  {place.name}
+                </h2>
 
-      <div className="absolute mt-4 ml-4 bg-white/90 backdrop-blur-md rounded-full px-4 py-2 text-sm font-medium">
-        {place.category}
-      </div>
+                <p className="mt-3 text-neutral-600">
+                  {place.mood}
+                </p>
 
-    </div>
+                <Link
+  href="/"
+  className="inline-block mt-6 rounded-full bg-black text-white px-5 py-3"
+>
+  Подробнее
+</Link>
 
-    <div className="p-8">
+              </div>
 
-      <div className="flex justify-between items-start">
-
-        <div>
-
-          <h3 className="text-3xl font-bold">
-            {place.name}
-          </h3>
-
-          <p className="text-yellow-500 mt-2">
-            ★★★★★
-            <span className="text-neutral-500 ml-2">
-              4.9
-            </span>
-          </p>
-
-        </div>
-
-      </div>
-
-      <div className="mt-6 grid gap-3 text-neutral-600">
-
-        <p>😊 {place.mood}</p>
-        <p>💰 {place.budget}</p>
-        <p>👥 {place.company}</p>
-        <p>🕒 {place.time}</p>
-
-      </div>
-
-      <Link
-        href={`/place/${place.id}`}
-        className="inline-flex items-center gap-2 mt-8 font-semibold"
-      >
-        Подробнее
-
-        <span className="group-hover:translate-x-1 transition">
-          →
-        </span>
-
-      </Link>
-
-    </div>
-
-  </div>
-
-))}
+            ))}
 
           </div>
 
