@@ -1,0 +1,65 @@
+export default async function PlacePage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+
+  return (
+    <main className="min-h-screen bg-[#f7f4ef] pt-36 pb-20">
+
+      <div className="max-w-6xl mx-auto px-8">
+
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
+
+          <div>
+
+            <img
+              src="https://picsum.photos/800/900"
+              alt="place"
+              className="rounded-[40px] shadow-xl w-full h-[650px] object-cover"
+            />
+
+          </div>
+
+          <div>
+
+            <p className="uppercase tracking-[0.4em] text-neutral-500">
+              ALMA
+            </p>
+
+            <h1 className="text-6xl font-bold mt-6">
+              Место №{id}
+            </h1>
+
+            <p className="mt-8 text-xl text-neutral-600 leading-9">
+              Здесь скоро появится настоящее описание
+              заведения, фотографии, рейтинг,
+              часы работы и адрес.
+            </p>
+
+            <div className="mt-12 space-y-5 text-lg">
+
+              <p>⭐ 4.9</p>
+
+              <p>📍 Санкт-Петербург</p>
+
+              <p>🕒 09:00 — 23:00</p>
+
+              <p>💰 ₽₽</p>
+
+            </div>
+
+            <button className="mt-12 rounded-full bg-black text-white px-8 py-4 hover:scale-105 transition">
+              Добавить в избранное
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </main>
+  );
+}
