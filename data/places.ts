@@ -10,6 +10,7 @@ export const places = [
     image:
       "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=1200&auto=format&fit=crop",
   },
+
   {
     id: 2,
     name: "Harvest",
@@ -21,6 +22,7 @@ export const places = [
     image:
       "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=1200&auto=format&fit=crop",
   },
+
   {
     id: 3,
     name: "Новая Голландия",
@@ -30,8 +32,9 @@ export const places = [
     company: "Друзья",
     time: "День",
     image:
-      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1724532903200-0b6d45b0d7aa?q=80&w=1200&auto=format&fit=crop",
   },
+
   {
     id: 4,
     name: "Roof Place",
@@ -41,17 +44,30 @@ export const places = [
     company: "Пара",
     time: "Вечер",
     image:
-      "https://images.unsplash.com/photo-1494526585095-c41746248156?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1514565131-fce0801e5785?q=80&w=1200&auto=format&fit=crop",
   },
+
   {
     id: 5,
-    name: "Aster",
-    category: "Ресторан",
-    mood: "Спокойно",
-    budget: "₽₽",
+    name: "Севкабель Порт",
+    category: "Набережная",
+    mood: "Прогулка",
+    budget: "Бесплатно",
     company: "Друзья",
+    time: "Вечер",
+    image:
+      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format&fit=crop",
+  },
+
+  {
+    id: 6,
+    name: "Ботанический сад",
+    category: "Парк",
+    mood: "Отдых",
+    budget: "₽",
+    company: "Один",
     time: "День",
     image:
-      "https://images.unsplash.com/photo-1559339352-11d035aa65de?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?q=80&w=1200&auto=format&fit=crop",
   },
 ];

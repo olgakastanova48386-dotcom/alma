@@ -9,62 +9,212 @@ export default function Home() {
 
       <main className="min-h-screen bg-[#f7f4ef]">
 
-        {/* Hero */}
-        <section className="max-w-7xl mx-auto px-8 pt-40 pb-32">
-          <div className="grid lg:grid-cols-2 gap-20 items-center">
+{/* Hero */}
+<section className="relative overflow-hidden bg-gradient-to-b from-[#fdfbf8] to-[#f7f4ef]">
+  <div className="max-w-7xl mx-auto px-8 py-28 lg:py-36">
 
-            <div>
+    <div className="grid lg:grid-cols-2 gap-16 items-center">
 
-              <p className="uppercase tracking-[0.45em] text-neutral-500 text-sm">
-                ALMA
-              </p>
+      <div>
 
-              <h1 className="mt-6 text-6xl xl:text-7xl font-bold leading-[1.05]">
-                Найди место,
-                <br />
-                которое подходит
-                <br />
-                именно тебе
-              </h1>
+        <span className="inline-flex items-center rounded-full bg-white px-4 py-2 text-sm shadow-md text-neutral-600">
+          ✨ Открой Санкт-Петербург по-новому
+        </span>
 
-              <p className="mt-8 text-xl text-neutral-600 leading-9 max-w-xl">
-                Уютные кофейни, атмосферные рестораны,
-                лучшие бары, красивые парки и секретные
-                места Санкт-Петербурга.
-              </p>
+        <h1 className="mt-8 text-5xl md:text-6xl xl:text-7xl font-bold leading-tight text-neutral-900">
+          Места,
+          <br />
+          в которые
+          <br />
+          хочется возвращаться
+        </h1>
 
-              <div className="flex gap-5 mt-12">
+        <p className="mt-8 text-xl leading-9 text-neutral-600 max-w-xl">
+          ALMA помогает находить уютные кофейни,
+          атмосферные рестораны, красивые парки
+          и секретные места Санкт-Петербурга.
+        </p>
 
-                <Link
-                  href="/map"
-                  className="rounded-full bg-black text-white px-8 py-4 hover:scale-105 transition"
-                >
-                  Начать поиск
-                </Link>
+        <div className="flex flex-wrap gap-4 mt-12">
 
-                <Link
-                  href="/collections"
-                  className="rounded-full border border-black px-8 py-4 hover:bg-black hover:text-white transition"
-                >
-                  Подборки
-                </Link>
+          <Link
+            href="/map"
+            className="rounded-full bg-black text-white px-8 py-4 hover:scale-105 transition-all duration-300"
+          >
+            Исследовать город
+          </Link>
 
-              </div>
+          <Link
+            href="/collections"
+            className="rounded-full bg-white border border-neutral-300 px-8 py-4 hover:bg-black hover:text-white transition-all duration-300"
+          >
+            Подборки
+          </Link>
 
-            </div>
+        </div>
 
-            <div className="rounded-[45px] overflow-hidden shadow-2xl">
+        <div className="flex gap-12 mt-16">
 
-              <img
-                src="https://picsum.photos/900/700"
-                alt="Санкт-Петербург"
-                className="w-full h-[700px] object-cover hover:scale-105 transition duration-700"
-              />
-
-            </div>
-
+          <div>
+            <p className="text-3xl font-bold">150+</p>
+            <span className="text-neutral-500">мест</span>
           </div>
-        </section>
+
+          <div>
+            <p className="text-3xl font-bold">40+</p>
+            <span className="text-neutral-500">кофеен</span>
+          </div>
+
+          <div>
+            <p className="text-3xl font-bold">60+</p>
+            <span className="text-neutral-500">ресторанов</span>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div className="relative">
+
+        <div className="absolute -top-8 -left-8 w-48 h-48 rounded-full bg-[#efe6dc] blur-3xl opacity-70"></div>
+
+        <img
+          src="https://images.unsplash.com/photo-1520637836862-4d197d17c90a?q=80&w=1600&auto=format&fit=crop"
+          alt="Санкт-Петербург"
+          className="relative rounded-[40px] shadow-2xl w-full h-[720px] object-cover hover:scale-[1.02] transition duration-700"
+        />
+
+      </div>
+
+    </div>
+
+  </div>
+</section>
+{/* Категории */}
+<section className="pb-24">
+  <div className="max-w-7xl mx-auto px-8">
+
+    <h2 className="text-4xl font-bold text-center mb-12">
+      Что вы ищете сегодня?
+    </h2>
+
+    <div className="grid md:grid-cols-3 gap-8">
+
+      <Link
+        href="/map"
+        className="group bg-white rounded-[32px] p-10 shadow-md hover:shadow-2xl hover:-translate-y-2 transition-all duration-300"
+      >
+        <div className="text-5xl mb-6">☕</div>
+
+        <h3 className="text-2xl font-bold">
+          Кофейни
+        </h3>
+
+        <p className="mt-4 text-neutral-600">
+          Найдите уютное место для работы,
+          встречи или отдыха.
+        </p>
+
+        <span className="inline-block mt-8 font-semibold group-hover:translate-x-1 transition">
+          Смотреть →
+        </span>
+      </Link>
+
+      <Link
+        href="/map"
+        className="group bg-white rounded-[32px] p-10 shadow-md hover:shadow-2xl hover:-translate-y-2 transition-all duration-300"
+      >
+        <div className="text-5xl mb-6">🍽️</div>
+
+        <h3 className="text-2xl font-bold">
+          Рестораны
+        </h3>
+
+        <p className="mt-4 text-neutral-600">
+          Для свиданий, семейных ужинов
+          и особых вечеров.
+        </p>
+
+        <span className="inline-block mt-8 font-semibold group-hover:translate-x-1 transition">
+          Смотреть →
+        </span>
+      </Link>
+
+      <Link
+        href="/map"
+        className="group bg-white rounded-[32px] p-10 shadow-md hover:shadow-2xl hover:-translate-y-2 transition-all duration-300"
+      >
+        <div className="text-5xl mb-6">🌳</div>
+
+        <h3 className="text-2xl font-bold">
+          Парки
+        </h3>
+
+        <p className="mt-4 text-neutral-600">
+          Лучшие места для прогулок
+          и отдыха на свежем воздухе.
+        </p>
+
+        <span className="inline-block mt-8 font-semibold group-hover:translate-x-1 transition">
+          Смотреть →
+        </span>
+      </Link>
+
+    </div>
+
+  </div>
+</section>
+<section className="py-20">
+  <div className="max-w-7xl mx-auto px-8">
+
+    <h2 className="text-4xl font-bold mb-10">
+      Что ищем сегодня?
+    </h2>
+
+    <div className="grid md:grid-cols-3 gap-6">
+
+      <Link
+        href="/collections"
+        className="bg-white rounded-3xl p-8 shadow-md hover:shadow-xl transition"
+      >
+        <div className="text-5xl mb-4">☕</div>
+        <h3 className="text-2xl font-bold">
+          Кофейни
+        </h3>
+        <p className="mt-3 text-neutral-600">
+          Лучшие места для кофе и отдыха.
+        </p>
+      </Link>
+
+      <Link
+        href="/collections"
+        className="bg-white rounded-3xl p-8 shadow-md hover:shadow-xl transition"
+      >
+        <div className="text-5xl mb-4">🍽️</div>
+        <h3 className="text-2xl font-bold">
+          Рестораны
+        </h3>
+        <p className="mt-3 text-neutral-600">
+          Для свиданий и уютных вечеров.
+        </p>
+      </Link>
+
+      <Link
+        href="/map"
+        className="bg-white rounded-3xl p-8 shadow-md hover:shadow-xl transition"
+      >
+        <div className="text-5xl mb-4">🌳</div>
+        <h3 className="text-2xl font-bold">
+          Парки
+        </h3>
+        <p className="mt-3 text-neutral-600">
+          Лучшие места для прогулок.
+        </p>
+      </Link>
+
+    </div>
+  </div>
+</section>
 
         {/* Популярные места */}
         <section className="pb-28">

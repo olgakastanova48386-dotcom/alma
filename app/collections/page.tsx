@@ -37,49 +37,46 @@ export default function CollectionsPage() {
       color: "bg-violet-100",
     },
   ];
-
   return (
-    <main className="min-h-screen bg-[#f7f4ef] pt-36 pb-20 px-8">
-
+    <main className="min-h-screen bg-[#f7f4ef] px-8 py-20">
       <div className="max-w-7xl mx-auto">
 
-        <p className="uppercase tracking-[0.45em] text-sm text-neutral-500">
-          ALMA
-        </p>
-
-        <h1 className="text-6xl font-bold mt-6">
+        <h1 className="text-5xl font-bold">
           Подборки
         </h1>
 
-        <p className="text-xl text-neutral-500 mt-6 max-w-2xl leading-9">
-          Мы собрали лучшие места Санкт-Петербурга по настроению,
-          атмосфере и формату отдыха.
+        <p className="text-neutral-500 mt-4 mb-14 text-lg">
+          Выбирай готовые маршруты под своё настроение.
         </p>
 
-        <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-8 mt-16">
+        <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-8">
 
-          {collections.map((item) => (
+          {collections.map((collection) => (
 
             <div
-              key={item.title}
-              className={`${item.color} rounded-[35px] p-10 h-80 flex flex-col justify-between shadow-lg hover:scale-[1.03] transition duration-300 cursor-pointer`}
+              key={collection.title}
+              className="group bg-white rounded-[32px] p-8 shadow-md hover:shadow-2xl hover:-translate-y-2 transition-all duration-300"
             >
 
-              <div className="text-6xl">
-                {item.emoji}
+              <div
+                className={`w-16 h-16 rounded-2xl flex items-center justify-center text-3xl ${collection.color}`}
+              >
+                {collection.emoji}
               </div>
 
-              <div>
+              <h2 className="text-2xl font-bold mt-6">
+                {collection.title}
+              </h2>
 
-                <p className="text-lg text-neutral-500">
-                  {item.places}
-                </p>
+              <p className="text-neutral-500 mt-2">
+                {collection.places}
+              </p>
 
-                <h2 className="text-3xl font-bold mt-2">
-                  {item.title}
-                </h2>
-
-              </div>
+              <button
+                className="mt-8 rounded-full bg-black text-white px-6 py-3 hover:scale-105 transition"
+              >
+                Смотреть →
+              </button>
 
             </div>
 
@@ -88,7 +85,6 @@ export default function CollectionsPage() {
         </div>
 
       </div>
-
     </main>
   );
 }
