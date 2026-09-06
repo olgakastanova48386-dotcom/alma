@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Header from "@/components/Header";
 import DogFriendlyMapEnhancer from "@/components/DogFriendlyMapEnhancer";
+import MapSearchEnhancer from "@/components/MapSearchEnhancer";
+import LegalFooter from "@/components/LegalFooter";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -30,10 +32,12 @@ export default function RootLayout({
       lang="ru"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full">
+      <body className="min-h-full flex flex-col">
         <Header />
         <DogFriendlyMapEnhancer />
-        {children}
+        <MapSearchEnhancer />
+        <div className="flex-1">{children}</div>
+        <LegalFooter />
       </body>
     </html>
   );
