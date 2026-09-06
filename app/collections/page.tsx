@@ -1,4 +1,4 @@
-export default function CollectionsPage() {
+﻿export default function CollectionsPage() {
   const collections = [
     {
       emoji: "❤️",
@@ -37,10 +37,10 @@ export default function CollectionsPage() {
       color: "bg-violet-100",
     },
   ];
-  return (
-    <main className="min-h-screen bg-[#f7f4ef] px-8 py-20">
-      <div className="max-w-7xl mx-auto">
 
+  return (
+    <main className="min-h-screen bg-[#f7f4ef] px-8 pt-36 pb-20">
+      <div className="max-w-7xl mx-auto">
         <h1 className="text-5xl font-bold">
           Подборки
         </h1>
@@ -50,14 +50,11 @@ export default function CollectionsPage() {
         </p>
 
         <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-8">
-
           {collections.map((collection) => (
-
             <div
               key={collection.title}
               className="group bg-white rounded-[32px] p-8 shadow-md hover:shadow-2xl hover:-translate-y-2 transition-all duration-300"
             >
-
               <div
                 className={`w-16 h-16 rounded-2xl flex items-center justify-center text-3xl ${collection.color}`}
               >
@@ -77,13 +74,9 @@ export default function CollectionsPage() {
               >
                 Смотреть →
               </button>
-
             </div>
-
           ))}
-
         </div>
-
       </div>
     </main>
   );

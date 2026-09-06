@@ -1,283 +1,721 @@
-import Header from "../components/Header";
-import Link from "next/link";
-import { places } from "../data/places";
+"use client";
 
-export default function Home() {
-  return (
-    <>
-      <Header />
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
-      <main className="min-h-screen bg-[#f7f4ef]">
+const moods = [
+  "Любое настроение",
+  "Спокойно",
+  "Романтика",
+  "Вдохновиться",
+  "Удивиться",
+];
 
-{/* Hero */}
-<section className="relative overflow-hidden bg-gradient-to-b from-[#fdfbf8] to-[#f7f4ef]">
-  <div className="max-w-7xl mx-auto px-8 py-28 lg:py-36">
+const budgets = [
+  "Любой",
+  "300–1500 ₽",
+  "2000–5000 ₽",
+  "6000–10000 ₽",
+  "от 10000 ₽",
+];
 
-    <div className="grid lg:grid-cols-2 gap-16 items-center">
+const companies = [
+  "Любая",
+  "Один",
+  "Пара",
+  "Друзья",
+  "Семья",
+];
 
-      <div>
+const durations = [
+  "Любая",
+  "До 1 часа",
+  "1–2 часа",
+  "2–4 часа",
+  "Полдня",
+];
 
-        <span className="inline-flex items-center rounded-full bg-white px-4 py-2 text-sm shadow-md text-neutral-600">
-          ✨ Открой Санкт-Петербург по-новому
-        </span>
+const places = [
+  {
+    title: "Исаакиевская площадь",
+    category: "Архитектура",
+    image: "/images/isaac.jpg",
+  },
+  {
+    title: "Ботанический сад",
+    category: "Прогулка",
+    image: "/images/botanic.jpg",
+  },
+  {
+    title: "Поцелуев мост",
+    category: "Романтика",
+    image: "/images/kisses-bridge.jpg",
+  },
+  {
+    title: "Особняк Демидова",
+    category: "Архитектура",
+    image: "/images/demidov.jpg",
+  },
+  {
+    title: "Академия Штиглица",
+    category: "Искусство",
+    image: "/images/shtiglitz.jpg",
+  },
+  {
+    title: "Лахта Центр",
+    category: "Современный Петербург",
+    image: "/images/lahta-hero.jpg",
+  },
+  {
+    title: "Водная прогулка",
+    category: "Развлечения",
+    image: "/images/hero.jpg",
+  },
+  {
+    title: "Новая Голландия",
+    category: "Отдых",
+    image: "/images/new-holland.jpg",
+  },
+];
 
-        <h1 className="mt-8 text-5xl md:text-6xl xl:text-7xl font-bold leading-tight text-neutral-900">
-          Места,
-          <br />
-          в которые
-          <br />
-          хочется возвращаться
-        </h1>
+type Weather = {
+  temperature: number;
+  code: number;
+};
 
-        <p className="mt-8 text-xl leading-9 text-neutral-600 max-w-xl">
-          ALMA помогает находить уютные кофейни,
-          атмосферные рестораны, красивые парки
-          и секретные места Санкт-Петербурга.
-        </p>
+function getWeatherInfo(code: number) {
+  if (code === 0) {
+    return {
+      icon: "☀️",
+      text: "Ясно",
+    };
+  }
 
-        <div className="flex flex-wrap gap-4 mt-12">
+  if ([1, 2].includes(code)) {
+    return {
+      icon: "🌤️",
+      text: "Малооблачно",
+    };
+  }
 
-          <Link
-            href="/map"
-            className="rounded-full bg-black text-white px-8 py-4 hover:scale-105 transition-all duration-300"
-          >
-            Исследовать город
-          </Link>
+  if (code === 3) {
+    return {
+      icon: "☁️",
+      text: "Облачно",
+    };
+  }
 
-          <Link
-            href="/collections"
-            className="rounded-full bg-white border border-neutral-300 px-8 py-4 hover:bg-black hover:text-white transition-all duration-300"
-          >
-            Подборки
-          </Link>
+  if ([45, 48].includes(code)) {
+    return {
+      icon: "🌫️",
+      text: "Туман",
+    };
+  }
 
-        </div>
+  if ([51, 53, 55, 56, 57].includes(code)) {
+    return {
+      icon: "🌦️",
+      text: "Морось",
+    };
+  }
 
-        <div className="flex gap-12 mt-16">
+  if ([61, 63, 65, 66, 67].includes(code)) {
+    return {
+      icon: "🌧️",
+      text: "Дождь",
+    };
+  }
 
-          <div>
-            <p className="text-3xl font-bold">150+</p>
-            <span className="text-neutral-500">мест</span>
-          </div>
+  if ([71, 73, 75, 77].includes(code)) {
+    return {
+      icon: "🌨️",
+      text: "Снег",
+    };
+  }
 
-          <div>
-            <p className="text-3xl font-bold">40+</p>
-            <span className="text-neutral-500">кофеен</span>
-          </div>
+  if ([80, 81, 82].includes(code)) {
+    return {
+      icon: "🌦️",
+      text: "Ливень",
+    };
+  }
 
-          <div>
-            <p className="text-3xl font-bold">60+</p>
-            <span className="text-neutral-500">ресторанов</span>
-          </div>
+  if ([85, 86].includes(code)) {
+    return {
+      icon: "🌨️",
+      text: "Снегопад",
+    };
+  }
 
-        </div>
+  if ([95, 96, 99].includes(code)) {
+    return {
+      icon: "⛈️",
+      text: "Гроза",
+    };
+  }
 
-      </div>
+  return {
+    icon: "🌤️",
+    text: "Погода",
+  };
+}
 
+export default function HomePage() {
+  const router = useRouter();
+
+  const [mood, setMood] =
+    useState("Любое настроение");
+
+  const [budget, setBudget] =
+    useState("Любой");
+
+  const [company, setCompany] =
+    useState("Любая");
+
+  const [duration, setDuration] =
+    useState("Любая");
+
+  const [openSelect, setOpenSelect] =
+    useState<string | null>(null);
+
+  const [weather, setWeather] =
+    useState<Weather | null>(null);
+
+  /*
+   * АКТУАЛЬНАЯ ПОГОДА
+   * Санкт-Петербург
+   */
+
+  useEffect(() => {
+    const loadWeather = async () => {
+      try {
+        const response = await fetch(
+          "https://api.open-meteo.com/v1/forecast?latitude=59.9386&longitude=30.3141&current=temperature_2m,weather_code&timezone=Europe%2FMoscow"
+        );
+
+        if (!response.ok) {
+          return;
+        }
+
+        const data = await response.json();
+
+        const temperature =
+          data?.current?.temperature_2m;
+
+        const code =
+          data?.current?.weather_code;
+
+        if (
+          typeof temperature === "number" &&
+          typeof code === "number"
+        ) {
+          setWeather({
+            temperature,
+            code,
+          });
+        }
+      } catch {
+        /*
+         * Если сервис погоды временно недоступен,
+         * просто не показываем погодный бейдж.
+         */
+      }
+    };
+
+    loadWeather();
+  }, []);
+
+  const scrollToFilters = () => {
+    document
+      .getElementById("alma-filters")
+      ?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+  };
+
+  const openMap = () => {
+    const params = new URLSearchParams();
+
+    if (mood !== "Любое настроение") {
+      params.set("mood", mood);
+    }
+
+    if (budget !== "Любой") {
+      params.set("budget", budget);
+    }
+
+    if (company !== "Любая") {
+      params.set("company", company);
+    }
+
+    if (duration !== "Любая") {
+      params.set("duration", duration);
+    }
+
+    const query = params.toString();
+
+    router.push(
+      query
+        ? `/map?${query}`
+        : "/map"
+    );
+  };
+
+  const renderDropdown = (
+    label: string,
+    value: string,
+    options: string[],
+    id: string,
+    setter: (value: string) => void
+  ) => {
+    const isOpen = openSelect === id;
+
+    return (
       <div className="relative">
 
-        <div className="absolute -top-8 -left-8 w-48 h-48 rounded-full bg-[#efe6dc] blur-3xl opacity-70"></div>
+        <p className="mb-2 text-xs uppercase tracking-[0.16em] text-white/40">
+          {label}
+        </p>
 
-        <img
-          src="https://images.unsplash.com/photo-1520637836862-4d197d17c90a?q=80&w=1600&auto=format&fit=crop"
-          alt="Санкт-Петербург"
-          className="relative rounded-[40px] shadow-2xl w-full h-[720px] object-cover hover:scale-[1.02] transition duration-700"
-        />
+        <button
+          type="button"
+          onClick={() =>
+            setOpenSelect(
+              isOpen
+                ? null
+                : id
+            )
+          }
+          className="w-full flex items-center justify-between gap-4 rounded-[18px] bg-white px-4 py-4 text-left text-black transition hover:bg-neutral-100"
+        >
+          <span className="truncate">
+            {value}
+          </span>
+
+          <span
+            className={`text-sm transition-transform duration-200 ${
+              isOpen
+                ? "rotate-180"
+                : ""
+            }`}
+          >
+            ↓
+          </span>
+        </button>
+
+        {isOpen && (
+          <div className="absolute left-0 right-0 top-[calc(100%+8px)] z-50 rounded-[20px] bg-white p-2 shadow-2xl border border-black/5">
+
+            {options.map((option) => {
+              const selected =
+                option === value;
+
+              return (
+                <button
+                  key={option}
+                  type="button"
+                  onClick={() => {
+                    setter(option);
+                    setOpenSelect(null);
+                  }}
+                  className={`w-full flex items-center justify-between gap-4 rounded-[14px] px-4 py-3 text-left text-sm transition ${
+                    selected
+                      ? "bg-black text-white"
+                      : "text-black hover:bg-neutral-100"
+                  }`}
+                >
+                  <span>
+                    {option}
+                  </span>
+
+                  {selected && (
+                    <span>
+                      ✓
+                    </span>
+                  )}
+                </button>
+              );
+            })}
+
+          </div>
+        )}
 
       </div>
+    );
+  };
 
-    </div>
+  const weatherInfo =
+    weather
+      ? getWeatherInfo(weather.code)
+      : null;
 
-  </div>
-</section>
-{/* Категории */}
-<section className="pb-24">
-  <div className="max-w-7xl mx-auto px-8">
+  return (
+    <main className="min-h-screen bg-[#f7f4ef]">
 
-    <h2 className="text-4xl font-bold text-center mb-12">
-      Что вы ищете сегодня?
-    </h2>
+      {/* HERO */}
 
-    <div className="grid md:grid-cols-3 gap-8">
+      <section className="relative min-h-[760px] sm:min-h-[820px] flex items-center pt-28 pb-20 overflow-hidden bg-[#efe9e1]">
 
-      <Link
-        href="/map"
-        className="group bg-white rounded-[32px] p-10 shadow-md hover:shadow-2xl hover:-translate-y-2 transition-all duration-300"
-      >
-        <div className="text-5xl mb-6">☕</div>
+        {/* BACKGROUND */}
 
-        <h3 className="text-2xl font-bold">
-          Кофейни
-        </h3>
+        <div className="absolute inset-0">
 
-        <p className="mt-4 text-neutral-600">
-          Найдите уютное место для работы,
-          встречи или отдыха.
-        </p>
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_72%_44%,rgba(255,255,255,0.95),rgba(239,233,225,0.65)_35%,rgba(226,216,205,0.95)_75%)]" />
 
-        <span className="inline-block mt-8 font-semibold group-hover:translate-x-1 transition">
-          Смотреть →
-        </span>
-      </Link>
+          <div className="absolute -top-40 -left-40 w-[520px] h-[520px] rounded-full bg-white/45 blur-3xl" />
 
-      <Link
-        href="/map"
-        className="group bg-white rounded-[32px] p-10 shadow-md hover:shadow-2xl hover:-translate-y-2 transition-all duration-300"
-      >
-        <div className="text-5xl mb-6">🍽️</div>
+          <div className="absolute right-[-180px] bottom-[-260px] w-[680px] h-[680px] rounded-full bg-[#d6c8bb]/70 blur-3xl" />
 
-        <h3 className="text-2xl font-bold">
-          Рестораны
-        </h3>
+        </div>
 
-        <p className="mt-4 text-neutral-600">
-          Для свиданий, семейных ужинов
-          и особых вечеров.
-        </p>
+       {/* CAT — ВЫРАВНИВАНИЕ ПО ВЕРХУ И НИЗУ */}
 
-        <span className="inline-block mt-8 font-semibold group-hover:translate-x-1 transition">
-          Смотреть →
-        </span>
-      </Link>
+<div className="absolute z-[2] right-[-15px] sm:right-[0px] lg:right-[7%] xl:right-[10%] top-28 bottom-0 w-[290px] sm:w-[370px] lg:w-[455px] xl:w-[500px] pointer-events-none flex items-stretch justify-end">
 
-      <Link
-        href="/map"
-        className="group bg-white rounded-[32px] p-10 shadow-md hover:shadow-2xl hover:-translate-y-2 transition-all duration-300"
-      >
-        <div className="text-5xl mb-6">🌳</div>
+  <img
+    src="/images/cat.png"
+    alt="Кот ALMA"
+    className="h-full w-full object-contain object-bottom drop-shadow-[0_30px_50px_rgba(0,0,0,0.16)]"
+  />
 
-        <h3 className="text-2xl font-bold">
-          Парки
-        </h3>
+</div>
 
-        <p className="mt-4 text-neutral-600">
-          Лучшие места для прогулок
-          и отдыха на свежем воздухе.
-        </p>
+        {/* CONTENT */}
 
-        <span className="inline-block mt-8 font-semibold group-hover:translate-x-1 transition">
-          Смотреть →
-        </span>
-      </Link>
+        <div className="relative z-10 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8">
 
-    </div>
+          <div className="max-w-[760px]">
 
-  </div>
-</section>
-<section className="py-20">
-  <div className="max-w-7xl mx-auto px-8">
+            {/* WEATHER */}
 
-    <h2 className="text-4xl font-bold mb-10">
-      Что ищем сегодня?
-    </h2>
+            {weather && weatherInfo && (
+              <div className="mb-3">
 
-    <div className="grid md:grid-cols-3 gap-6">
+                <div className="inline-flex items-center gap-2.5 rounded-full bg-black/80 backdrop-blur-md text-white px-4 py-2.5 shadow-sm">
 
-      <Link
-        href="/collections"
-        className="bg-white rounded-3xl p-8 shadow-md hover:shadow-xl transition"
-      >
-        <div className="text-5xl mb-4">☕</div>
-        <h3 className="text-2xl font-bold">
-          Кофейни
-        </h3>
-        <p className="mt-3 text-neutral-600">
-          Лучшие места для кофе и отдыха.
-        </p>
-      </Link>
+                  <span className="text-lg leading-none">
+                    {weatherInfo.icon}
+                  </span>
 
-      <Link
-        href="/collections"
-        className="bg-white rounded-3xl p-8 shadow-md hover:shadow-xl transition"
-      >
-        <div className="text-5xl mb-4">🍽️</div>
-        <h3 className="text-2xl font-bold">
-          Рестораны
-        </h3>
-        <p className="mt-3 text-neutral-600">
-          Для свиданий и уютных вечеров.
-        </p>
-      </Link>
+                  <span className="font-semibold">
+                    {Math.round(
+                      weather.temperature
+                    ) > 0
+                      ? "+"
+                      : ""}
+                    {Math.round(
+                      weather.temperature
+                    )}
+                    °
+                  </span>
 
-      <Link
-        href="/map"
-        className="bg-white rounded-3xl p-8 shadow-md hover:shadow-xl transition"
-      >
-        <div className="text-5xl mb-4">🌳</div>
-        <h3 className="text-2xl font-bold">
-          Парки
-        </h3>
-        <p className="mt-3 text-neutral-600">
-          Лучшие места для прогулок.
-        </p>
-      </Link>
+                  <span className="w-px h-4 bg-white/20" />
 
-    </div>
-  </div>
-</section>
+                  <span className="text-sm text-white/75">
+                    {weatherInfo.text}
+                  </span>
 
-        {/* Популярные места */}
-        <section className="pb-28">
-
-          <div className="max-w-7xl mx-auto px-8">
-
-            <h2 className="text-5xl font-bold mb-14">
-              Популярные места
-            </h2>
-
-            <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-10">
-
-              {places.map((place) => (
-
-                <div
-                  key={place.id}
-                  className="bg-white rounded-[35px] overflow-hidden shadow-lg hover:-translate-y-2 hover:shadow-2xl transition-all duration-300"
-                >
-
-                  <img
-                    src={place.image}
-                    alt={place.name}
-                    className="w-full h-64 object-cover"
-                  />
-
-                  <div className="p-8">
-
-                    <p className="text-sm text-neutral-500">
-                      {place.category}
-                    </p>
-
-                    <h3 className="text-3xl font-bold mt-3">
-                      {place.name}
-                    </h3>
-
-                    <div className="mt-6 space-y-3 text-neutral-600">
-                      <p>😊 {place.mood}</p>
-                      <p>💰 {place.budget}</p>
-                      <p>👥 {place.company}</p>
-                      <p>🕒 {place.time}</p>
-                    </div>
-
-                    <Link
-                      href={`/place/${place.id}`}
-                      className="inline-flex mt-8 rounded-full bg-black text-white px-6 py-3 hover:scale-105 transition"
-                    >
-                      Подробнее →
-                    </Link>
-
-                  </div>
+                  <span className="text-xs text-white/40">
+                    Петербург
+                  </span>
 
                 </div>
 
-              ))}
+              </div>
+            )}
+
+            {/* SPB BADGE */}
+
+            <div className="inline-flex rounded-full bg-white/70 backdrop-blur-md border border-black/5 px-4 py-2 text-sm text-neutral-700 shadow-sm">
+              ✨ Открой Санкт-Петербург по-новому
+            </div>
+
+            <h1 className="mt-7 text-5xl sm:text-6xl lg:text-7xl xl:text-[82px] font-bold leading-[0.98] tracking-tight text-black">
+              Места, в которые
+              <br />
+              хочется вернуться
+            </h1>
+
+            <p className="mt-7 max-w-xl text-lg sm:text-xl leading-8 text-neutral-600">
+              ALMA помогает находить места Петербурга
+              по настроению, бюджету, компании
+              и времени.
+            </p>
+
+            <div className="mt-9 flex flex-wrap gap-3">
+
+              <button
+                type="button"
+                onClick={scrollToFilters}
+                className="rounded-full bg-black text-white px-7 py-4 font-semibold hover:opacity-80 hover:scale-[1.02] transition"
+              >
+                Найти место
+              </button>
+
+              <button
+  type="button"
+  onClick={() => router.push("/surprise")}
+  className="rounded-full bg-white/80 backdrop-blur-md border border-black/10 text-black px-7 py-4 font-medium hover:bg-white hover:scale-[1.02] transition shadow-sm"
+>
+  ✦ Удиви меня
+</button>
 
             </div>
 
           </div>
 
-        </section>
+        </div>
 
-      </main>
+        <div className="absolute z-10 bottom-8 right-8 hidden lg:flex items-center gap-3 text-xs uppercase tracking-[0.22em] text-neutral-500">
 
-    </>
+          <span className="w-8 h-px bg-black/20" />
+
+          Санкт-Петербург
+
+        </div>
+
+      </section>
+
+      {/* INTRO */}
+
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28">
+
+        <div className="grid lg:grid-cols-[0.8fr_1.2fr] gap-10 lg:gap-20 items-end">
+
+          <div>
+
+            <p className="text-xs uppercase tracking-[0.22em] text-neutral-500">
+              ALMA · Санкт-Петербург
+            </p>
+
+            <h2 className="mt-5 text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.02]">
+              Не просто
+              <br />
+              список мест
+            </h2>
+
+          </div>
+
+          <p className="text-lg sm:text-xl leading-8 text-neutral-500 max-w-2xl">
+            Вместо бесконечного поиска выбирай,
+            как ты хочешь провести время —
+            а ALMA покажет подходящие места.
+          </p>
+
+        </div>
+
+      </section>
+
+      {/* FILTERS */}
+
+      <section
+        id="alma-filters"
+        className="scroll-mt-32 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 sm:pb-28"
+      >
+
+        <div className="rounded-[36px] sm:rounded-[44px] bg-black text-white p-6 sm:p-9 lg:p-12">
+
+          <div>
+
+            <p className="text-xs uppercase tracking-[0.22em] text-white/40">
+              Подбор места
+            </p>
+
+            <h2 className="mt-4 text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight">
+              Что тебе подходит сегодня?
+            </h2>
+
+            <p className="mt-4 text-white/55 text-base sm:text-lg max-w-2xl leading-7">
+              Выбери настроение, бюджет,
+              компанию и сколько времени
+              хочется провести вне дома.
+            </p>
+
+          </div>
+
+          <div className="mt-9 grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
+
+            {renderDropdown(
+              "Настроение",
+              mood,
+              moods,
+              "mood",
+              setMood
+            )}
+
+            {renderDropdown(
+              "Бюджет",
+              budget,
+              budgets,
+              "budget",
+              setBudget
+            )}
+
+            {renderDropdown(
+              "Компания",
+              company,
+              companies,
+              "company",
+              setCompany
+            )}
+
+            {renderDropdown(
+              "Длительность",
+              duration,
+              durations,
+              "duration",
+              setDuration
+            )}
+
+          </div>
+
+          <div className="mt-7 flex flex-col sm:flex-row sm:items-center gap-3">
+
+            <button
+              type="button"
+              onClick={openMap}
+              className="rounded-full bg-white text-black px-8 py-4 font-semibold hover:scale-[1.02] transition"
+            >
+              Показать подходящие места →
+            </button>
+
+            <button
+              type="button"
+              onClick={() => {
+                setMood(
+                  "Любое настроение"
+                );
+
+                setBudget(
+                  "Любой"
+                );
+
+                setCompany(
+                  "Любая"
+                );
+
+                setDuration(
+                  "Любая"
+                );
+              }}
+              className="rounded-full border border-white/15 text-white/60 px-6 py-4 hover:text-white hover:border-white/30 transition"
+            >
+              Сбросить
+            </button>
+
+          </div>
+
+        </div>
+
+      </section>
+
+      {/* POPULAR PLACES */}
+
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24 sm:pb-32">
+
+        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-5 mb-9">
+
+          <div>
+
+            <p className="text-xs uppercase tracking-[0.22em] text-neutral-500">
+              Идеи для прогулки
+            </p>
+
+            <h2 className="mt-4 text-4xl sm:text-5xl font-bold tracking-tight">
+              Популярные места
+            </h2>
+
+          </div>
+
+          <button
+            type="button"
+            onClick={() =>
+              router.push("/map")
+            }
+            className="self-start rounded-full border border-black/10 bg-white px-6 py-3 text-sm font-medium hover:bg-black hover:text-white transition"
+          >
+            Смотреть все →
+          </button>
+
+        </div>
+
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+
+          {places.map((place) => (
+            <article
+              key={place.title}
+              className="group relative min-h-[420px] rounded-[28px] overflow-hidden bg-neutral-200"
+            >
+
+              <img
+                src={place.image}
+                alt={place.title}
+                className="absolute inset-0 w-full h-full object-cover transition duration-700 group-hover:scale-[1.04]"
+              />
+
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/5 to-transparent" />
+
+              <div className="absolute top-4 left-4">
+
+                <span className="inline-flex rounded-full bg-white/90 backdrop-blur px-3 py-1.5 text-xs text-black">
+                  {place.category}
+                </span>
+
+              </div>
+
+              <div className="absolute left-5 right-5 bottom-5">
+
+                <h3 className="text-2xl font-bold text-white leading-tight">
+                  {place.title}
+                </h3>
+
+              </div>
+
+            </article>
+          ))}
+
+        </div>
+
+      </section>
+
+      {/* BOTTOM CTA */}
+
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
+
+        <div className="rounded-[38px] bg-[#e9e4dc] p-8 sm:p-12 lg:p-16">
+
+          <div className="max-w-3xl">
+
+            <p className="text-xs uppercase tracking-[0.22em] text-neutral-500">
+              ALMA
+            </p>
+
+            <h2 className="mt-5 text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.02]">
+              Петербург под твоё настроение
+            </h2>
+
+            <p className="mt-5 text-lg text-neutral-500 leading-8 max-w-2xl">
+              Не нужно заранее знать,
+              куда именно идти.
+              Достаточно понять,
+              чего хочется сегодня.
+            </p>
+
+            <button
+              type="button"
+              onClick={scrollToFilters}
+              className="mt-8 rounded-full bg-black text-white px-7 py-4 font-medium hover:opacity-80 transition"
+            >
+              Подобрать место
+            </button>
+
+          </div>
+
+        </div>
+
+      </section>
+
+    </main>
   );
 }
