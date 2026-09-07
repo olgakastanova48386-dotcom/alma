@@ -24,3 +24,48 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+@media print {
+  @page {
+    size: A4;
+    margin: 12mm;
+  }
+
+  body {
+    background: #ffffff !important;
+    color: #111111 !important;
+  }
+
+  body > header,
+  body > footer,
+  nav,
+  .alma-route-actions {
+    display: none !important;
+  }
+
+  .alma-purchased-route {
+    margin: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: #ffffff !important;
+    overflow: visible !important;
+  }
+
+  .alma-purchased-route > header {
+    padding: 0 0 18px !important;
+  }
+
+  .alma-purchased-route > div {
+    padding: 20px 0 0 !important;
+  }
+
+  .alma-route-stop {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .alma-route-stop img {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+}
