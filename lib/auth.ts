@@ -28,8 +28,16 @@ export async function ensureAuthSchema() {
       expires_at INTEGER NOT NULL,
       FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
     )`),
+    database.prepare(`CREATE TABLE IF NOT EXISTS favorites (
+      user_id TEXT NOT NULL,
+      place_id INTEGER NOT NULL,
+      created_at INTEGER NOT NULL,
+      PRIMARY KEY(user_id, place_id),
+      FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
+    )`),
     database.prepare("CREATE INDEX IF NOT EXISTS idx_sessions_user_id ON sessions(user_id)"),
-    database.prepare("CREATE INDEX IF NOT EXISTS idx_sessions_expires_at ON sessions(expires_at)")
+    database.prepare("CREATE INDEX IF NOT EXISTS idx_sessions_expires_at ON sessions(expires_at)"),
+    database.prepare("CREATE INDEX IF NOT EXISTS idx_favorites_user_id ON favorites(user_id)")
   ]);
 }
 
