@@ -3,6 +3,7 @@ import Script from "next/script";
 import { Geist, Geist_Mono } from "next/font/google";
 import Header from "@/components/Header";
 import DogFriendlyMapEnhancer from "@/components/DogFriendlyMapEnhancer";
+import WeatherOutfitAdvisor from "@/components/WeatherOutfitAdvisor";
 import LegalFooter from "@/components/LegalFooter";
 import "./globals.css";
 
@@ -39,6 +40,7 @@ export default function RootLayout({
         <DogFriendlyMapEnhancer />
         <div className="flex-1">{children}</div>
         <LegalFooter />
+        <WeatherOutfitAdvisor />
         {analyticsToken ? (
           <Script
             id="cloudflare-web-analytics"
