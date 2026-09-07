@@ -1,11 +1,25 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 type User = { id: string; name: string; phone: string };
 
+const mobileNavItems = [
+  { href: "/", label: "Главная", icon: "⌂" },
+  { href: "/map", label: "Карта", icon: "⌖" },
+  { href: "/dog-friendly", label: "С собакой", icon: "🐾" },
+  { href: "/favorites", label: "Избранное", icon: "♡" },
+];
+
+function isCurrentRoute(pathname: string, href: string) {
+  if (href === "/") return pathname === "/";
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
+
 export default function Header() {
+  const pathname = usePathname();
   const [user, setUser] = useState<User | null>(null);
   const [authLoaded, setAuthLoaded] = useState(false);
 
@@ -36,11 +50,13 @@ export default function Header() {
     </Link>
   );
 
+  const mobileVisibleItems = mobileNavItems.filter((item) => !isCurrentRoute(pathname, item.href));
+
   return (
-    <>
-      <header className="fixed top-0 left-0 w-full z-[9999]">
-        <div className="max-w-7xl mx-auto mt-3 sm:mt-4 px-3 sm:px-6">
-          <div className="flex items-center justify-between rounded-[22px] sm:rounded-full bg-white/92 backdrop-blur-xl border border-black/5 shadow-lg px-4 sm:px-8 py-2.5 sm:py-3">
+    <header className="fixed top-0 left-0 w-full z-[9999]">
+      <div className="max-w-7xl mx-auto mt-3 sm:mt-4 px-3 sm:px-6">
+        <div className="rounded-[22px] sm:rounded-full bg-white/92 backdrop-blur-xl border border-black/5 shadow-lg px-4 sm:px-8 py-2.5 sm:py-3">
+          <div className="flex items-center justify-between">
             <Link href="/" className="text-lg sm:text-2xl font-bold tracking-[0.28em]">alma</Link>
 
             <nav className="hidden md:flex items-center gap-5 lg:gap-7 text-sm md:text-base text-gray-600">
@@ -53,18 +69,21 @@ export default function Header() {
 
             {accountControl}
           </div>
-        </div>
-      </header>
 
-      <nav className="md:hidden fixed bottom-3 left-3 right-3 z-[9999] rounded-[24px] bg-white/95 backdrop-blur-xl border border-black/5 shadow-[0_16px_45px_rgba(0,0,0,.16)] px-2 py-2 safe-area-mobile-nav">
-        <div className="grid grid-cols-5 items-center">
-          <Link href="/" className="flex min-h-12 flex-col items-center justify-center gap-0.5 rounded-[18px] text-[10px] font-medium text-neutral-600 active:bg-neutral-100"><span className="text-lg leading-none">⌂</span><span>Главная</span></Link>
-          <Link href="/map" className="flex min-h-12 flex-col items-center justify-center gap-0.5 rounded-[18px] text-[10px] font-medium text-neutral-600 active:bg-neutral-100"><span className="text-lg leading-none">⌖</span><span>Карта</span></Link>
-          <Link href="/dog-friendly" className="flex min-h-12 flex-col items-center justify-center gap-0.5 rounded-[18px] text-[10px] font-medium text-neutral-600 active:bg-neutral-100"><span className="text-lg leading-none">🐾</span><span>С собакой</span></Link>
-          <Link href="/favorites" className="flex min-h-12 flex-col items-center justify-center gap-0.5 rounded-[18px] text-[10px] font-medium text-neutral-600 active:bg-neutral-100"><span className="text-lg leading-none">♡</span><span>Избранное</span></Link>
-          <Link href={user ? "/profile" : "/login"} className="flex min-h-12 flex-col items-center justify-center gap-0.5 rounded-[18px] text-[10px] font-medium text-neutral-600 active:bg-neutral-100"><span className="text-lg leading-none">◎</span><span>{user ? "Профиль" : "Войти"}</span></Link>
+          <nav className="md:hidden mt-2.5 flex items-center gap-1.5 overflow-x-auto pb-0.5 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            {mobileVisibleItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="flex shrink-0 items-center gap-1.5 rounded-full bg-black/[.04] px-3 py-2 text-[12px] font-medium text-neutral-700 active:bg-black/[.08]"
+              >
+                <span className="text-sm leading-none">{item.icon}</span>
+                <span>{item.label}</span>
+              </Link>
+            ))}
+          </nav>
         </div>
-      </nav>
-    </>
+      </div>
+    </header>
   );
 }
