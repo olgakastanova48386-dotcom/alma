@@ -2,8 +2,8 @@ import { env } from "cloudflare:workers";
 
 const SESSION_COOKIE = "alma_session";
 const SESSION_MAX_AGE = 60 * 60 * 24 * 30;
-// Cloudflare Workers Web Crypto currently supports PBKDF2 up to 100,000 iterations.
 const PBKDF2_ITERATIONS = 100_000;
+const CODE_TTL = 10 * 60;
 
 function db(): any { return (env as any).ALMA_DB; }
 
@@ -18,6 +18,7 @@ export async function ensureAuthSchema() {
       password_hash TEXT NOT NULL,
       password_salt TEXT NOT NULL,
       marketing_sms INTEGER NOT NULL DEFAULT 0,
+      phone_verified INTEGER NOT NULL DEFAULT 0,
       created_at INTEGER NOT NULL
     )`),
     database.prepare(`CREATE TABLE IF NOT EXISTS sessions (
@@ -41,6 +42,15 @@ export async function ensureAuthSchema() {
       hits INTEGER NOT NULL DEFAULT 0,
       PRIMARY KEY(scope, subject_hash)
     )`),
+    database.prepare(`CREATE TABLE IF NOT EXISTS phone_codes (
+      phone TEXT NOT NULL,
+      purpose TEXT NOT NULL,
+      code_hash TEXT NOT NULL,
+      expires_at INTEGER NOT NULL,
+      attempts INTEGER NOT NULL DEFAULT 0,
+      created_at INTEGER NOT NULL,
+      PRIMARY KEY(phone, purpose)
+    )`),
     database.prepare(`CREATE TABLE IF NOT EXISTS route_photos (
       id TEXT PRIMARY KEY,
       user_id TEXT NOT NULL,
@@ -57,9 +67,14 @@ export async function ensureAuthSchema() {
     database.prepare("CREATE INDEX IF NOT EXISTS idx_sessions_user_id ON sessions(user_id)"),
     database.prepare("CREATE INDEX IF NOT EXISTS idx_sessions_expires_at ON sessions(expires_at)"),
     database.prepare("CREATE INDEX IF NOT EXISTS idx_favorites_user_id ON favorites(user_id)"),
+    database.prepare("CREATE INDEX IF NOT EXISTS idx_phone_codes_expires_at ON phone_codes(expires_at)"),
     database.prepare("CREATE INDEX IF NOT EXISTS idx_route_photos_place_status ON route_photos(place_id, status)"),
     database.prepare("CREATE INDEX IF NOT EXISTS idx_route_photos_status_created ON route_photos(status, created_at)")
   ]);
+
+  const columns = await database.prepare("PRAGMA table_info(users)").all();
+  const hasVerified = (columns?.results || []).some((row: any) => row.name === "phone_verified");
+  if (!hasVerified) await database.prepare("ALTER TABLE users ADD COLUMN phone_verified INTEGER NOT NULL DEFAULT 0").run();
 }
 
 export function normalizePhone(value: string) {
@@ -106,6 +121,43 @@ export async function consumeAuthRateLimit(request: Request, scope: string, limi
   return { allowed: true, retryAfter: 0 };
 }
 
+export async function issuePhoneCode(phone: string, purpose: "verify" | "reset") {
+  const code = String(crypto.getRandomValues(new Uint32Array(1))[0] % 1_000_000).padStart(6, "0");
+  const codeHash = await sha256(`${phone}:${purpose}:${code}`);
+  const now = Math.floor(Date.now() / 1000);
+  await db().prepare(`INSERT INTO phone_codes (phone, purpose, code_hash, expires_at, attempts, created_at)
+    VALUES (?, ?, ?, ?, 0, ?)
+    ON CONFLICT(phone, purpose) DO UPDATE SET code_hash = excluded.code_hash, expires_at = excluded.expires_at, attempts = 0, created_at = excluded.created_at`)
+    .bind(phone, purpose, codeHash, now + CODE_TTL, now).run();
+  return code;
+}
+
+export async function verifyPhoneCode(phone: string, purpose: "verify" | "reset", code: string) {
+  const row = await db().prepare("SELECT code_hash, expires_at, attempts FROM phone_codes WHERE phone = ? AND purpose = ?").bind(phone, purpose).first();
+  const now = Math.floor(Date.now() / 1000);
+  if (!row || Number(row.expires_at) < now || Number(row.attempts) >= 5) return false;
+  const candidate = await sha256(`${phone}:${purpose}:${code}`);
+  if (candidate !== row.code_hash) {
+    await db().prepare("UPDATE phone_codes SET attempts = attempts + 1 WHERE phone = ? AND purpose = ?").bind(phone, purpose).run();
+    return false;
+  }
+  await db().prepare("DELETE FROM phone_codes WHERE phone = ? AND purpose = ?").bind(phone, purpose).run();
+  return true;
+}
+
+export async function sendSmsCode(phone: string, code: string, purpose: "verify" | "reset") {
+  const apiUrl = String((env as any).SMS_API_URL || "").trim();
+  const apiToken = String((env as any).SMS_API_TOKEN || "").trim();
+  if (!apiUrl) throw new Error("SMS_PROVIDER_NOT_CONFIGURED");
+  const message = purpose === "verify" ? `ALMA: код подтверждения ${code}. Он действует 10 минут.` : `ALMA: код восстановления ${code}. Он действует 10 минут.`;
+  const response = await fetch(apiUrl, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...(apiToken ? { Authorization: `Bearer ${apiToken}` } : {}) },
+    body: JSON.stringify({ phone, message, code, purpose })
+  });
+  if (!response.ok) throw new Error("SMS_SEND_FAILED");
+}
+
 export async function createSession(userId: string) {
   const raw = bytesToHex(crypto.getRandomValues(new Uint8Array(32)));
   const id = await hashSessionToken(raw);
@@ -123,7 +175,7 @@ export async function getCurrentUser(request: Request) {
   await ensureAuthSchema();
   const token = readCookie(request, SESSION_COOKIE); if (!token) return null;
   const id = await hashSessionToken(token); const now = Math.floor(Date.now() / 1000);
-  const row = await db().prepare(`SELECT users.id, users.name, users.phone, users.gender, users.marketing_sms, users.created_at
+  const row = await db().prepare(`SELECT users.id, users.name, users.phone, users.gender, users.marketing_sms, users.phone_verified, users.created_at
     FROM sessions JOIN users ON users.id = sessions.user_id
     WHERE sessions.id = ? AND sessions.expires_at > ?`).bind(id, now).first();
   return row || null;
