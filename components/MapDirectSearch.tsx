@@ -1,69 +1,33 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { places } from "@/data/places";
+import { mapPlaces } from "@/data/mapPlaces";
 
 export default function MapDirectSearch() {
   const router = useRouter();
   const [query, setQuery] = useState("");
 
-  useEffect(() => {
-    const hidePlaceCount = () => {
-      const elements = Array.from(document.querySelectorAll<HTMLElement>("div"));
-      const counter = elements.find((element) => {
-        const text = element.textContent?.replace(/\s+/g, " ").trim() ?? "";
-        const className = typeof element.className === "string" ? element.className : "";
-
-        return text.startsWith("Найдено:") && className.includes("rounded-full");
-      });
-
-      if (counter) {
-        counter.style.display = "none";
-        return true;
-      }
-
-      return false;
-    };
-
-    if (hidePlaceCount()) return;
-
-    const observer = new MutationObserver(() => {
-      if (hidePlaceCount()) {
-        observer.disconnect();
-      }
-    });
-
-    observer.observe(document.body, {
-      childList: true,
-      subtree: true,
-    });
-
-    return () => observer.disconnect();
-  }, []);
-
   const results = useMemo(() => {
     const value = query.trim().toLowerCase();
     if (!value) return [];
 
-    return places
+    return mapPlaces
       .filter((place) =>
-        [place.name, place.category, place.address]
+        [place.name, place.category, place.address, place.ratingSource]
+          .filter(Boolean)
           .join(" ")
           .toLowerCase()
           .includes(value)
       )
-      .slice(0, 7);
+      .slice(0, 8);
   }, [query]);
 
   return (
     <div className="absolute z-[1200] top-[205px] right-[110px] hidden lg:block">
       <div className="relative w-[300px]">
         <div className="flex items-center rounded-full bg-white border border-black/5 shadow-sm px-4 py-2.5">
-          <span className="mr-2 text-neutral-400" aria-hidden="true">
-            ⌕
-          </span>
-
+          <span className="mr-2 text-neutral-400" aria-hidden="true">⌕</span>
           <input
             value={query}
             onChange={(event) => setQuery(event.target.value)}
@@ -71,7 +35,6 @@ export default function MapDirectSearch() {
             aria-label="Поиск места на карте"
             className="min-w-0 flex-1 bg-transparent outline-none text-sm text-black placeholder:text-neutral-400"
           />
-
           {query && (
             <button
               type="button"
@@ -97,18 +60,15 @@ export default function MapDirectSearch() {
                   }}
                   className="w-full text-left px-4 py-3 hover:bg-[#f7f4ef] transition border-b border-black/5 last:border-b-0"
                 >
-                  <span className="block font-medium text-sm text-black">
-                    {place.name}
-                  </span>
+                  <span className="block font-medium text-sm text-black">{place.name}</span>
                   <span className="block mt-0.5 text-xs text-neutral-500 line-clamp-2">
                     {place.category} · {place.address}
+                    {place.rating ? ` · ★ ${place.rating.toFixed(1)}/${place.ratingScale ?? 5}` : ""}
                   </span>
                 </button>
               ))
             ) : (
-              <div className="px-4 py-4 text-sm text-neutral-500">
-                Ничего не найдено
-              </div>
+              <div className="px-4 py-4 text-sm text-neutral-500">Ничего не найдено</div>
             )}
           </div>
         )}
