@@ -10,6 +10,18 @@ type Weather = {
   code: number;
 };
 
+type Status =
+  | "idle"
+  | "loading"
+  | "denied"
+  | "location-fallback"
+  | "weather-error";
+
+const SPB = {
+  latitude: 59.9386,
+  longitude: 30.3141,
+};
+
 function weatherLabel(code: number) {
   if (code === 0) return "ясно";
   if ([1, 2].includes(code)) return "малооблачно";
@@ -48,11 +60,15 @@ function outfitAdvice(w: Weather) {
 
 export default function WeatherOutfitAdvisor() {
   const [weather, setWeather] = useState<Weather | null>(null);
-  const [status, setStatus] =
-    useState<"idle" | "loading" | "denied" | "error">("idle");
+  const [status, setStatus] = useState<Status>("idle");
   const [open, setOpen] = useState(false);
+  const [usingFallback, setUsingFallback] = useState(false);
 
-  const loadWeatherForCoords = async (latitude: number, longitude: number) => {
+  const loadWeatherForCoords = async (
+    latitude: number,
+    longitude: number,
+    fallback = false
+  ) => {
     try {
       const url = new URL("https://api.open-meteo.com/v1/forecast");
       url.searchParams.set("latitude", String(latitude));
@@ -63,40 +79,79 @@ export default function WeatherOutfitAdvisor() {
       );
       url.searchParams.set("timezone", "auto");
 
-      const response = await fetch(url.toString());
-      if (!response.ok) throw new Error("weather");
+      const response = await fetch(url.toString(), {
+        cache: "no-store",
+      });
+
+      if (!response.ok) {
+        throw new Error("weather");
+      }
 
       const data = await response.json();
+      const current = data?.current;
+
+      if (
+        !current ||
+        typeof current.temperature_2m !== "number" ||
+        typeof current.apparent_temperature !== "number" ||
+        typeof current.precipitation !== "number" ||
+        typeof current.wind_speed_10m !== "number" ||
+        typeof current.weather_code !== "number"
+      ) {
+        throw new Error("weather-data");
+      }
 
       setWeather({
-        temperature: data.current.temperature_2m,
-        apparent: data.current.apparent_temperature,
-        precipitation: data.current.precipitation,
-        wind: data.current.wind_speed_10m,
-        code: data.current.weather_code,
+        temperature: current.temperature_2m,
+        apparent: current.apparent_temperature,
+        precipitation: current.precipitation,
+        wind: current.wind_speed_10m,
+        code: current.weather_code,
       });
-      setStatus("idle");
+
+      setUsingFallback(fallback);
+      setStatus(fallback ? "location-fallback" : "idle");
     } catch {
-      setStatus("error");
+      setStatus("weather-error");
     }
   };
 
+  const useSpbFallback = () => {
+    void loadWeatherForCoords(SPB.latitude, SPB.longitude, true);
+  };
+
   const requestLocation = (showPanel = false) => {
-    if (showPanel) setOpen(true);
-    if (weather || status === "loading") return;
+    if (showPanel) {
+      setOpen(true);
+    }
+
+    if (status === "loading") {
+      return;
+    }
 
     if (!navigator.geolocation) {
-      setStatus("error");
+      useSpbFallback();
       return;
     }
 
     setStatus("loading");
+
     navigator.geolocation.getCurrentPosition(
       ({ coords }) => {
-        void loadWeatherForCoords(coords.latitude, coords.longitude);
+        void loadWeatherForCoords(coords.latitude, coords.longitude, false);
       },
-      (error) => setStatus(error.code === 1 ? "denied" : "error"),
-      { enableHighAccuracy: false, timeout: 10000, maximumAge: 10 * 60 * 1000 }
+      (error) => {
+        if (error.code === error.PERMISSION_DENIED) {
+          setStatus("denied");
+        }
+
+        useSpbFallback();
+      },
+      {
+        enableHighAccuracy: false,
+        timeout: 15000,
+        maximumAge: 30 * 60 * 1000,
+      }
     );
   };
 
@@ -104,7 +159,12 @@ export default function WeatherOutfitAdvisor() {
     let cancelled = false;
 
     const requestOnFirstVisit = async () => {
-      if (!navigator.geolocation) return;
+      if (!navigator.geolocation) {
+        if (!cancelled) {
+          useSpbFallback();
+        }
+        return;
+      }
 
       try {
         if (navigator.permissions?.query) {
@@ -112,16 +172,23 @@ export default function WeatherOutfitAdvisor() {
             name: "geolocation" as PermissionName,
           });
 
-          if (cancelled || permission.state === "denied") {
-            if (permission.state === "denied") setStatus("denied");
+          if (cancelled) {
+            return;
+          }
+
+          if (permission.state === "denied") {
+            setStatus("denied");
+            useSpbFallback();
             return;
           }
         }
       } catch {
-        // Не все браузеры поддерживают Permissions API для геолокации.
+        // Некоторые браузеры не поддерживают Permissions API для геолокации.
       }
 
-      if (!cancelled) requestLocation(false);
+      if (!cancelled) {
+        requestLocation(false);
+      }
     };
 
     void requestOnFirstVisit();
@@ -144,6 +211,7 @@ export default function WeatherOutfitAdvisor() {
                 Что надеть сегодня
               </h3>
             </div>
+
             <button
               type="button"
               onClick={() => setOpen(false)}
@@ -160,31 +228,43 @@ export default function WeatherOutfitAdvisor() {
             </p>
           )}
 
-          {status === "denied" && (
-            <p className="mt-4 text-sm leading-6 text-neutral-600">
-              Геолокация не разрешена. Разреши доступ к местоположению в браузере —
-              тогда совет будет именно для твоей точки.
-            </p>
-          )}
-
-          {status === "error" && (
-            <p className="mt-4 text-sm leading-6 text-neutral-600">
-              Не получилось получить погоду. Попробуй ещё раз чуть позже.
-            </p>
+          {status === "weather-error" && (
+            <div className="mt-4">
+              <p className="text-sm leading-6 text-neutral-600">
+                Сейчас не получилось загрузить данные о погоде.
+              </p>
+              <button
+                type="button"
+                onClick={() => requestLocation(false)}
+                className="mt-3 rounded-full bg-black px-4 py-2 text-sm font-semibold text-white"
+              >
+                Попробовать ещё раз
+              </button>
+            </div>
           )}
 
           {weather && (
             <div className="mt-4">
+              {usingFallback && (
+                <p className="mb-3 rounded-2xl bg-black/5 px-3 py-2 text-xs leading-5 text-neutral-600">
+                  Точное местоположение не определилось, поэтому пока показываю погоду по Санкт-Петербургу.
+                </p>
+              )}
+
               <div className="flex flex-wrap items-center gap-2 text-sm">
                 <span className="rounded-full bg-black px-3 py-1.5 font-semibold text-white">
                   {Math.round(weather.temperature) > 0 ? "+" : ""}
                   {Math.round(weather.temperature)}°
                 </span>
+
                 <span className="rounded-full bg-black/5 px-3 py-1.5 text-neutral-700">
                   ощущается {Math.round(weather.apparent) > 0 ? "+" : ""}
                   {Math.round(weather.apparent)}°
                 </span>
-                <span className="text-neutral-500">{weatherLabel(weather.code)}</span>
+
+                <span className="text-neutral-500">
+                  {weatherLabel(weather.code)}
+                </span>
               </div>
 
               <p className="mt-4 text-[15px] leading-6 text-neutral-800">
@@ -192,8 +272,7 @@ export default function WeatherOutfitAdvisor() {
               </p>
 
               <p className="mt-3 text-xs leading-5 text-neutral-400">
-                Совет ориентировочный: учитывай свою чувствительность к холоду и
-                длительность прогулки.
+                Совет ориентировочный: учитывай свою чувствительность к холоду и длительность прогулки.
               </p>
             </div>
           )}
@@ -202,7 +281,14 @@ export default function WeatherOutfitAdvisor() {
 
       <button
         type="button"
-        onClick={() => requestLocation(true)}
+        onClick={() => {
+          if (weather) {
+            setOpen(true);
+            return;
+          }
+
+          requestLocation(true);
+        }}
         className="rounded-full border border-black/10 bg-black px-5 py-3 text-sm font-semibold text-white shadow-xl transition hover:scale-[1.02] hover:bg-neutral-800"
       >
         ☁️ Что надеть?
