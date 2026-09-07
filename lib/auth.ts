@@ -2,7 +2,6 @@ import { env } from "cloudflare:workers";
 
 const SESSION_COOKIE = "alma_session";
 const SESSION_MAX_AGE = 60 * 60 * 24 * 30;
-// Cloudflare Workers Web Crypto currently supports PBKDF2 up to 100,000 iterations.
 const PBKDF2_ITERATIONS = 100_000;
 
 function db(): any {
@@ -36,9 +35,24 @@ export async function ensureAuthSchema() {
       PRIMARY KEY(user_id, place_id),
       FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
     )`),
+    database.prepare(`CREATE TABLE IF NOT EXISTS route_photos (
+      id TEXT PRIMARY KEY,
+      user_id TEXT NOT NULL,
+      place_id INTEGER NOT NULL,
+      place_name TEXT NOT NULL,
+      mime_type TEXT NOT NULL,
+      image_base64 TEXT NOT NULL,
+      status TEXT NOT NULL DEFAULT 'pending',
+      created_at INTEGER NOT NULL,
+      reviewed_at INTEGER,
+      reviewed_by TEXT,
+      FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
+    )`),
     database.prepare("CREATE INDEX IF NOT EXISTS idx_sessions_user_id ON sessions(user_id)"),
     database.prepare("CREATE INDEX IF NOT EXISTS idx_sessions_expires_at ON sessions(expires_at)"),
-    database.prepare("CREATE INDEX IF NOT EXISTS idx_favorites_user_id ON favorites(user_id)")
+    database.prepare("CREATE INDEX IF NOT EXISTS idx_favorites_user_id ON favorites(user_id)"),
+    database.prepare("CREATE INDEX IF NOT EXISTS idx_route_photos_place_status ON route_photos(place_id, status)"),
+    database.prepare("CREATE INDEX IF NOT EXISTS idx_route_photos_status_created ON route_photos(status, created_at)")
   ]);
 }
 
@@ -119,6 +133,10 @@ export async function deleteCurrentSession(request: Request) {
   if (!token) return;
   const id = await hashSessionToken(token);
   await db().prepare("DELETE FROM sessions WHERE id = ?").bind(id).run();
+}
+
+export function isPhotoModerator(user: any) {
+  return normalizePhone(String(user?.phone || "")) === "+79990000001";
 }
 
 export function authDb(): any {
