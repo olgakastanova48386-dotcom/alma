@@ -95,7 +95,7 @@ export default function HomePage() {
       <div className="absolute -top-40 -left-40 w-[520px] h-[520px] rounded-full bg-white/45 blur-3xl" />
 
       <div className="absolute z-[2] right-[-12px] sm:right-[2%] lg:right-[7%] xl:right-[10%] top-32 bottom-10 w-[270px] sm:w-[360px] lg:w-[440px] xl:w-[490px] pointer-events-none">
-        <div className="relative h-full w-full overflow-hidden rounded-[42%_42%_34%_34%/28%_28%_18%_18%] shadow-[0_35px_80px_rgba(0,0,0,.20)] ring-1 ring-black/5 bg-neutral-200">
+        <div className="relative h-full w-full overflow-hidden rounded-[30px] sm:rounded-[36px] lg:rounded-[42px] shadow-[0_35px_80px_rgba(0,0,0,.20)] ring-1 ring-black/5 bg-neutral-200">
           <img key={heroTheme.image} src={heroTheme.image} alt={heroTheme.label} className="h-full w-full object-cover transition-opacity duration-700" style={{ objectPosition: heroTheme.position }} />
           <div className="absolute inset-0 bg-gradient-to-t from-black/18 via-transparent to-white/5" />
         </div>
