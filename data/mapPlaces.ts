@@ -7,6 +7,8 @@ import { drivePlaces } from "@/data/drivePlaces";
 export type MapPlace = {
   id: number; name: string; category: string; mood: string; budget: string; company: string[]; duration: string; image: string; lat: number; lng: number; why: string; address: string; price: string; priceNote: string; detailHref: string;
   rating?: number; ratingScale?: number; ratingCount?: number; ratingSource?: string; dogFriendly?: boolean; drive?: boolean; driveTags?: string[];
+  babyCare?: "Пеленальный столик" | "Комната матери и ребёнка" | "Детская комната";
+  babyCareVerifiedAt?: string;
 };
 
 const hasAlmaRating = (rating: number, scale = 5) => scale === 5 && rating >= 4.5 && rating <= 5;
@@ -15,7 +17,7 @@ const basePlaces: MapPlace[] = editorialPlaces.map((place) => ({ id:place.id,nam
 
 const coffeeMapPlaces: MapPlace[] = coffeePlaces.filter((p)=>hasAlmaRating(p.rating)).map((p,index)=>({ id:1001+index,name:p.name,category:"Кофейня",mood:"Спокойно",budget:p.priceNote?"300–1500 ₽":"До 1500 ₽",company:["Один","Пара","Друзья"],duration:"До 1 часа",image:p.image??"",lat:p.lat,lng:p.lng,why:`★ ${p.rating.toFixed(1)} / 5`,address:p.address,price:p.priceNote??"Цена уточняется",priceNote:"Кофе и напитки",detailHref:"/coffee",rating:p.rating,ratingScale:5,ratingCount:p.ratingCount,ratingSource:p.ratingSource,dogFriendly:Boolean(p.dogFriendly) }));
 
-const restaurantMapPlaces: MapPlace[] = restaurantPlaces.filter((p)=>hasAlmaRating(p.rating)).map((p,index)=>({ id:2001+index,name:p.name,category:"Ресторан",mood:"Вкусно поесть",budget:p.averageBill??"1500–5000 ₽",company:["Пара","Друзья","Семья"],duration:"1–2 часа",image:"",lat:p.lat,lng:p.lng,why:`★ ${p.rating.toFixed(1)} / 5`,address:p.address,price:p.averageBill??"Чек уточняется",priceNote:"Средний чек",detailHref:"/restaurants",rating:p.rating,ratingScale:5,ratingCount:p.ratingCount,ratingSource:p.ratingSource,dogFriendly:Boolean(p.dogFriendly) }));
+const restaurantMapPlaces: MapPlace[] = restaurantPlaces.filter((p)=>hasAlmaRating(p.rating)).map((p,index)=>({ id:2001+index,name:p.name,category:"Ресторан",mood:"Вкусно поесть",budget:p.averageBill??"1500–5000 ₽",company:["Пара","Друзья","Семья"],duration:"1–2 часа",image:"",lat:p.lat,lng:p.lng,why:`★ ${p.rating.toFixed(1)} / 5`,address:p.address,price:p.averageBill??"Чек уточняется",priceNote:"Средний чек",detailHref:"/restaurants",rating:p.rating,ratingScale:5,ratingCount:p.ratingCount,ratingSource:p.ratingSource,dogFriendly:Boolean(p.dogFriendly),babyCare:p.babyCare,babyCareVerifiedAt:p.babyCareVerifiedAt }));
 
 const dogMapPlaces: MapPlace[] = dogFriendlyPlaces.filter((p)=>hasAlmaRating(p.rating,p.ratingScale)).filter((d)=>![...basePlaces,...coffeeMapPlaces,...restaurantMapPlaces].some((p)=>p.name.toLowerCase()===d.name.toLowerCase())).map((p,index)=>({ id:3001+index,name:p.name,category:p.category,mood:"С питомцем",budget:p.budget,company:["Один","Пара","Друзья","Семья"],duration:"1–2 часа",image:"",lat:p.lat,lng:p.lng,why:`🐾 Dog Friendly · ★ ${p.rating.toFixed(1)} / 5`,address:p.address,price:p.budget,priceNote:"Условия посещения",detailHref:"/dog-friendly",rating:p.rating,ratingScale:5,ratingCount:p.ratingCount,ratingSource:p.ratingSource,dogFriendly:true }));
 
