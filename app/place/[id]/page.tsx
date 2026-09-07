@@ -8,31 +8,82 @@ import PlaceOutfitAdvice from "@/components/PlaceOutfitAdvice";
 
 const FAVORITES_KEY = "alma-favorites";
 
+function readLocalFavorites() {
+  try {
+    const saved = localStorage.getItem(FAVORITES_KEY);
+    const parsed = saved ? JSON.parse(saved) : [];
+    return Array.isArray(parsed) ? parsed.map(Number).filter(Number.isFinite) : [];
+  } catch {
+    return [];
+  }
+}
+
 export default function PlacePage() {
   const params = useParams();
   const id = Number(params?.id);
   const place = mapPlaces.find((item) => item.id === id);
   const [favorites, setFavorites] = useState<number[]>([]);
   const [favoritesLoaded, setFavoritesLoaded] = useState(false);
+  const [signedIn, setSignedIn] = useState(false);
 
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem(FAVORITES_KEY);
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed)) setFavorites(parsed.map((item) => Number(item)).filter((item) => Number.isFinite(item)));
+    let active = true;
+    async function loadFavorites() {
+      const localIds = readLocalFavorites();
+      try {
+        const meRes = await fetch("/api/auth/me", { credentials: "include" });
+        const me = meRes.ok ? await meRes.json() : { user: null };
+        if (!me.user) {
+          if (active) {
+            setSignedIn(false);
+            setFavorites(localIds);
+          }
+          return;
+        }
+
+        if (active) setSignedIn(true);
+        for (const placeId of localIds) {
+          await fetch("/api/favorites", {
+            method: "POST",
+            credentials: "include",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ placeId })
+          });
+        }
+
+        const favRes = await fetch("/api/favorites", { credentials: "include" });
+        const data = favRes.ok ? await favRes.json() : { ids: localIds };
+        const ids = Array.isArray(data.ids) ? data.ids.map(Number).filter(Number.isFinite) : localIds;
+        localStorage.setItem(FAVORITES_KEY, JSON.stringify(ids));
+        if (active) setFavorites(ids);
+      } catch {
+        if (active) setFavorites(localIds);
+      } finally {
+        if (active) setFavoritesLoaded(true);
       }
-    } catch { setFavorites([]); }
-    finally { setFavoritesLoaded(true); }
+    }
+    loadFavorites();
+    return () => { active = false; };
   }, []);
 
   const isFavorite = place ? favorites.includes(place.id) : false;
-  const toggleFavorite = () => {
+
+  async function toggleFavorite() {
     if (!place) return;
-    const nextFavorites = isFavorite ? favorites.filter((item) => item !== place.id) : [...favorites, place.id];
+    const adding = !isFavorite;
+    const nextFavorites = adding ? [...favorites, place.id] : favorites.filter((item) => item !== place.id);
     setFavorites(nextFavorites);
     localStorage.setItem(FAVORITES_KEY, JSON.stringify(nextFavorites));
-  };
+
+    if (signedIn) {
+      await fetch("/api/favorites", {
+        method: adding ? "POST" : "DELETE",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ placeId: place.id })
+      }).catch(() => null);
+    }
+  }
 
   if (!place) {
     return <main className="min-h-screen bg-[#f7f4ef] pt-36 pb-20"><div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8"><div className="rounded-[32px] bg-white p-8 sm:p-12 border border-black/5"><p className="text-sm uppercase tracking-[0.2em] text-neutral-500">ALMA</p><h1 className="mt-4 text-4xl sm:text-5xl font-bold">Место не найдено</h1><p className="mt-4 text-neutral-500 text-lg">Возможно, ссылка устарела или это место пока недоступно.</p><Link href="/map" className="inline-flex mt-8 rounded-full bg-black text-white px-6 py-3.5 font-medium hover:opacity-80 transition">← Вернуться к карте</Link></div></div></main>;
@@ -78,6 +129,7 @@ export default function PlacePage() {
             </div>
 
             <div className="mt-5 sm:mt-8 grid grid-cols-2 gap-2.5 sm:flex sm:flex-row sm:gap-3"><Link href={`/map?place=${place.id}`} className="sm:flex-1 rounded-full bg-black text-white px-4 py-3.5 sm:px-7 sm:py-4 text-center text-sm sm:text-base font-medium hover:opacity-85 transition">На карте</Link><button type="button" onClick={toggleFavorite} disabled={!favoritesLoaded} aria-pressed={isFavorite} className={`sm:flex-1 rounded-full border px-4 py-3.5 sm:px-7 sm:py-4 text-sm sm:text-base font-medium transition-all duration-300 ${isFavorite ? "bg-black border-black text-white" : "bg-white border-black/10 text-black hover:bg-black hover:text-white"}`}>{isFavorite ? "♥ Сохранено" : "♡ В избранное"}</button></div>
+            {favoritesLoaded && !signedIn && <p className="mt-3 text-center sm:text-left text-xs text-neutral-400">Войдите в ALMA, чтобы избранное сохранилось в аккаунте.</p>}
           </div>
         </section>
       </div>
