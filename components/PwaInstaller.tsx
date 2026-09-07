@@ -53,7 +53,7 @@ export default function PwaInstaller() {
   }
 
   return (
-    <div className="fixed bottom-[calc(6.75rem+env(safe-area-inset-bottom))] left-1/2 z-[300] w-[calc(100%-1.5rem)] max-w-md -translate-x-1/2 rounded-[22px] bg-white/95 p-3 shadow-[0_10px_28px_rgba(0,0,0,.18)] backdrop-blur sm:bottom-6 sm:p-4">
+    <div className="fixed bottom-[calc(5.75rem+env(safe-area-inset-bottom))] left-1/2 z-[300] w-[calc(100%-1.5rem)] max-w-md -translate-x-1/2 rounded-[22px] bg-white/95 p-3 shadow-[0_8px_22px_rgba(0,0,0,.16)] backdrop-blur sm:bottom-6 sm:p-4">
       <div className="flex items-center gap-3">
         <div className="grid h-11 w-11 shrink-0 place-items-center rounded-[14px] bg-black/[.04] text-sm font-black tracking-[-.08em]">ALMA</div>
         <div className="min-w-0 flex-1">
