@@ -27,6 +27,14 @@ export async function ensurePaymentSchema() {
       PRIMARY KEY(user_id, product),
       FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
     )`),
+    database.prepare(`CREATE TABLE IF NOT EXISTS saved_routes (
+      user_id TEXT NOT NULL,
+      product TEXT NOT NULL,
+      route_json TEXT NOT NULL,
+      updated_at INTEGER NOT NULL,
+      PRIMARY KEY(user_id, product),
+      FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
+    )`),
     database.prepare("CREATE INDEX IF NOT EXISTS idx_payment_requests_user_product ON payment_requests(user_id, product)"),
     database.prepare("CREATE INDEX IF NOT EXISTS idx_payment_requests_reference ON payment_requests(reference)")
   ]);
@@ -35,6 +43,26 @@ export async function ensurePaymentSchema() {
 function referenceCode() {
   const bytes = crypto.getRandomValues(new Uint8Array(4));
   return `ALMA-${Array.from(bytes, b => b.toString(16).padStart(2, "0")).join("").toUpperCase()}`;
+}
+
+export async function saveRouteDraft(userId: string, route: unknown) {
+  await ensurePaymentSchema();
+  const routeJson = JSON.stringify(route);
+  if (routeJson.length > 20_000) throw new Error("route_too_large");
+  const now = Math.floor(Date.now() / 1000);
+  await authDb().prepare(`INSERT INTO saved_routes (user_id, product, route_json, updated_at) VALUES (?, ?, ?, ?)
+    ON CONFLICT(user_id, product) DO UPDATE SET route_json = excluded.route_json, updated_at = excluded.updated_at`)
+    .bind(userId, ROUTE_PRODUCT, routeJson, now).run();
+  return { ok: true, updatedAt: now };
+}
+
+export async function getSavedRouteDraft(userId: string) {
+  await ensurePaymentSchema();
+  const row = await authDb().prepare("SELECT route_json, updated_at FROM saved_routes WHERE user_id = ? AND product = ?")
+    .bind(userId, ROUTE_PRODUCT).first();
+  if (!row) return null;
+  try { return { route: JSON.parse(String(row.route_json)), updatedAt: row.updated_at }; }
+  catch { return null; }
 }
 
 export async function createOrGetPendingRequest(userId: string) {
