@@ -1,10 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { FormEvent, useState } from "react";
+import { FormEvent, Suspense, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
-export default function LoginPage() {
+function LoginContent() {
   const params = useSearchParams();
   const next = params.get("next") || "/";
   const product = params.get("product");
@@ -41,7 +41,7 @@ export default function LoginPage() {
       <div className="bg-white p-8 sm:p-10 rounded-[30px] shadow-xl w-full max-w-[430px] border border-black/5">
         <p className="text-xs uppercase tracking-[0.22em] text-neutral-400 text-center">ALMA</p>
         <h1 className="mt-3 text-3xl font-bold text-center">Вход</h1>
-        {isRoutePurchase ? <div className="mt-5 rounded-[22px] bg-[#f2eee7] p-5 text-center"><p className="text-xs uppercase tracking-[.16em] text-neutral-400">Твой маршрут сохранён</p><p className="mt-2 font-semibold">После входа сразу перейдём к безопасной оплате маршрута за 199 ₽</p></div> : <p className="mt-2 text-center text-sm text-neutral-500">Войдите по номеру телефона, чтобы сохранять любимые места</p>}
+        {isRoutePurchase ? <div className="mt-5 rounded-[22px] bg-[#f2eee7] p-5 text-center"><p className="text-xs uppercase tracking-[.16em] text-neutral-400">Твой маршрут сохранён</p><p className="mt-2 font-semibold">После входа сразу перейдём к оплате маршрута за 199 ₽</p></div> : <p className="mt-2 text-center text-sm text-neutral-500">Войдите по номеру телефона, чтобы сохранять любимые места</p>}
         <form className="mt-7" onSubmit={onSubmit}>
           <input value={phone} onChange={e => setPhone(e.target.value)} type="tel" autoComplete="tel" inputMode="tel" placeholder="Номер телефона" className="w-full border border-black/30 rounded-2xl px-4 py-3.5 outline-none focus:border-black transition" />
           <input value={password} onChange={e => setPassword(e.target.value)} type="password" autoComplete="current-password" placeholder="Пароль" className="mt-4 w-full border border-black/30 rounded-2xl px-4 py-3.5 outline-none focus:border-black transition" />
@@ -54,4 +54,8 @@ export default function LoginPage() {
       </div>
     </main>
   );
+}
+
+export default function LoginPage() {
+  return <Suspense fallback={<main className="min-h-screen bg-[#f7f4ef]"/>}><LoginContent/></Suspense>;
 }
