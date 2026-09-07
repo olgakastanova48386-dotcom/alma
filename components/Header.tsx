@@ -42,51 +42,53 @@ export default function Header() {
     return () => { active = false; };
   }, []);
 
-  const accountControl = authLoaded && user ? (
-    <Link href="/profile" className="rounded-full bg-black text-white px-4 sm:px-5 py-2 sm:py-2.5 text-sm sm:text-base hover:opacity-80 transition max-w-[150px] truncate" title={user.name}>
-      {user.name}
-    </Link>
-  ) : (
-    <Link href="/login" className="rounded-full bg-black text-white px-4 sm:px-5 py-2 sm:py-2.5 text-sm sm:text-base hover:opacity-80 transition">
-      Войти
-    </Link>
-  );
-
   const mobileVisibleItems = mobileNavItems.filter((item) => !isCurrentRoute(pathname, item.href));
 
   return (
     <header className="fixed top-0 left-0 w-full z-[9999]">
       <div className="max-w-7xl mx-auto mt-3 sm:mt-4 px-3 sm:px-6">
-        <div className="rounded-[22px] sm:rounded-full bg-white/92 backdrop-blur-xl border border-black/5 shadow-lg px-4 sm:px-8 py-2.5 sm:py-3">
-          <div className="flex items-center justify-between">
+        <div className="rounded-[22px] sm:rounded-full bg-white/92 backdrop-blur-xl border border-black/5 shadow-lg px-3 sm:px-8 py-2.5 sm:py-3">
+          <div className="md:hidden flex h-11 items-center gap-1.5 overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            <Link href="/" className="shrink-0 pl-1 pr-1 text-[17px] font-bold tracking-[0.22em]">alma</Link>
+            <div className="ml-auto flex shrink-0 items-center gap-1.5">
+              {mobileVisibleItems.map((item) => {
+                const iconOnly = item.href === "/map" || item.href === "/favorites";
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    aria-label={item.label}
+                    title={item.label}
+                    className={`flex h-9 shrink-0 items-center justify-center rounded-full bg-black/[.04] text-[11px] font-medium text-neutral-700 active:bg-black/[.08] ${iconOnly ? "w-9 px-0" : "gap-1 px-2.5"}`}
+                  >
+                    {item.icon === "map" ? <MapIcon /> : <span className={`${item.href === "/favorites" ? "text-[18px]" : "text-[13px]"} leading-none`}>{item.icon}</span>}
+                    {!iconOnly && <span>{item.label}</span>}
+                  </Link>
+                );
+              })}
+              {authLoaded && user ? (
+                <Link href="/profile" className="max-w-[82px] truncate rounded-full bg-black px-3 py-2.5 text-[11px] font-medium text-white" title={user.name}>{user.name}</Link>
+              ) : (
+                <Link href="/login" className="rounded-full bg-black px-3 py-2.5 text-[11px] font-medium text-white">Войти</Link>
+              )}
+            </div>
+          </div>
+
+          <div className="hidden md:flex items-center justify-between">
             <Link href="/" className="text-lg sm:text-2xl font-bold tracking-[0.28em]">alma</Link>
-            <nav className="hidden md:flex items-center gap-5 lg:gap-7 text-sm md:text-base text-gray-600">
+            <nav className="flex items-center gap-5 lg:gap-7 text-sm md:text-base text-gray-600">
               <Link href="/" className="hover:text-black transition">Главная</Link>
               <Link href="/map" className="hover:text-black transition">Карта</Link>
               <Link href="/dog-friendly" className="hover:text-black transition">🐾 С собакой</Link>
               <Link href="/favorites" className="hover:text-black transition">♡ Избранное</Link>
               <Link href="/about" className="hover:text-black transition">О проекте</Link>
             </nav>
-            {accountControl}
+            {authLoaded && user ? (
+              <Link href="/profile" className="rounded-full bg-black text-white px-5 py-2.5 text-base hover:opacity-80 transition max-w-[150px] truncate" title={user.name}>{user.name}</Link>
+            ) : (
+              <Link href="/login" className="rounded-full bg-black text-white px-5 py-2.5 text-base hover:opacity-80 transition">Войти</Link>
+            )}
           </div>
-
-          <nav className="md:hidden mt-2.5 flex items-center gap-1.5 overflow-x-auto pb-0.5 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            {mobileVisibleItems.map((item) => {
-              const iconOnly = item.href === "/map" || item.href === "/favorites";
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  aria-label={item.label}
-                  title={item.label}
-                  className={`flex shrink-0 items-center justify-center rounded-full bg-black/[.04] py-2 text-[12px] font-medium text-neutral-700 active:bg-black/[.08] ${iconOnly ? "h-9 w-10 px-0" : "gap-1.5 px-3"}`}
-                >
-                  {item.icon === "map" ? <MapIcon /> : <span className={`${item.href === "/favorites" ? "text-[18px]" : "text-sm"} leading-none`}>{item.icon}</span>}
-                  {!iconOnly && <span>{item.label}</span>}
-                </Link>
-              );
-            })}
-          </nav>
         </div>
       </div>
     </header>
