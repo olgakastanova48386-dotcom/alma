@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { routeStories, routeStayTimes } from "@/data/routeStories";
+import RoutePhotoZone from "@/components/RoutePhotoZone";
 
 export type PurchasedRouteStop = {
   id:number; name:string; category:string; image?:string; lat:number; lng:number;
@@ -94,12 +95,16 @@ function smartTransit(a:PurchasedRouteStop,b:PurchasedRouteStop):TransitPlan{
 }
 
 const restaurantVisuals:Record<string,string>={
-  "mario trattoria":"https://scdn.tomesto.ru/img/place/000/023/573/restoran-mario-trattoria-mario-trattoriya-na-admiralteyskom-prospekte_017b8_full-96299.jpg",
-  "birch":"https://img.restoclub.ru/uploads/place/f/c/7/c/fc7c964416cae41eb1bfda597e9f3421_w1230_h820--no-cut.webp?v=3",
-  "duo gastrobar":"https://ovvy.ru/upload/iblock/9df/9df4921c2038b609e73e1f5e4e13f95d.jpg",
-  "joli":"https://img.restoclub.ru/uploads/postimage/8/a/5/7/8a57b1769c3aec38497f7e2b9846f8b8_w958_h835--big.jpg",
+  "duo gastrobar":"https://s1.afisha.ru/mediastorage/75/0e/0a75e9f6ae0f470a911299150e75.jpg",
+  "birch":"https://s4.afisha.ru/mediastorage/ab/a9/a6fb400faaed4eaa96118a50a9ab.jpg",
+  "joli":"https://nordwest.wheretoeat.ru/upload/resize_cache/iblock/c56/1342_558_1/3azu6zy8qfgcuy90ouiz98vbsbk4invf.jpeg",
   "банщики":"https://static.sobaka.ru/images/post/00/05/55/00/_huge.jpg?v=1488892314",
-  "salone pasta&bar":"https://chef.ru/wp-content/uploads/atelier-pasta-11-scaled.jpg",
+  "koza strekoza":"https://koza.family/wp-content/uploads/2026/08/img_8648.webp",
+  "mario trattoria":"https://img.restoclub.ru/uploads/place/7/2/7/2/72723f5f584df695bae5271aa9c5c702_w1200_h630.webp",
+  "eli-shumeli":"https://s.restorating.ru/w/1024x768/galleries/87380/None-136678.jpg",
+  "ресторан 995":"https://995.rest/wp-content/uploads/2025/10/DSC_3388-scaled.jpg",
+  "tillander":"https://img.restoclub.ru/uploads/place/9/e/d/3/9ed3327a7ce2ddf46c3d771e12ba91d2_w1230_h820--no-cut.webp",
+  "salone pasta&bar":"https://wheretoeat.ru/upload/resize_cache/iblock/19b/1342_558_1/v4qeywbv4ougrb3yf5w9ho4nxydz2rie.jpg",
 };
 function visualFor(place:PurchasedRouteStop){
   if(place.image)return place.image;
@@ -133,6 +138,8 @@ export default function PurchasedRouteStory({stops,romantic=false,onReset}:{stop
 
   return <div className="alma-purchased-route mt-9 overflow-hidden rounded-[38px] bg-[#f3eee6] border border-black/5">
     <header className="p-7 sm:p-10 lg:p-12 border-b border-black/5"><div className="flex flex-wrap items-start justify-between gap-6"><div><span className="inline-flex rounded-full bg-[#dcebdc] px-3 py-2 text-xs font-semibold">МАРШРУТ ГОТОВ</span><p className="mt-6 text-xs uppercase tracking-[.2em] text-neutral-400">Твой день с ALMA</p><h3 className="mt-2 text-4xl sm:text-5xl font-bold tracking-tight">Маршрут открыт ✦</h3><p className="mt-3 max-w-xl text-neutral-500">ALMA уже выбрала удобный способ перемещения между точками. Всё остаётся внутри сайта.</p><div className="mt-6 flex flex-wrap gap-2"><button type="button" onClick={shareRoute} className="rounded-full bg-black text-white px-5 py-3 text-sm font-semibold">{routeShared?"Сохранено ✓":"↓ Сохранить маршрут"}</button><button type="button" onClick={shareRoute} className="rounded-full bg-white border border-black/10 px-5 py-3 text-sm font-semibold">{routeShared?"Готово ✓":"↗ Поделиться"}</button></div></div><button onClick={onReset} className="rounded-full bg-white border border-black/10 px-5 py-3 text-sm">Новый маршрут</button></div></header>
+
+    <RoutePhotoZone stops={stops}/>
 
     <div className="relative px-5 sm:px-10 lg:px-14 py-10 sm:py-14"><div className="absolute left-[42px] sm:left-1/2 top-10 bottom-10 w-px bg-black/15"/>
       {stops.map((place,i)=>{const reverse=i%2===1,plan=transitions[i],fact=story(place),visual=visualFor(place);return <div key={`${place.category}-${place.id}`} className="relative mb-3 last:mb-0">
