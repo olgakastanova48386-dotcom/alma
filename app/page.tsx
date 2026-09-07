@@ -263,9 +263,17 @@ export default function HomePage() {
 
   return (
     <main className="min-h-screen bg-[#f7f4ef]">
-      <section className="relative min-h-0 md:min-h-[820px] flex items-center pt-24 sm:pt-28 pb-10 sm:pb-20 overflow-hidden bg-[#efe9e1] text-black">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_72%_44%,rgba(255,255,255,0.95),rgba(239,233,225,0.65)_35%,rgba(226,216,205,0.95)_75%)]" />
-        <div className="absolute -top-40 -left-40 w-[520px] h-[520px] rounded-full bg-white/45 blur-3xl" />
+      <section className="relative min-h-[620px] md:min-h-[820px] flex items-end md:items-center pt-28 sm:pt-28 pb-10 sm:pb-20 overflow-hidden bg-[#efe9e1] text-black">
+        <img
+          key={`mobile-bg-${heroTheme.image}`}
+          src={heroTheme.image}
+          alt={heroTheme.label}
+          className="md:hidden absolute inset-0 h-full w-full object-cover transition-opacity duration-700"
+          style={{ objectPosition: heroTheme.position }}
+        />
+        <div className="md:hidden absolute inset-0 bg-gradient-to-b from-black/15 via-black/20 to-black/72" />
+        <div className="hidden md:block absolute inset-0 bg-[radial-gradient(circle_at_72%_44%,rgba(255,255,255,0.95),rgba(239,233,225,0.65)_35%,rgba(226,216,205,0.95)_75%)]" />
+        <div className="hidden md:block absolute -top-40 -left-40 w-[520px] h-[520px] rounded-full bg-white/45 blur-3xl" />
         <div className="hidden md:block absolute z-[2] right-[2%] lg:right-[7%] xl:right-[10%] top-32 bottom-10 w-[360px] lg:w-[440px] xl:w-[490px] pointer-events-none">
           <div className="relative h-full w-full overflow-hidden rounded-[36px] lg:rounded-[42px] shadow-[0_35px_80px_rgba(0,0,0,.20)] ring-1 ring-black/5 bg-neutral-200">
             <img
@@ -278,75 +286,71 @@ export default function HomePage() {
             <div className="absolute inset-0 bg-gradient-to-t from-black/18 via-transparent to-white/5" />
           </div>
         </div>
+
+        {weather && weatherInfo && (
+          <div className="absolute right-4 top-[88px] z-20 md:hidden">
+            <div className="inline-flex items-center gap-1.5 rounded-full bg-black/72 px-2.5 py-1.5 text-white shadow-sm backdrop-blur-md">
+              <span className="text-sm leading-none">{weatherInfo.icon}</span>
+              <span className="text-xs font-semibold">
+                {Math.round(weather.temperature) > 0 ? "+" : ""}
+                {Math.round(weather.temperature)}°
+              </span>
+              <span className="h-3 w-px bg-white/20" />
+              <span className="text-[11px] text-white/75">{weatherInfo.text}</span>
+            </div>
+          </div>
+        )}
+
         <div className="relative z-10 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8">
           <div className="max-w-[760px]">
             {weather && weatherInfo && (
-              <div className="mb-3">
+              <div className="hidden md:block mb-3">
                 <div className="inline-flex items-center gap-2.5 rounded-full bg-black/80 backdrop-blur-md text-white px-3.5 sm:px-4 py-2.5 shadow-sm">
-                  <span className="text-lg leading-none">
-                    {weatherInfo.icon}
-                  </span>
+                  <span className="text-lg leading-none">{weatherInfo.icon}</span>
                   <span className="font-semibold">
                     {Math.round(weather.temperature) > 0 ? "+" : ""}
                     {Math.round(weather.temperature)}°
                   </span>
                   <span className="w-px h-4 bg-white/20" />
-                  <span className="text-sm text-white/75">
-                    {weatherInfo.text}
-                  </span>
-                  <span className="hidden xs:inline text-xs text-white/40">
-                    Петербург
-                  </span>
+                  <span className="text-sm text-white/75">{weatherInfo.text}</span>
+                  <span className="hidden xs:inline text-xs text-white/40">Петербург</span>
                 </div>
               </div>
             )}
-            <div className="inline-flex rounded-full bg-white/70 backdrop-blur-md border border-black/5 px-3.5 sm:px-4 py-2 text-xs sm:text-sm text-neutral-700 shadow-sm">
+            <div className="inline-flex rounded-full bg-white/82 backdrop-blur-md border border-white/30 md:border-black/5 px-3.5 sm:px-4 py-2 text-xs sm:text-sm text-neutral-800 md:text-neutral-700 shadow-sm">
               ✨ Открой Санкт-Петербург по-новому
             </div>
-            <h1 className="mt-6 sm:mt-7 text-[42px] sm:text-6xl lg:text-7xl xl:text-[82px] font-bold leading-[0.98] tracking-tight text-black">
+            <h1 className="mt-5 sm:mt-7 text-[34px] sm:text-6xl lg:text-7xl xl:text-[82px] font-bold leading-[1.02] sm:leading-[0.98] tracking-tight text-white md:text-black drop-shadow-[0_2px_12px_rgba(0,0,0,.28)] md:drop-shadow-none">
               Места, в которые
               <br />
               хочется вернуться
             </h1>
-            <p className="mt-5 sm:mt-7 max-w-xl text-base sm:text-xl leading-7 sm:leading-8 text-neutral-600">
+            <p className="mt-4 sm:mt-7 max-w-xl text-[15px] sm:text-xl leading-6 sm:leading-8 text-white/82 md:text-neutral-600">
               ALMA помогает находить места Петербурга по настроению, бюджету,
               компании и времени.
             </p>
-            <div className="mt-7 sm:mt-9 grid grid-cols-2 sm:flex sm:flex-wrap gap-2.5 sm:gap-3">
+            <div className="mt-6 sm:mt-9 grid grid-cols-2 sm:flex sm:flex-wrap gap-2.5 sm:gap-3">
               <button
                 type="button"
                 onClick={scrollToFilters}
-                className="rounded-full bg-black text-white px-4 sm:px-7 py-3.5 sm:py-4 text-sm sm:text-base font-semibold hover:opacity-80 hover:scale-[1.02] transition"
+                className="rounded-full bg-white text-black md:bg-black md:text-white px-4 sm:px-7 py-3.5 sm:py-4 text-sm sm:text-base font-semibold hover:opacity-80 hover:scale-[1.02] transition"
               >
                 Найти место
               </button>
               <button
                 type="button"
                 onClick={() => router.push("/surprise")}
-                className="rounded-full bg-white/80 backdrop-blur-md border border-black/10 text-black px-4 sm:px-7 py-3.5 sm:py-4 text-sm sm:text-base font-medium hover:bg-white hover:scale-[1.02] transition shadow-sm"
+                className="rounded-full bg-black/55 md:bg-white/80 backdrop-blur-md border border-white/25 md:border-black/10 text-white md:text-black px-4 sm:px-7 py-3.5 sm:py-4 text-sm sm:text-base font-medium hover:scale-[1.02] transition shadow-sm"
               >
                 ✦ Удиви меня
               </button>
               <button
                 type="button"
                 onClick={scrollToPhotozones}
-                className="rounded-full bg-white/80 backdrop-blur-md border border-black/10 text-black px-4 sm:px-7 py-3.5 sm:py-4 text-sm sm:text-base font-medium hover:bg-white hover:scale-[1.02] transition shadow-sm"
+                className="rounded-full bg-black/55 md:bg-white/80 backdrop-blur-md border border-white/25 md:border-black/10 text-white md:text-black px-4 sm:px-7 py-3.5 sm:py-4 text-sm sm:text-base font-medium hover:scale-[1.02] transition shadow-sm"
               >
                 📸 Фотозоны
               </button>
-            </div>
-            <div className="md:hidden mt-8 relative h-[430px] w-full overflow-hidden rounded-[28px] shadow-[0_24px_55px_rgba(0,0,0,.18)] ring-1 ring-black/5 bg-neutral-200">
-              <img
-                key={`mobile-${heroTheme.image}`}
-                src={heroTheme.image}
-                alt={heroTheme.label}
-                className="h-full w-full object-cover"
-                style={{ objectPosition: heroTheme.position }}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-white/5" />
-              <div className="absolute left-4 bottom-4 rounded-full bg-black/70 backdrop-blur-md px-3 py-2 text-[11px] uppercase tracking-[0.14em] text-white/80">
-                {heroTheme.label}
-              </div>
             </div>
           </div>
         </div>
