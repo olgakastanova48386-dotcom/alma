@@ -22,6 +22,7 @@ export default function LegalFooter() {
             <Link href="/legal/reviews" className="hover:text-white transition">Отзывы и цены</Link>
             <Link href="/legal/complaints" className="hover:text-white transition">Жалобы</Link>
             <Link href="/legal/rightsholders" className="hover:text-white transition">Правообладателям</Link>
+            <Link href="/legal/data-sources" className="hover:text-white transition">Источники данных</Link>
           </nav>
         </div>
 
