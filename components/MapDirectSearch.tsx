@@ -1,12 +1,46 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { places } from "@/data/places";
 
 export default function MapDirectSearch() {
   const router = useRouter();
   const [query, setQuery] = useState("");
+
+  useEffect(() => {
+    const hidePlaceCount = () => {
+      const elements = Array.from(document.querySelectorAll<HTMLElement>("div"));
+      const counter = elements.find((element) => {
+        const text = element.textContent?.replace(/\s+/g, " ").trim() ?? "";
+        const className = typeof element.className === "string" ? element.className : "";
+
+        return text.startsWith("Найдено:") && className.includes("rounded-full");
+      });
+
+      if (counter) {
+        counter.style.display = "none";
+        return true;
+      }
+
+      return false;
+    };
+
+    if (hidePlaceCount()) return;
+
+    const observer = new MutationObserver(() => {
+      if (hidePlaceCount()) {
+        observer.disconnect();
+      }
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   const results = useMemo(() => {
     const value = query.trim().toLowerCase();
@@ -23,8 +57,8 @@ export default function MapDirectSearch() {
   }, [query]);
 
   return (
-    <div className="absolute z-[1200] top-[205px] right-[145px] hidden lg:block">
-      <div className="relative w-[270px]">
+    <div className="absolute z-[1200] top-[205px] right-[110px] hidden lg:block">
+      <div className="relative w-[300px]">
         <div className="flex items-center rounded-full bg-white border border-black/5 shadow-sm px-4 py-2.5">
           <span className="mr-2 text-neutral-400" aria-hidden="true">
             ⌕
