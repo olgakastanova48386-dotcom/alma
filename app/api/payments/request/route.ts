@@ -2,8 +2,10 @@ import { NextResponse } from "next/server";
 import { getCurrentUser } from "@/lib/auth";
 import { createOrGetPendingRequest, markTransferSent } from "@/lib/payments";
 
+type AuthUser = { id: string };
+
 export async function POST(request: Request) {
-  const user = await getCurrentUser(request) as any;
+  const user = await getCurrentUser(request) as AuthUser | null;
   if (!user) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
   try {
     const payment = await createOrGetPendingRequest(user.id);
@@ -15,7 +17,7 @@ export async function POST(request: Request) {
 }
 
 export async function PATCH(request: Request) {
-  const user = await getCurrentUser(request) as any;
+  const user = await getCurrentUser(request) as AuthUser | null;
   if (!user) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
   try {
     const body = await request.json().catch(() => ({}));
