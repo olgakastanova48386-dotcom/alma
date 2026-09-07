@@ -2,7 +2,8 @@ import { env } from "cloudflare:workers";
 
 const SESSION_COOKIE = "alma_session";
 const SESSION_MAX_AGE = 60 * 60 * 24 * 30;
-const PBKDF2_ITERATIONS = 210_000;
+// Cloudflare Workers Web Crypto currently supports PBKDF2 up to 100,000 iterations.
+const PBKDF2_ITERATIONS = 100_000;
 
 function db(): any {
   return (env as any).ALMA_DB;
