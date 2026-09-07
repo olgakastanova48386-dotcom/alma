@@ -24,7 +24,7 @@ export default function MapDirectSearch() {
   }, [query]);
 
   return (
-    <div className="relative w-full">
+    <div className="relative hidden w-full md:block">
       <div className="flex items-center rounded-2xl bg-white border border-black/5 shadow-sm px-4 py-3.5">
         <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true" className="mr-3 shrink-0 text-neutral-400"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
         <input
