@@ -46,19 +46,38 @@ function minutesBetween(a:PurchasedRouteStop,b:PurchasedRouteStop){
  return Math.max(5,Math.round((km/4.5)*60/5)*5);
 }
 
+const invitePresets=[
+ {label:"Нежно",text:"У меня есть для нас небольшой план. Детали пока оставлю сюрпризом ✦"},
+ {label:"Игриво",text:"Ничего не планируй на это время — я уже всё придумал(а). Тебе останется только прийти ✦"},
+ {label:"Минималистично",text:"Хочу украсть тебя на несколько часов. Маршрут — сюрприз."},
+];
+
 export default function PurchasedRouteStory({stops,romantic=false,onReset}:{stops:PurchasedRouteStop[];romantic?:boolean;onReset:()=>void}){
  const [inviteOpen,setInviteOpen]=useState(false);
  const [guestName,setGuestName]=useState("");
  const [date,setDate]=useState("");
  const [time,setTime]=useState("");
- const [note,setNote]=useState("У меня есть для нас небольшой план. Детали пока оставлю сюрпризом ✦");
+ const [note,setNote]=useState(invitePresets[0].text);
  const [copied,setCopied]=useState(false);
+ const [shared,setShared]=useState(false);
+ const prettyDate=useMemo(()=>{
+  if(!date) return "";
+  const d=new Date(`${date}T12:00:00`);
+  return Number.isNaN(d.getTime())?date:new Intl.DateTimeFormat("ru-RU",{day:"numeric",month:"long"}).format(d);
+ },[date]);
  const inviteText=useMemo(()=>{
   const hello=guestName.trim()?`${guestName.trim()}, `:"";
-  const when=[date,time].filter(Boolean).join(" · ");
+  const when=[prettyDate,time].filter(Boolean).join(" · ");
   return `${hello}приглашаю тебя на маленькое приключение по Петербургу ✦\n${when?`Когда: ${when}\n`:""}${note.trim()}\n\nМаршрут уже собран в ALMA, но точки пока останутся секретом.`;
- },[guestName,date,time,note]);
+ },[guestName,prettyDate,time,note]);
  const copyInvite=async()=>{try{await navigator.clipboard.writeText(inviteText);setCopied(true);setTimeout(()=>setCopied(false),1800)}catch{setCopied(false)}};
+ const shareInvite=async()=>{
+  try{
+   if(navigator.share){await navigator.share({title:"Приглашение от ALMA",text:inviteText});setShared(true);setTimeout(()=>setShared(false),1800)}
+   else await copyInvite();
+  }catch{}
+ };
+ const readyToSend=Boolean(date&&time&&note.trim());
 
  return <div className="mt-9 overflow-hidden rounded-[38px] bg-[#f3eee6] border border-black/5">
   <header className="p-7 sm:p-10 lg:p-12 border-b border-black/5"><div className="flex flex-wrap items-start justify-between gap-6"><div><span className="inline-flex rounded-full bg-[#dcebdc] px-3 py-2 text-xs font-semibold">ТЕСТОВАЯ ПОКУПКА УСПЕШНА</span><p className="mt-6 text-xs uppercase tracking-[.2em] text-neutral-400">Твой день с ALMA</p><h3 className="mt-2 text-4xl sm:text-5xl font-bold tracking-tight">Маршрут открыт ✦</h3><p className="mt-3 max-w-xl text-neutral-500">Готовый сценарий: куда идти, сколько остаться и как перейти к следующей точке. 199 ₽ в тестовом режиме не списывались.</p></div><button onClick={onReset} className="rounded-full bg-white border border-black/10 px-5 py-3 text-sm">Новый тест</button></div></header>
@@ -72,8 +91,8 @@ export default function PurchasedRouteStory({stops,romantic=false,onReset}:{stop
     {next&&<div className="relative z-10 ml-16 sm:ml-0 py-9 sm:py-12 flex sm:justify-center"><div className="rounded-full bg-[#f3eee6] border border-black/10 px-5 py-2.5 text-xs font-medium">≈ {walk} мин пешком до следующей точки</div></div>}
    </div>})}
   </div>
-  {romantic&&<footer className="m-5 sm:m-10 mt-0 rounded-[30px] bg-black p-6 sm:p-8 text-white"><div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6"><div><p className="text-xs uppercase tracking-[.18em] text-white/45">Для свидания</p><h4 className="mt-2 text-2xl sm:text-3xl font-bold">Приглашение без спойлеров</h4><p className="mt-2 max-w-2xl text-sm leading-6 text-white/60">Можно отправить красивое приглашение, не раскрывая ни одной точки маршрута.</p></div><button type="button" onClick={()=>setInviteOpen(v=>!v)} className="shrink-0 rounded-full bg-white text-black px-5 py-3 text-sm font-semibold">{inviteOpen?"Скрыть":"Создать приглашение"}</button></div>
-   {inviteOpen&&<div className="mt-7 grid lg:grid-cols-[.95fr_1.05fr] gap-4"><div className="rounded-[24px] bg-white/8 border border-white/10 p-5"><label className="block text-xs text-white/45">Имя</label><input value={guestName} onChange={e=>setGuestName(e.target.value)} placeholder="Например, Аня" className="mt-2 w-full rounded-2xl bg-white text-black px-4 py-3 outline-none"/><div className="mt-3 grid grid-cols-2 gap-3"><div><label className="block text-xs text-white/45">Дата</label><input type="date" value={date} onChange={e=>setDate(e.target.value)} className="mt-2 w-full rounded-2xl bg-white text-black px-4 py-3 outline-none"/></div><div><label className="block text-xs text-white/45">Время</label><input type="time" value={time} onChange={e=>setTime(e.target.value)} className="mt-2 w-full rounded-2xl bg-white text-black px-4 py-3 outline-none"/></div></div><label className="mt-3 block text-xs text-white/45">Сообщение</label><textarea value={note} onChange={e=>setNote(e.target.value)} rows={4} className="mt-2 w-full resize-none rounded-2xl bg-white text-black px-4 py-3 outline-none"/><p className="mt-3 text-xs leading-5 text-white/35">Названия мест и порядок остановок в приглашение не попадают.</p></div><div className="rounded-[24px] bg-[#f3eee6] p-6 text-black"><p className="text-xs uppercase tracking-[.18em] text-neutral-400">Предпросмотр</p><p className="mt-4 whitespace-pre-line text-base leading-7">{inviteText}</p><button type="button" onClick={copyInvite} className="mt-6 rounded-full bg-black text-white px-5 py-3 text-sm font-semibold">{copied?"Скопировано ✓":"Скопировать приглашение"}</button><p className="mt-3 text-xs leading-5 text-neutral-400">Отправку через аккаунт и персональную ссылку подключим позже. Сейчас можно безопасно проверить текст и сценарий приглашения.</p></div></div>}
+  {romantic&&<footer className="m-5 sm:m-10 mt-0 rounded-[30px] bg-black p-6 sm:p-8 text-white"><div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6"><div><p className="text-xs uppercase tracking-[.18em] text-white/45">Для свидания</p><h4 className="mt-2 text-2xl sm:text-3xl font-bold">Приглашение без спойлеров</h4><p className="mt-2 max-w-2xl text-sm leading-6 text-white/60">ALMA оставит маршрут секретом и поможет отправить только время, настроение и твоё сообщение.</p></div><button type="button" onClick={()=>setInviteOpen(v=>!v)} className="shrink-0 rounded-full bg-white text-black px-5 py-3 text-sm font-semibold">{inviteOpen?"Скрыть":"Создать приглашение"}</button></div>
+   {inviteOpen&&<div className="mt-7 grid lg:grid-cols-[.95fr_1.05fr] gap-4"><div className="rounded-[24px] bg-white/8 border border-white/10 p-5"><label className="block text-xs text-white/45">Кого приглашаем</label><input value={guestName} onChange={e=>setGuestName(e.target.value)} placeholder="Например, Аня" className="mt-2 w-full rounded-2xl bg-white text-black px-4 py-3 outline-none"/><div className="mt-4 grid grid-cols-2 gap-3"><div><label className="block text-xs text-white/45">Дата</label><input type="date" value={date} onChange={e=>setDate(e.target.value)} className="mt-2 w-full rounded-2xl bg-white text-black px-4 py-3 outline-none"/></div><div><label className="block text-xs text-white/45">Время встречи</label><input type="time" value={time} onChange={e=>setTime(e.target.value)} className="mt-2 w-full rounded-2xl bg-white text-black px-4 py-3 outline-none"/></div></div><p className="mt-4 text-xs text-white/45">Тон приглашения</p><div className="mt-2 flex flex-wrap gap-2">{invitePresets.map(p=><button key={p.label} type="button" onClick={()=>setNote(p.text)} className={`rounded-full px-3 py-2 text-xs border ${note===p.text?"bg-white text-black border-white":"border-white/15 text-white/70"}`}>{p.label}</button>)}</div><label className="mt-4 block text-xs text-white/45">Сообщение</label><textarea value={note} onChange={e=>setNote(e.target.value)} rows={4} className="mt-2 w-full resize-none rounded-2xl bg-white text-black px-4 py-3 outline-none"/><p className="mt-3 text-xs leading-5 text-white/35">Названия мест, адреса и порядок остановок не попадут в приглашение.</p></div><div className="rounded-[24px] bg-[#f3eee6] p-6 text-black"><div className="flex items-center justify-between gap-3"><p className="text-xs uppercase tracking-[.18em] text-neutral-400">Предпросмотр</p><span className="rounded-full bg-black/5 px-3 py-1.5 text-[11px] text-neutral-500">без спойлеров</span></div><div className="mt-5 rounded-[24px] bg-white p-5 shadow-sm"><p className="text-xs uppercase tracking-[.18em] text-neutral-400">ALMA · приглашение</p><p className="mt-4 whitespace-pre-line text-base leading-7">{inviteText}</p></div>{!readyToSend&&<p className="mt-4 text-xs text-amber-700">Добавь дату и время встречи — тогда приглашение будет готово к отправке.</p>}<div className="mt-5 flex flex-wrap gap-2"><button type="button" onClick={shareInvite} disabled={!readyToSend} className="rounded-full bg-black text-white px-5 py-3 text-sm font-semibold disabled:opacity-30">{shared?"Отправлено ✓":"Поделиться"}</button><button type="button" onClick={copyInvite} className="rounded-full border border-black/10 bg-white px-5 py-3 text-sm font-semibold">{copied?"Скопировано ✓":"Скопировать текст"}</button></div><p className="mt-3 text-xs leading-5 text-neutral-400">На телефоне «Поделиться» откроет системное меню отправки. На устройствах без этой функции текст можно скопировать вручную.</p></div></div>}
   </footer>}
  </div>;
 }
