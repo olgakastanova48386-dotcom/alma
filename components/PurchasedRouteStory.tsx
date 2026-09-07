@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useMemo, useState } from "react";
 
 export type PurchasedRouteStop = {
  id: number;
@@ -46,6 +47,19 @@ function minutesBetween(a:PurchasedRouteStop,b:PurchasedRouteStop){
 }
 
 export default function PurchasedRouteStory({stops,romantic=false,onReset}:{stops:PurchasedRouteStop[];romantic?:boolean;onReset:()=>void}){
+ const [inviteOpen,setInviteOpen]=useState(false);
+ const [guestName,setGuestName]=useState("");
+ const [date,setDate]=useState("");
+ const [time,setTime]=useState("");
+ const [note,setNote]=useState("У меня есть для нас небольшой план. Детали пока оставлю сюрпризом ✦");
+ const [copied,setCopied]=useState(false);
+ const inviteText=useMemo(()=>{
+  const hello=guestName.trim()?`${guestName.trim()}, `:"";
+  const when=[date,time].filter(Boolean).join(" · ");
+  return `${hello}приглашаю тебя на маленькое приключение по Петербургу ✦\n${when?`Когда: ${when}\n`:""}${note.trim()}\n\nМаршрут уже собран в ALMA, но точки пока останутся секретом.`;
+ },[guestName,date,time,note]);
+ const copyInvite=async()=>{try{await navigator.clipboard.writeText(inviteText);setCopied(true);setTimeout(()=>setCopied(false),1800)}catch{setCopied(false)}};
+
  return <div className="mt-9 overflow-hidden rounded-[38px] bg-[#f3eee6] border border-black/5">
   <header className="p-7 sm:p-10 lg:p-12 border-b border-black/5"><div className="flex flex-wrap items-start justify-between gap-6"><div><span className="inline-flex rounded-full bg-[#dcebdc] px-3 py-2 text-xs font-semibold">ТЕСТОВАЯ ПОКУПКА УСПЕШНА</span><p className="mt-6 text-xs uppercase tracking-[.2em] text-neutral-400">Твой день с ALMA</p><h3 className="mt-2 text-4xl sm:text-5xl font-bold tracking-tight">Маршрут открыт ✦</h3><p className="mt-3 max-w-xl text-neutral-500">Готовый сценарий: куда идти, сколько остаться и как перейти к следующей точке. 199 ₽ в тестовом режиме не списывались.</p></div><button onClick={onReset} className="rounded-full bg-white border border-black/10 px-5 py-3 text-sm">Новый тест</button></div></header>
   <div className="relative px-5 sm:px-10 lg:px-14 py-10 sm:py-14"><div className="absolute left-[42px] sm:left-1/2 top-10 bottom-10 w-px bg-black/15"/>
@@ -58,6 +72,8 @@ export default function PurchasedRouteStory({stops,romantic=false,onReset}:{stop
     {next&&<div className="relative z-10 ml-16 sm:ml-0 py-9 sm:py-12 flex sm:justify-center"><div className="rounded-full bg-[#f3eee6] border border-black/10 px-5 py-2.5 text-xs font-medium">≈ {walk} мин пешком до следующей точки</div></div>}
    </div>})}
   </div>
-  {romantic&&<footer className="m-5 sm:m-10 mt-0 rounded-[28px] bg-black p-6 sm:p-8 text-white"><p className="text-xs uppercase tracking-[.18em] text-white/45">Для свидания</p><h4 className="mt-2 text-2xl font-bold">Приглашение без спойлеров</h4><p className="mt-2 max-w-2xl text-sm leading-6 text-white/60">Маршрут можно отправить как приглашение, не раскрывая заранее все остановки. Финальную механику отправки подключим вместе с аккаунтами.</p></footer>}
+  {romantic&&<footer className="m-5 sm:m-10 mt-0 rounded-[30px] bg-black p-6 sm:p-8 text-white"><div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6"><div><p className="text-xs uppercase tracking-[.18em] text-white/45">Для свидания</p><h4 className="mt-2 text-2xl sm:text-3xl font-bold">Приглашение без спойлеров</h4><p className="mt-2 max-w-2xl text-sm leading-6 text-white/60">Можно отправить красивое приглашение, не раскрывая ни одной точки маршрута.</p></div><button type="button" onClick={()=>setInviteOpen(v=>!v)} className="shrink-0 rounded-full bg-white text-black px-5 py-3 text-sm font-semibold">{inviteOpen?"Скрыть":"Создать приглашение"}</button></div>
+   {inviteOpen&&<div className="mt-7 grid lg:grid-cols-[.95fr_1.05fr] gap-4"><div className="rounded-[24px] bg-white/8 border border-white/10 p-5"><label className="block text-xs text-white/45">Имя</label><input value={guestName} onChange={e=>setGuestName(e.target.value)} placeholder="Например, Аня" className="mt-2 w-full rounded-2xl bg-white text-black px-4 py-3 outline-none"/><div className="mt-3 grid grid-cols-2 gap-3"><div><label className="block text-xs text-white/45">Дата</label><input type="date" value={date} onChange={e=>setDate(e.target.value)} className="mt-2 w-full rounded-2xl bg-white text-black px-4 py-3 outline-none"/></div><div><label className="block text-xs text-white/45">Время</label><input type="time" value={time} onChange={e=>setTime(e.target.value)} className="mt-2 w-full rounded-2xl bg-white text-black px-4 py-3 outline-none"/></div></div><label className="mt-3 block text-xs text-white/45">Сообщение</label><textarea value={note} onChange={e=>setNote(e.target.value)} rows={4} className="mt-2 w-full resize-none rounded-2xl bg-white text-black px-4 py-3 outline-none"/><p className="mt-3 text-xs leading-5 text-white/35">Названия мест и порядок остановок в приглашение не попадают.</p></div><div className="rounded-[24px] bg-[#f3eee6] p-6 text-black"><p className="text-xs uppercase tracking-[.18em] text-neutral-400">Предпросмотр</p><p className="mt-4 whitespace-pre-line text-base leading-7">{inviteText}</p><button type="button" onClick={copyInvite} className="mt-6 rounded-full bg-black text-white px-5 py-3 text-sm font-semibold">{copied?"Скопировано ✓":"Скопировать приглашение"}</button><p className="mt-3 text-xs leading-5 text-neutral-400">Отправку через аккаунт и персональную ссылку подключим позже. Сейчас можно безопасно проверить текст и сценарий приглашения.</p></div></div>}
+  </footer>}
  </div>;
 }
