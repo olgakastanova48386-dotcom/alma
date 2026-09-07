@@ -53,19 +53,21 @@ export default function PwaInstaller() {
   }
 
   return (
-    <div className="fixed bottom-4 left-1/2 z-[100] w-[calc(100%-2rem)] max-w-md -translate-x-1/2 rounded-[24px] border border-black/10 bg-white p-4 shadow-2xl sm:bottom-6">
-      <div className="flex items-center gap-3">
-        <div className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl border border-black/10 bg-white text-sm font-black tracking-[-.08em]">ALMA</div>
-        <div className="min-w-0 flex-1">
-          <p className="font-semibold text-black">Установить ALMA</p>
-          <p className="text-sm text-black/55">Открывай как обычное приложение с экрана телефона.</p>
+    <div className="fixed bottom-[calc(1rem+env(safe-area-inset-bottom))] left-1/2 z-[200] w-[calc(100%-1.5rem)] max-w-md -translate-x-1/2 rounded-[28px] border-2 border-black bg-white p-4 shadow-[0_18px_60px_rgba(0,0,0,.28)] sm:bottom-6">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+        <div className="flex min-w-0 items-center gap-3">
+          <div className="grid h-14 w-14 shrink-0 place-items-center rounded-[18px] border border-black/15 bg-white text-base font-black tracking-[-.08em]">ALMA</div>
+          <div className="min-w-0 flex-1">
+            <p className="text-lg font-bold leading-tight text-black">Установить ALMA</p>
+            <p className="mt-1 text-sm leading-5 text-black/65">Добавь ALMA на экран телефона и открывай как приложение.</p>
+          </div>
         </div>
-        <button onClick={install} className="rounded-full bg-black px-4 py-2.5 text-sm font-semibold text-white">
-          Установить
+        <button onClick={install} className="w-full shrink-0 rounded-full bg-black px-5 py-3.5 text-base font-bold text-white shadow-lg sm:w-auto">
+          Установить ALMA
         </button>
       </div>
       {showIosHelp ? (
-        <p className="mt-3 rounded-2xl bg-black/[.04] px-4 py-3 text-sm leading-5 text-black/70">
+        <p className="mt-4 rounded-2xl bg-black px-4 py-3 text-sm font-medium leading-5 text-white">
           На iPhone: нажми «Поделиться» в Safari → «На экран Домой» → «Добавить».
         </p>
       ) : null}
