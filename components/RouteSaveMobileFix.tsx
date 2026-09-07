@@ -17,7 +17,7 @@ export default function RouteSaveMobileFix() {
     const onClick = async (event: MouseEvent) => {
       const target = event.target as HTMLElement | null;
       const button = target?.closest("button") as HTMLButtonElement | null;
-      if (!button || !button.textContent?.includes("Сохранить на телефон")) return;
+      if (!button || !button.textContent?.includes("Сохранить маршрут")) return;
 
       const route = document.querySelector(".alma-purchased-route") as HTMLElement | null;
       if (!route) return;
