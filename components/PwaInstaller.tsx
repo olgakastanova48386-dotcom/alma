@@ -53,20 +53,20 @@ export default function PwaInstaller() {
   }
 
   return (
-    <div className="fixed bottom-[calc(7.25rem+env(safe-area-inset-bottom))] left-1/2 z-[300] w-[calc(100%-1.25rem)] max-w-md -translate-x-1/2 rounded-[24px] border-2 border-black bg-white p-3.5 shadow-[0_16px_50px_rgba(0,0,0,.32)] sm:bottom-6 sm:p-4">
+    <div className="fixed bottom-[calc(6.75rem+env(safe-area-inset-bottom))] left-1/2 z-[300] w-[calc(100%-1.5rem)] max-w-md -translate-x-1/2 rounded-[22px] bg-white/95 p-3 shadow-[0_10px_28px_rgba(0,0,0,.18)] backdrop-blur sm:bottom-6 sm:p-4">
       <div className="flex items-center gap-3">
-        <div className="grid h-12 w-12 shrink-0 place-items-center rounded-[16px] border border-black/15 bg-white text-sm font-black tracking-[-.08em]">ALMA</div>
+        <div className="grid h-11 w-11 shrink-0 place-items-center rounded-[14px] bg-black/[.04] text-sm font-black tracking-[-.08em]">ALMA</div>
         <div className="min-w-0 flex-1">
-          <p className="text-base font-bold leading-tight text-black">Установить ALMA</p>
-          <p className="mt-0.5 text-xs leading-4 text-black/65">Добавь на экран телефона.</p>
+          <p className="text-[15px] font-bold leading-tight text-black">Установить ALMA</p>
+          <p className="mt-0.5 text-[12px] leading-4 text-black/60">Добавь на экран телефона.</p>
         </div>
-        <button onClick={install} className="shrink-0 rounded-full bg-black px-4 py-3 text-sm font-bold text-white shadow-lg">
+        <button onClick={install} className="shrink-0 rounded-full bg-black px-4 py-2.5 text-[13px] font-bold text-white shadow-sm">
           Установить
         </button>
       </div>
       {showIosHelp ? (
-        <p className="mt-3 rounded-2xl bg-black px-4 py-3 text-sm font-medium leading-5 text-white">
-          На iPhone: нажми «Поделиться» в Safari → «На экран Домой» → «Добавить».
+        <p className="mt-2.5 rounded-2xl bg-black/[.05] px-3.5 py-2.5 text-[12px] font-medium leading-4 text-black/75">
+          На iPhone: «Поделиться» → «На экран Домой» → «Добавить».
         </p>
       ) : null}
     </div>
