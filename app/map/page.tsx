@@ -11,7 +11,7 @@ const collections = [
 export default function MapPage() {
   return (
     <main className="min-h-screen bg-[#f7f4ef] pt-28 pb-12">
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-4">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="text-xs uppercase tracking-[0.2em] text-neutral-500">ALMA · Санкт-Петербург</p>
@@ -20,7 +20,7 @@ export default function MapPage() {
           <p className="max-w-xl text-neutral-500 sm:text-right">Выбирай вручную или начни с готовой подборки.</p>
         </div>
 
-        <div className="mt-7 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+        <div className="mt-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
           {collections.map((collection) => (
             <Link key={collection.title} href={collection.href} className="group rounded-[24px] border border-black/5 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
               <div className="text-2xl">{collection.emoji}</div>
