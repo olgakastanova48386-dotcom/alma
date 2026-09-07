@@ -11,7 +11,7 @@ const securityHeaders = [
       "object-src 'none'",
       "script-src 'self' 'unsafe-inline' https://unpkg.com https://static.cloudflareinsights.com",
       "style-src 'self' 'unsafe-inline' https://unpkg.com",
-      "img-src 'self' data: blob: https://*.openstreetmap.org https://sibaristica.com https://thb.tildacdn.com https://static.tildacdn.com https://spb.restoran.ru https://back.b.devtwin.multikey.studio https://img.restoclub.ru https://www.xtremespots.com https://pr6.zoon.ru https://p2.zoon.ru https://maps.climbingpro.ru https://spb.lazertag-portal.ru https://laser-battle.ru https://sportishka.com https://media.kudago.com https://tennis-play.com",
+      "img-src 'self' data: blob: https://*.openstreetmap.org https://sibaristica.com https://thb.tildacdn.com https://static.tildacdn.com https://spb.restoran.ru https://back.b.devtwin.multikey.studio https://img.restoclub.ru https://www.xtremespots.com https://pr6.zoon.ru https://p2.zoon.ru https://maps.climbingpro.ru https://spb.lazertag-portal.ru https://laser-battle.ru https://sportishka.com https://media.kudago.com https://tennis-play.com https://scdn.tomesto.ru https://ovvy.ru https://static.sobaka.ru https://chef.ru https://cdnstatic.rg.ru https://www.atorus.ru https://4traveler.me",
       "font-src 'self' data:",
       "connect-src 'self' https://api.open-meteo.com https://*.openstreetmap.org https://unpkg.com https://cloudflareinsights.com https://router.project-osrm.org",
       "worker-src 'self' blob:",
