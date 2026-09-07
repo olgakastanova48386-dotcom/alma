@@ -1,11 +1,8 @@
 import { Suspense, type ReactNode } from "react";
-import MapDirectSearch from "@/components/MapDirectSearch";
 
 export default function MapLayout({ children }: { children: ReactNode }) {
   return (
     <div className="relative">
-      <MapDirectSearch />
-
       <Suspense
         fallback={
           <main className="min-h-screen bg-[#f7f4ef] pt-28 sm:pt-32 pb-10">
@@ -13,7 +10,7 @@ export default function MapLayout({ children }: { children: ReactNode }) {
               <div className="min-h-[560px] lg:min-h-[760px] rounded-[28px] bg-[#ebe8e3] border border-black/5 shadow-sm flex items-center justify-center">
                 <div className="text-center">
                   <div className="mx-auto w-10 h-10 rounded-full border-2 border-black/15 border-t-black animate-spin" />
-                  <p className="mt-4 text-sm text-neutral-500">Загружаем карту…</p>
+                  <p className="mt-4 text-sm text-neutral-500">Загружаем места…</p>
                 </div>
               </div>
             </div>
