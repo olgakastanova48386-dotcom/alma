@@ -60,7 +60,10 @@ export default function UnifiedMap() {
       l.dataset.leafletCss = "true";
       document.head.appendChild(l);
     }
-    if (window.L) return setReady(true);
+    if (window.L) {
+      queueMicrotask(() => setReady(true));
+      return;
+    }
     const old = document.querySelector('script[data-leaflet-js="true"]') as HTMLScriptElement | null;
     if (old) {
       old.addEventListener("load", () => setReady(true));
