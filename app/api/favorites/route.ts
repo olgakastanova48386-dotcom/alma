@@ -1,17 +1,21 @@
 import { NextResponse } from "next/server";
 import { authDb, getCurrentUser } from "@/lib/auth";
 
+type AuthUser = { id: string };
+type FavoriteRow = { place_id: number | string };
+
 export async function GET(request: Request) {
-  const user = await getCurrentUser(request) as any;
+  const user = await getCurrentUser(request) as AuthUser | null;
   if (!user) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
 
   const result = await authDb().prepare("SELECT place_id FROM favorites WHERE user_id = ? ORDER BY created_at DESC").bind(user.id).all();
-  const ids = (result?.results || []).map((row: any) => Number(row.place_id)).filter(Number.isFinite);
+  const rows = (result?.results || []) as FavoriteRow[];
+  const ids = rows.map((row) => Number(row.place_id)).filter(Number.isFinite);
   return NextResponse.json({ ids });
 }
 
 export async function POST(request: Request) {
-  const user = await getCurrentUser(request) as any;
+  const user = await getCurrentUser(request) as AuthUser | null;
   if (!user) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
 
   const body = await request.json().catch(() => ({}));
@@ -27,7 +31,7 @@ export async function POST(request: Request) {
 }
 
 export async function DELETE(request: Request) {
-  const user = await getCurrentUser(request) as any;
+  const user = await getCurrentUser(request) as AuthUser | null;
   if (!user) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
 
   const body = await request.json().catch(() => ({}));
