@@ -104,10 +104,19 @@ function smartTransit(a:PurchasedRouteStop,b:PurchasedRouteStop):TransitPlan{
   return{mode:"bus",minutes:Math.max(20,Math.round(walk*0.6)),title:"Наземный транспорт удобнее",details:["ALMA не отправляет тебя на длинную пешую прогулку.","Для этой пары точек покажем ближайший прямой автобус после проверки маршрута."]};
 }
 
+const venuePhotos:Record<string,string>={
+  "duo gastrobar":"https://s1.afisha.ru/mediastorage/75/0e/0a75e9f6ae0f470a911299150e75.jpg",
+  "birch":"https://s4.afisha.ru/mediastorage/ab/a9/a6fb400faaed4eaa96118a50a9ab.jpg",
+  "joli":"https://nordwest.wheretoeat.ru/upload/resize_cache/iblock/c56/1342_558_1/3azu6zy8qfgcuy90ouiz98vbsbk4invf.jpeg",
+  "банщики":"https://static.sobaka.ru/images/post/00/05/55/00/_huge.jpg?v=1488892314",
+  "mario trattoria":"https://img.restoclub.ru/uploads/place/7/2/7/2/72723f5f584df695bae5271aa9c5c702_w1200_h630.webp",
+  "eli-shumeli":"https://s.restorating.ru/w/1024x768/galleries/87380/None-136678.jpg",
+  "salone pasta&bar":"https://wheretoeat.ru/upload/resize_cache/iblock/19b/1342_558_1/v4qeywbv4ougrb3yf5w9ho4nxydz2rie.jpg",
+};
+
 function visualFor(place:PurchasedRouteStop){
   if(place.image)return place.image;
-  if(place.name.toLowerCase()==="birch")return"https://img.restoclub.ru/uploads/place/f/c/7/c/fc7c964416cae41eb1bfda597e9f3421_w1230_h820--no-cut.webp?v=3";
-  return null;
+  return venuePhotos[place.name.toLowerCase()]??null;
 }
 
 export default function PurchasedRouteStory({stops,romantic=false,onReset}:{stops:PurchasedRouteStop[];romantic?:boolean;onReset:()=>void}){
