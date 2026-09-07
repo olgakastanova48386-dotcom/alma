@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Geist, Geist_Mono } from "next/font/google";
 import Header from "@/components/Header";
 import DogFriendlyMapEnhancer from "@/components/DogFriendlyMapEnhancer";
@@ -26,6 +27,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const analyticsToken = process.env.NEXT_PUBLIC_CF_WEB_ANALYTICS_TOKEN;
+
   return (
     <html
       lang="ru"
@@ -36,6 +39,15 @@ export default function RootLayout({
         <DogFriendlyMapEnhancer />
         <div className="flex-1">{children}</div>
         <LegalFooter />
+        {analyticsToken ? (
+          <Script
+            id="cloudflare-web-analytics"
+            src="https://static.cloudflareinsights.com/beacon.min.js"
+            type="module"
+            strategy="afterInteractive"
+            data-cf-beacon={JSON.stringify({ token: analyticsToken })}
+          />
+        ) : null}
       </body>
     </html>
   );
