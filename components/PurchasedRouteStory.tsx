@@ -79,28 +79,23 @@ function busNumber(a:PurchasedRouteStop,b:PurchasedRouteStop){
 function smartTransit(a:PurchasedRouteStop,b:PurchasedRouteStop):TransitPlan{
   const walk=walkMinutes(a,b);
   if(walk<=20)return{mode:"walk",minutes:walk,title:`Пешком · ≈ ${walk} мин`,details:["Это самый простой вариант — без ожидания транспорта и пересадок."]};
-
   const from=nearestMetro(a),to=nearestMetro(b);
   const toFrom=walkMinutes(a,from),fromTo=walkMinutes(b,to);
   const sameStation=from.name===to.name;
   const sameLine=from.line===to.line;
   const metroRide=Math.max(5,Math.round(kmBetween(from,to)/0.55*2.2));
   const metroTotal=toFrom+fromTo+metroRide+5+(sameLine?0:6);
-
   if(!sameStation&&toFrom<=12&&fromTo<=12&&metroTotal<=walk-6){
     return{mode:"metro",minutes:metroTotal,title:`Лучше всего: метро · ≈ ${metroTotal} мин`,details:[`${toFrom} мин пешком → ${from.name}`,`${from.line}${sameLine?"":" · 1 пересадка"}`,`${to.name} → ${fromTo} мин пешком до следующей точки`]};
   }
-
   const bus=busNumber(a,b);
   if(bus){
     const total=Math.max(18,Math.round(walk*0.55));
     return{mode:"bus",minutes:total,title:`Лучше всего: автобус №${bus} · ≈ ${total} мин`,details:["Без лишнего спуска в метро", "ALMA выбирает наземный вариант, потому что здесь он удобнее пешего пути и метро."]};
   }
-
   if(!sameStation&&toFrom<=15&&fromTo<=15){
     return{mode:"metro",minutes:metroTotal,title:`Метро · ≈ ${metroTotal} мин`,details:[`${toFrom} мин пешком → ${from.name}`,`${from.line}${sameLine?"":" · с пересадкой"}`,`${to.name} → ${fromTo} мин пешком`]};
   }
-
   return{mode:"bus",minutes:Math.max(20,Math.round(walk*0.6)),title:"Наземный транспорт удобнее",details:["ALMA не отправляет тебя на длинную пешую прогулку.","Для этой пары точек покажем ближайший прямой автобус после проверки маршрута."]};
 }
 
@@ -128,9 +123,26 @@ export default function PurchasedRouteStory({stops,romantic=false,onReset}:{stop
   const [guest,setGuest]=useState("");
   const [date,setDate]=useState("");
   const [time,setTime]=useState("");
+  const [photoPlaceId,setPhotoPlaceId]=useState<number>(()=>stops[0]?.mapPlaceId??stops[0]?.id??0);
+  const [uploading,setUploading]=useState(false);
+  const [photoMessage,setPhotoMessage]=useState("");
   const transitions=useMemo(()=>stops.slice(0,-1).map((p,i)=>smartTransit(p,stops[i+1])),[stops]);
   const routeText=useMemo(()=>stops.map((p,i)=>`${i+1}. ${p.name} · ${stayTime(p)}${transitions[i]?`\n${transitions[i].title}`:""}`).join("\n\n"),[stops,transitions]);
   const shareRoute=async()=>{try{if(navigator.share)await navigator.share({title:"Мой маршрут ALMA",text:routeText,url:location.href});else await navigator.clipboard.writeText(location.href);setRouteShared(true);setTimeout(()=>setRouteShared(false),1800)}catch{}};
+  const uploadPhoto=async(file?:File)=>{
+    if(!file)return;
+    const place=stops.find(p=>(p.mapPlaceId??p.id)===photoPlaceId);
+    if(!place)return;
+    setUploading(true);setPhotoMessage("");
+    try{
+      const form=new FormData();
+      form.append("file",file);form.append("placeId",String(photoPlaceId));form.append("placeName",place.name);
+      const res=await fetch("/api/route-photos",{method:"POST",body:form});
+      const data=await res.json();
+      if(!res.ok)throw new Error(data.error||"Не удалось отправить фото.");
+      setPhotoMessage("Фото отправлено на проверку ✓ После одобрения оно сможет появиться в ALMA.");
+    }catch(e:any){setPhotoMessage(e?.message||"Не удалось отправить фото.");}finally{setUploading(false)}
+  };
 
   return <div className="alma-purchased-route mt-9 overflow-hidden rounded-[38px] bg-[#f3eee6] border border-black/5">
     <header className="p-7 sm:p-10 lg:p-12 border-b border-black/5">
@@ -139,6 +151,23 @@ export default function PurchasedRouteStory({stops,romantic=false,onReset}:{stop
         <button onClick={onReset} className="rounded-full bg-white border border-black/10 px-5 py-3 text-sm">Новый маршрут</button>
       </div>
     </header>
+
+    <section className="m-5 sm:m-10 rounded-[28px] bg-[#dcebdc] p-5 sm:p-7 border border-black/5">
+      <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-5">
+        <div><p className="text-xs uppercase tracking-[.18em] text-neutral-500">Сделай ALMA живой</p><h4 className="mt-2 text-2xl sm:text-3xl font-bold">Добавить фоточки в маршрут</h4><p className="mt-2 max-w-2xl text-sm leading-6 text-neutral-600">Выбери точку и загрузи своё фото. Мы сначала проверим, что на снимке действительно это место и что фотографию можно показывать другим.</p></div>
+        <div className="flex flex-col sm:flex-row gap-2 sm:items-center">
+          <select value={photoPlaceId} onChange={e=>setPhotoPlaceId(Number(e.target.value))} className="min-h-12 rounded-full bg-white px-4 py-3 text-sm border border-black/10">
+            {stops.map(p=><option key={p.id} value={p.mapPlaceId??p.id}>{p.name}</option>)}
+          </select>
+          <label className={`min-h-12 inline-flex items-center justify-center rounded-full bg-black text-white px-5 py-3 text-sm font-semibold cursor-pointer ${uploading?"opacity-50 pointer-events-none":""}`}>
+            {uploading?"Отправляю…":"＋ Выбрать фото"}
+            <input type="file" accept="image/jpeg,image/png,image/webp" className="hidden" onChange={e=>{const file=e.target.files?.[0];uploadPhoto(file);e.currentTarget.value=""}} />
+          </label>
+        </div>
+      </div>
+      <p className="mt-3 text-xs text-neutral-500">JPG, PNG или WEBP · до 1,5 МБ · публикация только после проверки.</p>
+      {photoMessage&&<p className="mt-3 rounded-2xl bg-white/70 px-4 py-3 text-sm">{photoMessage}</p>}
+    </section>
 
     <div className="relative px-5 sm:px-10 lg:px-14 py-10 sm:py-14"><div className="absolute left-[42px] sm:left-1/2 top-10 bottom-10 w-px bg-black/15"/>
       {stops.map((place,i)=>{const reverse=i%2===1,plan=transitions[i],fact=facts[place.name.toLowerCase()],visual=visualFor(place);return <div key={`${place.category}-${place.id}`} className="relative mb-3 last:mb-0">
