@@ -31,11 +31,11 @@ export default function CollectionsPage() {
       href: "/coffee",
     },
     {
-      emoji: "🌇",
-      title: "Красивый закат",
-      places: "6 мест",
-      color: "bg-sky-100",
-      href: null,
+      emoji: "🍽️",
+      title: "Рестораны 4,5–5,0",
+      places: "10 проверенных мест",
+      color: "bg-red-100",
+      href: "/restaurants",
     },
     {
       emoji: "🍷",
