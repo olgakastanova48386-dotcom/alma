@@ -74,6 +74,12 @@ select:-webkit-autofill {
     font-size: 16px;
   }
 
+  /* Keep the three hero CTA labels compact on phones.
+     This intentionally overrides the generic 16px mobile button rule above. */
+  main > section:first-child button {
+    font-size: 11px !important;
+  }
+
   .safe-area-mobile-nav {
     bottom: calc(12px + env(safe-area-inset-bottom));
   }
