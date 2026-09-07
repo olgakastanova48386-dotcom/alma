@@ -10,11 +10,11 @@ export default function Header() {
           </Link>
 
           <nav className="hidden md:flex items-center gap-5 lg:gap-7 text-sm md:text-base text-gray-600">
-            <Link href="/map" className="font-semibold text-black hover:opacity-60 transition">
-              Карта
-            </Link>
             <Link href="/" className="hover:text-black transition">
               Главная
+            </Link>
+            <Link href="/map" className="font-semibold text-black hover:opacity-60 transition">
+              Карта
             </Link>
             <Link href="/dog-friendly" className="hover:text-black transition">
               🐾 С собакой
