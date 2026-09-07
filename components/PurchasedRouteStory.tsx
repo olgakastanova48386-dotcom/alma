@@ -109,8 +109,11 @@ const venuePhotos:Record<string,string>={
   "birch":"https://s4.afisha.ru/mediastorage/ab/a9/a6fb400faaed4eaa96118a50a9ab.jpg",
   "joli":"https://nordwest.wheretoeat.ru/upload/resize_cache/iblock/c56/1342_558_1/3azu6zy8qfgcuy90ouiz98vbsbk4invf.jpeg",
   "банщики":"https://static.sobaka.ru/images/post/00/05/55/00/_huge.jpg?v=1488892314",
+  "koza strekoza":"https://koza.family/wp-content/uploads/2026/08/img_8648.webp",
   "mario trattoria":"https://img.restoclub.ru/uploads/place/7/2/7/2/72723f5f584df695bae5271aa9c5c702_w1200_h630.webp",
   "eli-shumeli":"https://s.restorating.ru/w/1024x768/galleries/87380/None-136678.jpg",
+  "ресторан 995":"https://995.rest/wp-content/uploads/2025/10/DSC_3388-scaled.jpg",
+  "tillander":"https://img.restoclub.ru/uploads/place/9/e/d/3/9ed3327a7ce2ddf46c3d771e12ba91d2_w1230_h820--no-cut.webp",
   "salone pasta&bar":"https://wheretoeat.ru/upload/resize_cache/iblock/19b/1342_558_1/v4qeywbv4ougrb3yf5w9ho4nxydz2rie.jpg",
 };
 
