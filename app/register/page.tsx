@@ -1,12 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { FormEvent, useState } from "react";
+import { FormEvent, Suspense, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
 type Gender = "female" | "male" | "unspecified";
 
-export default function RegisterPage() {
+function RegisterContent() {
   const params = useSearchParams();
   const next = params.get("next") || "/";
   const product = params.get("product");
@@ -89,4 +89,8 @@ export default function RegisterPage() {
       </div>
     </main>
   );
+}
+
+export default function RegisterPage() {
+  return <Suspense fallback={<main className="min-h-screen bg-[#f7f4ef]"/>}><RegisterContent/></Suspense>;
 }
