@@ -1,40 +1,48 @@
-﻿export default function CollectionsPage() {
+import Link from "next/link";
+
+export default function CollectionsPage() {
   const collections = [
     {
       emoji: "❤️",
       title: "Для свидания",
       places: "7 мест",
       color: "bg-pink-100",
+      href: null,
     },
     {
       emoji: "🌿",
       title: "Перезагрузиться",
       places: "5 мест",
       color: "bg-green-100",
+      href: null,
     },
     {
       emoji: "🎉",
       title: "Для компании",
       places: "10 мест",
       color: "bg-orange-100",
+      href: null,
     },
     {
       emoji: "☕",
-      title: "Уютные кофейни",
-      places: "12 мест",
+      title: "Кофейни 4,5–5,0",
+      places: "10 проверенных мест",
       color: "bg-amber-100",
+      href: "/coffee",
     },
     {
       emoji: "🌇",
       title: "Красивый закат",
       places: "6 мест",
       color: "bg-sky-100",
+      href: null,
     },
     {
       emoji: "🍷",
       title: "Вечерние бары",
       places: "9 мест",
       color: "bg-violet-100",
+      href: null,
     },
   ];
 
@@ -69,11 +77,22 @@
                 {collection.places}
               </p>
 
-              <button
-                className="mt-8 rounded-full bg-black text-white px-6 py-3 hover:scale-105 transition"
-              >
-                Смотреть →
-              </button>
+              {collection.href ? (
+                <Link
+                  href={collection.href}
+                  className="inline-flex mt-8 rounded-full bg-black text-white px-6 py-3 hover:scale-105 transition"
+                >
+                  Смотреть →
+                </Link>
+              ) : (
+                <button
+                  type="button"
+                  className="mt-8 rounded-full bg-black text-white px-6 py-3 opacity-40 cursor-default"
+                  aria-disabled="true"
+                >
+                  Скоро →
+                </button>
+              )}
             </div>
           ))}
         </div>
