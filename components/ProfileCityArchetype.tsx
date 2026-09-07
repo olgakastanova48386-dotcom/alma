@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 
 type ArchetypeKey = "romantic" | "aesthete" | "explorer" | "hedonist";
 
@@ -79,12 +79,11 @@ const STORAGE_KEY = "alma_city_archetype";
 export default function ProfileCityArchetype() {
   const [step, setStep] = useState(0);
   const [scores, setScores] = useState<Record<ArchetypeKey, number>>({ romantic: 0, aesthete: 0, explorer: 0, hedonist: 0 });
-  const [result, setResult] = useState<ArchetypeKey | null>(null);
-
-  useEffect(() => {
+  const [result, setResult] = useState<ArchetypeKey | null>(() => {
+    if (typeof window === "undefined") return null;
     const saved = window.localStorage.getItem(STORAGE_KEY) as ArchetypeKey | null;
-    if (saved && archetypes[saved]) setResult(saved);
-  }, []);
+    return saved && archetypes[saved] ? saved : null;
+  });
 
   const current = questions[step];
   const resultData = useMemo(() => result ? archetypes[result] : null, [result]);
