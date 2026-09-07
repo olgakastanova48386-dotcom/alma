@@ -17,31 +17,37 @@ export default function MapSearchEnhancer() {
       return;
     }
 
-    let wrapper: HTMLDivElement | null = null;
-    let foundPill: HTMLElement | null = null;
-    let originalParent: HTMLElement | null = null;
+    let portalHost: HTMLDivElement | null = null;
 
     const mount = () => {
-      const candidates = Array.from(document.querySelectorAll("div"));
+      if (portalHost?.isConnected) return;
+
+      const candidates = Array.from(document.querySelectorAll<HTMLElement>("div"));
       const pill = candidates.find((element) => {
         const text = element.textContent?.replace(/\s+/g, " ").trim() ?? "";
-        return text.startsWith("Найдено:") && element.className.toString().includes("rounded-full");
-      }) as HTMLElement | undefined;
+        const classes = typeof element.className === "string" ? element.className : "";
 
-      if (!pill || pill.dataset.almaSearchMounted === "true") return;
+        return text.startsWith("Найдено:") && classes.includes("rounded-full");
+      });
 
-      originalParent = pill.parentElement;
-      if (!originalParent) return;
+      if (!pill || !pill.parentElement) return;
 
-      wrapper = document.createElement("div");
-      wrapper.className = "relative flex flex-col sm:flex-row items-stretch sm:items-center gap-2 self-start lg:self-auto";
-      wrapper.dataset.almaSearchWrapper = "true";
+      const existingHost = document.querySelector<HTMLDivElement>(
+        '[data-alma-map-search-host="true"]'
+      );
 
-      originalParent.insertBefore(wrapper, pill);
-      wrapper.appendChild(pill);
-      pill.dataset.almaSearchMounted = "true";
-      foundPill = pill;
-      setTarget(wrapper);
+      if (existingHost) {
+        portalHost = existingHost;
+        setTarget(existingHost);
+        return;
+      }
+
+      portalHost = document.createElement("div");
+      portalHost.dataset.almaMapSearchHost = "true";
+      portalHost.className = "relative self-start lg:self-auto lg:ml-auto";
+
+      pill.parentElement.insertBefore(portalHost, pill);
+      setTarget(portalHost);
     };
 
     mount();
@@ -53,13 +59,8 @@ export default function MapSearchEnhancer() {
       observer.disconnect();
       setTarget(null);
 
-      if (foundPill) {
-        delete foundPill.dataset.almaSearchMounted;
-      }
-
-      if (wrapper && originalParent && foundPill && wrapper.parentElement === originalParent) {
-        originalParent.insertBefore(foundPill, wrapper);
-        wrapper.remove();
+      if (portalHost?.isConnected) {
+        portalHost.remove();
       }
     };
   }, [pathname]);
@@ -81,53 +82,61 @@ export default function MapSearchEnhancer() {
   if (!target) return null;
 
   return createPortal(
-    <>
-      <div className="relative order-first sm:order-none min-w-[230px]">
-        <div className="flex items-center rounded-full bg-white border border-black/5 shadow-sm px-4 py-2.5">
-          <span className="text-neutral-400 mr-2" aria-hidden="true">⌕</span>
-          <input
-            value={query}
-            onChange={(event) => setQuery(event.target.value)}
-            placeholder="Найти место…"
-            aria-label="Поиск места на карте"
-            className="w-full bg-transparent outline-none text-sm text-black placeholder:text-neutral-400"
-          />
-          {query && (
-            <button
-              type="button"
-              onClick={() => setQuery("")}
-              className="ml-2 text-neutral-400 hover:text-black transition"
-              aria-label="Очистить поиск"
-            >
-              ×
-            </button>
-          )}
-        </div>
+    <div className="relative w-[260px] max-w-[72vw]">
+      <div className="flex items-center rounded-full bg-white border border-black/5 shadow-sm px-4 py-2.5">
+        <span className="mr-2 text-neutral-400" aria-hidden="true">
+          ⌕
+        </span>
+
+        <input
+          value={query}
+          onChange={(event) => setQuery(event.target.value)}
+          placeholder="Найти место…"
+          aria-label="Поиск места на карте"
+          className="min-w-0 flex-1 bg-transparent outline-none text-sm text-black placeholder:text-neutral-400"
+        />
 
         {query && (
-          <div className="absolute z-[10000] right-0 left-0 mt-2 overflow-hidden rounded-[20px] bg-white border border-black/5 shadow-xl">
-            {results.length ? (
-              results.map((place) => (
-                <button
-                  type="button"
-                  key={place.id}
-                  onClick={() => {
-                    setQuery("");
-                    router.push(`/map?place=${place.id}`);
-                  }}
-                  className="w-full text-left px-4 py-3 hover:bg-[#f7f4ef] transition border-b border-black/5 last:border-b-0"
-                >
-                  <span className="block font-medium text-sm text-black">{place.name}</span>
-                  <span className="block mt-0.5 text-xs text-neutral-500">{place.category} · {place.address}</span>
-                </button>
-              ))
-            ) : (
-              <div className="px-4 py-4 text-sm text-neutral-500">Ничего не найдено</div>
-            )}
-          </div>
+          <button
+            type="button"
+            onClick={() => setQuery("")}
+            className="ml-2 text-neutral-400 hover:text-black transition"
+            aria-label="Очистить поиск"
+          >
+            ×
+          </button>
         )}
       </div>
-    </>,
+
+      {query && (
+        <div className="absolute z-[10000] right-0 left-0 mt-2 overflow-hidden rounded-[20px] bg-white border border-black/5 shadow-xl">
+          {results.length ? (
+            results.map((place) => (
+              <button
+                type="button"
+                key={place.id}
+                onClick={() => {
+                  setQuery("");
+                  router.push(`/map?place=${place.id}`);
+                }}
+                className="w-full text-left px-4 py-3 hover:bg-[#f7f4ef] transition border-b border-black/5 last:border-b-0"
+              >
+                <span className="block font-medium text-sm text-black">
+                  {place.name}
+                </span>
+                <span className="block mt-0.5 text-xs text-neutral-500 line-clamp-2">
+                  {place.category} · {place.address}
+                </span>
+              </button>
+            ))
+          ) : (
+            <div className="px-4 py-4 text-sm text-neutral-500">
+              Ничего не найдено
+            </div>
+          )}
+        </div>
+      )}
+    </div>,
     target
   );
 }
