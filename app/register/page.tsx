@@ -2,13 +2,12 @@
 
 import Link from "next/link";
 import { FormEvent, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 type Gender = "female" | "male" | "unspecified";
 
 export default function RegisterPage() {
   const params = useSearchParams();
-  const router = useRouter();
   const next = params.get("next") || "/";
   const product = params.get("product");
   const isRoutePurchase = product === "route-199";
@@ -38,16 +37,15 @@ export default function RegisterPage() {
     try {
       const response = await fetch("/api/auth/register", {
         method: "POST",
+        credentials: "include",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, phone, gender, password, consent, marketingSms })
       });
       const data = await response.json();
       if (!response.ok) throw new Error(data.error || "Не удалось создать аккаунт.");
-      router.replace(destination);
-      router.refresh();
+      window.location.assign(destination);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Не удалось создать аккаунт.");
-    } finally {
       setLoading(false);
     }
   }
