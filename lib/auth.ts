@@ -36,6 +36,13 @@ export async function ensureAuthSchema() {
       PRIMARY KEY(user_id, place_id),
       FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
     )`),
+    database.prepare(`CREATE TABLE IF NOT EXISTS auth_rate_limits (
+      scope TEXT NOT NULL,
+      subject_hash TEXT NOT NULL,
+      window_started_at INTEGER NOT NULL,
+      hits INTEGER NOT NULL DEFAULT 0,
+      PRIMARY KEY(scope, subject_hash)
+    )`),
     database.prepare("CREATE INDEX IF NOT EXISTS idx_sessions_user_id ON sessions(user_id)"),
     database.prepare("CREATE INDEX IF NOT EXISTS idx_sessions_expires_at ON sessions(expires_at)"),
     database.prepare("CREATE INDEX IF NOT EXISTS idx_favorites_user_id ON favorites(user_id)")
@@ -59,6 +66,11 @@ function hexToBytes(hex: string) {
   return bytes;
 }
 
+async function sha256(value: string) {
+  const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(value));
+  return bytesToHex(new Uint8Array(digest));
+}
+
 export async function hashPassword(password: string, saltHex?: string) {
   const salt = saltHex ? hexToBytes(saltHex) : crypto.getRandomValues(new Uint8Array(16));
   const key = await crypto.subtle.importKey("raw", new TextEncoder().encode(password), "PBKDF2", false, ["deriveBits"]);
@@ -75,14 +87,35 @@ export async function verifyPassword(password: string, salt: string, expectedHas
 }
 
 async function hashSessionToken(token: string) {
-  const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(token));
-  return bytesToHex(new Uint8Array(digest));
+  return sha256(token);
+}
+
+export async function consumeAuthRateLimit(request: Request, scope: string, limit: number, windowSeconds: number) {
+  const ip = request.headers.get("cf-connecting-ip") || request.headers.get("x-real-ip") || "";
+  if (!ip) return { allowed: true, retryAfter: 0 };
+  const subjectHash = await sha256(ip);
+  const now = Math.floor(Date.now() / 1000);
+  const row = await db().prepare("SELECT window_started_at, hits FROM auth_rate_limits WHERE scope = ? AND subject_hash = ?")
+    .bind(scope, subjectHash).first();
+
+  if (!row || now - Number(row.window_started_at) >= windowSeconds) {
+    await db().prepare(`INSERT INTO auth_rate_limits (scope, subject_hash, window_started_at, hits) VALUES (?, ?, ?, 1)
+      ON CONFLICT(scope, subject_hash) DO UPDATE SET window_started_at = excluded.window_started_at, hits = 1`)
+      .bind(scope, subjectHash, now).run();
+    return { allowed: true, retryAfter: 0 };
+  }
+
+  const hits = Number(row.hits);
+  if (hits >= limit) return { allowed: false, retryAfter: Math.max(1, windowSeconds - (now - Number(row.window_started_at))) };
+  await db().prepare("UPDATE auth_rate_limits SET hits = hits + 1 WHERE scope = ? AND subject_hash = ?").bind(scope, subjectHash).run();
+  return { allowed: true, retryAfter: 0 };
 }
 
 export async function createSession(userId: string) {
   const raw = bytesToHex(crypto.getRandomValues(new Uint8Array(32)));
   const id = await hashSessionToken(raw);
   const now = Math.floor(Date.now() / 1000);
+  await db().prepare("DELETE FROM sessions WHERE expires_at <= ?").bind(now).run();
   await db().prepare("INSERT INTO sessions (id, user_id, created_at, expires_at) VALUES (?, ?, ?, ?)")
     .bind(id, userId, now, now + SESSION_MAX_AGE).run();
   return raw;
