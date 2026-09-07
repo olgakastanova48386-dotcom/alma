@@ -71,18 +71,21 @@ export default function Header() {
           </div>
 
           <nav className="md:hidden mt-2.5 flex items-center gap-1.5 overflow-x-auto pb-0.5 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            {mobileVisibleItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                aria-label={item.label}
-                title={item.label}
-                className={`flex shrink-0 items-center justify-center rounded-full bg-black/[.04] py-2 text-[12px] font-medium text-neutral-700 active:bg-black/[.08] ${item.href === "/map" ? "h-9 w-10 px-0" : "gap-1.5 px-3"}`}
-              >
-                {item.icon === "map" ? <MapIcon /> : <span className="text-sm leading-none">{item.icon}</span>}
-                {item.href !== "/map" && <span>{item.label}</span>}
-              </Link>
-            ))}
+            {mobileVisibleItems.map((item) => {
+              const iconOnly = item.href === "/map" || item.href === "/favorites";
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  aria-label={item.label}
+                  title={item.label}
+                  className={`flex shrink-0 items-center justify-center rounded-full bg-black/[.04] py-2 text-[12px] font-medium text-neutral-700 active:bg-black/[.08] ${iconOnly ? "h-9 w-10 px-0" : "gap-1.5 px-3"}`}
+                >
+                  {item.icon === "map" ? <MapIcon /> : <span className={`${item.href === "/favorites" ? "text-[18px]" : "text-sm"} leading-none`}>{item.icon}</span>}
+                  {!iconOnly && <span>{item.label}</span>}
+                </Link>
+              );
+            })}
           </nav>
         </div>
       </div>
