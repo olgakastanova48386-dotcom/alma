@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import ProfileCityArchetype from "@/components/ProfileCityArchetype";
 
 type User = {
   id: string;
@@ -75,8 +76,12 @@ export default function ProfilePage() {
             <Link href="/favorites" className="rounded-[22px] bg-[#f2eee7] px-5 py-5 hover:bg-[#ebe5dc] transition"><p className="text-sm text-neutral-500">Твои места</p><p className="mt-1 font-semibold text-lg">♡ Избранное</p></Link>
             <Link href="/surprise" className="rounded-[22px] bg-[#f2eee7] px-5 py-5 hover:bg-[#ebe5dc] transition"><p className="text-sm text-neutral-500">Новый план</p><p className="mt-1 font-semibold text-lg">✨ Удиви меня</p></Link>
           </div>
+        </div>
 
-          <div className="mt-8 border-t border-black/10 pt-6">
+        <ProfileCityArchetype />
+
+        <div className="mt-6 rounded-[34px] bg-white border border-black/5 shadow-sm p-7 sm:p-10">
+          <div className="border-t border-black/10 pt-6">
             <p className="text-xs uppercase tracking-[0.16em] text-neutral-400">Аккаунт</p>
             <p className="mt-3 text-sm text-neutral-500 leading-6">Сейчас вход работает по номеру телефона и паролю. Подтверждение номера и восстановление доступа добавим следующим этапом.</p>
             <button type="button" onClick={logout} disabled={loggingOut} className="mt-6 rounded-full border border-black/15 px-6 py-3 text-sm font-medium hover:bg-black hover:text-white transition disabled:opacity-50">{loggingOut ? "Выходим…" : "Выйти из аккаунта"}</button>
