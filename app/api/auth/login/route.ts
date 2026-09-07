@@ -5,22 +5,17 @@ export async function POST(request: Request) {
   try {
     await ensureAuthSchema();
     const rate = await consumeAuthRateLimit(request, "login", 10, 15 * 60);
-    if (!rate.allowed) {
-      return NextResponse.json({ error: "Слишком много попыток входа. Попробуйте позже." }, { status: 429, headers: { "Retry-After": String(rate.retryAfter) } });
-    }
+    if (!rate.allowed) return NextResponse.json({ error: "Слишком много попыток входа. Попробуйте позже." }, { status: 429, headers: { "Retry-After": String(rate.retryAfter) } });
 
     const body = await request.json();
     const phone = normalizePhone(String(body.phone || ""));
     const password = String(body.password || "");
 
-    if (!/^\+?[1-9]\d{9,14}$/.test(phone) || !password) {
-      return NextResponse.json({ error: "Проверьте номер телефона и пароль." }, { status: 400 });
-    }
+    if (!/^\+?[1-9]\d{9,14}$/.test(phone) || !password) return NextResponse.json({ error: "Проверьте номер телефона и пароль." }, { status: 400 });
 
-    const user = await authDb().prepare(`SELECT id, name, phone, gender, password_hash, password_salt FROM users WHERE phone = ?`).bind(phone).first();
-    if (!user || !(await verifyPassword(password, user.password_salt, user.password_hash))) {
-      return NextResponse.json({ error: "Неверный номер телефона или пароль." }, { status: 401 });
-    }
+    const user = await authDb().prepare(`SELECT id, name, phone, gender, password_hash, password_salt, phone_verified FROM users WHERE phone = ?`).bind(phone).first();
+    if (!user || !(await verifyPassword(password, user.password_salt, user.password_hash))) return NextResponse.json({ error: "Неверный номер телефона или пароль." }, { status: 401 });
+    if (Number(user.phone_verified) !== 1) return NextResponse.json({ error: "Сначала подтвердите номер телефона.", requiresVerification: true, phone }, { status: 403 });
 
     const token = await createSession(user.id);
     const response = NextResponse.json({ ok: true, user: { id: user.id, name: user.name, phone: user.phone, gender: user.gender } });
