@@ -26,6 +26,8 @@ export type MapPlace = {
   dogFriendly?: boolean;
 };
 
+const hasAlmaRating = (rating: number, scale = 5) => scale === 5 && rating >= 4.5 && rating <= 5;
+
 const basePlaces: MapPlace[] = editorialPlaces.map((place) => ({
   id: place.id,
   name: place.name,
@@ -45,53 +47,58 @@ const basePlaces: MapPlace[] = editorialPlaces.map((place) => ({
   dogFriendly: place.name === "Севкабель Порт",
 }));
 
-const coffeeMapPlaces: MapPlace[] = coffeePlaces.map((place, index) => ({
-  id: 1001 + index,
-  name: place.name,
-  category: "Кофейня",
-  mood: "Спокойно",
-  budget: place.priceNote ? "300–1500 ₽" : "До 1500 ₽",
-  company: ["Один", "Пара", "Друзья"],
-  duration: "До 1 часа",
-  image: place.image ?? "",
-  lat: place.lat,
-  lng: place.lng,
-  why: `★ ${place.rating.toFixed(1)} / 5 · ${place.ratingSource}`,
-  address: place.address,
-  price: place.priceNote ?? "Цена уточняется",
-  priceNote: "Кофе и напитки",
-  detailHref: "/coffee",
-  rating: place.rating,
-  ratingScale: 5,
-  ratingCount: place.ratingCount,
-  ratingSource: place.ratingSource,
-  dogFriendly: Boolean(place.dogFriendly),
-}));
+const coffeeMapPlaces: MapPlace[] = coffeePlaces
+  .filter((place) => hasAlmaRating(place.rating))
+  .map((place, index) => ({
+    id: 1001 + index,
+    name: place.name,
+    category: "Кофейня",
+    mood: "Спокойно",
+    budget: place.priceNote ? "300–1500 ₽" : "До 1500 ₽",
+    company: ["Один", "Пара", "Друзья"],
+    duration: "До 1 часа",
+    image: place.image ?? "",
+    lat: place.lat,
+    lng: place.lng,
+    why: `★ ${place.rating.toFixed(1)} / 5`,
+    address: place.address,
+    price: place.priceNote ?? "Цена уточняется",
+    priceNote: "Кофе и напитки",
+    detailHref: "/coffee",
+    rating: place.rating,
+    ratingScale: 5,
+    ratingCount: place.ratingCount,
+    ratingSource: place.ratingSource,
+    dogFriendly: Boolean(place.dogFriendly),
+  }));
 
-const restaurantMapPlaces: MapPlace[] = restaurantPlaces.map((place, index) => ({
-  id: 2001 + index,
-  name: place.name,
-  category: "Ресторан",
-  mood: "Вкусно поесть",
-  budget: place.averageBill ?? "1500–5000 ₽",
-  company: ["Пара", "Друзья", "Семья"],
-  duration: "1–2 часа",
-  image: "",
-  lat: place.lat,
-  lng: place.lng,
-  why: `★ ${place.rating.toFixed(1)} / 5 · ${place.ratingSource}`,
-  address: place.address,
-  price: place.averageBill ?? "Чек уточняется",
-  priceNote: "Средний чек",
-  detailHref: "/restaurants",
-  rating: place.rating,
-  ratingScale: 5,
-  ratingCount: place.ratingCount,
-  ratingSource: place.ratingSource,
-  dogFriendly: Boolean(place.dogFriendly),
-}));
+const restaurantMapPlaces: MapPlace[] = restaurantPlaces
+  .filter((place) => hasAlmaRating(place.rating))
+  .map((place, index) => ({
+    id: 2001 + index,
+    name: place.name,
+    category: "Ресторан",
+    mood: "Вкусно поесть",
+    budget: place.averageBill ?? "1500–5000 ₽",
+    company: ["Пара", "Друзья", "Семья"],
+    duration: "1–2 часа",
+    image: "",
+    lat: place.lat,
+    lng: place.lng,
+    why: `★ ${place.rating.toFixed(1)} / 5`,
+    address: place.address,
+    price: place.averageBill ?? "Чек уточняется",
+    priceNote: "Средний чек",
+    detailHref: "/restaurants",
+    rating: place.rating,
+    ratingScale: 5,
+    ratingCount: place.ratingCount,
+    ratingSource: place.ratingSource,
+    dogFriendly: Boolean(place.dogFriendly),
+  }));
 
 const dogMapPlaces: MapPlace[] = dogFriendlyPlaces
+  .filter((place) => hasAlmaRating(place.rating, place.ratingScale))
   .filter((dogPlace) => {
     const alreadyExists = [...basePlaces, ...coffeeMapPlaces, ...restaurantMapPlaces].some(
       (place) => place.name.toLowerCase() === dogPlace.name.toLowerCase()
@@ -109,15 +116,13 @@ const dogMapPlaces: MapPlace[] = dogFriendlyPlaces
     image: "",
     lat: place.lat,
     lng: place.lng,
-    why: place.rating
-      ? `🐾 Dog Friendly · ★ ${place.rating.toFixed(1)} / ${place.ratingScale ?? 5}`
-      : "🐾 Можно прийти с питомцем",
+    why: `🐾 Dog Friendly · ★ ${place.rating.toFixed(1)} / 5`,
     address: place.address,
     price: place.budget,
     priceNote: "Условия посещения",
     detailHref: "/dog-friendly",
     rating: place.rating,
-    ratingScale: place.ratingScale,
+    ratingScale: 5,
     ratingCount: place.ratingCount,
     ratingSource: place.ratingSource,
     dogFriendly: true,
