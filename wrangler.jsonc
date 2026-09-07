@@ -9,5 +9,5 @@
   "version_metadata": { "binding": "CF_VERSION_METADATA" },
   "images": { "binding": "IMAGES" },
   "kv_namespaces": [{ "binding": "VINEXT_KV_CACHE", "id": "916297b7f90841f380ef8a4f2459cd65" }],
-  "d1_databases": [{ "binding": "ALMA_DB", "database_name": "alma-auth" }]
+  "d1_databases": [{ "binding": "ALMA_DB" }]
 }
