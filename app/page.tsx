@@ -134,7 +134,7 @@ export default function HomePage() {
           <p className="mt-3 sm:mt-7 max-w-xl text-[15px] sm:text-xl leading-6 sm:leading-8 text-white/82 md:text-neutral-600">ALMA помогает находить места Петербурга по настроению, бюджету, компании и времени.</p>
           <div className="mt-4 sm:mt-9 grid grid-cols-3 gap-1.5 sm:flex sm:flex-wrap sm:gap-3">
             <button type="button" onClick={scrollToFilters} className="whitespace-nowrap rounded-full bg-white text-black md:bg-black md:text-white px-2 sm:px-7 py-2.5 sm:py-4 text-[11px] sm:text-base font-semibold hover:opacity-80 hover:scale-[1.02] transition">Найти место</button>
-            <button type="button" onClick={() => router.push("/surprise")} className="whitespace-nowrap rounded-full bg-black/55 md:bg-white/80 backdrop-blur-md border border-white/25 md:border-black/10 text-white md:text-black px-2 sm:px-7 py-2.5 sm:py-4 text-[11px] sm:text-base font-medium hover:scale-[1.02] transition shadow-sm">✦ Удиви меня</button>
+            <button type="button" onClick={() => router.push("/surprise")} className="whitespace-nowrap rounded-full bg-black/55 md:bg-white/80 backdrop-blur-md border border-white/25 md:border-black/10 text-white md:text-black px-2 sm:px-7 py-2.5 sm:py-4 text-[11px] sm:text-base font-medium hover:scale-[1.02] transition shadow-sm">✦ Готовый план</button>
             <button type="button" onClick={scrollToPhotozones} className="whitespace-nowrap rounded-full bg-black/55 md:bg-white/80 backdrop-blur-md border border-white/25 md:border-black/10 text-white md:text-black px-2 sm:px-7 py-2.5 sm:py-4 text-[11px] sm:text-base font-medium hover:scale-[1.02] transition shadow-sm">📸 Фотозоны</button>
           </div>
         </div></div>
