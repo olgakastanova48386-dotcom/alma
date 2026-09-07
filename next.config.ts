@@ -11,7 +11,7 @@ const securityHeaders = [
       "object-src 'none'",
       "script-src 'self' 'unsafe-inline' https://unpkg.com",
       "style-src 'self' 'unsafe-inline' https://unpkg.com",
-      "img-src 'self' data: blob: https://*.openstreetmap.org",
+      "img-src 'self' data: blob: https://*.openstreetmap.org https://sibaristica.com",
       "font-src 'self' data:",
       "connect-src 'self' https://api.open-meteo.com https://*.openstreetmap.org https://unpkg.com",
       "worker-src 'self' blob:",
