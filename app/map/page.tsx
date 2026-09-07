@@ -8,7 +8,7 @@ import { drivePlaces } from "@/data/drivePlaces";
 const verified = (rating: number) => rating >= 4.5 && rating <= 5;
 
 const collections = [
-  { emoji: "⚡", title: "Драйв", subtitle: `${drivePlaces.filter((place) => verified(place.rating)).length} мест · матчи, рок, живая музыка`, href: "/map?category=drive" },
+  { emoji: "⚡", title: "Драйв", subtitle: "Активный отдых", href: "/map?category=drive" },
   { emoji: "☕", title: "Кофейни 4,5–5,0", subtitle: `${coffeePlaces.filter((place) => verified(place.rating)).length} проверенных мест`, href: "/coffee" },
   { emoji: "🍽️", title: "Рестораны 4,5–5,0", subtitle: `${restaurantPlaces.filter((place) => verified(place.rating)).length} проверенных мест`, href: "/restaurants" },
   { emoji: "🐾", title: "С собакой", subtitle: `${dogFriendlyPlaces.filter((place) => place.ratingScale === 5 && verified(place.rating)).length} проверенных мест`, href: "/dog-friendly" },
