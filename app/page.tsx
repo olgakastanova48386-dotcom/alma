@@ -22,6 +22,8 @@ const places = [
 const photozones = [
   { title: "Поцелуев мост", tag: "Романтика", image: "/images/kisses-bridge.jpg", time: "Перед закатом" },
   { title: "Исаакиевская площадь", tag: "Архитектура", image: "/images/isaac.jpg", time: "Утро · золотой час" },
+  { title: "Фотокиоск", tag: "Необычный Петербург", image: "/images/фотокиоск.jpg", time: "Днём · мягкий свет" },
+  { title: "Ракета · Кожевенная линия, 27", tag: "Индустриальная эстетика", image: "/images/падл адрес ракета кожевенная линия, 27.jpg", time: "Вечер · перед закатом" },
   { title: "Новая Голландия", tag: "Городская эстетика", image: "/images/new-holland.jpg", time: "После 16:00" },
   { title: "Академия Штиглица", tag: "Детали", image: "/images/shtiglitz.jpg", time: "Днём" },
 ];
