@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { mapPlaces, type MapPlace } from "@/data/mapPlaces";
 import MapDirectSearch from "@/components/MapDirectSearch";
@@ -9,6 +8,7 @@ import MapDirectSearch from "@/components/MapDirectSearch";
 declare global { interface Window { L: any; almaRouteTo?: (id: number) => void; } }
 
 function emoji(place: MapPlace) {
+  if (place.driveTags?.includes("Активный отдых")) return "🏎️";
   if (place.drive) return "⚡";
   if (place.babyCare) return "👶";
   if (place.dogFriendly) return "🐾";
@@ -34,7 +34,7 @@ export default function UnifiedMap() {
   const [routeStatus, setRouteStatus] = useState("");
 
   const categories = ["Все", "Кофейня", "Ресторан", "Dog Friendly", "👶 Для малыша", "⚡ Драйв", "Другие места"];
-  const driveTags = ["Все", "Матчи", "Живая музыка", "Рок", "С друзьями"];
+  const driveTags = ["Все", "Активный отдых", "Матчи", "Живая музыка", "Рок", "С друзьями"];
   const placeId = params.get("place");
 
   const filtered = useMemo(() => mapPlaces.filter((p) => {
@@ -156,7 +156,7 @@ export default function UnifiedMap() {
 
       {category === "👶 Для малыша" && <div className="mb-4 rounded-[18px] bg-[#efe5d7] p-3.5 sm:mb-5 sm:rounded-[24px] sm:p-5"><p className="text-[11px] uppercase tracking-[.16em] text-neutral-500">ALMA · Для малыша</p><p className="mt-1 text-[15px] leading-5 text-neutral-700 sm:text-sm">Показываем только подтверждённые удобства: пеленальный столик, комнату матери и ребёнка или отдельную детскую комнату.</p></div>}
 
-      {category === "⚡ Драйв" && <div className="mb-4 rounded-[18px] bg-black px-3.5 py-3 text-white sm:mb-5 sm:rounded-[24px] sm:p-5"><div className="flex flex-col gap-2.5 sm:flex-row sm:items-center sm:justify-between sm:gap-3"><div><p className="text-[10px] uppercase tracking-[.16em] text-white/45 sm:text-xs">ALMA · Драйв</p><p className="mt-1 text-[16px] leading-5 text-white/80 sm:text-sm">Матчи, живая музыка, рок и места для вечера с друзьями.</p></div><div className="-mx-1 flex gap-1.5 overflow-x-auto px-1 pb-0.5 sm:flex-wrap sm:overflow-visible sm:p-0">{driveTags.map((t) => <button key={t} onClick={() => setDriveTag(t)} className={`shrink-0 rounded-full px-3 py-1.5 text-[12px] sm:py-2 sm:text-xs ${driveTag === t ? "bg-white text-black" : "bg-white/10 text-white"}`}>{t}</button>)}</div></div></div>}
+      {category === "⚡ Драйв" && <div className="mb-4 rounded-[18px] bg-black px-3.5 py-3 text-white sm:mb-5 sm:rounded-[24px] sm:p-5"><div className="flex flex-col gap-2.5 sm:flex-row sm:items-center sm:justify-between sm:gap-3"><div><p className="text-[10px] uppercase tracking-[.16em] text-white/45 sm:text-xs">ALMA · Драйв</p><p className="mt-1 text-[16px] leading-5 text-white/80 sm:text-sm">Матчи, музыка, рок, картинг и другой активный отдых.</p></div><div className="-mx-1 flex gap-1.5 overflow-x-auto px-1 pb-0.5 sm:flex-wrap sm:overflow-visible sm:p-0">{driveTags.map((t) => <button key={t} onClick={() => setDriveTag(t)} className={`shrink-0 rounded-full px-3 py-1.5 text-[12px] sm:py-2 sm:text-xs ${driveTag === t ? "bg-white text-black" : "bg-white/10 text-white"}`}>{t}</button>)}</div></div></div>}
 
       <div className="grid lg:grid-cols-[410px_minmax(0,1fr)] gap-4 lg:gap-6 items-start">
         <div className="order-1 bg-white rounded-[22px] sm:rounded-[28px] border border-black/5 overflow-hidden lg:mt-[52px]">
@@ -168,7 +168,7 @@ export default function UnifiedMap() {
             {filtered.length === 0 && <div className="rounded-[18px] bg-[#faf8f5] p-4 text-sm leading-6 text-neutral-500">Пока нет мест с подтверждённым удобством в этой категории.</div>}
             {filtered.map((p) => <article key={p.id} className={`rounded-[18px] sm:rounded-[24px] overflow-hidden mb-2.5 sm:mb-3 border ${selected === p.id ? "border-black bg-black text-white" : "border-black/5 bg-[#faf8f5]"}`}>
               <button onClick={() => router.push(p.detailHref)} className="w-full text-left">
-                {p.image ? <div className="relative h-28 sm:h-36 w-full bg-[#ece8e2]"><Image src={p.image} alt={p.name} fill sizes="410px" className="object-cover" unoptimized /></div> : <div className="h-20 sm:h-24 w-full bg-gradient-to-br from-[#e9dfd1] via-[#f5eee5] to-[#ddd1c2] flex items-center justify-center text-3xl">{emoji(p)}</div>}
+                {p.image ? <div className="relative h-28 sm:h-36 w-full bg-[#ece8e2]"><img src={p.image} alt={p.name} className="absolute inset-0 h-full w-full object-cover" loading="lazy" /></div> : <div className="h-20 sm:h-24 w-full bg-gradient-to-br from-[#e9dfd1] via-[#f5eee5] to-[#ddd1c2] flex items-center justify-center text-3xl">{emoji(p)}</div>}
                 <div className="p-3.5 sm:p-4">
                   <div className="flex items-start justify-between gap-3"><div><p className="text-[12px] opacity-60">{p.category}</p><h3 className="mt-1 text-[20px] leading-6 font-semibold sm:text-lg">{p.name}</h3><p className="mt-1.5 text-[12px] opacity-55">Открыть карточку →</p></div>{p.rating && <span className={`shrink-0 rounded-full px-2.5 py-1 text-[12px] font-semibold ${selected === p.id ? "bg-white text-black" : "bg-black text-white"}`}>★ {p.rating.toFixed(1)}</span>}</div>
                   {p.babyCare && <div className="mt-2.5"><span className={`inline-flex rounded-full px-2.5 py-1 text-[11px] font-medium ${selected === p.id ? "bg-white/10" : "bg-[#efe5d7]"}`}>👶 {p.babyCare}</span></div>}
