@@ -5,9 +5,9 @@ import { useSearchParams } from "next/navigation";
 import { mapPlaces, type MapPlace } from "@/data/mapPlaces";
 import MapDirectSearch from "@/components/MapDirectSearch";
 
-declare global { interface Window { L: any; } }
+declare global { interface Window { L: any; almaRouteTo?: (id: number) => void; } }
 
-function categoryEmoji(place: MapPlace) {
+function emoji(place: MapPlace) {
   if (place.dogFriendly) return "🐾";
   if (place.category === "Кофейня") return "☕";
   if (place.category === "Ресторан") return "🍴";
@@ -15,220 +15,88 @@ function categoryEmoji(place: MapPlace) {
 }
 
 export default function UnifiedMap() {
-  const searchParams = useSearchParams();
-  const mapContainerRef = useRef<HTMLDivElement | null>(null);
-  const mapRef = useRef<any>(null);
-  const markersRef = useRef<{ id: number; marker: any }[]>([]);
-  const [leafletReady, setLeafletReady] = useState(false);
-  const [selectedPlace, setSelectedPlace] = useState<number | null>(null);
+  const params = useSearchParams();
+  const container = useRef<HTMLDivElement | null>(null);
+  const map = useRef<any>(null);
+  const markers = useRef<{ id: number; marker: any }[]>([]);
+  const routeLayer = useRef<any>(null);
+  const userMarker = useRef<any>(null);
+  const [ready, setReady] = useState(false);
+  const [selected, setSelected] = useState<number | null>(null);
   const [category, setCategory] = useState("Все");
-
-  const mood = searchParams.get("mood");
-  const budget = searchParams.get("budget");
-  const company = searchParams.get("company");
-  const duration = searchParams.get("duration");
-  const placeId = searchParams.get("place");
+  const [routeStatus, setRouteStatus] = useState("");
   const categories = ["Все", "Кофейня", "Ресторан", "Dog Friendly", "Другие места"];
+  const placeId = params.get("place");
 
-  const filteredPlaces = useMemo(() => mapPlaces.filter((place) => {
-    const categoryMatches =
-      category === "Все" ||
-      (category === "Dog Friendly" && place.dogFriendly) ||
-      (category === "Другие места" && place.category !== "Кофейня" && place.category !== "Ресторан") ||
-      place.category === category;
-
-    return categoryMatches &&
-      (!mood || place.mood === mood) &&
-      (!budget || place.budget === budget) &&
-      (!company || place.company.includes(company)) &&
-      (!duration || place.duration === duration);
-  }), [category, mood, budget, company, duration]);
+  const filtered = useMemo(() => mapPlaces.filter((p) => {
+    const cat = category === "Все" || (category === "Dog Friendly" && p.dogFriendly) || (category === "Другие места" && p.category !== "Кофейня" && p.category !== "Ресторан") || p.category === category;
+    return cat && (!params.get("mood") || p.mood === params.get("mood")) && (!params.get("budget") || p.budget === params.get("budget")) && (!params.get("company") || p.company.includes(params.get("company")!)) && (!params.get("duration") || p.duration === params.get("duration"));
+  }), [category, params]);
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
-
     if (!document.querySelector('link[data-leaflet-css="true"]')) {
-      const link = document.createElement("link");
-      link.rel = "stylesheet";
-      link.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
-      link.setAttribute("data-leaflet-css", "true");
-      document.head.appendChild(link);
+      const l = document.createElement("link"); l.rel = "stylesheet"; l.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"; l.dataset.leafletCss = "true"; document.head.appendChild(l);
     }
-
-    if (window.L) {
-      setLeafletReady(true);
-      return;
-    }
-
-    const existing = document.querySelector('script[data-leaflet-js="true"]') as HTMLScriptElement | null;
-    if (existing) {
-      existing.addEventListener("load", () => setLeafletReady(true));
-      return;
-    }
-
-    const script = document.createElement("script");
-    script.src = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";
-    script.async = true;
-    script.setAttribute("data-leaflet-js", "true");
-    script.onload = () => setLeafletReady(true);
-    document.body.appendChild(script);
+    if (window.L) return setReady(true);
+    const old = document.querySelector('script[data-leaflet-js="true"]') as HTMLScriptElement | null;
+    if (old) { old.addEventListener("load", () => setReady(true)); return; }
+    const s = document.createElement("script"); s.src = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"; s.async = true; s.dataset.leafletJs = "true"; s.onload = () => setReady(true); document.body.appendChild(s);
   }, []);
 
   useEffect(() => {
-    if (!leafletReady || !mapContainerRef.current || mapRef.current) return;
+    if (!ready || !container.current || map.current) return;
+    map.current = window.L.map(container.current, { zoomControl: false }).setView([59.9386, 30.3141], 11);
+    window.L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 19, attribution: "© OpenStreetMap" }).addTo(map.current);
+    window.L.control.zoom({ position: "bottomright" }).addTo(map.current);
+  }, [ready]);
 
-    mapRef.current = window.L.map(mapContainerRef.current, {
-      zoomControl: false,
-      attributionControl: true,
-    }).setView([59.9386, 30.3141], 11);
-
-    window.L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      maxZoom: 19,
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-    }).addTo(mapRef.current);
-
-    window.L.control.zoom({ position: "bottomright" }).addTo(mapRef.current);
-    setTimeout(() => mapRef.current?.invalidateSize(), 100);
-  }, [leafletReady]);
-
-  useEffect(() => {
-    if (!leafletReady || !mapRef.current) return;
-
-    markersRef.current.forEach(({ marker }) => marker.remove());
-    markersRef.current = [];
-
-    filteredPlaces.forEach((place) => {
-      const icon = window.L.divIcon({
-        className: "alma-marker-wrapper",
-        html: `<div class="alma-marker"><span>${categoryEmoji(place)}</span></div>`,
-        iconSize: [40, 40],
-        iconAnchor: [20, 20],
-        popupAnchor: [0, -20],
-      });
-
-      const marker = window.L.marker([place.lat, place.lng], { icon }).addTo(mapRef.current);
-      const rating = place.rating
-        ? `<div class="alma-popup-rating">★ ${place.rating.toFixed(1)} / ${place.ratingScale ?? 5}${place.ratingSource ? ` · ${place.ratingSource}` : ""}</div>`
-        : "";
-      const dog = place.dogFriendly ? `<span class="alma-popup-dog">🐾 Dog Friendly</span>` : "";
-
-      marker.bindPopup(
-        `<div class="alma-popup">
-          <div class="alma-popup-category">${place.category}</div>
-          <div class="alma-popup-title">${place.name}</div>
-          ${rating}
-          <div class="alma-popup-why">${place.why}</div>
-          <div class="alma-popup-address">${place.address}</div>
-          <div class="alma-popup-price"><span>${place.priceNote}</span><strong>${place.price}</strong></div>
-          ${dog}
-          <a href="${place.detailHref}" class="alma-popup-button">Подробнее →</a>
-        </div>`,
-        { maxWidth: 330, minWidth: 290, className: "alma-leaflet-popup" }
-      );
-
-      marker.on("click", () => setSelectedPlace(place.id));
-      markersRef.current.push({ id: place.id, marker });
-    });
-  }, [filteredPlaces, leafletReady]);
-
-  const focusPlace = (place: MapPlace) => {
-    setSelectedPlace(place.id);
-    if (!mapRef.current) return;
-    mapRef.current.flyTo([place.lat, place.lng], 15, { duration: 1.05 });
-    const item = markersRef.current.find((m) => m.id === place.id);
-    if (item) setTimeout(() => item.marker.openPopup(), 450);
+  const buildRoute = async (place: MapPlace) => {
+    if (!navigator.geolocation || !map.current) { setRouteStatus("Не удалось определить ваше местоположение"); return; }
+    setSelected(place.id); setRouteStatus("Определяем ваше местоположение…");
+    navigator.geolocation.getCurrentPosition(async ({ coords }) => {
+      try {
+        setRouteStatus("Строим маршрут…");
+        const url = `https://router.project-osrm.org/route/v1/driving/${coords.longitude},${coords.latitude};${place.lng},${place.lat}?overview=full&geometries=geojson&steps=true`;
+        const res = await fetch(url); if (!res.ok) throw new Error();
+        const data = await res.json(); const route = data.routes?.[0]; if (!route) throw new Error();
+        if (routeLayer.current) routeLayer.current.remove();
+        if (userMarker.current) userMarker.current.remove();
+        userMarker.current = window.L.circleMarker([coords.latitude, coords.longitude], { radius: 8, weight: 3, color: "#111", fillColor: "#fff", fillOpacity: 1 }).addTo(map.current).bindTooltip("Вы здесь");
+        routeLayer.current = window.L.geoJSON(route.geometry, { style: { color: "#111", weight: 5, opacity: .9 } }).addTo(map.current);
+        map.current.fitBounds(routeLayer.current.getBounds(), { padding: [45, 45] });
+        const km = route.distance / 1000; const min = Math.max(1, Math.round(route.duration / 60));
+        setRouteStatus(`${km.toFixed(1).replace(".", ",")} км · примерно ${min} мин`);
+      } catch { setRouteStatus("Маршрут сейчас не удалось построить. Попробуйте ещё раз."); }
+    }, () => setRouteStatus("Разрешите ALMA доступ к геопозиции, чтобы построить маршрут."), { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 });
   };
 
   useEffect(() => {
-    if (!placeId || !leafletReady || !mapRef.current || markersRef.current.length === 0) return;
-    const id = Number(placeId);
-    if (!Number.isFinite(id)) return;
-    const place = mapPlaces.find((item) => item.id === id);
-    if (!place) return;
-    if (!filteredPlaces.some((item) => item.id === place.id)) setCategory("Все");
-    setTimeout(() => focusPlace(place), 100);
-  }, [placeId, leafletReady, filteredPlaces]);
+    window.almaRouteTo = (id: number) => { const p = mapPlaces.find((x) => x.id === id); if (p) buildRoute(p); };
+    return () => { delete window.almaRouteTo; };
+  });
 
-  return (
-    <section className="bg-[#f7f4ef] pb-10 text-black">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="mb-3">
-          <p className="text-xs uppercase tracking-[0.22em] text-neutral-500">ALMA · Санкт-Петербург</p>
-          <h2 className="mt-2 text-3xl sm:text-4xl font-bold tracking-tight">Карта</h2>
-          <p className="mt-2 text-neutral-500">Выбери категорию или найди конкретное заведение.</p>
-        </div>
+  useEffect(() => {
+    if (!ready || !map.current) return;
+    markers.current.forEach((m) => m.marker.remove()); markers.current = [];
+    filtered.forEach((p) => {
+      const icon = window.L.divIcon({ className: "alma-marker-wrapper", html: `<div class="alma-marker">${emoji(p)}</div>`, iconSize: [40,40], iconAnchor: [20,20] });
+      const marker = window.L.marker([p.lat, p.lng], { icon }).addTo(map.current);
+      marker.bindPopup(`<div class="alma-popup"><div class="alma-popup-category">${p.category}</div><div class="alma-popup-title">${p.name}</div>${p.rating ? `<div class="alma-popup-rating">★ ${p.rating.toFixed(1)} / 5</div>` : ""}<div class="alma-popup-address">${p.address}</div><button class="alma-route-button" onclick="window.almaRouteTo(${p.id})">Маршрут от меня →</button><a href="${p.detailHref}" class="alma-popup-button">Подробнее</a></div>`, { maxWidth: 330, minWidth: 290, className: "alma-leaflet-popup" });
+      marker.on("click", () => setSelected(p.id)); markers.current.push({ id: p.id, marker });
+    });
+  }, [filtered, ready]);
 
-        <div className="mb-4 flex flex-wrap gap-2">
-          {categories.map((item) => (
-            <button
-              key={item}
-              type="button"
-              onClick={() => setCategory(item)}
-              className={`rounded-full px-4 py-2.5 text-sm transition ${category === item ? "bg-black text-white" : "bg-white border border-black/5 hover:bg-[#f0ede8]"}`}
-            >
-              {item}
-            </button>
-          ))}
-        </div>
+  const focus = (p: MapPlace) => { setSelected(p.id); map.current?.flyTo([p.lat,p.lng],15,{duration:1}); const m=markers.current.find(x=>x.id===p.id); if(m) setTimeout(()=>m.marker.openPopup(),400); };
 
-        <section className="grid lg:grid-cols-[390px_minmax(0,1fr)] gap-5 lg:gap-6 items-start">
-          <div className="order-2 lg:order-1 bg-white rounded-[28px] border border-black/5 shadow-sm overflow-hidden lg:mt-[52px]">
-            <div className="px-5 sm:px-6 pt-6 pb-4 border-b border-black/5">
-              <p className="font-semibold text-lg">Список мест</p>
-              <p className="mt-1 text-sm text-neutral-500">Выбери карточку — покажем точку справа.</p>
-            </div>
+  useEffect(() => { if (!placeId || !ready || !map.current || !markers.current.length) return; const p=mapPlaces.find(x=>x.id===Number(placeId)); if(p) setTimeout(()=>focus(p),100); }, [placeId, ready, filtered]);
 
-            <div className="max-h-[700px] overflow-y-auto p-3">
-              {filteredPlaces.map((place) => {
-                const active = selectedPlace === place.id;
-                return (
-                  <button
-                    key={place.id}
-                    type="button"
-                    onClick={() => focusPlace(place)}
-                    className={`w-full text-left rounded-[22px] p-3 mb-2 transition ${active ? "bg-black text-white" : "hover:bg-[#f5f2ed]"}`}
-                  >
-                    <div className="flex gap-3">
-                      <div className="w-[94px] h-[92px] rounded-[17px] overflow-hidden shrink-0 bg-[#ece8e2] flex items-center justify-center">
-                        {place.image ? <img src={place.image} alt={place.name} className="w-full h-full object-cover" /> : <span className="text-3xl">{categoryEmoji(place)}</span>}
-                      </div>
-                      <div className="min-w-0 flex-1 py-0.5">
-                        <p className={`text-[11px] uppercase tracking-[0.13em] ${active ? "text-white/50" : "text-neutral-400"}`}>{place.category}</p>
-                        <h3 className="mt-1 text-base font-semibold leading-5">{place.name}</h3>
-                        {place.rating && <p className={`mt-1 text-xs ${active ? "text-white/70" : "text-neutral-500"}`}>★ {place.rating.toFixed(1)} / {place.ratingScale ?? 5}</p>}
-                        <div className="mt-2 flex flex-wrap gap-1.5">
-                          {place.dogFriendly && <span className={`rounded-full px-2.5 py-1 text-xs ${active ? "bg-white/10" : "bg-[#dfe8d8]"}`}>🐾</span>}
-                          <span className={`rounded-full px-2.5 py-1 text-xs font-medium ${active ? "bg-white text-black" : "bg-black text-white"}`}>{place.price}</span>
-                        </div>
-                      </div>
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          <div className="order-1 lg:order-2">
-            <div className="mb-3 flex justify-start lg:justify-end">
-              <MapDirectSearch />
-            </div>
-            <div className="alma-map relative min-h-[560px] lg:min-h-[760px] rounded-[28px] overflow-hidden bg-[#ebe8e3] border border-black/5 shadow-sm">
-              <div ref={mapContainerRef} className="absolute inset-0 z-0" />
-              {!leafletReady && (
-                <div className="absolute inset-0 z-[500] flex items-center justify-center bg-[#ebe8e3]">
-                  <div className="text-center">
-                    <div className="mx-auto w-10 h-10 rounded-full border-2 border-black/15 border-t-black animate-spin" />
-                    <p className="mt-4 text-sm text-neutral-500">Загружаем…</p>
-                  </div>
-                </div>
-              )}
-              <div className="absolute z-[500] left-4 bottom-4 rounded-full bg-black text-white px-4 py-2 text-sm font-semibold tracking-[0.12em] shadow-lg pointer-events-none">alma</div>
-            </div>
-          </div>
-        </section>
-      </div>
-
-      <style jsx global>{`.alma-map .leaflet-tile-pane{filter:grayscale(.82) sepia(.1) saturate(.42) brightness(1.08) contrast(.87)}.alma-map .leaflet-control-container{position:relative;z-index:500}.alma-map .leaflet-control-zoom{border:none!important;border-radius:15px!important;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,.1)!important}.alma-map .leaflet-control-zoom a{width:38px!important;height:38px!important;line-height:38px!important;border:none!important;background:rgba(255,255,255,.95)!important;color:#111!important}.alma-marker-wrapper{background:transparent;border:none}.alma-marker{width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:999px;background:rgba(255,255,255,.96);box-shadow:0 6px 18px rgba(0,0,0,.2);font-size:18px}.alma-leaflet-popup .leaflet-popup-content-wrapper{padding:0!important;border-radius:24px!important;overflow:hidden;background:white!important;box-shadow:0 20px 60px rgba(0,0,0,.22)!important}.alma-leaflet-popup .leaflet-popup-content{margin:0!important;width:310px!important}.alma-popup{padding:21px;color:#111}.alma-popup-category{font-size:10px;text-transform:uppercase;letter-spacing:.14em;color:#999}.alma-popup-title{margin-top:6px;font-size:23px;line-height:1.12;font-weight:700}.alma-popup-rating{margin-top:8px;font-size:12px;font-weight:600}.alma-popup-why,.alma-popup-address{margin-top:9px;color:#666;font-size:12px;line-height:1.5}.alma-popup-price{margin-top:15px;padding:12px 13px;border-radius:15px;background:#f3f1ed;display:flex;justify-content:space-between;gap:12px;font-size:11px}.alma-popup-price strong{font-size:14px}.alma-popup-dog{display:inline-flex;margin-top:12px;padding:7px 10px;border-radius:999px;background:#dfe8d8;font-size:11px}.alma-popup-button{display:flex;justify-content:center;margin-top:14px;min-height:43px;align-items:center;border-radius:999px;background:#111;color:white!important;text-decoration:none!important;font-size:13px;font-weight:600}.alma-leaflet-popup .leaflet-popup-tip{box-shadow:none!important}@media(max-width:640px){.alma-leaflet-popup .leaflet-popup-content{width:275px!important}}`}</style>
-    </section>
-  );
+  return <section className="bg-[#f7f4ef] pb-10 text-black"><div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="mb-3"><p className="text-xs uppercase tracking-[0.22em] text-neutral-500">ALMA · Санкт-Петербург</p><h2 className="mt-2 text-3xl sm:text-4xl font-bold">Карта</h2><p className="mt-2 text-neutral-500">Выбери категорию или найди конкретное заведение.</p></div>
+    <div className="mb-4 flex flex-wrap gap-2">{categories.map(c=><button key={c} onClick={()=>setCategory(c)} className={`rounded-full px-4 py-2.5 text-sm ${category===c?"bg-black text-white":"bg-white border border-black/5"}`}>{c}</button>)}</div>
+    <div className="grid lg:grid-cols-[390px_minmax(0,1fr)] gap-5 lg:gap-6 items-start">
+      <div className="order-2 lg:order-1 bg-white rounded-[28px] border border-black/5 overflow-hidden lg:mt-[52px]"><div className="px-6 pt-6 pb-4 border-b border-black/5"><p className="font-semibold text-lg">Список мест</p><p className="mt-1 text-sm text-neutral-500">Выбери карточку — покажем точку справа.</p></div><div className="max-h-[700px] overflow-y-auto p-3">{filtered.map(p=><div key={p.id} className={`rounded-[22px] p-3 mb-2 ${selected===p.id?"bg-black text-white":"hover:bg-[#f5f2ed]"}`}><button onClick={()=>focus(p)} className="w-full text-left"><p className="text-xs opacity-60">{p.category}</p><h3 className="mt-1 font-semibold">{p.name}</h3>{p.rating&&<p className="mt-1 text-xs opacity-70">★ {p.rating.toFixed(1)} / 5</p>}<p className="mt-2 text-xs opacity-70">{p.address}</p></button><button onClick={()=>buildRoute(p)} className={`mt-3 w-full rounded-full px-4 py-2.5 text-sm font-medium ${selected===p.id?"bg-white text-black":"bg-[#f3f1ed] text-black"}`}>Маршрут от меня →</button></div>)}</div></div>
+      <div className="order-1 lg:order-2"><div className="mb-3 flex justify-start lg:justify-end"><MapDirectSearch /></div><div className="alma-map relative min-h-[560px] lg:min-h-[760px] rounded-[28px] overflow-hidden bg-[#ebe8e3] border border-black/5"><div ref={container} className="absolute inset-0"/>{!ready&&<div className="absolute inset-0 z-[500] flex items-center justify-center bg-[#ebe8e3]">Загружаем…</div>}{routeStatus&&<div className="absolute z-[600] left-4 top-4 max-w-[calc(100%-32px)] rounded-2xl bg-white px-4 py-3 text-sm font-medium shadow-lg">{routeStatus}</div>}<div className="absolute z-[500] left-4 bottom-4 rounded-full bg-black text-white px-4 py-2 text-sm font-semibold">alma</div></div></div>
+    </div></div>
+    <style jsx global>{`.alma-map .leaflet-tile-pane{filter:grayscale(.82) sepia(.1) saturate(.42) brightness(1.08) contrast(.87)}.alma-map .leaflet-control-container{position:relative;z-index:500}.alma-marker-wrapper{background:transparent;border:none}.alma-marker{width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:999px;background:#fff;box-shadow:0 6px 18px rgba(0,0,0,.2);font-size:18px}.alma-leaflet-popup .leaflet-popup-content-wrapper{padding:0!important;border-radius:24px!important;overflow:hidden}.alma-leaflet-popup .leaflet-popup-content{margin:0!important;width:300px!important}.alma-popup{padding:20px;color:#111}.alma-popup-category{font-size:10px;text-transform:uppercase;letter-spacing:.14em;color:#999}.alma-popup-title{margin-top:6px;font-size:22px;font-weight:700}.alma-popup-rating,.alma-popup-address{margin-top:9px;font-size:12px}.alma-popup-address{color:#666}.alma-route-button,.alma-popup-button{display:flex;width:100%;justify-content:center;margin-top:12px;min-height:42px;align-items:center;border-radius:999px;font-size:13px;font-weight:600}.alma-route-button{background:#111;color:#fff;border:0;cursor:pointer}.alma-popup-button{background:#f3f1ed;color:#111!important;text-decoration:none!important}`}</style>
+  </section>;
 }
