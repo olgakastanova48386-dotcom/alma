@@ -50,42 +50,61 @@ function RegisterContent() {
     }
   }
 
+  const inputClass = "w-full rounded-[18px] border border-black/20 bg-white px-4 py-3 text-base outline-none transition focus:border-black";
+
   return (
-    <main className="min-h-screen bg-[#f7f4ef] flex items-center justify-center px-4 pt-24 pb-12">
-      <div className="bg-white p-8 sm:p-10 rounded-[30px] shadow-xl w-full max-w-[430px] border border-black/5">
-        <p className="text-xs uppercase tracking-[0.22em] text-neutral-400 text-center">ALMA</p>
-        <h1 className="mt-3 text-3xl font-bold text-center">Регистрация</h1>
-        {isRoutePurchase ? <div className="mt-5 rounded-[22px] bg-[#f2eee7] p-5 text-center"><p className="text-xs uppercase tracking-[.16em] text-neutral-400">Маршрут ждёт тебя</p><p className="mt-2 font-semibold">Создай аккаунт — после регистрации сразу перейдём к оплате 199 ₽</p></div> : <p className="mt-2 text-center text-sm text-neutral-500">Телефон станет вашим способом входа в ALMA</p>}
+    <main className="min-h-screen bg-[#f7f4ef] px-3 pt-[76px] pb-28 sm:flex sm:items-center sm:justify-center sm:px-4 sm:pt-24 sm:pb-12">
+      <div className="mx-auto w-full max-w-[430px] rounded-[24px] border border-black/5 bg-white p-5 shadow-lg sm:rounded-[30px] sm:p-10 sm:shadow-xl">
+        <div className="text-center">
+          <p className="text-[10px] uppercase tracking-[0.22em] text-neutral-400 sm:text-xs">ALMA</p>
+          <h1 className="mt-1.5 text-[26px] font-bold sm:mt-3 sm:text-3xl">Регистрация</h1>
+          {isRoutePurchase ? (
+            <div className="mt-3 rounded-[18px] bg-[#f2eee7] p-3.5 text-center sm:mt-5 sm:rounded-[22px] sm:p-5">
+              <p className="text-[10px] uppercase tracking-[.16em] text-neutral-400 sm:text-xs">Маршрут ждёт тебя</p>
+              <p className="mt-1.5 text-sm font-semibold sm:mt-2 sm:text-base">Создай аккаунт — после регистрации сразу перейдём к оплате 199 ₽</p>
+            </div>
+          ) : (
+            <p className="mt-1.5 text-[13px] leading-5 text-neutral-500 sm:mt-2 sm:text-sm">Телефон станет вашим способом входа в ALMA</p>
+          )}
+        </div>
 
-        <form className="mt-7" onSubmit={onSubmit}>
-          <label className="block text-xs font-medium text-neutral-500 mb-2">Как вас зовут</label>
-          <input value={name} onChange={e => setName(e.target.value)} type="text" autoComplete="name" placeholder="Имя" maxLength={40} className="w-full border border-black/30 rounded-2xl px-4 py-3.5 outline-none focus:border-black transition" />
+        <form className="mt-4 space-y-3 sm:mt-7 sm:space-y-4" onSubmit={onSubmit}>
+          <div>
+            <label className="mb-1.5 block text-[12px] font-medium text-neutral-500">Как вас зовут</label>
+            <input value={name} onChange={e => setName(e.target.value)} type="text" autoComplete="name" enterKeyHint="next" placeholder="Имя" maxLength={40} className={inputClass} />
+          </div>
 
-          <label className="block text-xs font-medium text-neutral-500 mt-4 mb-2">Номер телефона</label>
-          <input value={phone} onChange={e => setPhone(e.target.value)} type="tel" autoComplete="tel" inputMode="tel" placeholder="+7 999 123-45-67" className="w-full border border-black/30 rounded-2xl px-4 py-3.5 outline-none focus:border-black transition" />
+          <div>
+            <label className="mb-1.5 block text-[12px] font-medium text-neutral-500">Номер телефона</label>
+            <input value={phone} onChange={e => setPhone(e.target.value)} type="tel" autoComplete="tel" inputMode="tel" enterKeyHint="next" placeholder="+7 999 123-45-67" className={inputClass} />
+          </div>
 
-          <fieldset className="mt-5">
-            <legend className="text-xs font-medium text-neutral-500">Пол <span className="font-normal text-neutral-400">· необязательно</span></legend>
-            <div className="mt-3 grid grid-cols-3 gap-2">
+          <fieldset>
+            <legend className="text-[12px] font-medium text-neutral-500">Пол <span className="font-normal text-neutral-400">· необязательно</span></legend>
+            <div className="mt-2 grid grid-cols-3 gap-1.5 sm:gap-2">
               {([{ value: "female", label: "Женщина" }, { value: "male", label: "Мужчина" }, { value: "unspecified", label: "Не указывать" }] as const).map(option => (
-                <button key={option.value} type="button" onClick={() => setGender(option.value)} className={`rounded-2xl border px-2 py-3 text-xs font-medium ${gender === option.value ? "border-black bg-black text-white" : "border-black/10 text-neutral-600"}`}>{option.label}</button>
+                <button key={option.value} type="button" onClick={() => setGender(option.value)} className={`min-h-10 rounded-[14px] border px-1.5 py-2 text-[11px] font-medium sm:rounded-2xl sm:px-2 sm:py-3 sm:text-xs ${gender === option.value ? "border-black bg-black text-white" : "border-black/10 text-neutral-600"}`}>{option.label}</button>
               ))}
             </div>
           </fieldset>
 
-          <input value={password} onChange={e => setPassword(e.target.value)} type="password" autoComplete="new-password" minLength={8} placeholder="Пароль · минимум 8 символов" className="mt-5 w-full border border-black/30 rounded-2xl px-4 py-3.5 outline-none focus:border-black transition" />
-          <input value={repeat} onChange={e => setRepeat(e.target.value)} type="password" autoComplete="new-password" minLength={8} placeholder="Повторите пароль" className="mt-4 w-full border border-black/30 rounded-2xl px-4 py-3.5 outline-none focus:border-black transition" />
-          {repeat && password !== repeat && <p className="mt-2 text-xs text-red-600">Пароли не совпадают.</p>}
+          <div className="grid gap-2.5 sm:gap-4">
+            <input value={password} onChange={e => setPassword(e.target.value)} type="password" autoComplete="new-password" enterKeyHint="next" minLength={8} placeholder="Пароль · минимум 8 символов" className={inputClass} />
+            <input value={repeat} onChange={e => setRepeat(e.target.value)} type="password" autoComplete="new-password" enterKeyHint="done" minLength={8} placeholder="Повторите пароль" className={inputClass} />
+            {repeat && password !== repeat && <p className="-mt-1 text-[11px] text-red-600">Пароли не совпадают.</p>}
+          </div>
 
-          <label className="mt-5 flex items-start gap-3 text-xs leading-5 text-neutral-600"><input checked={consent} onChange={e => setConsent(e.target.checked)} type="checkbox" className="mt-1" /><span>Согласен(на) с правилами ALMA и обработкой данных для работы аккаунта.</span></label>
-          <label className="mt-3 flex items-start gap-3 text-xs leading-5 text-neutral-500"><input checked={marketingSms} onChange={e => setMarketingSms(e.target.checked)} type="checkbox" className="mt-1" /><span>Хочу получать полезные сообщения ALMA. Это необязательно.</span></label>
+          <label className="flex items-start gap-2.5 text-[11px] leading-4.5 text-neutral-600 sm:text-xs sm:leading-5"><input checked={consent} onChange={e => setConsent(e.target.checked)} type="checkbox" className="mt-0.5 h-4 w-4 shrink-0" /><span>Согласен(на) с правилами ALMA и обработкой данных для работы аккаунта.</span></label>
+          <label className="flex items-start gap-2.5 text-[11px] leading-4.5 text-neutral-500 sm:text-xs sm:leading-5"><input checked={marketingSms} onChange={e => setMarketingSms(e.target.checked)} type="checkbox" className="mt-0.5 h-4 w-4 shrink-0" /><span>Хочу получать полезные сообщения ALMA. Это необязательно.</span></label>
 
-          {error && <div role="alert" className="mt-5 rounded-2xl bg-red-50 px-4 py-3 text-sm text-red-700">{error}</div>}
-          <button type="submit" disabled={!canSubmit} className="mt-6 w-full bg-black text-white rounded-2xl py-3.5 font-medium hover:opacity-85 transition disabled:opacity-30 disabled:cursor-not-allowed">{loading ? "Создаём аккаунт…" : isRoutePurchase ? "Создать аккаунт и перейти к оплате" : "Создать аккаунт"}</button>
+          {error && <div role="alert" className="rounded-2xl bg-red-50 px-4 py-3 text-sm text-red-700">{error}</div>}
+
+          <div className="sticky bottom-[calc(.75rem+env(safe-area-inset-bottom))] z-20 -mx-1 pt-1 sm:static sm:mx-0 sm:pt-0">
+            <button type="submit" disabled={!canSubmit} className="w-full rounded-[18px] bg-black py-3 text-sm font-semibold text-white shadow-lg transition hover:opacity-85 disabled:cursor-not-allowed disabled:opacity-30 sm:rounded-2xl sm:py-3.5 sm:text-base sm:shadow-none">{loading ? "Создаём аккаунт…" : isRoutePurchase ? "Создать аккаунт и перейти к оплате" : "Создать аккаунт"}</button>
+          </div>
         </form>
 
-        <p className="mt-6 text-center text-sm text-neutral-600">Уже есть аккаунт? <Link href={loginHref} className="font-semibold text-black underline underline-offset-4">Войти</Link></p>
-        <p className="mt-4 text-center text-xs leading-5 text-neutral-400">Аккаунт создаётся сразу. Подтверждение телефона добавим следующим этапом.</p>
+        <p className="mt-4 text-center text-[12px] text-neutral-600 sm:mt-6 sm:text-sm">Уже есть аккаунт? <Link href={loginHref} className="font-semibold text-black underline underline-offset-4">Войти</Link></p>
       </div>
     </main>
   );
