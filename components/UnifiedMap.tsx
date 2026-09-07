@@ -78,7 +78,7 @@ export default function UnifiedMap() {
     <section className="bg-[#f7f4ef] pb-10 text-black">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-4 flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
-          <div><p className="text-xs uppercase tracking-[0.22em] text-neutral-500">ALMA · Санкт-Петербург</p><h2 className="mt-2 text-3xl sm:text-4xl font-bold tracking-tight">Все места</h2><p className="mt-2 text-neutral-500">Выбери категорию или найди конкретное заведение.</p></div>
+          <div><p className="text-xs uppercase tracking-[0.22em] text-neutral-500">ALMA · Санкт-Петербург</p><h2 className="mt-2 text-3xl sm:text-4xl font-bold tracking-tight">Карта</h2><p className="mt-2 text-neutral-500">Выбери категорию или найди конкретное заведение.</p></div>
           <MapDirectSearch />
         </div>
         <div className="mb-4 flex flex-wrap gap-2">{categories.map((item) => <button key={item} type="button" onClick={() => setCategory(item)} className={`rounded-full px-4 py-2.5 text-sm transition ${category === item ? "bg-black text-white" : "bg-white border border-black/5 hover:bg-[#f0ede8]"}`}>{item}</button>)}</div>
