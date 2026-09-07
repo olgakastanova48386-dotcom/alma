@@ -2,11 +2,10 @@
 
 import Link from "next/link";
 import { FormEvent, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 export default function LoginPage() {
   const params = useSearchParams();
-  const router = useRouter();
   const next = params.get("next") || "/";
   const product = params.get("product");
   const isRoutePurchase = product === "route-199";
@@ -24,16 +23,15 @@ export default function LoginPage() {
     try {
       const response = await fetch("/api/auth/login", {
         method: "POST",
+        credentials: "include",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ phone, password })
       });
       const data = await response.json();
       if (!response.ok) throw new Error(data.error || "Не удалось войти.");
-      router.replace(destination);
-      router.refresh();
+      window.location.assign(destination);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Не удалось войти.");
-    } finally {
       setLoading(false);
     }
   }
