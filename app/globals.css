@@ -52,6 +52,37 @@ body {
     bottom: calc(12px + env(safe-area-inset-bottom));
   }
 
+  .alma-map {
+    min-height: 58vh !important;
+    border-radius: 22px !important;
+  }
+
+  .alma-map .leaflet-control-zoom {
+    margin-right: 10px !important;
+    margin-bottom: 10px !important;
+  }
+
+  .alma-leaflet-popup .leaflet-popup-content-wrapper {
+    border-radius: 20px !important;
+  }
+
+  .alma-leaflet-popup .leaflet-popup-content {
+    width: min(278px, calc(100vw - 56px)) !important;
+  }
+
+  .alma-popup {
+    padding: 16px !important;
+  }
+
+  .alma-popup-title {
+    font-size: 19px !important;
+    line-height: 1.15 !important;
+  }
+
+  .alma-route-button {
+    min-height: 46px !important;
+  }
+
   .alma-purchased-route {
     border-radius: 26px !important;
   }
