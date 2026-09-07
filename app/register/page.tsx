@@ -27,13 +27,33 @@ function RegisterContent() {
   const phoneOk = /^\+?[1-9]\d{9,14}$/.test(phone.replace(/[^\d+]/g, ""));
   const nameOk = /^[A-Za-zА-Яа-яЁё][A-Za-zА-Яа-яЁё\- ']{1,39}$/.test(name.trim());
   const passwordsOk = password.length >= 8 && password === repeat;
-  const canSubmit = nameOk && phoneOk && passwordsOk && consent && !loading;
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (!canSubmit) return;
-    setLoading(true);
     setError("");
+
+    if (!nameOk) {
+      setError("Укажите имя — минимум 2 буквы.");
+      return;
+    }
+    if (!phoneOk) {
+      setError("Проверьте номер телефона. Например: +7 999 123-45-67.");
+      return;
+    }
+    if (password.length < 8) {
+      setError("Пароль должен содержать минимум 8 символов.");
+      return;
+    }
+    if (!passwordsOk) {
+      setError("Пароли не совпадают.");
+      return;
+    }
+    if (!consent) {
+      setError("Нужно согласиться с правилами ALMA и обработкой данных.");
+      return;
+    }
+
+    setLoading(true);
     try {
       const response = await fetch("/api/auth/register", {
         method: "POST",
@@ -100,7 +120,7 @@ function RegisterContent() {
           {error && <div role="alert" className="rounded-2xl bg-red-50 px-4 py-3 text-sm text-red-700">{error}</div>}
 
           <div className="sticky bottom-[calc(.75rem+env(safe-area-inset-bottom))] z-20 -mx-1 pt-1 sm:static sm:mx-0 sm:pt-0">
-            <button type="submit" disabled={!canSubmit} className="w-full rounded-[18px] bg-black py-3 text-sm font-semibold text-white shadow-lg transition hover:opacity-85 disabled:cursor-not-allowed disabled:opacity-30 sm:rounded-2xl sm:py-3.5 sm:text-base sm:shadow-none">{loading ? "Создаём аккаунт…" : isRoutePurchase ? "Создать аккаунт и перейти к оплате" : "Создать аккаунт"}</button>
+            <button type="submit" disabled={loading} className="w-full rounded-[18px] bg-black py-3 text-sm font-semibold text-white shadow-lg transition hover:opacity-85 disabled:cursor-not-allowed disabled:opacity-50 sm:rounded-2xl sm:py-3.5 sm:text-base sm:shadow-none">{loading ? "Создаём аккаунт…" : isRoutePurchase ? "Создать аккаунт и перейти к оплате" : "Создать аккаунт"}</button>
           </div>
         </form>
 
