@@ -1,5 +1,6 @@
 import Link from "next/link";
 import UnifiedMap from "@/components/UnifiedMap";
+import MapDirectSearch from "@/components/MapDirectSearch";
 
 const collections = [
   {
@@ -30,20 +31,20 @@ const collections = [
 
 export default function MapPage() {
   return (
-    <main className="min-h-screen bg-[#f7f4ef] pt-28 pb-16">
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
+    <main className="min-h-screen bg-[#f7f4ef] pt-28 pb-12">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-3">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="text-xs uppercase tracking-[0.2em] text-neutral-500">
-              Карта ALMA
+              ALMA · Санкт-Петербург
             </p>
             <h1 className="mt-3 text-4xl sm:text-5xl font-bold tracking-tight">
-              Найди место на карте
+              Найди место
             </h1>
           </div>
 
           <p className="max-w-xl text-neutral-500 sm:text-right">
-            Выбирай место вручную или начни с готовой подборки.
+            Выбирай вручную или начни с готовой подборки.
           </p>
         </div>
 
@@ -66,6 +67,10 @@ export default function MapPage() {
               </span>
             </Link>
           ))}
+        </div>
+
+        <div className="mt-5 flex justify-end">
+          <MapDirectSearch />
         </div>
       </section>
 
