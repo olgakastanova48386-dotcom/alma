@@ -1,72 +1,99 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { createPortal } from "react-dom";
 import { usePathname, useRouter } from "next/navigation";
 import { places } from "@/data/places";
+
+type Position = {
+  top: number;
+  left: number;
+};
 
 export default function MapSearchEnhancer() {
   const pathname = usePathname();
   const router = useRouter();
-  const [target, setTarget] = useState<HTMLElement | null>(null);
   const [query, setQuery] = useState("");
+  const [position, setPosition] = useState<Position | null>(null);
 
   useEffect(() => {
     if (pathname !== "/map") {
-      setTarget(null);
+      setPosition(null);
       return;
     }
 
-    let portalHost: HTMLDivElement | null = null;
+    let pill: HTMLElement | null = null;
+    let frame = 0;
 
-    const mount = () => {
-      if (portalHost?.isConnected) return;
+    const findPill = () => {
+      const elements = Array.from(document.querySelectorAll<HTMLElement>("div"));
 
-      const candidates = Array.from(document.querySelectorAll<HTMLElement>("div"));
-      const pill = candidates.find((element) => {
-        const text = element.textContent?.replace(/\s+/g, " ").trim() ?? "";
-        const classes = typeof element.className === "string" ? element.className : "";
+      pill =
+        elements.find((element) => {
+          const text = element.textContent?.replace(/\s+/g, " ").trim() ?? "";
+          return text === "Найдено: 18" || text.startsWith("Найдено:");
+        }) ?? null;
 
-        return text.startsWith("Найдено:") && classes.includes("rounded-full");
-      });
-
-      if (!pill || !pill.parentElement) return;
-
-      const existingHost = document.querySelector<HTMLDivElement>(
-        '[data-alma-map-search-host="true"]'
-      );
-
-      if (existingHost) {
-        portalHost = existingHost;
-        setTarget(existingHost);
-        return;
-      }
-
-      portalHost = document.createElement("div");
-      portalHost.dataset.almaMapSearchHost = "true";
-      portalHost.className = "relative self-start lg:self-auto lg:ml-auto";
-
-      pill.parentElement.insertBefore(portalHost, pill);
-      setTarget(portalHost);
+      updatePosition();
     };
 
-    mount();
+    const updatePosition = () => {
+      cancelAnimationFrame(frame);
 
-    const observer = new MutationObserver(mount);
-    observer.observe(document.body, { childList: true, subtree: true });
+      frame = requestAnimationFrame(() => {
+        if (!pill || !pill.isConnected) {
+          setPosition(null);
+          return;
+        }
+
+        const rect = pill.getBoundingClientRect();
+        const searchWidth = 260;
+        const gap = 10;
+        const left = Math.max(16, rect.left - searchWidth - gap);
+
+        setPosition({
+          top: rect.top,
+          left,
+        });
+      });
+    };
+
+    findPill();
+
+    const retry = window.setInterval(() => {
+      if (!pill || !pill.isConnected) {
+        findPill();
+      }
+    }, 350);
+
+    const observer = new MutationObserver(() => {
+      if (!pill || !pill.isConnected) {
+        findPill();
+      } else {
+        updatePosition();
+      }
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
+
+    window.addEventListener("resize", updatePosition);
+    window.addEventListener("scroll", updatePosition, true);
 
     return () => {
+      cancelAnimationFrame(frame);
+      window.clearInterval(retry);
       observer.disconnect();
-      setTarget(null);
-
-      if (portalHost?.isConnected) {
-        portalHost.remove();
-      }
+      window.removeEventListener("resize", updatePosition);
+      window.removeEventListener("scroll", updatePosition, true);
+      setPosition(null);
     };
   }, [pathname]);
 
   const results = useMemo(() => {
     const value = query.trim().toLowerCase();
+
     if (!value) return [];
 
     return places
@@ -79,10 +106,16 @@ export default function MapSearchEnhancer() {
       .slice(0, 7);
   }, [query]);
 
-  if (!target) return null;
+  if (pathname !== "/map" || !position) return null;
 
-  return createPortal(
-    <div className="relative w-[260px] max-w-[72vw]">
+  return (
+    <div
+      className="fixed z-[12000] w-[260px] max-w-[calc(100vw-32px)]"
+      style={{
+        top: position.top,
+        left: position.left,
+      }}
+    >
       <div className="flex items-center rounded-full bg-white border border-black/5 shadow-sm px-4 py-2.5">
         <span className="mr-2 text-neutral-400" aria-hidden="true">
           ⌕
@@ -109,7 +142,7 @@ export default function MapSearchEnhancer() {
       </div>
 
       {query && (
-        <div className="absolute z-[10000] right-0 left-0 mt-2 overflow-hidden rounded-[20px] bg-white border border-black/5 shadow-xl">
+        <div className="absolute z-[12001] right-0 left-0 mt-2 overflow-hidden rounded-[20px] bg-white border border-black/5 shadow-xl">
           {results.length ? (
             results.map((place) => (
               <button
@@ -136,7 +169,6 @@ export default function MapSearchEnhancer() {
           )}
         </div>
       )}
-    </div>,
-    target
+    </div>
   );
 }
