@@ -13,36 +13,15 @@ export type DogFriendlyPlace = {
   sourceLabel: string;
   sourceUrl: string;
   verifiedAt: string;
-  rating?: number;
-  ratingScale?: number;
+  rating: number;
+  ratingScale: 5;
   ratingCount?: number;
-  ratingSource?: string;
+  ratingSource: string;
   imageUrl?: string;
   imageSourceUrl?: string;
 };
 
 export const dogFriendlyPlaces: DogFriendlyPlace[] = [
-  {
-    id: "pong",
-    name: "Pong",
-    category: "Ресторан",
-    address: "ул. Ленина, 16/42",
-    lat: 59.9609,
-    lng: 30.3067,
-    budget: "≈ 1800–2000 ₽",
-    district: "Петроградский",
-    dogSize: "Уточнить у заведения",
-    dogRules: "Актуальные ресторанные источники отмечают Pong как pet-friendly. Ограничение по росту собаки в открытом источнике не указано — ALMA его не придумывает.",
-    dogPerks: "Dog-friendly",
-    sourceLabel: "Restorating · подборка Dog Friendly",
-    sourceUrl: "https://www.restorating.ru/spb/best/dogs",
-    verifiedAt: "07.09.2026",
-    rating: 6.4,
-    ratingScale: 10,
-    ratingCount: 2,
-    ratingSource: "Restoclub",
-    imageSourceUrl: "https://www.restoclub.ru/spb/place/pong",
-  },
   {
     id: "berthold-centre",
     name: "Бертгольд Центр",
@@ -170,23 +149,6 @@ export const dogFriendlyPlaces: DogFriendlyPlace[] = [
     imageSourceUrl: "https://7am.insales.site/",
   },
   {
-    id: "pan-tao",
-    name: "Pan Tao",
-    category: "Кафе",
-    address: "Гороховая ул., 31",
-    lat: 59.92992,
-    lng: 30.31897,
-    budget: "≈ 1450 ₽",
-    district: "Адмиралтейский",
-    dogSize: "Маленькие и средние",
-    dogRules: "Restorating указывает, что в Pan Tao рады воспитанным питомцам маленького и среднего размера.",
-    dogPerks: "Можно с собакой",
-    sourceLabel: "Restorating · подборка Dog Friendly",
-    sourceUrl: "https://www.restorating.ru/spb/best/dogs",
-    verifiedAt: "07.09.2026",
-    imageSourceUrl: "https://www.restorating.ru/spb/best/dogs",
-  },
-  {
     id: "kroo-cafe",
     name: "Kroo Cafe",
     category: "Кафе-ресторан",
@@ -195,7 +157,7 @@ export const dogFriendlyPlaces: DogFriendlyPlace[] = [
     lng: 30.3743,
     budget: "≈ 1900 ₽",
     district: "Центральный",
-    dogSize: "Любой размер — условия лучше уточнить перед визитом",
+    dogSize: "Ограничение не опубликовано",
     dogRules: "Актуальная подборка Restorating отмечает Kroo Cafe как dog-friendly. Заведение особенно выделяется тем, что для собак готовят отдельные торты, а на день рождения питомца десерт могут подать со свечкой.",
     dogPerks: "Есть угощения для собак",
     sourceLabel: "Restorating · подборка Dog Friendly",
@@ -206,26 +168,5 @@ export const dogFriendlyPlaces: DogFriendlyPlace[] = [
     ratingCount: 1223,
     ratingSource: "Google",
     imageSourceUrl: "https://www.restorating.ru/spb/catalogue/kroo-cafe",
-  },
-  {
-    id: "muka-i-voda-gorokhovaya",
-    name: "Мука & Вода",
-    category: "Ресторан",
-    address: "Гороховая ул., 44",
-    lat: 59.927,
-    lng: 30.3246,
-    budget: "≈ 1400–1800 ₽",
-    district: "Центральный",
-    dogSize: "Без опубликованного ограничения",
-    dogRules: "В актуальной карточке Restorating заведение прямо отмечено тегом «Можно с собакой». Отдельного ограничения по размеру питомца в открытом источнике не опубликовано.",
-    dogPerks: "Можно с собакой",
-    sourceLabel: "Restorating · карточка ресторана",
-    sourceUrl: "https://www.restorating.ru/spb/catalogue/muka-voda",
-    verifiedAt: "07.09.2026",
-    rating: 9.1,
-    ratingScale: 10,
-    ratingCount: 5,
-    ratingSource: "Restorating",
-    imageSourceUrl: "https://www.restorating.ru/spb/catalogue/muka-voda",
   },
 ];
