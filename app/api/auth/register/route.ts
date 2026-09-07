@@ -1,11 +1,16 @@
 import { NextResponse } from "next/server";
-import { authDb, createSession, ensureAuthSchema, hashPassword, normalizePhone, sessionCookie } from "@/lib/auth";
+import { authDb, consumeAuthRateLimit, createSession, ensureAuthSchema, hashPassword, normalizePhone, sessionCookie } from "@/lib/auth";
 
 const NAME_RE = /^[A-Za-zА-Яа-яЁё][A-Za-zА-Яа-яЁё\- ']{1,39}$/;
 
 export async function POST(request: Request) {
   try {
     await ensureAuthSchema();
+    const rate = await consumeAuthRateLimit(request, "register", 5, 60 * 60);
+    if (!rate.allowed) {
+      return NextResponse.json({ error: "Слишком много попыток регистрации. Попробуйте позже." }, { status: 429, headers: { "Retry-After": String(rate.retryAfter) } });
+    }
+
     const body = await request.json();
     const name = String(body.name || "").trim();
     const phone = normalizePhone(String(body.phone || ""));
@@ -16,7 +21,7 @@ export async function POST(request: Request) {
 
     if (!NAME_RE.test(name) || /(.)\1{3,}/i.test(name)) return NextResponse.json({ error: "Проверьте имя." }, { status: 400 });
     if (!/^\+?[1-9]\d{9,14}$/.test(phone)) return NextResponse.json({ error: "Проверьте номер телефона." }, { status: 400 });
-    if (password.length < 8) return NextResponse.json({ error: "Пароль должен содержать минимум 8 символов." }, { status: 400 });
+    if (password.length < 8 || password.length > 128) return NextResponse.json({ error: "Пароль должен содержать от 8 до 128 символов." }, { status: 400 });
     if (!consent) return NextResponse.json({ error: "Нужно согласиться с правилами ALMA и обработкой данных." }, { status: 400 });
 
     const existing = await authDb().prepare("SELECT id FROM users WHERE phone = ?").bind(phone).first();
