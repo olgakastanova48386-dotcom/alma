@@ -19,10 +19,86 @@
   }
 }
 
+html {
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+}
+
+@media (max-width: 767px) {
+  body {
+    padding-bottom: calc(82px + env(safe-area-inset-bottom));
+  }
+
+  button,
+  a {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  input,
+  textarea,
+  select,
+  button {
+    font-size: 16px;
+  }
+
+  .safe-area-mobile-nav {
+    bottom: calc(12px + env(safe-area-inset-bottom));
+  }
+
+  .alma-purchased-route {
+    border-radius: 26px !important;
+  }
+
+  .alma-purchased-route > header {
+    padding: 24px 20px !important;
+  }
+
+  .alma-purchased-route > header h3 {
+    font-size: 34px !important;
+    line-height: 1 !important;
+  }
+
+  .alma-purchased-route > div {
+    padding: 26px 16px 30px !important;
+  }
+
+  .alma-route-stop {
+    margin-bottom: 22px !important;
+  }
+
+  .alma-route-stop > span {
+    left: 0 !important;
+    top: 18px !important;
+    width: 42px !important;
+    height: 42px !important;
+  }
+
+  .alma-route-stop article {
+    margin-left: 52px !important;
+    gap: 18px !important;
+  }
+
+  .alma-route-stop article > div:first-child {
+    aspect-ratio: 4 / 3 !important;
+    border-radius: 24px !important;
+  }
+
+  .alma-route-stop h4 {
+    font-size: 26px !important;
+    line-height: 1.05 !important;
+  }
+
+  .alma-route-actions button,
+  .alma-route-actions a {
+    min-height: 46px;
+  }
 }
 
 @media print {
