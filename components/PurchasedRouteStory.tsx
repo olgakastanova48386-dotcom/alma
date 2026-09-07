@@ -109,12 +109,27 @@ function visualFor(place:PurchasedRouteStop){
 export default function PurchasedRouteStory({stops,romantic=false,onReset}:{stops:PurchasedRouteStop[];romantic?:boolean;onReset:()=>void}){
   const [routeShared,setRouteShared]=useState(false);
   const [inviteOpen,setInviteOpen]=useState(false);
+  const [inviteShared,setInviteShared]=useState(false);
   const [guest,setGuest]=useState("");
   const [date,setDate]=useState("");
   const [time,setTime]=useState("");
+  const [note,setNote]=useState("У меня есть для нас небольшой план ✦ Маршрут пока останется сюрпризом.");
   const transitions=useMemo(()=>stops.slice(0,-1).map((p,i)=>smartTransit(p,stops[i+1])),[stops]);
   const routeText=useMemo(()=>stops.map((p,i)=>{const fact=story(p);return `${i+1}. ${p.name} · ${stayTime(p)}${fact?`\nМожно рассказать: ${fact}`:""}${transitions[i]?`\n${transitions[i].title}`:""}`}).join("\n\n"),[stops,transitions]);
   const shareRoute=async()=>{try{if(navigator.share)await navigator.share({title:"Мой маршрут ALMA",text:routeText,url:location.href});else await navigator.clipboard.writeText(routeText);setRouteShared(true);setTimeout(()=>setRouteShared(false),1800)}catch{}};
+  const shareInvite=async()=>{
+    try{
+      const params=new URLSearchParams();
+      if(guest.trim())params.set("guest",guest.trim());
+      if(date)params.set("date",date);
+      if(time)params.set("time",time);
+      if(note.trim())params.set("note",note.trim());
+      const url=`${location.origin}/invite?${params.toString()}`;
+      if(navigator.share)await navigator.share({title:"Приглашение ALMA",text:"Для тебя есть план ✦",url});
+      else await navigator.clipboard.writeText(url);
+      setInviteShared(true);setTimeout(()=>setInviteShared(false),1800);
+    }catch{}
+  };
 
   return <div className="alma-purchased-route mt-9 overflow-hidden rounded-[38px] bg-[#f3eee6] border border-black/5">
     <header className="p-7 sm:p-10 lg:p-12 border-b border-black/5"><div className="flex flex-wrap items-start justify-between gap-6"><div><span className="inline-flex rounded-full bg-[#dcebdc] px-3 py-2 text-xs font-semibold">МАРШРУТ ГОТОВ</span><p className="mt-6 text-xs uppercase tracking-[.2em] text-neutral-400">Твой день с ALMA</p><h3 className="mt-2 text-4xl sm:text-5xl font-bold tracking-tight">Маршрут открыт ✦</h3><p className="mt-3 max-w-xl text-neutral-500">ALMA уже выбрала удобный способ перемещения между точками. Всё остаётся внутри сайта.</p><div className="mt-6 flex flex-wrap gap-2"><button type="button" onClick={shareRoute} className="rounded-full bg-black text-white px-5 py-3 text-sm font-semibold">{routeShared?"Сохранено ✓":"↓ Сохранить маршрут"}</button><button type="button" onClick={shareRoute} className="rounded-full bg-white border border-black/10 px-5 py-3 text-sm font-semibold">{routeShared?"Готово ✓":"↗ Поделиться"}</button></div></div><button onClick={onReset} className="rounded-full bg-white border border-black/10 px-5 py-3 text-sm">Новый маршрут</button></div></header>
@@ -130,6 +145,6 @@ export default function PurchasedRouteStory({stops,romantic=false,onReset}:{stop
       </div>})}
     </div>
 
-    {romantic&&<footer className="m-5 sm:m-10 mt-0 rounded-[30px] bg-black p-6 sm:p-8 text-white"><div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6"><div><p className="text-xs uppercase tracking-[.18em] text-white/45">Для свидания</p><h4 className="mt-2 text-2xl sm:text-3xl font-bold">Приглашение без спойлеров</h4><p className="mt-2 text-sm leading-6 text-white/60">Получатель увидит только дату, время и твоё сообщение. Сам маршрут останется секретом.</p></div><button type="button" onClick={()=>setInviteOpen(v=>!v)} className="rounded-full bg-white text-black px-5 py-3 text-sm font-semibold">{inviteOpen?"Скрыть":"Создать приглашение"}</button></div>{inviteOpen&&<div className="mt-6 grid sm:grid-cols-3 gap-3"><input value={guest} onChange={e=>setGuest(e.target.value)} placeholder="Имя" className="rounded-2xl px-4 py-3 text-black"/><input type="date" value={date} onChange={e=>setDate(e.target.value)} className="rounded-2xl px-4 py-3 text-black"/><input type="time" value={time} onChange={e=>setTime(e.target.value)} className="rounded-2xl px-4 py-3 text-black"/><div className="sm:col-span-3 rounded-2xl bg-white/10 p-4 text-sm">{guest?`${guest}, `:""}у меня есть для нас небольшой план ✦ {date&&`Дата: ${date}. `}{time&&`Встречаемся в ${time}. `}Маршрут пока останется сюрпризом.</div></div>}</footer>}
+    {romantic&&<footer className="m-5 sm:m-10 mt-0 rounded-[30px] bg-black p-6 sm:p-8 text-white"><div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6"><div><p className="text-xs uppercase tracking-[.18em] text-white/45">Для свидания</p><h4 className="mt-2 text-2xl sm:text-3xl font-bold">Приглашение без спойлеров</h4><p className="mt-2 text-sm leading-6 text-white/60">Получатель увидит только дату, время и твоё сообщение. Названия точек и порядок маршрута не попадут в ссылку.</p></div><button type="button" onClick={()=>setInviteOpen(v=>!v)} className="rounded-full bg-white text-black px-5 py-3 text-sm font-semibold">{inviteOpen?"Скрыть":"Создать приглашение"}</button></div>{inviteOpen&&<div className="mt-6 grid sm:grid-cols-3 gap-3"><input value={guest} onChange={e=>setGuest(e.target.value)} placeholder="Имя" className="rounded-2xl px-4 py-3 text-black"/><input type="date" value={date} onChange={e=>setDate(e.target.value)} className="rounded-2xl px-4 py-3 text-black"/><input type="time" value={time} onChange={e=>setTime(e.target.value)} className="rounded-2xl px-4 py-3 text-black"/><textarea value={note} onChange={e=>setNote(e.target.value)} rows={3} className="sm:col-span-3 rounded-2xl px-4 py-3 text-black" aria-label="Сообщение приглашения"/><div className="sm:col-span-3 flex flex-wrap items-center gap-3"><button type="button" onClick={shareInvite} disabled={!date&&!time&&!guest.trim()} className="rounded-full bg-white text-black px-5 py-3 text-sm font-semibold disabled:opacity-40">{inviteShared?"Приглашение готово ✓":"↗ Отправить приглашение"}</button><span className="text-xs text-white/45">Ссылка ведёт только на /invite и не содержит маршрут.</span></div></div>}</footer>}
   </div>;
 }
