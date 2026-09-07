@@ -15,10 +15,12 @@ function LoginContent() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [needsVerification, setNeedsVerification] = useState(false);
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError("");
+    setNeedsVerification(false);
     setLoading(true);
     try {
       const response = await fetch("/api/auth/login", {
@@ -28,13 +30,18 @@ function LoginContent() {
         body: JSON.stringify({ phone, password })
       });
       const data = await response.json();
-      if (!response.ok) throw new Error(data.error || "Не удалось войти.");
+      if (!response.ok) {
+        if (data.requiresVerification) setNeedsVerification(true);
+        throw new Error(data.error || "Не удалось войти.");
+      }
       window.location.assign(destination);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Не удалось войти.");
       setLoading(false);
     }
   }
+
+  const verificationHref = `/verify-phone?phone=${encodeURIComponent(phone)}&next=${encodeURIComponent(destination)}`;
 
   return (
     <main className="min-h-screen bg-[#f7f4ef] flex items-center justify-center px-4 pt-24 pb-12">
@@ -45,7 +52,8 @@ function LoginContent() {
         <form className="mt-7" onSubmit={onSubmit}>
           <input value={phone} onChange={e => setPhone(e.target.value)} type="tel" autoComplete="tel" inputMode="tel" placeholder="Номер телефона" className="w-full border border-black/30 rounded-2xl px-4 py-3.5 outline-none focus:border-black transition" />
           <input value={password} onChange={e => setPassword(e.target.value)} type="password" autoComplete="current-password" placeholder="Пароль" className="mt-4 w-full border border-black/30 rounded-2xl px-4 py-3.5 outline-none focus:border-black transition" />
-          {error && <div role="alert" className="mt-5 rounded-2xl bg-red-50 px-4 py-3 text-sm text-red-700">{error}</div>}
+          <div className="mt-2 text-right"><Link href="/forgot-password" className="text-xs font-medium text-neutral-500 underline underline-offset-4">Забыли пароль?</Link></div>
+          {error && <div role="alert" className="mt-5 rounded-2xl bg-red-50 px-4 py-3 text-sm text-red-700">{error}{needsVerification && <Link href={verificationHref} className="mt-2 block font-semibold underline underline-offset-4">Подтвердить номер →</Link>}</div>}
           <button type="submit" disabled={loading || !phone || !password} className="mt-6 w-full bg-black text-white rounded-2xl py-3.5 font-medium hover:opacity-85 transition disabled:opacity-30 disabled:cursor-not-allowed">{loading ? "Входим…" : isRoutePurchase ? "Войти и перейти к оплате" : "Войти"}</button>
         </form>
         <div className="my-6 flex items-center gap-3"><div className="h-px flex-1 bg-black/10"/><span className="text-xs text-neutral-400">или</span><div className="h-px flex-1 bg-black/10"/></div>
@@ -56,6 +64,4 @@ function LoginContent() {
   );
 }
 
-export default function LoginPage() {
-  return <Suspense fallback={<main className="min-h-screen bg-[#f7f4ef]"/>}><LoginContent/></Suspense>;
-}
+export default function LoginPage() { return <Suspense fallback={<main className="min-h-screen bg-[#f7f4ef]"/>}><LoginContent/></Suspense>; }
