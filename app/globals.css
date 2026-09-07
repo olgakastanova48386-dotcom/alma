@@ -31,6 +31,32 @@ body {
   overflow-x: hidden;
 }
 
+/* ALMA forms: user-entered values must stay readable on light fields,
+   including iOS/Safari autofill and telephone inputs. */
+input,
+textarea,
+select {
+  color: #000 !important;
+  -webkit-text-fill-color: #000 !important;
+  caret-color: #000;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: rgba(0, 0, 0, 0.42);
+  -webkit-text-fill-color: rgba(0, 0, 0, 0.42);
+  opacity: 1;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+  -webkit-text-fill-color: #000 !important;
+  caret-color: #000;
+}
+
 @media (max-width: 767px) {
   body {
     padding-bottom: calc(82px + env(safe-area-inset-bottom));
