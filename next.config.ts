@@ -11,7 +11,7 @@ const securityHeaders = [
       "object-src 'none'",
       "script-src 'self' 'unsafe-inline' https://unpkg.com https://static.cloudflareinsights.com",
       "style-src 'self' 'unsafe-inline' https://unpkg.com",
-      "img-src 'self' data: blob: https://*.openstreetmap.org https://sibaristica.com",
+      "img-src 'self' data: blob: https://*.openstreetmap.org https://sibaristica.com https://thb.tildacdn.com",
       "font-src 'self' data:",
       "connect-src 'self' https://api.open-meteo.com https://*.openstreetmap.org https://unpkg.com https://cloudflareinsights.com",
       "worker-src 'self' blob:",
@@ -32,7 +32,7 @@ const securityHeaders = [
   },
   {
     key: "Permissions-Policy",
-    value: "camera=(), microphone=(), geolocation=(), payment=(), usb=()",
+    value: "camera=(), microphone=(), geolocation=(self), payment=(), usb=()",
   },
   {
     key: "Strict-Transport-Security",
