@@ -21,7 +21,5 @@ jobs:
         run: npm ci
       - name: Lint
         run: npm run lint
-      - name: Next build
-        run: npm run build
-      - name: Vinext build
+      - name: Vinext production build
         run: npm run build:vinext
