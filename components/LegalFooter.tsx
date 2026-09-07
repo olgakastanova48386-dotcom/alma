@@ -16,10 +16,12 @@ export default function LegalFooter() {
 
           <nav className="flex flex-wrap gap-x-5 gap-y-3 text-sm text-white/70">
             <Link href="/legal" className="hover:text-white transition">Правовая информация</Link>
-            <Link href="/legal#privacy" className="hover:text-white transition">Персональные данные</Link>
-            <Link href="/legal#reviews" className="hover:text-white transition">Отзывы и цены</Link>
-            <Link href="/legal#complaints" className="hover:text-white transition">Жалобы</Link>
-            <Link href="/legal#rightsholders" className="hover:text-white transition">Правообладателям</Link>
+            <Link href="/legal/terms" className="hover:text-white transition">Соглашение</Link>
+            <Link href="/legal/privacy" className="hover:text-white transition">Персональные данные</Link>
+            <Link href="/legal/cookies" className="hover:text-white transition">Cookies</Link>
+            <Link href="/legal/reviews" className="hover:text-white transition">Отзывы и цены</Link>
+            <Link href="/legal/complaints" className="hover:text-white transition">Жалобы</Link>
+            <Link href="/legal/rightsholders" className="hover:text-white transition">Правообладателям</Link>
           </nav>
         </div>
 
