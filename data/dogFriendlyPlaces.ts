@@ -3,6 +3,8 @@ export type DogFriendlyPlace = {
   name: string;
   category: string;
   address: string;
+  lat: number;
+  lng: number;
   budget: string;
   district: string;
   dogSize: string;
@@ -25,6 +27,8 @@ export const dogFriendlyPlaces: DogFriendlyPlace[] = [
     name: "Pong",
     category: "Ресторан",
     address: "ул. Ленина, 16/42",
+    lat: 59.9609,
+    lng: 30.3067,
     budget: "≈ 1800–2000 ₽",
     district: "Петроградский",
     dogSize: "Уточнить у заведения",
@@ -45,6 +49,8 @@ export const dogFriendlyPlaces: DogFriendlyPlace[] = [
     name: "Бертгольд Центр",
     category: "Городское пространство",
     address: "Гражданская ул., 13–15",
+    lat: 59.928159,
+    lng: 30.312481,
     budget: "Вход свободный",
     district: "Адмиралтейский",
     dogSize: "Без опубликованного ограничения",
