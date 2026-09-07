@@ -20,7 +20,7 @@ function isCurrentRoute(pathname: string, href: string) {
 
 function MapIcon() {
   return (
-    <svg viewBox="0 0 24 24" aria-hidden="true" className="h-[18px] w-[18px]" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <svg viewBox="0 0 24 24" aria-hidden="true" className="h-[17px] w-[17px]" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
       <path d="M3.5 5.5 8.5 3l7 2.5 5-2v15l-5 2-7-2.5-5 2.5z" />
       <path d="M8.5 3v15M15.5 5.5v15" />
     </svg>
@@ -46,30 +46,24 @@ export default function Header() {
 
   return (
     <header className="fixed top-0 left-0 w-full z-[9999]">
-      <div className="max-w-7xl mx-auto mt-3 sm:mt-4 px-3 sm:px-6">
-        <div className="rounded-[22px] sm:rounded-full bg-white/92 backdrop-blur-xl border border-black/5 shadow-lg px-3 sm:px-8 py-2.5 sm:py-3">
-          <div className="md:hidden flex h-11 items-center gap-1.5 overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            <Link href="/" className="shrink-0 pl-1 pr-1 text-[17px] font-bold tracking-[0.22em]">alma</Link>
-            <div className="ml-auto flex shrink-0 items-center gap-1.5">
+      <div className="max-w-7xl mx-auto mt-2.5 sm:mt-4 px-2.5 sm:px-6">
+        <div className="rounded-[20px] sm:rounded-full bg-white/92 backdrop-blur-xl border border-black/5 shadow-lg px-2.5 sm:px-8 py-2 sm:py-3">
+          <div className="md:hidden flex h-9 items-center gap-1 overflow-hidden">
+            <Link href="/" className="shrink-0 pl-1 pr-0.5 text-[15px] font-bold tracking-[0.19em]">alma</Link>
+            <div className="ml-auto flex min-w-0 shrink-0 items-center gap-1">
               {mobileVisibleItems.map((item) => {
                 const iconOnly = item.href === "/map" || item.href === "/favorites";
                 return (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    aria-label={item.label}
-                    title={item.label}
-                    className={`flex h-9 shrink-0 items-center justify-center rounded-full bg-black/[.04] text-[11px] font-medium text-neutral-700 active:bg-black/[.08] ${iconOnly ? "w-9 px-0" : "gap-1 px-2.5"}`}
-                  >
-                    {item.icon === "map" ? <MapIcon /> : <span className={`${item.href === "/favorites" ? "text-[18px]" : "text-[13px]"} leading-none`}>{item.icon}</span>}
+                  <Link key={item.href} href={item.href} aria-label={item.label} title={item.label} className={`flex h-8 shrink-0 items-center justify-center rounded-full bg-black/[.04] text-[10px] font-medium text-neutral-700 active:bg-black/[.08] ${iconOnly ? "w-8 px-0" : "gap-1 px-2"}`}>
+                    {item.icon === "map" ? <MapIcon /> : <span className={`${item.href === "/favorites" ? "text-[17px]" : "text-[12px]"} leading-none`}>{item.icon}</span>}
                     {!iconOnly && <span>{item.label}</span>}
                   </Link>
                 );
               })}
               {authLoaded && user ? (
-                <Link href="/profile" className="max-w-[82px] truncate rounded-full bg-black px-3 py-2.5 text-[11px] font-medium text-white" title={user.name}>{user.name}</Link>
+                <Link href="/profile" className="max-w-[70px] truncate rounded-full bg-black px-2.5 py-2 text-[10px] font-medium text-white" title={user.name}>{user.name}</Link>
               ) : (
-                <Link href="/login" className="rounded-full bg-black px-3 py-2.5 text-[11px] font-medium text-white">Войти</Link>
+                <Link href="/login" className="rounded-full bg-black px-2.5 py-2 text-[10px] font-medium text-white">Войти</Link>
               )}
             </div>
           </div>
