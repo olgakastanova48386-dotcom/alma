@@ -31,6 +31,7 @@ export default function Header() {
   const pathname = usePathname();
   const [user, setUser] = useState<User | null>(null);
   const [authLoaded, setAuthLoaded] = useState(false);
+  const authScreen = pathname.startsWith("/register") || pathname.startsWith("/login");
 
   useEffect(() => {
     let active = true;
@@ -42,7 +43,7 @@ export default function Header() {
     return () => { active = false; };
   }, []);
 
-  const mobileVisibleItems = mobileNavItems.filter((item) => !isCurrentRoute(pathname, item.href));
+  const mobileVisibleItems = authScreen ? [] : mobileNavItems.filter((item) => !isCurrentRoute(pathname, item.href));
 
   return (
     <header className="fixed top-0 left-0 w-full z-[9999]">
@@ -62,7 +63,7 @@ export default function Header() {
               })}
               {authLoaded && user ? (
                 <Link href="/profile" className="max-w-[70px] truncate rounded-full bg-black px-2.5 py-2 text-[10px] font-medium text-white" title={user.name}>{user.name}</Link>
-              ) : (
+              ) : pathname.startsWith("/login") ? null : (
                 <Link href="/login" className="rounded-full bg-black px-2.5 py-2 text-[10px] font-medium text-white">Войти</Link>
               )}
             </div>
