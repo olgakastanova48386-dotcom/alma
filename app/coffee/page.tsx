@@ -9,7 +9,7 @@ export default function CoffeePage() {
           <div>
             <p className="text-xs uppercase tracking-[0.22em] text-neutral-500">ALMA · Санкт-Петербург</p>
             <h1 className="mt-3 text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight">Кофейни с рейтингом ★ 4,5–5,0</h1>
-            <p className="mt-4 max-w-3xl text-neutral-600 text-base sm:text-lg leading-8">Проверенные кофейни Петербурга. Показываем рейтинг, количество оценок и дату проверки ALMA.</p>
+            <p className="mt-4 max-w-3xl text-neutral-600 text-base sm:text-lg leading-8">Проверенные кофейни Петербурга. ★★★★★ - показываем источник, оценку и дату проверки ALMA.</p>
           </div>
           <div className="rounded-full bg-black text-white px-5 py-3 text-sm font-medium self-start lg:self-auto">{coffeePlaces.length} мест</div>
         </div>
