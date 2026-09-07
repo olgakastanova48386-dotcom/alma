@@ -13,7 +13,7 @@ export default function Header() {
             <Link href="/" className="hover:text-black transition">
               Главная
             </Link>
-            <Link href="/map" className="font-semibold text-black hover:opacity-60 transition">
+            <Link href="/map" className="hover:text-black transition">
               Карта
             </Link>
             <Link href="/dog-friendly" className="hover:text-black transition">
