@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import DogFriendlyMapEnhancer from "@/components/DogFriendlyMapEnhancer";
 import WeatherOutfitAdvisor from "@/components/WeatherOutfitAdvisor";
 import LegalFooter from "@/components/LegalFooter";
+import RouteSaveMobileFix from "@/components/RouteSaveMobileFix";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -38,6 +39,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         <Header />
         <DogFriendlyMapEnhancer />
+        <RouteSaveMobileFix />
         <div className="flex-1">{children}</div>
         <LegalFooter />
         <WeatherOutfitAdvisor />
