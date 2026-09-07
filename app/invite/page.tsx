@@ -2,14 +2,14 @@
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useMemo, useState } from "react";
+import { Suspense, useMemo, useState } from "react";
 
 const decode = (value: string | null) => {
   if (!value) return "";
   try { return decodeURIComponent(value); } catch { return value; }
 };
 
-export default function InvitePage(){
+function InviteContent(){
   const params = useSearchParams();
   const [answer,setAnswer]=useState<"yes"|"maybe"|"">("");
   const guest=decode(params.get("guest"));
@@ -54,4 +54,8 @@ export default function InvitePage(){
       <div className="mt-6 text-center"><Link href="/" className="text-sm text-neutral-500 underline underline-offset-4">Что такое ALMA?</Link></div>
     </section>
   </main>;
+}
+
+export default function InvitePage(){
+  return <Suspense fallback={<main className="min-h-screen bg-[#f7f4ef]"/>}><InviteContent/></Suspense>;
 }
