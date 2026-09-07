@@ -94,8 +94,12 @@ function smartTransit(a:PurchasedRouteStop,b:PurchasedRouteStop):TransitPlan{
 }
 
 const restaurantVisuals:Record<string,string>={
-  "mario trattoria":"https://img.restoclub.ru/uploads/newsinner/e/e/d/3/eed36c2c0402fcc72fc513bd801c4448_w642--big.jpg",
+  "mario trattoria":"https://scdn.tomesto.ru/img/place/000/023/573/restoran-mario-trattoria-mario-trattoriya-na-admiralteyskom-prospekte_017b8_full-96299.jpg",
   "birch":"https://img.restoclub.ru/uploads/place/f/c/7/c/fc7c964416cae41eb1bfda597e9f3421_w1230_h820--no-cut.webp?v=3",
+  "duo gastrobar":"https://ovvy.ru/upload/iblock/9df/9df4921c2038b609e73e1f5e4e13f95d.jpg",
+  "joli":"https://img.restoclub.ru/uploads/postimage/8/a/5/7/8a57b1769c3aec38497f7e2b9846f8b8_w958_h835--big.jpg",
+  "банщики":"https://static.sobaka.ru/images/post/00/05/55/00/_huge.jpg?v=1488892314",
+  "salone pasta&bar":"https://chef.ru/wp-content/uploads/atelier-pasta-11-scaled.jpg",
 };
 function visualFor(place:PurchasedRouteStop){
   if(place.image)return place.image;
