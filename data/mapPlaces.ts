@@ -23,4 +23,9 @@ const dogMapPlaces: MapPlace[] = dogFriendlyPlaces.filter((p)=>hasAlmaRating(p.r
 
 const driveMapPlaces: MapPlace[] = drivePlaces.filter((p)=>hasAlmaRating(p.rating,p.ratingScale)).map((p)=>({ id:p.id,name:p.name,category:p.category,mood:"Драйв",budget:p.price,company:["Один","Пара","Друзья"],duration:"2–4 часа",image:p.image,lat:p.lat,lng:p.lng,why:p.note,address:p.address,price:p.price,priceNote:"Ориентир по стоимости",detailHref:`/place/${p.id}`,rating:p.rating,ratingScale:5,ratingCount:p.ratingCount,ratingSource:p.ratingSource,drive:true,driveTags:p.tags }));
 
-export const mapPlaces: MapPlace[] = [...basePlaces,...coffeeMapPlaces,...restaurantMapPlaces,...dogMapPlaces,...driveMapPlaces];
+const photoMapPlaces: MapPlace[] = [
+  { id:5001,name:"Дом Бака",category:"Фотолокация",mood:"Вдохновиться",budget:"Бесплатно",company:["Один","Пара","Друзья"],duration:"До 1 часа",image:"https://cdnstatic.rg.ru/uploads/images/2024/11/12/photo_2024-11-11_17-14-13_ac3.jpg",lat:59.944086,lng:30.357996,why:"Воздушные галереи, исторический двор и выразительная архитектура.",address:"Кирочная ул., 24",price:"Бесплатно",priceNote:"Доступ во двор может зависеть от правил дома",detailHref:"/place/5001",rating:4.9,ratingScale:5,ratingCount:1445,ratingSource:"Яндекс Карты" },
+  { id:5002,name:"Ракета",category:"Падел-клуб",mood:"Драйв",budget:"Цена уточняется",company:["Один","Пара","Друзья"],duration:"1–2 часа",image:"/images/падл адрес ракета кожевенная линия, 27.jpg",lat:59.923057,lng:30.248787,why:"Падел-корты в индустриальном интерьере с сильной геометрией кадра.",address:"Кожевенная линия, 27, корп. 1",price:"Цена уточняется",priceNote:"Стоимость зависит от времени и формата игры",detailHref:"/place/5002",rating:5,ratingScale:5,ratingCount:12,ratingSource:"2ГИС",drive:true,driveTags:["Активный отдых","С друзьями"] },
+];
+
+export const mapPlaces: MapPlace[] = [...basePlaces,...coffeeMapPlaces,...restaurantMapPlaces,...dogMapPlaces,...driveMapPlaces,...photoMapPlaces];
