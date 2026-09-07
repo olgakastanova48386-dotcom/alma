@@ -12,6 +12,7 @@ export default function RegisterPage() {
   const next = params.get("next") || "/";
   const product = params.get("product");
   const isRoutePurchase = product === "route-199";
+  const destination = isRoutePurchase ? "/checkout?product=route-199" : next;
   const loginHref = `/login?next=${encodeURIComponent(next)}${product ? `&product=${encodeURIComponent(product)}` : ""}`;
 
   const [name, setName] = useState("");
@@ -42,7 +43,7 @@ export default function RegisterPage() {
       });
       const data = await response.json();
       if (!response.ok) throw new Error(data.error || "Не удалось создать аккаунт.");
-      router.replace(next);
+      router.replace(destination);
       router.refresh();
     } catch (e) {
       setError(e instanceof Error ? e.message : "Не удалось создать аккаунт.");
@@ -56,7 +57,7 @@ export default function RegisterPage() {
       <div className="bg-white p-8 sm:p-10 rounded-[30px] shadow-xl w-full max-w-[430px] border border-black/5">
         <p className="text-xs uppercase tracking-[0.22em] text-neutral-400 text-center">ALMA</p>
         <h1 className="mt-3 text-3xl font-bold text-center">Регистрация</h1>
-        {isRoutePurchase ? <div className="mt-5 rounded-[22px] bg-[#f2eee7] p-5 text-center"><p className="text-xs uppercase tracking-[.16em] text-neutral-400">Маршрут ждёт тебя</p><p className="mt-2 font-semibold">Создай аккаунт, чтобы продолжить покупку за 199 ₽</p></div> : <p className="mt-2 text-center text-sm text-neutral-500">Телефон станет вашим способом входа в ALMA</p>}
+        {isRoutePurchase ? <div className="mt-5 rounded-[22px] bg-[#f2eee7] p-5 text-center"><p className="text-xs uppercase tracking-[.16em] text-neutral-400">Маршрут ждёт тебя</p><p className="mt-2 font-semibold">Создай аккаунт — после регистрации сразу перейдём к оплате 199 ₽</p></div> : <p className="mt-2 text-center text-sm text-neutral-500">Телефон станет вашим способом входа в ALMA</p>}
 
         <form className="mt-7" onSubmit={onSubmit}>
           <label className="block text-xs font-medium text-neutral-500 mb-2">Как вас зовут</label>
@@ -82,7 +83,7 @@ export default function RegisterPage() {
           <label className="mt-3 flex items-start gap-3 text-xs leading-5 text-neutral-500"><input checked={marketingSms} onChange={e => setMarketingSms(e.target.checked)} type="checkbox" className="mt-1" /><span>Хочу получать полезные сообщения ALMA. Это необязательно.</span></label>
 
           {error && <div role="alert" className="mt-5 rounded-2xl bg-red-50 px-4 py-3 text-sm text-red-700">{error}</div>}
-          <button type="submit" disabled={!canSubmit} className="mt-6 w-full bg-black text-white rounded-2xl py-3.5 font-medium hover:opacity-85 transition disabled:opacity-30 disabled:cursor-not-allowed">{loading ? "Создаём аккаунт…" : isRoutePurchase ? "Создать аккаунт и продолжить" : "Создать аккаунт"}</button>
+          <button type="submit" disabled={!canSubmit} className="mt-6 w-full bg-black text-white rounded-2xl py-3.5 font-medium hover:opacity-85 transition disabled:opacity-30 disabled:cursor-not-allowed">{loading ? "Создаём аккаунт…" : isRoutePurchase ? "Создать аккаунт и перейти к оплате" : "Создать аккаунт"}</button>
         </form>
 
         <p className="mt-6 text-center text-sm text-neutral-600">Уже есть аккаунт? <Link href={loginHref} className="font-semibold text-black underline underline-offset-4">Войти</Link></p>
