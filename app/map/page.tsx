@@ -1,9 +1,9 @@
 import Link from "next/link";
+import { Suspense } from "react";
 import UnifiedMap from "@/components/UnifiedMap";
 import { coffeePlaces } from "@/data/coffeePlaces";
 import { restaurantPlaces } from "@/data/restaurantPlaces";
 import { dogFriendlyPlaces } from "@/data/dogFriendlyPlaces";
-import { drivePlaces } from "@/data/drivePlaces";
 
 const verified = (rating: number) => rating >= 4.5 && rating <= 5;
 
@@ -38,7 +38,9 @@ export default function MapPage() {
           ))}
         </div>
       </section>
-      <UnifiedMap />
+      <Suspense fallback={<section className="mx-auto max-w-7xl px-4 sm:px-6"><div className="min-h-[560px] rounded-[28px] bg-[#ebe8e3] flex items-center justify-center text-neutral-500">Загружаем карту…</div></section>}>
+        <UnifiedMap />
+      </Suspense>
     </main>
   );
 }
