@@ -143,6 +143,19 @@ select:-webkit-autofill {
   .alma-route-actions button, .alma-route-actions a { min-height: 46px; }
 }
 
+@keyframes alma-cta-shine {
+  0%, 55% { transform: translateX(0) skewX(-12deg); }
+  78%, 100% { transform: translateX(520%) skewX(-12deg); }
+}
+
+.alma-cta-shine {
+  animation: alma-cta-shine 3.2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .alma-cta-shine { animation: none; }
+}
+
 @media (max-width: 374px) {
   h1 { font-size: clamp(29px, 9vw, 36px) !important; }
   h2 { font-size: clamp(25px, 8vw, 32px) !important; }
