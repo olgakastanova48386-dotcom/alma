@@ -54,6 +54,12 @@ div {
   min-width: 0;
 }
 
+/* Remove the decorative "ALMA · Санкт-Петербург" eyebrow above
+   "Не просто список мест" on the homepage on every screen size. */
+main > section:nth-of-type(2) > div > div > p:first-child {
+  display: none;
+}
+
 /* ALMA forms: user-entered values must stay readable on light fields,
    including iOS/Safari autofill and telephone inputs. */
 input,
