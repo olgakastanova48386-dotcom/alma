@@ -70,6 +70,12 @@ main > section:nth-of-type(2) > div > div > p:first-child {
   display: none;
 }
 
+/* On the ready/generated route screen, remove the questionnaire intro
+   ("Соберём твой Петербург" and the 199 ₽ explanation). */
+main > section.max-w-6xl:has(> section) > div.max-w-3xl:first-child {
+  display: none;
+}
+
 /* ALMA forms: user-entered values must stay readable on light fields,
    including iOS/Safari autofill and telephone inputs. */
 input,
