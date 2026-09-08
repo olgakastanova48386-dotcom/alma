@@ -3,6 +3,7 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  color-scheme: light;
 }
 
 @theme inline {
@@ -12,16 +13,11 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 html {
   overflow-x: hidden;
   -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  color-scheme: light;
 }
 
 body {
@@ -29,6 +25,33 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
   overflow-x: hidden;
+}
+
+/* Keep every ALMA heading inside its container on phones, tablets and desktop.
+   Explicit text colors on dark sections still win through Tailwind classes. */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  max-width: 100%;
+  min-width: 0;
+  overflow-wrap: break-word;
+  word-break: normal;
+  hyphens: auto;
+  text-wrap: balance;
+}
+
+/* Protect cards and layout children from forcing the viewport wider. */
+main,
+section,
+article,
+header,
+footer,
+nav,
+div {
+  min-width: 0;
 }
 
 /* ALMA forms: user-entered values must stay readable on light fields,
@@ -72,6 +95,14 @@ select:-webkit-autofill {
   select,
   button {
     font-size: 16px;
+  }
+
+  /* Prevent oversized display headings from spilling outside narrow phones. */
+  h1,
+  h2,
+  h3,
+  h4 {
+    max-inline-size: 100%;
   }
 
   /* Keep the three hero CTA labels compact on phones.
