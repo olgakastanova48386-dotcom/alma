@@ -16,12 +16,14 @@ export async function ensureAuthSchema() {
     database.prepare(`CREATE TABLE IF NOT EXISTS auth_rate_limits (scope TEXT NOT NULL, subject_hash TEXT NOT NULL, window_started_at INTEGER NOT NULL, hits INTEGER NOT NULL DEFAULT 0, PRIMARY KEY(scope, subject_hash))`),
     database.prepare(`CREATE TABLE IF NOT EXISTS email_codes (email TEXT NOT NULL, purpose TEXT NOT NULL, code_hash TEXT NOT NULL, expires_at INTEGER NOT NULL, attempts INTEGER NOT NULL DEFAULT 0, created_at INTEGER NOT NULL, PRIMARY KEY(email, purpose))`),
     database.prepare(`CREATE TABLE IF NOT EXISTS route_photos (id TEXT PRIMARY KEY, user_id TEXT NOT NULL, place_id INTEGER NOT NULL, place_name TEXT NOT NULL, mime_type TEXT NOT NULL, image_base64 TEXT NOT NULL, status TEXT NOT NULL DEFAULT 'pending', created_at INTEGER NOT NULL, reviewed_at INTEGER, reviewed_by TEXT, FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE)`),
+    database.prepare(`CREATE TABLE IF NOT EXISTS photozone_submissions (id TEXT PRIMARY KEY, user_id TEXT NOT NULL, name TEXT NOT NULL, address TEXT NOT NULL, note TEXT, mime_type TEXT NOT NULL, image_base64 TEXT NOT NULL, status TEXT NOT NULL DEFAULT 'pending', created_at INTEGER NOT NULL, reviewed_at INTEGER, reviewed_by TEXT, FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE)`),
     database.prepare("CREATE INDEX IF NOT EXISTS idx_sessions_user_id ON sessions(user_id)"),
     database.prepare("CREATE INDEX IF NOT EXISTS idx_sessions_expires_at ON sessions(expires_at)"),
     database.prepare("CREATE INDEX IF NOT EXISTS idx_favorites_user_id ON favorites(user_id)"),
     database.prepare("CREATE INDEX IF NOT EXISTS idx_email_codes_expires_at ON email_codes(expires_at)"),
     database.prepare("CREATE INDEX IF NOT EXISTS idx_route_photos_place_status ON route_photos(place_id, status)"),
-    database.prepare("CREATE INDEX IF NOT EXISTS idx_route_photos_status_created ON route_photos(status, created_at)")
+    database.prepare("CREATE INDEX IF NOT EXISTS idx_route_photos_status_created ON route_photos(status, created_at)"),
+    database.prepare("CREATE INDEX IF NOT EXISTS idx_photozone_submissions_status_created ON photozone_submissions(status, created_at)")
   ]);
   const columns = await database.prepare("PRAGMA table_info(users)").all();
   const names = (columns?.results || []).map((row: any) => row.name);
