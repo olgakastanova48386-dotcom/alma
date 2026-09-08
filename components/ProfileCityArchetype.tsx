@@ -111,12 +111,12 @@ export default function ProfileCityArchetype() {
     <section className="mt-6 overflow-hidden rounded-[30px] border border-black/5 bg-black text-white shadow-sm">
       <div className="p-6 sm:p-8">
         <p className="text-xs uppercase tracking-[0.2em] text-white/45">Только в твоём профиле</p>
-        <div className="mt-3 flex items-start justify-between gap-4">
-          <div>
-            <h2 className="text-2xl sm:text-3xl font-bold">Твой городской архетип</h2>
+        <div className="mt-3 flex items-start justify-between gap-3 sm:gap-4">
+          <div className="min-w-0 flex-1">
+            <h2 className="whitespace-nowrap text-[20px] sm:text-3xl font-bold tracking-tight">Твой городской архетип</h2>
             <p className="mt-2 max-w-xl text-sm leading-6 text-white/60">Три быстрых выбора — и ALMA скажет, как ты на самом деле любишь проживать город.</p>
           </div>
-          <span className="text-3xl">✦</span>
+          <span className="shrink-0 text-3xl">✦</span>
         </div>
       </div>
 
