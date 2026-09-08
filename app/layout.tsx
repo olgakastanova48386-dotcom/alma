@@ -14,12 +14,26 @@ const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "ALMA — места Санкт-Петербурга",
-  description: "Подбирай места Санкт-Петербурга по настроению, компании и бюджету.",
+  title: "ALMA — места Санкт-Петербурга по настроению",
+  description: "ALMA помогает найти кофейни, рестораны, прогулки и красивые места Санкт-Петербурга по настроению, бюджету, компании и времени.",
+  keywords: [
+    "места Санкт-Петербурга",
+    "куда сходить в Петербурге",
+    "кофейни Санкт-Петербурга",
+    "рестораны Санкт-Петербурга",
+    "красивые места СПб",
+    "маршруты по Петербургу",
+  ],
   applicationName: "ALMA",
   manifest: "/manifest.webmanifest",
   appleWebApp: { capable: true, title: "ALMA", statusBarStyle: "default" },
   icons: { icon: "/alma-icon.svg", apple: "/alma-icon.svg" },
+  openGraph: {
+    title: "ALMA — найди место, которое подходит именно тебе",
+    description: "Кофейни, рестораны, прогулки и маршруты Санкт-Петербурга под твоё настроение.",
+    locale: "ru_RU",
+    type: "website",
+  },
 };
 
 export const viewport = { themeColor: "#ffffff" };
