@@ -144,12 +144,26 @@ select:-webkit-autofill {
 }
 
 @keyframes alma-cta-shine {
-  0%, 55% { transform: translateX(0) skewX(-12deg); }
-  78%, 100% { transform: translateX(520%) skewX(-12deg); }
+  0%, 58% {
+    opacity: 0;
+    transform: translateX(0) skewX(-14deg);
+  }
+  62% { opacity: 0.9; }
+  82% {
+    opacity: 0.9;
+    transform: translateX(720%) skewX(-14deg);
+  }
+  83%, 100% {
+    opacity: 0;
+    transform: translateX(720%) skewX(-14deg);
+  }
 }
 
 .alma-cta-shine {
-  animation: alma-cta-shine 3.2s ease-in-out infinite;
+  left: -28%;
+  width: 16%;
+  animation: alma-cta-shine 3.6s linear infinite;
+  will-change: transform;
 }
 
 @media (prefers-reduced-motion: reduce) {
