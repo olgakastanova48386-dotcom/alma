@@ -105,6 +105,7 @@ select:-webkit-autofill {
     font-size: clamp(32px, 9.2vw, 44px) !important;
     line-height: 1.02 !important;
     letter-spacing: -0.035em;
+    text-align: left !important;
   }
 
   /* Paragraphs and labels wrap only at spaces: no broken words, no lost text. */
