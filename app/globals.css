@@ -27,8 +27,8 @@ body {
   overflow-x: hidden;
 }
 
-/* Keep every ALMA heading inside its container on phones, tablets and desktop.
-   Explicit text colors on dark sections still win through Tailwind classes. */
+/* ALMA headings stay on one line on every viewport.
+   This also neutralizes old forced <br> breaks left in page markup. */
 h1,
 h2,
 h3,
@@ -37,10 +37,20 @@ h5,
 h6 {
   max-width: 100%;
   min-width: 0;
-  overflow-wrap: break-word;
+  white-space: nowrap;
+  text-wrap: nowrap;
+  overflow-wrap: normal;
   word-break: normal;
-  hyphens: auto;
-  text-wrap: balance;
+  hyphens: none;
+}
+
+h1 br,
+h2 br,
+h3 br,
+h4 br,
+h5 br,
+h6 br {
+  display: none;
 }
 
 /* Protect cards and layout children from forcing the viewport wider. */
@@ -103,12 +113,14 @@ select:-webkit-autofill {
     font-size: 16px;
   }
 
-  /* Prevent oversized display headings from spilling outside narrow phones. */
+  /* Keep headings single-line on narrow phones too. */
   h1,
   h2,
   h3,
   h4 {
     max-inline-size: 100%;
+    white-space: nowrap;
+    text-wrap: nowrap;
   }
 
   /* Keep the three hero CTA labels compact on phones.
