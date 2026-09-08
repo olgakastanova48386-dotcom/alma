@@ -129,6 +129,19 @@ select:-webkit-autofill {
     text-wrap: nowrap;
   }
 
+  /* Homepage hero is the intentional exception: it needs two readable lines. */
+  main > section:first-child h1 {
+    max-inline-size: 100%;
+    white-space: normal;
+    text-wrap: balance;
+    overflow-wrap: normal;
+    word-break: normal;
+  }
+
+  main > section:first-child h1 br {
+    display: block;
+  }
+
   /* Keep the three hero CTA labels compact on phones.
      This intentionally overrides the generic 16px mobile button rule above. */
   main > section:first-child button {
