@@ -27,67 +27,36 @@ body {
   overflow-x: hidden;
 }
 
-/* ALMA headings stay on one line on every viewport.
-   This also neutralizes old forced <br> breaks left in page markup. */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  max-width: 100%;
-  min-width: 0;
-  white-space: nowrap;
-  text-wrap: nowrap;
+/* Never split Russian words with automatic hyphenation. */
+h1, h2, h3, h4, h5, h6, p, span, a, button, label, li {
   overflow-wrap: normal;
   word-break: normal;
   hyphens: none;
+  -webkit-hyphens: none;
 }
 
-h1 br,
-h2 br,
-h3 br,
-h4 br,
-h5 br,
-h6 br {
-  display: none;
-}
-
-/* Protect cards and layout children from forcing the viewport wider. */
-main,
-section,
-article,
-header,
-footer,
-nav,
-div {
+/* Protect layout children from forcing the viewport wider. */
+main, section, article, header, footer, nav, div {
   min-width: 0;
 }
 
-/* Remove the decorative "ALMA · Санкт-Петербург" eyebrow above
-   "Не просто список мест" on the homepage on every screen size. */
+/* Remove the decorative eyebrow above “Не просто список мест”. */
 main > section:nth-of-type(2) > div > div > p:first-child {
   display: none;
 }
 
-/* On the ready/generated route screen, remove the questionnaire intro
-   ("Соберём твой Петербург" and the 199 ₽ explanation). */
+/* Remove questionnaire intro on the ready/generated route screen. */
 main > section.max-w-6xl:has(> section) > div.max-w-3xl:first-child {
   display: none;
 }
 
-/* ALMA forms: user-entered values must stay readable on light fields,
-   including iOS/Safari autofill and telephone inputs. */
-input,
-textarea,
-select {
+input, textarea, select {
   color: #000 !important;
   -webkit-text-fill-color: #000 !important;
   caret-color: #000;
 }
 
-input::placeholder,
-textarea::placeholder {
+input::placeholder, textarea::placeholder {
   color: rgba(0, 0, 0, 0.42);
   -webkit-text-fill-color: rgba(0, 0, 0, 0.42);
   opacity: 1;
@@ -107,172 +76,85 @@ select:-webkit-autofill {
     padding-bottom: calc(82px + env(safe-area-inset-bottom));
   }
 
-  button,
-  a {
-    -webkit-tap-highlight-color: transparent;
-  }
+  button, a { -webkit-tap-highlight-color: transparent; }
+  input, textarea, select, button { font-size: 16px; }
 
-  input,
-  textarea,
-  select,
-  button {
-    font-size: 16px;
-  }
-
-  /* Keep headings single-line on narrow phones too. */
-  h1,
-  h2,
-  h3,
-  h4 {
-    max-inline-size: 100%;
-    white-space: nowrap;
-    text-wrap: nowrap;
-  }
-
-  /* Homepage hero is the intentional exception: it needs two readable lines. */
-  main > section:first-child h1 {
-    max-inline-size: 100%;
-    white-space: normal;
+  /* All mobile headings: centered, complete, never clipped or hyphenated.
+     Balance produces one or two clean lines depending on phone width. */
+  h1, h2, h3, h4, h5, h6 {
+    width: 100%;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center !important;
+    white-space: normal !important;
     text-wrap: balance;
+    overflow: visible;
+    overflow-wrap: normal !important;
+    word-break: keep-all !important;
+    hyphens: none !important;
+    -webkit-hyphens: none !important;
+  }
+
+  /* Old forced line breaks are ignored; the browser balances by available width. */
+  h1 br, h2 br, h3 br, h4 br, h5 br, h6 br { display: none; }
+
+  /* Main hero keeps its deliberate two-line composition. */
+  main > section:first-child h1 br { display: block; }
+  main > section:first-child h1 {
+    font-size: clamp(32px, 9.2vw, 44px) !important;
+    line-height: 1.02 !important;
+    letter-spacing: -0.035em;
+  }
+
+  /* Paragraphs and labels wrap only at spaces: no broken words, no lost text. */
+  p, li, label, button, a, span {
     overflow-wrap: normal;
     word-break: normal;
+    hyphens: none;
+    -webkit-hyphens: none;
   }
 
-  main > section:first-child h1 br {
-    display: block;
+  /* Keep controls inside every phone viewport. */
+  button, a, input, textarea, select {
+    max-width: 100%;
   }
 
-  /* Keep the three hero CTA labels compact on phones.
-     This intentionally overrides the generic 16px mobile button rule above. */
-  main > section:first-child button {
-    font-size: 11px !important;
-  }
+  main > section:first-child button { font-size: 11px !important; }
 
-  .safe-area-mobile-nav {
-    bottom: calc(12px + env(safe-area-inset-bottom));
-  }
+  .safe-area-mobile-nav { bottom: calc(12px + env(safe-area-inset-bottom)); }
+  .alma-map { min-height: 58vh !important; border-radius: 22px !important; }
+  .alma-map .leaflet-control-zoom { margin-right: 10px !important; margin-bottom: 10px !important; }
+  .alma-leaflet-popup .leaflet-popup-content-wrapper { border-radius: 20px !important; }
+  .alma-leaflet-popup .leaflet-popup-content { width: min(278px, calc(100vw - 56px)) !important; }
+  .alma-popup { padding: 16px !important; }
+  .alma-popup-title { font-size: 19px !important; line-height: 1.15 !important; }
+  .alma-route-button { min-height: 46px !important; }
+  .alma-purchased-route { border-radius: 26px !important; }
+  .alma-purchased-route > header { padding: 24px 20px !important; }
+  .alma-purchased-route > header h3 { font-size: clamp(27px, 8vw, 34px) !important; line-height: 1.04 !important; }
+  .alma-purchased-route > div { padding: 26px 16px 30px !important; }
+  .alma-route-stop { margin-bottom: 22px !important; }
+  .alma-route-stop > span { left: 0 !important; top: 18px !important; width: 42px !important; height: 42px !important; }
+  .alma-route-stop article { margin-left: 52px !important; gap: 18px !important; }
+  .alma-route-stop article > div:first-child { aspect-ratio: 4 / 3 !important; border-radius: 24px !important; }
+  .alma-route-stop h4 { font-size: clamp(22px, 6.5vw, 26px) !important; line-height: 1.08 !important; }
+  .alma-route-actions button, .alma-route-actions a { min-height: 46px; }
+}
 
-  .alma-map {
-    min-height: 58vh !important;
-    border-radius: 22px !important;
-  }
-
-  .alma-map .leaflet-control-zoom {
-    margin-right: 10px !important;
-    margin-bottom: 10px !important;
-  }
-
-  .alma-leaflet-popup .leaflet-popup-content-wrapper {
-    border-radius: 20px !important;
-  }
-
-  .alma-leaflet-popup .leaflet-popup-content {
-    width: min(278px, calc(100vw - 56px)) !important;
-  }
-
-  .alma-popup {
-    padding: 16px !important;
-  }
-
-  .alma-popup-title {
-    font-size: 19px !important;
-    line-height: 1.15 !important;
-  }
-
-  .alma-route-button {
-    min-height: 46px !important;
-  }
-
-  .alma-purchased-route {
-    border-radius: 26px !important;
-  }
-
-  .alma-purchased-route > header {
-    padding: 24px 20px !important;
-  }
-
-  .alma-purchased-route > header h3 {
-    font-size: 34px !important;
-    line-height: 1 !important;
-  }
-
-  .alma-purchased-route > div {
-    padding: 26px 16px 30px !important;
-  }
-
-  .alma-route-stop {
-    margin-bottom: 22px !important;
-  }
-
-  .alma-route-stop > span {
-    left: 0 !important;
-    top: 18px !important;
-    width: 42px !important;
-    height: 42px !important;
-  }
-
-  .alma-route-stop article {
-    margin-left: 52px !important;
-    gap: 18px !important;
-  }
-
-  .alma-route-stop article > div:first-child {
-    aspect-ratio: 4 / 3 !important;
-    border-radius: 24px !important;
-  }
-
-  .alma-route-stop h4 {
-    font-size: 26px !important;
-    line-height: 1.05 !important;
-  }
-
-  .alma-route-actions button,
-  .alma-route-actions a {
-    min-height: 46px;
-  }
+@media (max-width: 374px) {
+  h1 { font-size: clamp(29px, 9vw, 36px) !important; }
+  h2 { font-size: clamp(25px, 8vw, 32px) !important; }
+  h3 { font-size: clamp(21px, 7vw, 28px) !important; }
 }
 
 @media print {
-  @page {
-    size: A4;
-    margin: 12mm;
-  }
-
-  body {
-    background: #ffffff !important;
-    color: #111111 !important;
-  }
-
-  body > header,
-  body > footer,
-  nav,
-  .alma-route-actions {
-    display: none !important;
-  }
-
-  .alma-purchased-route {
-    margin: 0 !important;
-    border: 0 !important;
-    border-radius: 0 !important;
-    background: #ffffff !important;
-    overflow: visible !important;
-  }
-
-  .alma-purchased-route > header {
-    padding: 0 0 18px !important;
-  }
-
-  .alma-purchased-route > div {
-    padding: 20px 0 0 !important;
-  }
-
-  .alma-route-stop {
-    break-inside: avoid;
-    page-break-inside: avoid;
-  }
-
-  .alma-route-stop img {
-    print-color-adjust: exact;
-    -webkit-print-color-adjust: exact;
-  }
+  @page { size: A4; margin: 12mm; }
+  body { background: #ffffff !important; color: #111111 !important; }
+  body > header, body > footer, nav, .alma-route-actions { display: none !important; }
+  .alma-purchased-route { margin: 0 !important; border: 0 !important; border-radius: 0 !important; background: #ffffff !important; overflow: visible !important; }
+  .alma-purchased-route > header { padding: 0 0 18px !important; }
+  .alma-purchased-route > div { padding: 20px 0 0 !important; }
+  .alma-route-stop { break-inside: avoid; page-break-inside: avoid; }
+  .alma-route-stop img { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
 }
