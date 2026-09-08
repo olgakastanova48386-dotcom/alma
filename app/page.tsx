@@ -131,11 +131,10 @@ export default function HomePage() {
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-[#f7f4ef] text-black">
-      <section className="relative min-h-[560px] md:min-h-[820px] flex items-start md:items-center pt-[170px] md:pt-28 pb-8 sm:pb-20 overflow-hidden bg-[#efe9e1] text-black">
+      <section className="relative min-h-[560px] md:min-h-[820px] flex items-start md:items-center pt-[170px] md:pt-28 pb-8 sm:pb-20 overflow-hidden bg-[#f7f4ef] text-black">
         <img key={`mobile-bg-${heroTheme.image}`} src={heroTheme.image} alt={heroTheme.label} className="md:hidden absolute inset-0 h-full w-full object-cover transition-opacity duration-700" style={{ objectPosition: heroTheme.position }} />
         <div className="md:hidden absolute inset-0 bg-gradient-to-b from-black/15 via-black/20 to-black/72" />
-        <div className="hidden md:block absolute inset-0 bg-[radial-gradient(circle_at_72%_44%,rgba(255,255,255,0.95),rgba(239,233,225,0.65)_35%,rgba(226,216,205,0.95)_75%)]" />
-        <div className="hidden md:block absolute -top-40 -left-40 w-[520px] h-[520px] rounded-full bg-white/45 blur-3xl" />
+        <div className="hidden md:block absolute inset-0 bg-[#f7f4ef]" />
         <div className="hidden md:block absolute z-[2] right-[2%] lg:right-[7%] xl:right-[10%] top-32 bottom-10 w-[360px] lg:w-[440px] xl:w-[490px] pointer-events-none"><div className="relative h-full w-full overflow-hidden rounded-[36px] lg:rounded-[42px] shadow-[0_35px_80px_rgba(0,0,0,.20)] ring-1 ring-black/5 bg-neutral-200"><img key={heroTheme.image} src={heroTheme.image} alt={heroTheme.label} className="h-full w-full object-cover transition-opacity duration-700" style={{ objectPosition: heroTheme.position }} /><div className="absolute inset-0 bg-gradient-to-t from-black/18 via-transparent to-white/5" /></div></div>
 
         {weather && weatherInfo && <div className="absolute right-4 top-[82px] z-20 md:hidden"><div className="inline-flex items-center gap-1.5 rounded-full bg-black/72 px-2.5 py-1.5 text-white shadow-sm backdrop-blur-md"><span className="text-sm leading-none">{weatherInfo.icon}</span><span className="text-xs font-semibold">{Math.round(weather.temperature) > 0 ? "+" : ""}{Math.round(weather.temperature)}°</span><span className="h-3 w-px bg-white/20" /><span className="text-[11px] text-white/75">{weatherInfo.text}</span></div></div>}
