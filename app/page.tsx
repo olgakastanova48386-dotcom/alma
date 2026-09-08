@@ -27,6 +27,18 @@ const photozones = [
   { title: "Академия Штиглица", tag: "Детали", image: "/images/shtiglitz.jpg", time: "Днём" },
 ];
 
+const placeIds: Record<string, number> = {
+  "Дворцовая площадь": 1,
+  "Ботанический сад": 2,
+  "Поцелуев мост": 3,
+  "Особняк Демидова": 4,
+  "Академия Штиглица": 5,
+  "Лахта Центр": 6,
+  "Водная прогулка": 7,
+  "Новая Голландия": 8,
+  "Ракета · Кожевенная линия, 27": 5002,
+};
+
 type Weather = { temperature: number; code: number };
 type HeroTheme = { image: string; position: string; label: string };
 
@@ -80,7 +92,10 @@ export default function HomePage() {
 
   const scrollToFilters = () => document.getElementById("alma-filters")?.scrollIntoView({ behavior: "smooth", block: "center" });
   const scrollToPhotozones = () => document.getElementById("alma-photozones")?.scrollIntoView({ behavior: "smooth", block: "start" });
-  const openPlace = (title: string) => router.push(`/map?place=${encodeURIComponent(title)}`);
+  const openPlace = (title: string) => {
+    const id = placeIds[title];
+    router.push(id ? `/place/${id}` : "/map");
+  };
   const openMap = () => {
     const params = new URLSearchParams();
     if (mood !== "Любое настроение") params.set("mood", mood);
