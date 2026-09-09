@@ -25,7 +25,7 @@ export default function PhotozonesPage(){
  return <main className="min-h-screen bg-[#f4f0e9] pt-24 sm:pt-28 pb-24 text-black">
   <section className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-10">
    <div className="border-b border-black/10 pb-8 sm:pb-12 lg:grid lg:grid-cols-[1.25fr_.75fr] lg:items-end lg:gap-16">
-    <div><p className="text-[11px] uppercase tracking-[.26em] text-neutral-500">ALMA · PHOTO GUIDE · Санкт-Петербург</p><h1 className="mt-5 max-w-4xl text-[48px] sm:text-7xl lg:text-[92px] font-bold leading-[.88] tracking-[-.055em]">Город как<br/><span className="font-serif italic font-normal">в сохранёнках.</span></h1></div>
+    <div><h1 className="max-w-4xl text-[48px] sm:text-7xl lg:text-[92px] font-bold leading-[.88] tracking-[-.055em]">Город как<br/><span className="font-serif italic font-normal">в сохранёнках.</span></h1></div>
     <div className="mt-7 lg:mt-0"><p className="max-w-md text-base sm:text-lg leading-7 text-neutral-600">Не список достопримечательностей, а места, ради которых хочется достать камеру. Выбирай настроение — ALMA подскажет, где получится тот самый кадр.</p><div className="mt-5"><Link href="/photozones/add" className="inline-flex rounded-full bg-black px-5 py-3 text-sm font-semibold text-white">＋ Предложить фотолокацию</Link></div><p className="mt-4 text-xs text-neutral-400">Фотографии используются как иллюстрация локаций. Для заведений ALMA публикует только подтверждённые данные.</p></div>
    </div>
 
