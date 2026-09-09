@@ -3,12 +3,12 @@ import { Suspense } from "react";
 import UnifiedMap from "@/components/UnifiedMap";
 
 const collections = [
-  { title: "Готовый план", href: "/surprise", featured: true },
-  { title: "Кофейни", href: "/coffee" },
-  { title: "Рестораны", href: "/restaurants" },
-  { title: "С собакой", href: "/dog-friendly" },
-  { title: "Для свидания", href: "/map?mood=Романтика&company=Пара" },
-  { title: "Драйв", href: "/map?category=drive" },
+  { title: "Готовый план", icon: "✨", href: "/surprise", featured: true },
+  { title: "Кофейни", icon: "☕", href: "/coffee" },
+  { title: "Рестораны", icon: "🍴", href: "/restaurants" },
+  { title: "С собакой", icon: "🐾", href: "/dog-friendly" },
+  { title: "Для свидания", icon: "💕", href: "/map?mood=Романтика&company=Пара" },
+  { title: "Драйв", icon: "⚡", href: "/map?category=drive" },
 ];
 
 export default function MapPage() {
@@ -25,7 +25,7 @@ export default function MapPage() {
               href={collection.href}
               className={`group min-w-[156px] max-w-[172px] snap-start rounded-[18px] sm:rounded-[24px] border px-3.5 py-3 sm:p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-lg sm:min-w-0 sm:max-w-none ${collection.featured ? "border-black bg-black text-white" : "border-black/5 bg-white text-black"}`}
             >
-              <h2 className="text-[15px] leading-5 sm:text-lg font-semibold">{collection.title}</h2>
+              <h2 className="text-[15px] leading-5 sm:text-lg font-semibold"><span aria-hidden="true">{collection.icon}</span> {collection.title}</h2>
               <span className={`mt-2 sm:mt-4 inline-flex text-[13px] sm:text-sm font-medium transition ${collection.featured ? "text-white/80 group-hover:text-white" : "text-black/70 group-hover:text-black"}`}>Открыть →</span>
             </Link>
           ))}
