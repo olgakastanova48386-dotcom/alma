@@ -124,8 +124,7 @@ export default function PlacePage() {
 
           <div className="flex flex-col justify-between py-1 lg:py-3">
             <div>
-              <p className="text-[11px] sm:text-sm uppercase tracking-[0.2em] sm:tracking-[0.24em] text-neutral-500">ALMA · Санкт-Петербург</p>
-              <h1 className="mt-3 sm:mt-5 text-[34px] sm:text-5xl lg:text-[58px] font-bold leading-[1.02] tracking-tight text-neutral-900">{place.name}</h1>
+              <h1 className="text-[34px] sm:text-5xl lg:text-[58px] font-bold leading-[1.02] tracking-tight text-neutral-900">{place.name}</h1>
               {place.rating && <div className="mt-3 sm:mt-5 flex flex-wrap items-center gap-2 sm:gap-3"><span className="rounded-full bg-black text-white px-3 py-1.5 text-xs sm:px-4 sm:py-2 sm:text-sm font-semibold">★ {place.rating.toFixed(1)} / 5</span>{place.ratingSource && <span className="text-xs sm:text-sm text-neutral-500">Источник: {place.ratingSource}</span>}</div>}
 
               {place.description && (
