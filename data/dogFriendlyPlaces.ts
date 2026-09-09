@@ -19,6 +19,7 @@ export type DogFriendlyPlace = {
   ratingSource: string;
   imageUrl?: string;
   imageSourceUrl?: string;
+  babyCare?: "Пеленальный столик" | "Комната матери и ребёнка" | "Детская комната" | "Детский стульчик";
 };
 
 export const dogFriendlyPlaces: DogFriendlyPlace[] = [
@@ -151,6 +152,7 @@ export const dogFriendlyPlaces: DogFriendlyPlace[] = [
     ratingScale: 5,
     ratingCount: 149,
     ratingSource: "Яндекс Карты",
+    babyCare: "Детская комната",
     imageUrl: "https://img01.rl0.ru/afisha/1894x1000i/s.afisha.ru/mediastorage/64/d4/831816dcdfd44083b65e5cc3d464.jpg",
     imageSourceUrl: "https://www.afisha.ru/spb/restaurant/7-am-sovremennye-aristokraty-1600449/",
   },
@@ -173,6 +175,7 @@ export const dogFriendlyPlaces: DogFriendlyPlace[] = [
     ratingScale: 5,
     ratingCount: 1223,
     ratingSource: "Google",
+    babyCare: "Детская комната",
     imageUrl: "https://spb.restoran.ru/upload/resize_cache/iblock/734/1252_600_2/5fc94a57495b18c759e08bd20ec1f3b661b.jpg",
     imageSourceUrl: "https://spb.restoran.ru/spb/detailed/restaurants/kroo_cafe/",
   },
