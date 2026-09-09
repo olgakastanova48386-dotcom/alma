@@ -7,27 +7,128 @@ export default function CoffeePage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
           <div>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight">Кофейни с рейтингом ★ 4,5–5,0</h1>
-            <p className="mt-4 max-w-3xl text-neutral-600 text-base sm:text-lg leading-8">Проверенные кофейни Петербурга. ★★★★★ - показываем источник, оценку и дату проверки ALMA.</p>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight">
+              Кофейни с рейтингом ★ 4,5–5,0
+            </h1>
+            <p className="mt-4 max-w-3xl text-neutral-600 text-base sm:text-lg leading-8">
+              Проверенные кофейни Петербурга. ★★★★★ - показываем источник,
+              оценку и дату проверки ALMA.
+            </p>
           </div>
-          <div className="rounded-full bg-black text-white px-5 py-3 text-sm font-medium self-start lg:self-auto">{coffeePlaces.length} мест</div>
+          <div className="rounded-full bg-black text-white px-5 py-3 text-sm font-medium self-start lg:self-auto">
+            {coffeePlaces.length} мест
+          </div>
         </div>
 
         <div className="mt-10 grid md:grid-cols-2 xl:grid-cols-3 gap-5">
           {coffeePlaces.map((place, index) => (
-            <article key={place.id} className="relative overflow-hidden rounded-[28px] bg-white border border-black/5 shadow-sm flex flex-col transition hover:-translate-y-1 hover:shadow-lg">
-              <Link href={`/place/${1001 + index}`} aria-label={`Открыть карточку ${place.name}`} className="absolute inset-0 z-10 rounded-[28px]"><span className="sr-only">Открыть карточку {place.name}</span></Link>
-              {place.image && <div className="aspect-[16/10] overflow-hidden bg-[#ebe8e3]"><img src={place.image} alt={`${place.name} — кофейня в Санкт-Петербурге`} className="h-full w-full object-cover transition duration-500 hover:scale-[1.03]" loading="lazy" /></div>}
+            <article
+              key={place.id}
+              className="relative overflow-hidden rounded-[28px] bg-white border border-black/5 shadow-sm flex flex-col transition hover:-translate-y-1 hover:shadow-lg"
+            >
+              <Link
+                href={`/place/${1001 + index}`}
+                aria-label={`Открыть карточку ${place.name}`}
+                className="absolute inset-0 z-10 rounded-[28px]"
+              >
+                <span className="sr-only">Открыть карточку {place.name}</span>
+              </Link>
+              {place.image && (
+                <div className="aspect-[16/10] overflow-hidden bg-[#ebe8e3]">
+                  <img
+                    src={place.image}
+                    alt={`${place.name} — кофейня в Санкт-Петербурге`}
+                    className="h-full w-full object-cover transition duration-500 hover:scale-[1.03]"
+                    loading="lazy"
+                  />
+                </div>
+              )}
               <div className="p-6 flex flex-col flex-1">
-                <div className="flex items-start justify-between gap-4"><div><p className="text-xs uppercase tracking-[0.16em] text-neutral-400">Кофейня</p><h2 className="mt-2 text-2xl font-semibold tracking-tight">{place.name}</h2></div><div className="shrink-0 rounded-2xl bg-black px-4 py-3 text-white text-xl sm:text-2xl font-bold leading-none">★ {place.rating.toFixed(1)} <span className="text-sm font-medium text-white/60">/ 5</span></div></div>
-                <p className="mt-4 text-sm leading-6 text-neutral-600">{place.note}</p>
-                <div className="mt-5 space-y-2 text-sm text-neutral-600"><p><span className="text-black font-medium">Адрес:</span> {place.address}</p><p><span className="text-black font-medium">Часы:</span> {place.hours}</p>{place.priceNote && <p><span className="text-black font-medium">Цена:</span> {place.priceNote}</p>}{place.dogFriendly && <p><span className="text-black font-medium">Dog Friendly:</span> {place.dogFriendly}</p>}</div>
-                <div className="mt-auto pt-6"><div className="pt-5 border-t border-black/5 text-sm text-neutral-500 leading-6"><p className="font-medium text-neutral-700">★ {place.rating.toFixed(1)} из 5 · {place.ratingCount.toLocaleString("ru-RU")} оценок</p><p>Проверено ALMA: {place.ratingUpdated}</p></div><div className="mt-5 flex justify-end"><Link href={`/map?place=${1001 + index}`} title="На карте" aria-label={`${place.name} на карте ALMA`} className="relative z-20 inline-flex h-12 w-12 items-center justify-center rounded-full bg-black text-white transition hover:scale-105"><svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg></Link></div></div>
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <p className="text-xs uppercase tracking-[0.16em] text-neutral-400">
+                      Кофейня
+                    </p>
+                    <h2 className="mt-2 text-2xl font-semibold tracking-tight">
+                      {place.name}
+                    </h2>
+                  </div>
+                  <div className="shrink-0 rounded-2xl bg-black px-4 py-3 text-white text-xl sm:text-2xl font-bold leading-none">
+                    ★ {place.rating.toFixed(1)}{" "}
+                    <span className="text-sm font-medium text-white/60">
+                      / 5
+                    </span>
+                  </div>
+                </div>
+                <p className="mt-4 text-sm leading-6 text-neutral-600">
+                  {place.note}
+                </p>
+                <div className="mt-5 space-y-2 text-sm text-neutral-600">
+                  <p>
+                    <span className="text-black font-medium">Адрес:</span>{" "}
+                    {place.address}
+                  </p>
+                  <p>
+                    <span className="text-black font-medium">Часы:</span>{" "}
+                    {place.hours}
+                  </p>
+                  <p>
+                    <span className="text-black font-medium">Средний чек:</span>{" "}
+                    {place.averageBill}
+                  </p>
+                  {place.dogFriendly && (
+                    <p>
+                      <span className="text-black font-medium">
+                        Dog Friendly:
+                      </span>{" "}
+                      {place.dogFriendly}
+                    </p>
+                  )}
+                </div>
+                <div className="mt-auto pt-6">
+                  <div className="pt-5 border-t border-black/5 text-sm text-neutral-500 leading-6">
+                    <p className="font-medium text-neutral-700">
+                      ★ {place.rating.toFixed(1)} из 5 ·{" "}
+                      {place.ratingCount.toLocaleString("ru-RU")} оценок
+                    </p>
+                    <p>Проверено ALMA: {place.ratingUpdated}</p>
+                  </div>
+                  <div className="mt-5 flex justify-end">
+                    <Link
+                      href={`/map?place=${1001 + index}`}
+                      title="На карте"
+                      aria-label={`${place.name} на карте ALMA`}
+                      className="relative z-20 inline-flex h-12 w-12 items-center justify-center rounded-full bg-black text-white transition hover:scale-105"
+                    >
+                      <svg
+                        viewBox="0 0 24 24"
+                        width="23"
+                        height="23"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        aria-hidden="true"
+                      >
+                        <path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z" />
+                        <circle cx="12" cy="10" r="2.5" />
+                      </svg>
+                    </Link>
+                  </div>
+                </div>
               </div>
             </article>
           ))}
         </div>
-        <div className="mt-10"><Link href="/map" className="inline-flex rounded-full bg-white border border-black/5 px-5 py-3 text-sm font-medium shadow-sm">← К карте</Link></div>
+        <div className="mt-10">
+          <Link
+            href="/map"
+            className="inline-flex rounded-full bg-white border border-black/5 px-5 py-3 text-sm font-medium shadow-sm"
+          >
+            ← К карте
+          </Link>
+        </div>
       </div>
     </main>
   );
