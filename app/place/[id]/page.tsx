@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { mapPlaces } from "@/data/mapPlaces";
 import PlaceOutfitAdvice from "@/components/PlaceOutfitAdvice";
+import PlaceMenu from "@/components/PlaceMenu";
 
 const FAVORITES_KEY = "alma-favorites";
 
@@ -188,7 +189,6 @@ export default function PlacePage() {
                 ))}
               </div>
             )}
-
           </div>
 
           <div className="flex flex-col justify-between py-1 lg:py-3">
@@ -283,6 +283,7 @@ export default function PlacePage() {
                     🐾 Dog Friendly
                   </div>
                 )}
+                <PlaceMenu placeId={place.id} signedIn={signedIn} />
               </div>
 
               {isFoodVenue && (
