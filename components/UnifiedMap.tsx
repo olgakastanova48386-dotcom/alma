@@ -80,7 +80,7 @@ export default function UnifiedMap() {
   useEffect(() => {
     if (!ready || !container.current || map.current) return;
     map.current = window.L.map(container.current, { zoomControl: false }).setView([59.9386, 30.3141], 11);
-    window.L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", { subdomains: "abcd", maxZoom: 20, attribution: "© OpenStreetMap · © CARTO" }).addTo(map.current);
+    window.L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 19, attribution: "© OpenStreetMap" }).addTo(map.current);
     window.L.control.zoom({ position: "bottomright" }).addTo(map.current);
   }, [ready]);
 
