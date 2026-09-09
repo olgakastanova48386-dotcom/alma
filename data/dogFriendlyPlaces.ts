@@ -41,7 +41,8 @@ export const dogFriendlyPlaces: DogFriendlyPlace[] = [
     ratingScale: 5,
     ratingCount: 6524,
     ratingSource: "Яндекс Карты",
-    imageSourceUrl: "https://bertholdcentre.com/",
+    imageUrl: "https://static.gorbilet.com/media/00/c5/bd/DSC_4552.jpg",
+    imageSourceUrl: "https://gorbilet.com/blog/news/berthold-centre",
   },
   {
     id: "gaijin",
@@ -62,7 +63,8 @@ export const dogFriendlyPlaces: DogFriendlyPlace[] = [
     ratingScale: 5,
     ratingCount: 588,
     ratingSource: "2ГИС",
-    imageSourceUrl: "https://www.restorating.ru/spb/best/dogs",
+    imageUrl: "https://img.restoclub.ru/uploads/place/e/6/7/b/e67bb001f1a07c9f1b939b920e45024c_w1200_h630--c.jpeg",
+    imageSourceUrl: "https://www.restoclub.ru/spb/place/gaijin",
   },
   {
     id: "attache",
@@ -83,7 +85,8 @@ export const dogFriendlyPlaces: DogFriendlyPlace[] = [
     ratingScale: 5,
     ratingCount: 20,
     ratingSource: "2ГИС",
-    imageSourceUrl: "https://www.restorating.ru/spb/best/dogs",
+    imageUrl: "https://peterburg2.ru/uploads/23/09/12/ga2_exnc8ENazJg.jpg",
+    imageSourceUrl: "https://peterburg2.ru/restplaces/restoran-attache-32752.html",
   },
   {
     id: "phali-khinkali-kuznetsovskaya",
@@ -104,7 +107,8 @@ export const dogFriendlyPlaces: DogFriendlyPlace[] = [
     ratingScale: 5,
     ratingCount: 3581,
     ratingSource: "2ГИС",
-    imageSourceUrl: "https://www.restorating.ru/spb/best/dogs",
+    imageUrl: "https://phali-hinkali.ru/pimages/Restorans7/fbf36ebde5-1_1920x.jpg",
+    imageSourceUrl: "https://phali-hinkali.ru/restoran/kuznecovskaya",
   },
   {
     id: "cafe-claret",
@@ -125,7 +129,8 @@ export const dogFriendlyPlaces: DogFriendlyPlace[] = [
     ratingScale: 5,
     ratingCount: 220,
     ratingSource: "Google",
-    imageSourceUrl: "https://www.restorating.ru/spb/best/dogs",
+    imageUrl: "https://chef.ru/wp-content/uploads/claret_red-hall4_tilda6440756.jpg",
+    imageSourceUrl: "https://chef.ru/place/claret/",
   },
   {
     id: "7am-chitateli",
@@ -146,7 +151,8 @@ export const dogFriendlyPlaces: DogFriendlyPlace[] = [
     ratingScale: 5,
     ratingCount: 149,
     ratingSource: "Яндекс Карты",
-    imageSourceUrl: "https://7am.insales.site/",
+    imageUrl: "https://img01.rl0.ru/afisha/1894x1000i/s.afisha.ru/mediastorage/64/d4/831816dcdfd44083b65e5cc3d464.jpg",
+    imageSourceUrl: "https://www.afisha.ru/spb/restaurant/7-am-sovremennye-aristokraty-1600449/",
   },
   {
     id: "kroo-cafe",
@@ -167,6 +173,7 @@ export const dogFriendlyPlaces: DogFriendlyPlace[] = [
     ratingScale: 5,
     ratingCount: 1223,
     ratingSource: "Google",
-    imageSourceUrl: "https://www.restorating.ru/spb/catalogue/kroo-cafe",
+    imageUrl: "https://spb.restoran.ru/upload/resize_cache/iblock/734/1252_600_2/5fc94a57495b18c759e08bd20ec1f3b661b.jpg",
+    imageSourceUrl: "https://spb.restoran.ru/spb/detailed/restaurants/kroo_cafe/",
   },
 ];
