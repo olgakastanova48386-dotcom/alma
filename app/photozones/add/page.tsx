@@ -1,7 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { FormEvent, useMemo, useState } from "react";
+import { FormEvent, useEffect, useMemo, useState } from "react";
+
+const MAX_FILE_SIZE = 1_500_000;
+const ALLOWED_FILE_TYPES = new Set(["image/jpeg", "image/png", "image/webp"]);
 
 export default function AddPhotozonePage() {
   const [name, setName] = useState("");
@@ -13,6 +16,33 @@ export default function AddPhotozonePage() {
   const [done, setDone] = useState(false);
 
   const preview = useMemo(() => (file ? URL.createObjectURL(file) : ""), [file]);
+
+  useEffect(() => {
+    return () => {
+      if (preview) URL.revokeObjectURL(preview);
+    };
+  }, [preview]);
+
+  function selectFile(selectedFile: File | null) {
+    setError("");
+
+    if (!selectedFile) {
+      setFile(null);
+      return;
+    }
+    if (!ALLOWED_FILE_TYPES.has(selectedFile.type)) {
+      setFile(null);
+      setError("Выбери фотографию в формате JPG, PNG или WEBP.");
+      return;
+    }
+    if (selectedFile.size > MAX_FILE_SIZE) {
+      setFile(null);
+      setError("Размер фотографии не должен превышать 1,5 МБ.");
+      return;
+    }
+
+    setFile(selectedFile);
+  }
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -59,10 +89,10 @@ export default function AddPhotozonePage() {
           <div className="rounded-[32px] bg-white p-7 sm:p-10 shadow-sm border border-black/5">
             <div className="text-4xl">✓</div>
             <h1 className="mt-5 text-4xl sm:text-5xl font-bold tracking-tight">
-              Спасибо за фотолокацию
+              Спасибо!
             </h1>
             <p className="mt-4 text-neutral-500 leading-7">
-              Она отправлена на проверку ALMA. После модерации мы сможем добавить её в фотогид.
+              Фотолокация отправлена на проверку ALMA.
             </p>
             <div className="mt-7 flex flex-wrap gap-3">
               <button
@@ -95,7 +125,7 @@ export default function AddPhotozonePage() {
     <main className="min-h-screen bg-[#f4f0e9] pt-24 sm:pt-28 pb-24 text-black">
       <section className="mx-auto max-w-3xl px-4 sm:px-6">
         <Link href="/photozones" className="text-sm text-neutral-500 hover:text-black">
-          ← Фотозоны
+          ← Все фотолокации
         </Link>
 
         <p className="mt-8 text-xs uppercase tracking-[.22em] text-neutral-400">
@@ -112,55 +142,66 @@ export default function AddPhotozonePage() {
 
         <form onSubmit={submit} className="mt-9 rounded-[30px] bg-white p-5 sm:p-8 border border-black/5 shadow-sm">
           <label className="block">
-            <span className="text-sm font-semibold">Название места *</span>
+            <span className="text-sm font-semibold">Название фотолокации</span>
             <input
               value={name}
               onChange={(e) => setName(e.target.value)}
               maxLength={120}
               required
-              placeholder="Например: двор с аркой на Петроградской"
+              placeholder="Например, двор с аркой на Петроградской"
               className="mt-2 w-full rounded-[18px] border border-black/10 bg-[#faf9f7] px-4 py-4 outline-none focus:border-black/30"
             />
           </label>
 
           <label className="mt-5 block">
-            <span className="text-sm font-semibold">Адрес или ориентир *</span>
+            <span className="text-sm font-semibold">Адрес или ориентир</span>
             <input
               value={address}
               onChange={(e) => setAddress(e.target.value)}
               maxLength={240}
               required
-              placeholder="Улица, дом или понятный ориентир"
+              placeholder="Улица, номер дома или понятный ориентир"
               className="mt-2 w-full rounded-[18px] border border-black/10 bg-[#faf9f7] px-4 py-4 outline-none focus:border-black/30"
             />
           </label>
 
           <label className="mt-5 block">
-            <span className="text-sm font-semibold">Фото *</span>
-            <input
-              type="file"
-              accept="image/jpeg,image/png,image/webp"
-              required
-              onChange={(e) => setFile(e.target.files?.[0] || null)}
-              className="mt-2 block w-full rounded-[18px] border border-dashed border-black/20 bg-[#faf9f7] px-4 py-5 text-sm"
-            />
-            <span className="mt-2 block text-xs text-neutral-400">JPG, PNG или WEBP · до 1,5 МБ</span>
+            <span className="text-sm font-semibold">Фотография места</span>
+            <span className="mt-2 flex min-h-28 cursor-pointer flex-col items-center justify-center rounded-[18px] border border-dashed border-black/20 bg-[#faf9f7] px-4 py-5 text-center transition hover:border-black/40 hover:bg-[#f7f5f1]">
+              <span className="text-2xl" aria-hidden="true">📷</span>
+              <span className="mt-2 text-sm font-semibold">
+                {file ? "Выбрать другую фотографию" : "Выбрать фотографию"}
+              </span>
+              <span className="mt-1 text-xs text-neutral-400">
+                JPG, PNG или WEBP · до 1,5 МБ
+              </span>
+              <input
+                type="file"
+                accept="image/jpeg,image/png,image/webp"
+                required
+                onChange={(event) => selectFile(event.target.files?.[0] || null)}
+                className="sr-only"
+              />
+            </span>
           </label>
 
           {preview && (
-            <div className="mt-4 overflow-hidden rounded-[22px] bg-neutral-100">
+            <div className="mt-4 overflow-hidden rounded-[22px] border border-black/5 bg-neutral-100">
               <img src={preview} alt="Предпросмотр фотографии" className="max-h-[420px] w-full object-cover" />
             </div>
           )}
 
           <label className="mt-5 block">
-            <span className="text-sm font-semibold">Подсказка или комментарий</span>
+            <span className="flex items-baseline justify-between gap-3">
+              <span className="text-sm font-semibold">Комментарий</span>
+              <span className="text-xs text-neutral-400">Необязательно</span>
+            </span>
             <textarea
               value={note}
               onChange={(e) => setNote(e.target.value)}
               maxLength={700}
               rows={5}
-              placeholder="Например: лучше приходить за час до заката, кадр красивее со стороны набережной."
+              placeholder="Например, когда лучше приходить и откуда снимать"
               className="mt-2 w-full resize-none rounded-[18px] border border-black/10 bg-[#faf9f7] px-4 py-4 outline-none focus:border-black/30"
             />
             <span className="mt-2 block text-right text-xs text-neutral-400">{note.length}/700</span>
