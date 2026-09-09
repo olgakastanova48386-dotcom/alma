@@ -32,13 +32,18 @@ const transferMinutes=(a:PurchasedRouteStop,b:PurchasedRouteStop)=>Math.max(8,Ma
 export default function SurprisePage(){
  const [step,setStep]=useState<Step>(1),[mood,setMood]=useState(""),[budget,setBudget]=useState(""),[company,setCompany]=useState(""),[duration,setDuration]=useState(""),[selectedInterests,setSelectedInterests]=useState<string[]>([]),[generated,setGenerated]=useState(false),[testPurchased,setTestPurchased]=useState(false),[paidPurchased,setPaidPurchased]=useState(false),[restored,setRestored]=useState(false),[restoredPlaceIds,setRestoredPlaceIds]=useState<number[]>([]),[purchaseStatus,setPurchaseStatus]=useState("");
  useEffect(()=>{let active=true;(async()=>{
+   const startNew=new URLSearchParams(window.location.search).get("new")==="1";
    let saved:SavedDraft|null=null;
-   try{const raw=localStorage.getItem(DRAFT_KEY);if(raw)saved=JSON.parse(raw) as SavedDraft}catch{}
-   try{const response=await fetch("/api/routes/draft",{credentials:"include"});if(response.ok){const data=await response.json();if(!saved&&data.saved?.route)saved=data.saved.route as SavedDraft}}catch{}
+   if(!startNew){
+    try{const raw=localStorage.getItem(DRAFT_KEY);if(raw)saved=JSON.parse(raw) as SavedDraft}catch{}
+    try{const response=await fetch("/api/routes/draft",{credentials:"include"});if(response.ok){const data=await response.json();if(!saved&&data.saved?.route)saved=data.saved.route as SavedDraft}}catch{}
+   }
    if(!active)return;
    if(saved){if(saved.mood)setMood(saved.mood);if(saved.budget)setBudget(saved.budget);if(saved.company)setCompany(saved.company);if(saved.duration)setDuration(saved.duration);if(Array.isArray(saved.interests))setSelectedInterests(saved.interests);if(Array.isArray(saved.placeIds))setRestoredPlaceIds(saved.placeIds.map(Number).filter(Number.isFinite));setGenerated(true);setStep(6);setRestored(true);try{localStorage.setItem(DRAFT_KEY,JSON.stringify(saved))}catch{}}
-   try{const purchaseRaw=localStorage.getItem(TEST_PURCHASE_KEY);if(purchaseRaw){const purchase=JSON.parse(purchaseRaw);if(purchase?.status==="test_paid"&&purchase?.product==="route-199")setTestPurchased(true)}}catch{}
-   try{const statusResponse=await fetch("/api/payments/status",{credentials:"include"});if(statusResponse.ok){const status=await statusResponse.json();if(!active)return;setPaidPurchased(status.entitled===true);setPurchaseStatus(String(status.status||""))}}catch{}
+   if(!startNew){
+    try{const purchaseRaw=localStorage.getItem(TEST_PURCHASE_KEY);if(purchaseRaw){const purchase=JSON.parse(purchaseRaw);if(purchase?.status==="test_paid"&&purchase?.product==="route-199")setTestPurchased(true)}}catch{}
+    try{const statusResponse=await fetch("/api/payments/status",{credentials:"include"});if(statusResponse.ok){const status=await statusResponse.json();if(!active)return;setPaidPurchased(status.entitled===true);setPurchaseStatus(String(status.status||""))}}catch{}
+   }
  })();return()=>{active=false}},[]);
  const hardcore=selectedInterests.includes("Хардкор · успеть максимум");
  const routeInterests=selectedInterests.filter(i=>i!=="Хардкор · успеть максимум");
