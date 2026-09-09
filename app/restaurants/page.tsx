@@ -18,7 +18,7 @@ export default function RestaurantsPage() {
     <main className="min-h-screen bg-[#f7f4ef] pt-28 sm:pt-32 pb-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
-          <div><p className="text-xs uppercase tracking-[0.22em] text-neutral-500">ALMA · Санкт-Петербург</p><h1 className="mt-3 text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight">Рестораны с рейтингом 4,5–5,0</h1><p className="mt-4 max-w-3xl text-neutral-600 text-base sm:text-lg leading-8">Проверенная подборка ALMA. Показываем рейтинг, количество оценок, дату проверки и подтверждённые удобства.</p></div>
+          <div><h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight">Рестораны с рейтингом 4,5–5,0</h1><p className="mt-4 max-w-3xl text-neutral-600 text-base sm:text-lg leading-8">Проверенная подборка ALMA. Показываем рейтинг, количество оценок, дату проверки и подтверждённые удобства.</p></div>
           <div className="rounded-full bg-black text-white px-5 py-3 text-sm font-medium self-start lg:self-auto">{filtered.length} мест</div>
         </div>
 
