@@ -147,27 +147,28 @@ export default function UnifiedMap() {
 
   return <section className="bg-[#f7f4ef] pb-10 text-black">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="mb-3">
-        <h2 className="w-full text-left text-3xl sm:text-4xl font-bold">Карта</h2>
+      <div className="mb-4 flex items-end justify-between gap-4">
+        <div><p className="text-[11px] font-semibold uppercase tracking-[.18em] text-neutral-400">Исследуй Петербург</p><h2 className="mt-1 w-full text-left text-3xl font-bold tracking-tight sm:text-4xl">Карта</h2></div>
+        <span className="shrink-0 rounded-full border border-black/5 bg-white px-3 py-1.5 text-xs font-semibold shadow-sm">{filtered.length} мест</span>
       </div>
 
       <div className="mb-3 -mx-4 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0">
-        {categories.map((c) => <button key={c} onClick={() => { setCategory(c); if (c !== "⚡ Драйв") setDriveTag("Все"); }} className={`shrink-0 rounded-full px-3.5 py-2 text-[13px] sm:px-4 sm:py-2.5 sm:text-sm ${category === c ? "bg-black text-white" : "bg-white border border-black/5"}`}>{c}</button>)}
+        {categories.map((c) => <button key={c} onClick={() => { setCategory(c); if (c !== "⚡ Драйв") setDriveTag("Все"); }} className={`shrink-0 rounded-full border px-3.5 py-2 text-[13px] font-medium shadow-sm transition-all duration-200 sm:px-4 sm:py-2.5 sm:text-sm ${category === c ? "border-black bg-black text-white shadow-md" : "border-black/5 bg-white text-black hover:-translate-y-0.5 hover:border-black/15"}`}>{c}</button>)}
       </div>
 
       {category === "👶 Для малыша" && <div className="mb-4 rounded-[18px] bg-[#efe5d7] p-3.5 sm:mb-5 sm:rounded-[24px] sm:p-5"><p className="text-[11px] uppercase tracking-[.16em] text-neutral-500">ALMA · Для малыша</p><p className="mt-1 text-[15px] leading-5 text-neutral-700 sm:text-sm">Показываем только подтверждённые удобства: пеленальный столик, комнату матери и ребёнка или отдельную детскую комнату.</p></div>}
 
       {category === "⚡ Драйв" && <div className="mb-4 rounded-[18px] bg-black px-3.5 py-3 text-white sm:mb-5 sm:rounded-[24px] sm:p-5"><div className="flex flex-col gap-2.5 sm:flex-row sm:items-center sm:justify-between sm:gap-3"><div><p className="text-[10px] uppercase tracking-[.16em] text-white/45 sm:text-xs">ALMA · Драйв</p><p className="mt-1 text-[17px] leading-5 font-medium text-white/90 sm:text-sm">Активный отдых</p></div><div className="-mx-1 flex gap-1.5 overflow-x-auto px-1 pb-0.5 sm:flex-wrap sm:overflow-visible sm:p-0">{driveTags.map((t) => <button key={t} onClick={() => setDriveTag(t)} className={`shrink-0 rounded-full px-3 py-1.5 text-[12px] sm:py-2 sm:text-xs ${driveTag === t ? "bg-white text-black" : "bg-white/10 text-white"}`}>{t}</button>)}</div></div></div>}
 
-      <div className="grid lg:grid-cols-[410px_minmax(0,1fr)] gap-4 lg:gap-6 items-start">
-        <div className="order-1 bg-white rounded-[22px] sm:rounded-[28px] border border-black/5 overflow-hidden lg:mt-[52px]">
+      <div className="grid items-start gap-4 lg:grid-cols-[390px_minmax(0,1fr)] lg:gap-6">
+        <div className="order-2 overflow-hidden rounded-[26px] border border-black/5 bg-white/90 shadow-[0_18px_55px_-35px_rgba(0,0,0,.35)] backdrop-blur-xl sm:rounded-[30px] lg:order-1 lg:mt-[52px]">
           <div className="px-4 pt-4 pb-3 sm:px-6 sm:pt-6 sm:pb-4 border-b border-black/5">
             <p className="font-semibold text-[20px] sm:text-lg">{category === "⚡ Драйв" ? "Куда за драйвом" : category === "👶 Для малыша" ? "С малышом" : "Выбери место"}</p>
             <p className="mt-1 text-[14px] sm:text-sm text-neutral-500">Рейтинг 4,5–5,0 · проверено ALMA.</p>
           </div>
-          <div className="max-h-none lg:max-h-[700px] lg:overflow-y-auto p-2.5 sm:p-3">
+          <div className="flex snap-x snap-mandatory gap-3 overflow-x-auto p-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:block lg:max-h-[700px] lg:overflow-y-auto">
             {filtered.length === 0 && <div className="rounded-[18px] bg-[#faf8f5] p-4 text-sm leading-6 text-neutral-500">Пока нет мест с подтверждённым удобством в этой категории.</div>}
-            {filtered.map((p) => <article key={p.id} className={`rounded-[18px] sm:rounded-[24px] overflow-hidden mb-2.5 sm:mb-3 border ${selected === p.id ? "border-black bg-black text-white" : "border-black/5 bg-[#faf8f5]"}`}>
+            {filtered.map((p) => <article key={p.id} className={`w-[82vw] max-w-[340px] shrink-0 snap-center overflow-hidden rounded-[22px] border transition-all duration-300 lg:mb-3 lg:w-auto lg:max-w-none ${selected === p.id ? "border-black bg-black text-white shadow-lg" : "border-black/5 bg-[#faf8f5] hover:border-black/15"}`}>
               <button onClick={() => router.push(p.detailHref)} className="w-full text-left">
                 {p.image ? <div className="relative h-28 sm:h-36 w-full bg-[#ece8e2]"><img src={p.image} alt={p.name} className="absolute inset-0 h-full w-full object-cover" loading="lazy" /></div> : <div className="h-20 sm:h-24 w-full bg-gradient-to-br from-[#e9dfd1] via-[#f5eee5] to-[#ddd1c2] flex items-center justify-center text-3xl">{emoji(p)}</div>}
                 <div className="p-3.5 sm:p-4">
@@ -183,19 +184,19 @@ export default function UnifiedMap() {
           </div>
         </div>
 
-        <div className="order-2 lg:order-2">
+        <div className="order-1 lg:order-2">
           <div className="mb-3"><MapDirectSearch /></div>
-          <div className="alma-map relative min-h-[330px] sm:min-h-[560px] lg:min-h-[760px] rounded-[20px] sm:rounded-[28px] overflow-hidden bg-[#ebe8e3] border border-black/5">
+          <div className="alma-map relative min-h-[430px] overflow-hidden rounded-[28px] border border-black/5 bg-[#ebe8e3] shadow-[0_24px_70px_-38px_rgba(0,0,0,.45)] sm:min-h-[580px] sm:rounded-[34px] lg:min-h-[760px]">
             <div ref={container} className="absolute inset-0" />
             {!ready && <div className="absolute inset-0 z-[500] flex items-center justify-center bg-[#ebe8e3]">Загружаем…</div>}
             {routeStatus && <div className="absolute z-[600] left-3 top-3 max-w-[calc(100%-24px)] rounded-xl bg-white px-3 py-2.5 text-[13px] font-medium shadow-lg sm:left-4 sm:top-4 sm:max-w-[calc(100%-32px)] sm:rounded-2xl sm:px-4 sm:py-3 sm:text-sm">{routeStatus}</div>}
             <div className="absolute z-[500] left-3 bottom-3 rounded-full bg-black text-white px-3 py-1.5 text-xs font-semibold sm:left-4 sm:bottom-4 sm:px-4 sm:py-2 sm:text-sm">alma</div>
           </div>
-          <p className="mt-2 text-[12px] text-neutral-400 lg:hidden">Карта — для ориентира. Сначала выбери подходящее место из карточек выше.</p>
+          <p className="mt-2 px-1 text-[12px] text-neutral-400 lg:hidden">Нажми на метку или выбери место в ленте ниже.</p>
         </div>
       </div>
     </div>
 
-    <style jsx global>{`.alma-map .leaflet-tile-pane{filter:saturate(.78) brightness(1.04) contrast(.92)}.alma-map .leaflet-control-container{position:relative;z-index:500}.alma-marker-wrapper{background:transparent;border:none}.alma-marker{width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:999px;background:#fff;box-shadow:0 6px 18px rgba(0,0,0,.2);font-size:18px}.alma-leaflet-popup .leaflet-popup-content-wrapper{padding:0!important;border-radius:24px!important;overflow:hidden}.alma-leaflet-popup .leaflet-popup-content{margin:0!important;width:300px!important}.alma-popup{padding:20px;color:#111}.alma-popup-category{font-size:10px;text-transform:uppercase;letter-spacing:.14em;color:#999}.alma-popup-title{margin-top:6px;font-size:22px;font-weight:700}.alma-popup-rating,.alma-popup-address,.alma-popup-tags,.alma-popup-baby{margin-top:9px;font-size:12px}.alma-popup-address{color:#666}.alma-popup-tags,.alma-popup-baby{font-weight:600}.alma-route-button{display:flex;width:100%;justify-content:center;margin-top:12px;min-height:42px;align-items:center;border-radius:999px;font-size:13px;font-weight:600;background:#111;color:#fff;border:0;cursor:pointer}@media(max-width:767px){.alma-leaflet-popup .leaflet-popup-content{width:245px!important}.alma-popup{padding:15px}.alma-popup-title{font-size:18px}.alma-map .leaflet-control-zoom{transform:scale(.88);transform-origin:bottom right}}`}</style>
+    <style jsx global>{`.alma-map .leaflet-tile-pane{filter:saturate(.78) brightness(1.04) contrast(.92)}.alma-map .leaflet-control-container{position:relative;z-index:500}.alma-map .leaflet-control-zoom{overflow:hidden;border:0!important;border-radius:16px!important;box-shadow:0 10px 30px rgba(0,0,0,.16)!important}.alma-map .leaflet-control-zoom a{width:38px!important;height:38px!important;line-height:38px!important;border-color:rgba(0,0,0,.06)!important}.alma-marker-wrapper{background:transparent;border:none}.alma-marker{width:42px;height:42px;display:flex;align-items:center;justify-content:center;border:3px solid #fff;border-radius:999px;background:#111;color:#fff;box-shadow:0 10px 24px rgba(0,0,0,.28);font-size:17px;transition:transform .2s ease,box-shadow .2s ease}.alma-marker:hover{transform:translateY(-3px) scale(1.08);box-shadow:0 14px 30px rgba(0,0,0,.34)}.alma-leaflet-popup .leaflet-popup-content-wrapper{padding:0!important;border-radius:24px!important;overflow:hidden}.alma-leaflet-popup .leaflet-popup-content{margin:0!important;width:300px!important}.alma-popup{padding:20px;color:#111}.alma-popup-category{font-size:10px;text-transform:uppercase;letter-spacing:.14em;color:#999}.alma-popup-title{margin-top:6px;font-size:22px;font-weight:700}.alma-popup-rating,.alma-popup-address,.alma-popup-tags,.alma-popup-baby{margin-top:9px;font-size:12px}.alma-popup-address{color:#666}.alma-popup-tags,.alma-popup-baby{font-weight:600}.alma-route-button{display:flex;width:100%;justify-content:center;margin-top:12px;min-height:42px;align-items:center;border-radius:999px;font-size:13px;font-weight:600;background:#111;color:#fff;border:0;cursor:pointer}@media(max-width:767px){.alma-leaflet-popup .leaflet-popup-content{width:245px!important}.alma-popup{padding:15px}.alma-popup-title{font-size:18px}.alma-map .leaflet-control-zoom{transform:scale(.88);transform-origin:bottom right}}`}</style>
   </section>;
 }
