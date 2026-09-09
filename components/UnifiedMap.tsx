@@ -148,9 +148,7 @@ export default function UnifiedMap() {
   return <section className="bg-[#f7f4ef] pb-10 text-black">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="mb-3">
-        <p className="text-xs uppercase tracking-[0.22em] text-neutral-500">ALMA · Санкт-Петербург</p>
-        <h2 className="mt-2 text-3xl sm:text-4xl font-bold">Карта</h2>
-        <p className="mt-2 text-base sm:text-sm text-neutral-500">Выбери настроение и место из готовых вариантов.</p>
+        <h2 className="text-left text-3xl sm:text-4xl font-bold">Карта</h2>
       </div>
 
       <div className="mb-3 -mx-4 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0">
