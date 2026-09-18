@@ -229,8 +229,12 @@ export default function SurprisePage() {
     };
   }, []);
   const hardcore = selectedInterests.includes("Хардкор · успеть максимум");
-  const routeInterests = selectedInterests.filter(
-    (i) => i !== "Хардкор · успеть максимум",
+  const routeInterests = useMemo(
+    () =>
+      selectedInterests.filter(
+        (i) => i !== "Хардкор · успеть максимум",
+      ),
+    [selectedInterests],
   );
   const toggleInterest = (v: string) =>
     setSelectedInterests((x) =>
@@ -348,11 +352,10 @@ export default function SurprisePage() {
     budget,
     company,
     duration,
-    selectedInterests,
     hardcore,
+    routeInterests,
     restoredPlaceIds,
     generated,
-    step,
   ]);
   const can = () =>
     step === 1
