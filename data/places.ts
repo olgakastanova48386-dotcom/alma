@@ -431,6 +431,8 @@ export const places: Place[] = [
     priceNote: "Свободный доступ",
     priceDetails: "Подходит как прогулочная или познавательная точка готового маршрута ALMA.",
     priceUpdated: "18.09.2026",
+    studentBenefitCheckedAt: "18.09.2026",
+    studentBenefitCheckNote: "Бесплатная городская достопримечательность в открытом пространстве; отдельная студенческая скидка не требуется.",
   },
   {
     id: 21,
@@ -450,6 +452,8 @@ export const places: Place[] = [
     priceNote: "Свободный доступ",
     priceDetails: "Подходит как прогулочная или познавательная точка готового маршрута ALMA.",
     priceUpdated: "18.09.2026",
+    studentBenefitCheckedAt: "18.09.2026",
+    studentBenefitCheckNote: "Бесплатная городская достопримечательность в открытом пространстве; отдельная студенческая скидка не требуется.",
   },
   {
     id: 22,
@@ -469,6 +473,8 @@ export const places: Place[] = [
     priceNote: "Свободный доступ",
     priceDetails: "Подходит как прогулочная или познавательная точка готового маршрута ALMA.",
     priceUpdated: "18.09.2026",
+    studentBenefitCheckedAt: "18.09.2026",
+    studentBenefitCheckNote: "Бесплатная городская достопримечательность в открытом пространстве; отдельная студенческая скидка не требуется.",
   },
   {
     id: 23,
@@ -488,6 +494,8 @@ export const places: Place[] = [
     priceNote: "Свободный доступ",
     priceDetails: "Подходит как прогулочная или познавательная точка готового маршрута ALMA.",
     priceUpdated: "18.09.2026",
+    studentBenefitCheckedAt: "18.09.2026",
+    studentBenefitCheckNote: "Бесплатная городская достопримечательность в открытом пространстве; отдельная студенческая скидка не требуется.",
   },
   {
     id: 24,
@@ -507,6 +515,8 @@ export const places: Place[] = [
     priceNote: "Свободный доступ",
     priceDetails: "Подходит как прогулочная или познавательная точка готового маршрута ALMA.",
     priceUpdated: "18.09.2026",
+    studentBenefitCheckedAt: "18.09.2026",
+    studentBenefitCheckNote: "Бесплатная городская достопримечательность в открытом пространстве; отдельная студенческая скидка не требуется.",
   },
   {
     id: 25,
@@ -526,6 +536,8 @@ export const places: Place[] = [
     priceNote: "Свободный доступ",
     priceDetails: "Подходит как прогулочная или познавательная точка готового маршрута ALMA.",
     priceUpdated: "18.09.2026",
+    studentBenefitCheckedAt: "18.09.2026",
+    studentBenefitCheckNote: "Бесплатная городская достопримечательность в открытом пространстве; отдельная студенческая скидка не требуется.",
   },
   {
     id: 26,
@@ -545,6 +557,8 @@ export const places: Place[] = [
     priceNote: "Свободный доступ",
     priceDetails: "Подходит как прогулочная или познавательная точка готового маршрута ALMA.",
     priceUpdated: "18.09.2026",
+    studentBenefitCheckedAt: "18.09.2026",
+    studentBenefitCheckNote: "Бесплатная городская достопримечательность в открытом пространстве; отдельная студенческая скидка не требуется.",
   },
   {
     id: 27,
@@ -564,6 +578,8 @@ export const places: Place[] = [
     priceNote: "Свободный доступ",
     priceDetails: "Подходит как прогулочная или познавательная точка готового маршрута ALMA.",
     priceUpdated: "18.09.2026",
+    studentBenefitCheckedAt: "18.09.2026",
+    studentBenefitCheckNote: "Бесплатная городская достопримечательность в открытом пространстве; отдельная студенческая скидка не требуется.",
   },
   {
     id: 28,
@@ -583,6 +599,8 @@ export const places: Place[] = [
     priceNote: "Свободный доступ",
     priceDetails: "Подходит как прогулочная или познавательная точка готового маршрута ALMA.",
     priceUpdated: "18.09.2026",
+    studentBenefitCheckedAt: "18.09.2026",
+    studentBenefitCheckNote: "Бесплатная городская достопримечательность в открытом пространстве; отдельная студенческая скидка не требуется.",
   },
   {
     id: 29,
@@ -602,6 +620,8 @@ export const places: Place[] = [
     priceNote: "Свободный доступ",
     priceDetails: "Подходит как прогулочная или познавательная точка готового маршрута ALMA.",
     priceUpdated: "18.09.2026",
+    studentBenefitCheckedAt: "18.09.2026",
+    studentBenefitCheckNote: "Бесплатная городская достопримечательность в открытом пространстве; отдельная студенческая скидка не требуется.",
   },
   {
     id: 30,
