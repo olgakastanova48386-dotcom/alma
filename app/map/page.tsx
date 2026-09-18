@@ -14,6 +14,7 @@ type EventItem = {
 
 const events: EventItem[] = [
   { title: "Финский залив андер хаус пати", place: "Севкабель Порт", date: "19–20 сентября", category: "Вечеринки", note: "Вечеринка у залива", href: "https://sevcableport.ru/afisha/", accent: "🌊" },
+  { title: "Гроубокс маркет", place: "Севкабель Порт", date: "19–20 сентября", category: "Маркеты", note: "Маркет выходного дня в Порту", href: "https://sevcableport.ru/afisha/", accent: "🛍️" },
   { title: "КОИ Азия Фестиваль", place: "Севкабель Порт · Цех", date: "19–20 сентября", category: "Фестивали", note: "Азия, музыка, еда, маркет и фотозоны · вход по регистрации", href: "https://sevcableport.ru/afisha/koi-aziya-festival/", accent: "🏮" },
   { title: "SPIEXFF", place: "Севкабель Порт · лекторий’порт", date: "до 20 сентября", category: "Кино", note: "Международный фестиваль экспериментального кино", href: "https://sevcableport.ru/afisha/sankt-peterburgskij-mezhdunarodnyj-festival-eksperimentalnogo-kino-spiexff/", accent: "🎞️" },
   { title: "Виктор Цой. Легенда", place: "Севкабель Порт", date: "до 27 сентября", category: "Выставки", note: "Выставка в Порту", href: "https://sevcableport.ru/afisha/", accent: "🎸" },
@@ -22,7 +23,7 @@ const events: EventItem[] = [
   { title: "DARK WAVE", place: "Брусницын", date: "31 октября", category: "Вечеринки", note: "Тёмная эстетика, образы и немного мистики", href: "https://brusnitsyn.spb.ru/", accent: "🖤" },
 ];
 
-const filters = ["Все", "Вечеринки", "Фестивали", "Кино", "Выставки", "Лекции"];
+const filters = ["Все", "Вечеринки", "Фестивали", "Маркеты", "Кино", "Выставки", "Лекции"];
 
 export default function MapPage() {
   const [filter, setFilter] = useState("Все");
