@@ -65,8 +65,14 @@ function getWeatherInfo(code: number, isDay: boolean) {
 }
 
 function getHeroTheme(code: number | undefined, isDay: boolean): HeroTheme {
+  const isDrizzle = [51, 53, 55, 56, 57].includes(code ?? -1);
+
   if (!isDay) {
-    if ([45, 48, 51, 53, 55, 56, 57, 61, 63, 65, 66, 67, 71, 73, 75, 77, 80, 81, 82, 85, 86, 95, 96, 99].includes(code ?? -1)) {
+    if (isDrizzle) {
+      return { image: "/images/дождь в питере ночь.jpg", position: "center 45%", label: "Морось в Петербурге" };
+    }
+
+    if ([45, 48, 61, 63, 65, 66, 67, 71, 73, 75, 77, 80, 81, 82, 85, 86, 95, 96, 99].includes(code ?? -1)) {
       return { image: "/images/ночной питербург.jpg", position: "center 42%", label: "Ночной Петербург" };
     }
 
@@ -77,7 +83,8 @@ function getHeroTheme(code: number | undefined, isDay: boolean): HeroTheme {
   if ([1, 2].includes(code ?? -1)) return { image: "/images/питер главная фотка.jpg", position: "center 42%", label: "Петербург в переменной облачности" };
   if (code === 3) return { image: "/images/питер главная фотка 2.jpg", position: "center 42%", label: "Пасмурный Петербург" };
   if ([45, 48].includes(code ?? -1)) return { image: "/images/пиер главная фотка 3.jpg", position: "center 42%", label: "Петербург в тумане" };
-  if ([51, 53, 55, 56, 57, 61, 63, 65, 66, 67, 80, 81, 82].includes(code ?? -1)) return { image: "/images/питер главная фотка 5.jpg", position: "center 46%", label: "Петербург под дождём" };
+  if (isDrizzle) return { image: "/images/питер морось.jpg", position: "center 48%", label: "Морось в Петербурге" };
+  if ([61, 63, 65, 66, 67, 80, 81, 82].includes(code ?? -1)) return { image: "/images/питер главная фотка 5.jpg", position: "center 46%", label: "Петербург под дождём" };
   if ([71, 73, 75, 77, 85, 86].includes(code ?? -1)) return { image: "/images/питер главная фотка 2.jpg", position: "center 42%", label: "Снежный Петербург" };
   if ([95, 96, 99].includes(code ?? -1)) return { image: "/images/пиер главная фотка 3.jpg", position: "center 42%", label: "Драматичный Петербург" };
   return { image: "/images/питер главная фотка.jpg", position: "center 42%", label: "Петербург сегодня" };
