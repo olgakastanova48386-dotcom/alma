@@ -679,8 +679,8 @@ export default function SurprisePage() {
               <div className="flex items-start justify-between gap-4">
                 <div>
                   <p className="text-[10px] uppercase tracking-[.22em] text-neutral-400">ALMA</p>
-                  <h2 className="mt-2 text-3xl font-bold">Сохраним твой маршрут</h2>
-                  <p className="mt-2 text-sm leading-6 text-neutral-500">Зарегистрируйся один раз — после этого создавай новые маршруты сколько угодно.</p>
+                  <h2 className="mt-2 text-3xl font-bold">Регистрация</h2>
+                  <p className="mt-2 text-sm leading-6 text-neutral-500">Зарегистрируйся и создавай маршруты без ограничений.</p>
                 </div>
                 <button type="button" onClick={() => setShowRegister(false)} className="rounded-full border border-black/10 px-3 py-2 text-sm">✕</button>
               </div>
@@ -695,7 +695,7 @@ export default function SurprisePage() {
                 <input value={registerRepeat} onChange={(e) => setRegisterRepeat(e.target.value)} type="password" placeholder="Повторите пароль" className="w-full rounded-[16px] border border-black/15 px-4 py-3 outline-none focus:border-black" />
                 <label className="flex items-start gap-2 text-xs leading-5 text-neutral-600"><input type="checkbox" checked={registerConsent} onChange={(e) => setRegisterConsent(e.target.checked)} className="mt-1" /><span>Согласен(на) с правилами ALMA и обработкой данных.</span></label>
                 {registerError && <div className="rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700">{registerError}</div>}
-                <button disabled={registerLoading} className="w-full rounded-[16px] bg-black py-3 font-semibold text-white disabled:opacity-50">{registerLoading ? "Создаём аккаунт…" : "Зарегистрироваться и получить маршрут"}</button>
+                <button disabled={registerLoading} className="w-full rounded-[16px] bg-black py-3 font-semibold text-white disabled:opacity-50">{registerLoading ? "Создаём аккаунт…" : "Зарегистрироваться и создать маршрут"}</button>
               </form>
               <p className="mt-4 text-center text-sm text-neutral-500">Уже есть аккаунт? <a className="font-semibold text-black underline" href="/login?next=%2Fsurprise">Войти</a></p>
             </div>
