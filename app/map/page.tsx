@@ -34,7 +34,7 @@ export default function MapPage() {
     <main className="min-h-screen bg-[#f7f4ef] pb-20 pt-28 text-black sm:pt-32">
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mt-4 grid items-start gap-5 md:grid-cols-[minmax(0,1.1fr)_minmax(280px,.9fr)] md:gap-12">
-          <h1 className="text-[clamp(30px,4.5vw,48px)] font-bold leading-[1.08] tracking-[-0.03em]">Что происходит<br />в Петербурге?</h1>
+          <h1 className="whitespace-nowrap text-[clamp(25px,4.5vw,48px)] font-bold leading-[1.08] tracking-[-0.03em]">Что сегодня в городе?</h1>
         </div>
 
         <div className="mt-8 -mx-4 flex gap-2 overflow-x-auto px-4 pb-2 sm:mx-0 sm:px-0">
