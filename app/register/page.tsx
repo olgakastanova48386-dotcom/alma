@@ -52,9 +52,7 @@ function RegisterContent() {
       });
       const d = await r.json();
       if (!r.ok) throw new Error(d.error || "Не удалось создать аккаунт.");
-      window.location.assign(
-        `/verify-phone?email=${encodeURIComponent(d.email || email)}&next=${encodeURIComponent(destination)}`,
-      );
+      window.location.assign(destination);
     } catch (x) {
       setError(x instanceof Error ? x.message : "Не удалось создать аккаунт.");
       setLoading(false);
@@ -73,8 +71,7 @@ function RegisterContent() {
             Регистрация
           </h1>
           <p className="mt-2 text-[13px] leading-5 text-neutral-500">
-            Почта нужна только для подтверждения аккаунта и восстановления
-            доступа. Никакого спама.
+            Почта нужна для входа и восстановления доступа. Никакого спама.
           </p>
         </div>
         <form
@@ -99,8 +96,7 @@ function RegisterContent() {
               className={ic}
             />
             <p className="mt-1.5 px-1 text-[11px] leading-4 text-neutral-400">
-              Отправим сюда только код подтверждения и письма для восстановления
-              доступа — рекламных рассылок не будет.
+              Используем её для входа и восстановления доступа — рекламных рассылок не будет.
             </p>
           </div>
           <fieldset>
@@ -163,7 +159,7 @@ function RegisterContent() {
             disabled={loading}
             className="w-full rounded-[18px] bg-black py-3 font-semibold text-white disabled:opacity-50"
           >
-            {loading ? "Отправляем код…" : "Создать аккаунт"}
+            {loading ? "Создаём аккаунт…" : "Создать аккаунт"}
           </button>
         </form>
         <p className="mt-5 text-center text-sm text-neutral-600">
