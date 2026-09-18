@@ -63,14 +63,16 @@ export default function UnifiedMap() {
   const [routeStatus, setRouteStatus] = useState("");
   const [mood, setMood] = useState("Любое настроение");
   const [budget, setBudget] = useState("Любой бюджет");
-  const [averageCheck, setAverageCheck] = useState("Любой чек");
+  const [company, setCompany] = useState("Любая компания");
+  const [duration, setDuration] = useState("Любая длительность");
   const [studentOnly, setStudentOnly] = useState(false);
 
   const categories = ["Все", "Кофейня", "Ресторан", "🎓 Скидка студенту", "Dog Friendly", "👶 Для малыша", "⚡ Драйв", "Другие места"];
   const driveTags = ["Все", "Активный отдых", "Матчи", "Живая музыка", "Рок", "С друзьями"];
   const moods = ["Любое настроение", ...Array.from(new Set(mapPlaces.map((place) => place.mood))).sort()];
   const budgets = ["Любой бюджет", "Бесплатно", "До 700 ₽", "700–1500 ₽", "От 1500 ₽"];
-  const averageChecks = ["Любой чек", "До 700 ₽", "700–1500 ₽", "1500–3000 ₽", "От 3000 ₽"];
+  const companies = ["Любая компания", ...Array.from(new Set(mapPlaces.flatMap((place) => place.company))).sort()];
+  const durations = ["Любая длительность", ...Array.from(new Set(mapPlaces.map((place) => place.duration))).sort()];
   const placeId = params.get("place");
 
   const filtered = useMemo(() => mapPlaces.filter((p) => {
@@ -85,13 +87,14 @@ export default function UnifiedMap() {
     return cat && tag &&
       (mood === "Любое настроение" || p.mood === mood) &&
       matchesBudget(p, budget) &&
-      matchesAverageCheck(p, averageCheck) &&
+      (company === "Любая компания" || p.company.includes(company)) &&
+      (duration === "Любая длительность" || p.duration === duration) &&
       (!studentOnly || Boolean(p.studentDiscount)) &&
       (!params.get("mood") || p.mood === params.get("mood")) &&
       (!params.get("budget") || p.budget === params.get("budget")) &&
       (!params.get("company") || p.company.includes(params.get("company")!)) &&
       (!params.get("duration") || p.duration === params.get("duration"));
-  }), [averageCheck, budget, category, driveTag, mood, params, studentOnly]);
+  }), [budget, category, company, driveTag, duration, mood, params, studentOnly]);
 
   useEffect(() => {
     if (!document.querySelector('link[data-leaflet-css="true"]')) {
@@ -216,9 +219,16 @@ export default function UnifiedMap() {
             <span aria-hidden="true" className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-xs">⌄</span>
           </label>
           <label className="relative block">
-            <span className="sr-only">Средний чек</span>
-            <select value={averageCheck} onChange={(event) => setAverageCheck(event.target.value)} className="h-12 w-full appearance-none rounded-2xl border border-black/5 bg-[#f7f4ef] px-4 pr-9 text-sm font-medium outline-none transition focus:border-black/25">
-              {averageChecks.map((value) => <option key={value}>{value}</option>)}
+            <span className="sr-only">Компания</span>
+            <select value={company} onChange={(event) => setCompany(event.target.value)} className="h-12 w-full appearance-none rounded-2xl border border-black/5 bg-[#f7f4ef] px-4 pr-9 text-sm font-medium outline-none transition focus:border-black/25">
+              {companies.map((value) => <option key={value}>{value}</option>)}
+            </select>
+            <span aria-hidden="true" className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-xs">⌄</span>
+          </label>
+          <label className="relative block">
+            <span className="sr-only">Длительность прогулки</span>
+            <select value={duration} onChange={(event) => setDuration(event.target.value)} className="h-12 w-full appearance-none rounded-2xl border border-black/5 bg-[#f7f4ef] px-4 pr-9 text-sm font-medium outline-none transition focus:border-black/25">
+              {durations.map((value) => <option key={value}>{value}</option>)}
             </select>
             <span aria-hidden="true" className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-xs">⌄</span>
           </label>
