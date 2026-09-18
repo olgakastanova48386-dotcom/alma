@@ -36,6 +36,10 @@ export type MapPlace = {
     | "Детский стульчик";
   babyCareVerifiedAt?: string;
   menuUrl?: string;
+  studentDiscount?: number;
+  studentDiscountNote?: string;
+  studentDiscountVerifiedAt?: string;
+  studentDiscountSourceUrl?: string;
 };
 
 const hasAlmaRating = (rating: number, scale = 5) =>
@@ -252,6 +256,35 @@ const photoMapPlaces: MapPlace[] = [
   },
 ];
 
+const studentDiscountPlaces: MapPlace[] = [
+  {
+    id: 6001,
+    name: "Meren Coffee",
+    category: "Кофейня",
+    mood: "Спокойно",
+    budget: "≈ 300–500 ₽",
+    company: ["Один", "Пара", "Друзья"],
+    duration: "До 1 часа",
+    image: "",
+    lat: 59.9257,
+    lng: 30.3867,
+    why: "🎓 Скидка студентам 20% · подтверждено ALMA",
+    address: "Тележная ул., 32, Санкт-Петербург",
+    price: "≈ 300–500 ₽",
+    priceNote: "Средний чек",
+    detailHref: "/place/6001",
+    rating: 5.0,
+    ratingScale: 5,
+    ratingCount: 948,
+    ratingSource: "Яндекс Карты",
+    studentDiscount: 20,
+    studentDiscountNote: "Покажи студенческий / подтверди обучение и получи скидку 20%.",
+    studentDiscountVerifiedAt: "18.09.2026",
+    studentDiscountSourceUrl: "https://merencoffee.ru/",
+    menuUrl: "https://merencoffee.ru/",
+  },
+];
+
 export const mapPlaces: MapPlace[] = [
   ...basePlaces,
   ...coffeeMapPlaces,
@@ -259,4 +292,5 @@ export const mapPlaces: MapPlace[] = [
   ...dogMapPlaces,
   ...driveMapPlaces,
   ...photoMapPlaces,
+  ...studentDiscountPlaces,
 ];
