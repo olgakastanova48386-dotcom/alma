@@ -399,23 +399,24 @@ export default function SurprisePage() {
           : step === 4
             ? { title: "Сколько времени есть?", options: durations, current: duration, choose: setDuration }
             : null;
-  const draft = () => ({
+  const draft = (placeIds: number[] = []) => ({
     mood,
     budget,
     company,
     duration,
     interests: selectedInterests,
     hardcore,
-    placeIds: matchingPlaces.map((p) => p.mapPlaceId ?? p.id),
+    placeIds,
     createdAt: new Date().toISOString(),
   });
-  const saveDraft = () => {
+  const saveDraft = (placeIds: number[] = []) => {
     try {
-      localStorage.setItem(DRAFT_KEY, JSON.stringify(draft()));
+      localStorage.setItem(DRAFT_KEY, JSON.stringify(draft(placeIds)));
     } catch {}
   };
   const generateRoute = () => {
-    saveDraft();
+    // Generate first. The route itself is calculated only after generated=true.
+    // Saving before that used to persist an empty route.
     setGenerated(true);
   };
   const reset = () => {
