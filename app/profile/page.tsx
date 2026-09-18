@@ -78,7 +78,20 @@ export default function ProfilePage() {
           </div>
         </div>
 
-        <ProfileCityArchetype />
+        {user.gender === "female" && (
+          <section className="mt-6 rounded-[34px] bg-white border border-black/5 shadow-sm p-7 sm:p-10">
+            <div className="flex items-start gap-4">
+              <div className="shrink-0 h-12 w-12 rounded-full bg-black text-white flex items-center justify-center text-xl" aria-hidden="true">🛡</div>
+              <div>
+                <p className="text-xs uppercase tracking-[0.16em] text-neutral-400">Безопасность</p>
+                <h2 className="mt-1 text-2xl font-bold tracking-tight">Безопасное место</h2>
+                <p className="mt-3 text-sm sm:text-base leading-7 text-neutral-600">В некоторых кафе, ресторанах и других местах ALMA ты увидишь этот значок. Он означает, что заведение подтвердило возможность обратиться к сотруднику за помощью, если тебя преследуют, тебе угрожают или рядом с кем-то небезопасно.</p>
+                <p className="mt-3 text-sm sm:text-base leading-7 text-neutral-600">В карточке такого места ALMA покажет <span className="font-semibold text-black">кодовую фразу</span>, которую нужно назвать сотруднику, и объяснит, какую помощь сможет оказать персонал.</p>
+                <p className="mt-3 text-xs leading-5 text-neutral-400">ALMA показывает отметку только после подтверждения заведением. При непосредственной опасности обращайся в экстренные службы.</p>
+              </div>
+            </div>
+          </section>
+        )}
 
         <div className="mt-6 rounded-[34px] bg-white border border-black/5 shadow-sm p-7 sm:p-10">
           <div className="border-t border-black/10 pt-6">
