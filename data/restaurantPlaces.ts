@@ -301,7 +301,7 @@ export const restaurantPlaces: RestaurantPlace[] = [
     phone: "+7 (911) 921-16-69",
     website: "https://kuznyahouse.com",
     image:
-      "https://img.restoclub.ru/uploads/place/3/1/9/4/31948663aa96c6203663365352fa59b0_w1230_h820--no-cut.webp",
+      "https://s.restorating.ru/places/1920x1080/places/31527/5bc9c31cc6bc5.jpg",
     categories: ["restaurant", "bar", "date"],
     bestFor: ["бранч", "вечеринка", "ужин на острове"],
     note: "Ресторан и клуб в Новой Голландии: современная кухня, музыка и просторная летняя терраса.",
@@ -321,7 +321,7 @@ export const restaurantPlaces: RestaurantPlace[] = [
     phone: "+7 (921) 994-31-27",
     website: "https://duoasia.ru",
     image:
-      "https://cms-duoband-media.storage.yandexcloud.net/5/duo-asia-interior.jpeg",
+      "https://s.restorating.ru/places/3840x2160/places/31943/65a6998ad4a8a.jpg",
     categories: ["restaurant", "date"],
     bestFor: ["азиатская кухня", "свидание", "ужин"],
     note: "Небольшой азиатский ресторан Duo Band: рамен, димсамы, блюда на воке и авторские десерты.",
@@ -341,7 +341,7 @@ export const restaurantPlaces: RestaurantPlace[] = [
     phone: "+7 (931) 206-09-99",
     website: "https://peremenaspb.ru",
     image:
-      "https://img.restoclub.ru/uploads/place/3/7/0/7/3707acfdc5d650eb6ecf27af5136de2d_w1230_h820--no-cut.webp",
+      "https://cms-duoband-media.storage.yandexcloud.net/2/photo_2026-03-03_10-09-39-768x512.webp",
     categories: ["coffee", "restaurant", "dessert", "date"],
     bestFor: ["завтрак", "русская кухня", "вид на Неву"],
     note: "Актуальная русская кухня от Duo Band: вареники, блины, северная рыба, дичь, ягоды и крупы.",
@@ -361,7 +361,7 @@ export const restaurantPlaces: RestaurantPlace[] = [
     phone: "+7 (931) 255-99-90",
     website: "https://rebornbyduo.ru",
     image:
-      "https://cms-duoband-media.storage.yandexcloud.net/9/reborn-interior.jpeg",
+      "https://avatars.mds.yandex.net/get-vertis-journal/4220003/0393e99b-7109-49f2-9f9d-2fec3070b083.jpeg/1600x1600",
     categories: ["restaurant", "bar", "date"],
     bestFor: ["мясо", "гриль", "вечер с друзьями"],
     note: "Гастрономический мясной ресторан: открытый огонь, гриль и блюда для компании.",
@@ -381,7 +381,7 @@ export const restaurantPlaces: RestaurantPlace[] = [
     phone: "+7 (911) 975-96-06",
     website: "https://bottlehouse.ru/ru/food/oggi",
     image:
-      "https://img.restoclub.ru/uploads/place/b/5/c/c/b5ccd72cc2b5dccdf18d84f91b77de31_w1230_h820--no-cut.webp",
+      "https://img02.rl0.ru/afisha/1064x1064i/s.afisha.ru/mediastorage/f6/7a/1d4aa3ce6cdd4554983fe5a97af6.jpg",
     categories: ["coffee", "restaurant", "dessert", "date"],
     bestFor: ["итальянская кухня", "обед", "прогулка по Новой Голландии"],
     note: "Современное итальянское бистро в «Бутылке»: паста, брускетты, десерты и вино.",
@@ -420,7 +420,7 @@ export const restaurantPlaces: RestaurantPlace[] = [
     phone: "+7 (812) 240-20-25",
     website: "https://pionero.ru",
     image:
-      "https://img.restoclub.ru/uploads/place/0/4/a/d/04adf34380a54d9ce9fd203a0a4fe693_w1230_h820--no-cut.webp",
+      "https://img.restoclub.ru/uploads/place/5/6/b/a/56ba7ce6597465ed4e12e1a83689ade8_w1230_h820--no-cut.webp?v=3",
     categories: ["restaurant", "bar", "date"],
     bestFor: ["итальянская кухня", "паста", "свидание"],
     note: "Итальянский ресторан на Петроградской стороне с домашней пастой, вином и камерной атмосферой.",
