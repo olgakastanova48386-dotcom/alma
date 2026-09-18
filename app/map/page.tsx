@@ -35,7 +35,7 @@ export default function MapPage() {
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <p className="text-xs uppercase tracking-[0.24em] text-neutral-500">ALMA · Петербург сейчас</p>
         <div className="mt-4 max-w-4xl">
-          <h1 className="text-[clamp(34px,6vw,64px)] font-bold leading-[1.02] tracking-[-0.035em]">Что происходит<br />в Петербурге?</h1>
+          <h1 className="text-[clamp(30px,4.5vw,48px)] font-bold leading-[1.08] tracking-[-0.03em]">Что происходит<br />в Петербурге?</h1>
           <p className="mt-5 max-w-2xl text-[15px] leading-6 text-neutral-600 sm:text-base">Вечеринки, фестивали, выставки и события в городских пространствах. Выбирай, куда хочется сегодня.</p>
         </div>
 
