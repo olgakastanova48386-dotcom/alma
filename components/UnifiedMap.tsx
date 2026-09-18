@@ -34,13 +34,13 @@ export default function UnifiedMap() {
   const [driveTag, setDriveTag] = useState("Все");
   const [routeStatus, setRouteStatus] = useState("");
 
-  const categories = ["Все", "Кофейня", "Ресторан", "🎓 Студентам", "Dog Friendly", "👶 Для малыша", "⚡ Драйв", "Другие места"];
+  const categories = ["Все", "Кофейня", "Ресторан", "🎓 Скидка студенту", "Dog Friendly", "👶 Для малыша", "⚡ Драйв", "Другие места"];
   const driveTags = ["Все", "Активный отдых", "Матчи", "Живая музыка", "Рок", "С друзьями"];
   const placeId = params.get("place");
 
   const filtered = useMemo(() => mapPlaces.filter((p) => {
     const cat = category === "Все" ||
-      (category === "🎓 Студентам" && Boolean(p.studentDiscount)) ||
+      (category === "🎓 Скидка студенту" && Boolean(p.studentDiscount)) ||
       (category === "Dog Friendly" && p.dogFriendly) ||
       (category === "👶 Для малыша" && Boolean(p.babyCare)) ||
       (category === "⚡ Драйв" && p.drive) ||
