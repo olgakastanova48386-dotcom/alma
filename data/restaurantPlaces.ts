@@ -487,6 +487,58 @@ export const confirmedSafetyPlaces = [
       sourceUrl: "https://kluch.help/",
     },
   },
+  {
+    id: "safe-golodnye-serdca-murino",
+    name: "Голодные сердца",
+    category: "Кафе",
+    address: "Мурино, Екатерининская ул., 3/4",
+    safetySupport: {
+      verified: true as const,
+      codePhrase: "Любая фраза со словом «ключ»",
+      helpText: "Точка отображается на действующей карте проекта «Ключевое слово».",
+      verifiedAt: "18.09.2026",
+      sourceUrl: "https://kluch.help/",
+    },
+  },
+  {
+    id: "safe-par-studio-1-murino",
+    name: "Пар Студия №1",
+    category: "Кафе",
+    address: "Мурино, Петровский бул., 6, корп. 2",
+    safetySupport: {
+      verified: true as const,
+      codePhrase: "Любая фраза со словом «ключ»",
+      helpText: "Точка отображается на действующей карте проекта «Ключевое слово».",
+      verifiedAt: "18.09.2026",
+      sourceUrl: "https://kluch.help/",
+    },
+  },
+  {
+    id: "safe-alex-coffee-murino",
+    name: "Alex Coffee",
+    category: "Кафе",
+    address: "Мурино, Екатерининская ул., 8, корп. 1",
+    safetySupport: {
+      verified: true as const,
+      codePhrase: "Любая фраза со словом «ключ»",
+      helpText: "Точка отображается на действующей карте проекта «Ключевое слово».",
+      verifiedAt: "18.09.2026",
+      sourceUrl: "https://kluch.help/",
+    },
+  },
+  {
+    id: "safe-lavegint-murino",
+    name: "ЛаВеегинт",
+    category: "Бар",
+    address: "Мурино, Петровский бул., 6, корп. 2",
+    safetySupport: {
+      verified: true as const,
+      codePhrase: "Любая фраза со словом «ключ»",
+      helpText: "Точка отображается на действующей карте проекта «Ключевое слово».",
+      verifiedAt: "18.09.2026",
+      sourceUrl: "https://kluch.help/",
+    },
+  },
 
 ];
 
