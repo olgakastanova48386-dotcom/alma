@@ -188,7 +188,7 @@ export default function UnifiedMap() {
   return <section className="bg-[#f7f4ef] pb-10 text-black">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="mb-4 flex items-end justify-between gap-4">
-        <div><p className="text-[11px] font-semibold uppercase tracking-[.18em] text-neutral-400">Исследуй Петербург</p><h2 className="mt-1 w-full text-left text-3xl font-bold tracking-tight sm:text-4xl">Карта</h2></div>
+        <div><h2 className="w-full text-left text-3xl font-bold tracking-tight sm:text-4xl">Карта</h2></div>
         <span className="shrink-0 rounded-full border border-black/5 bg-white px-3 py-1.5 text-xs font-semibold shadow-sm">{filtered.length} мест</span>
       </div>
 
