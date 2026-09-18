@@ -18,15 +18,23 @@ export default function MapPage() {
         <h1 className="text-3xl sm:text-5xl font-bold tracking-tight">Выбери место</h1>
         <p className="mt-2 sm:mt-3 max-w-xl text-[15px] sm:text-base leading-6 text-neutral-500">Начни с готового плана или выбери конкретную категорию.</p>
 
-        <div className="mt-3 sm:mt-5 -mx-4 px-4 flex gap-2.5 overflow-x-auto pb-2 snap-x snap-mandatory sm:mx-0 sm:px-0 sm:grid sm:grid-cols-2 xl:grid-cols-6 sm:overflow-visible sm:pb-0">
+        <div className="mt-4 sm:mt-6 -mx-4 flex gap-3 overflow-x-auto px-4 pb-3 snap-x snap-mandatory sm:mx-0 sm:px-0 xl:overflow-visible">
           {collections.map((collection) => (
             <Link
               key={collection.title}
               href={collection.href}
-              className={`group min-w-[156px] max-w-[172px] snap-start rounded-[18px] sm:rounded-[24px] border px-3.5 py-3 sm:p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-lg sm:min-w-0 sm:max-w-none ${collection.featured ? "border-black bg-black text-white" : "border-black/5 bg-white text-black"}`}
+              className={`group flex h-[70px] min-w-[178px] flex-1 snap-start items-center justify-between gap-3 rounded-full border px-5 shadow-[0_5px_18px_rgba(30,24,18,0.06)] transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_10px_24px_rgba(30,24,18,0.10)] sm:h-[78px] sm:min-w-[196px] xl:min-w-0 ${collection.featured ? "border-black bg-black text-white" : "border-black/10 bg-white text-black"}`}
             >
-              <h2 className="text-[15px] leading-5 sm:text-lg font-semibold"><span aria-hidden="true">{collection.icon}</span> {collection.title}</h2>
-              <span className={`mt-2 sm:mt-4 inline-flex text-[13px] sm:text-sm font-medium transition ${collection.featured ? "text-white/80 group-hover:text-white" : "text-black/70 group-hover:text-black"}`}>Открыть →</span>
+              <span className="flex min-w-0 items-center gap-2.5">
+                <span aria-hidden="true" className="shrink-0 text-xl sm:text-[22px]">{collection.icon}</span>
+                <span className="whitespace-nowrap text-[15px] font-semibold sm:text-base">{collection.title}</span>
+              </span>
+              <span
+                aria-hidden="true"
+                className={`shrink-0 text-xl transition duration-300 group-hover:translate-x-1 ${collection.featured ? "text-white/80" : "text-black/45"}`}
+              >
+                →
+              </span>
             </Link>
           ))}
         </div>
