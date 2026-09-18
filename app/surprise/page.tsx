@@ -377,17 +377,14 @@ export default function SurprisePage() {
   );
   const question =
     step === 1
-      ? ["Какое у тебя настроение?", moods, mood, setMood]
+      ? { title: "Какое у тебя настроение?", options: moods, current: mood, choose: setMood }
       : step === 2
-        ? ["Какая сегодня компания?", companies, company, setCompany]
+        ? { title: "Какая сегодня компания?", options: companies, current: company, choose: setCompany }
         : step === 3
-          ? ["Какой бюджет?", budgets, budget, setBudget]
-          : ([
-              "Сколько времени есть?",
-              durations,
-              duration,
-              setDuration,
-            ] as any);
+          ? { title: "Какой бюджет?", options: budgets, current: budget, choose: setBudget }
+          : step === 4
+            ? { title: "Сколько времени есть?", options: durations, current: duration, choose: setDuration }
+            : null;
   const draft = () => ({
     mood,
     budget,
@@ -505,15 +502,15 @@ export default function SurprisePage() {
                         Удиви меня
                       </p>
                       <h2 className="mt-2 sm:mt-3 text-[28px] sm:text-4xl leading-[1.05] font-bold">
-                        {question[0]}
+                        {question?.title ?? ""}
                       </h2>
                       <div className="mt-6 sm:mt-8 grid sm:grid-cols-2 gap-2.5 sm:gap-3">
-                        {(question[1] as string[]).map((v) => (
+                        {question?.options.map((v) => (
                           <Option
                             key={v}
                             value={v}
-                            current={question[2] as string}
-                            set={question[3] as (v: string) => void}
+                            current={question.current}
+                            set={question.choose}
                           />
                         ))}
                       </div>
