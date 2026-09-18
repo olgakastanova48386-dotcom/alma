@@ -1,12 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-
-const moods = ["Любое настроение", "Спокойно", "Романтика", "Вдохновиться", "Удивиться"];
-const budgets = ["Любой", "300–1500 ₽", "2000–5000 ₽", "6000–10000 ₽", "от 10000 ₽"];
-const companies = ["Любая", "Один", "Пара", "Друзья", "Семья"];
-const durations = ["Любая", "До 1 часа", "1–2 часа", "2–4 часа", "Полдня"];
+import UnifiedMap from "@/components/UnifiedMap";
 
 const places = [
   { title: "Дворцовая площадь", category: "Архитектура", image: "/images/isaac.jpg" },
@@ -89,11 +85,6 @@ function getHeroTheme(code: number | undefined, isDay: boolean): HeroTheme {
 
 export default function HomePage() {
   const router = useRouter();
-  const [mood, setMood] = useState("Любое настроение");
-  const [budget, setBudget] = useState("Любой");
-  const [company, setCompany] = useState("Любая");
-  const [duration, setDuration] = useState("Любая");
-  const [openSelect, setOpenSelect] = useState<string | null>(null);
   const [weather, setWeather] = useState<Weather | null>(null);
 
   useEffect(() => {
@@ -119,36 +110,6 @@ export default function HomePage() {
     const id = placeIds[title];
     router.push(id ? `/place/${id}` : "/map");
   };
-  const openMap = () => {
-    const params = new URLSearchParams();
-    if (mood !== "Любое настроение") params.set("mood", mood);
-    if (budget !== "Любой") params.set("budget", budget);
-    if (company !== "Любая") params.set("company", company);
-    if (duration !== "Любая") params.set("duration", duration);
-    const query = params.toString();
-    router.push(query ? `/map?${query}` : "/map");
-  };
-
-  const renderDropdown = (label: string, value: string, options: string[], id: string, setter: (value: string) => void) => {
-    const isOpen = openSelect === id;
-    return (
-      <div className="relative">
-        <p className="mb-2 text-xs uppercase tracking-[0.16em] text-white/40">{label}</p>
-        <button type="button" onClick={() => setOpenSelect(isOpen ? null : id)} className="w-full flex items-center justify-between gap-4 rounded-[18px] bg-white px-4 py-4 text-left text-black transition hover:bg-neutral-100">
-          <span className="truncate">{value}</span><span className={`text-sm transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}>↓</span>
-        </button>
-        {isOpen && (
-          <div className="absolute left-0 right-0 top-[calc(100%+8px)] z-50 rounded-[20px] bg-white p-2 shadow-2xl border border-black/5">
-            {options.map((option) => {
-              const selected = option === value;
-              return <button key={option} type="button" onClick={() => { setter(option); setOpenSelect(null); }} className={`w-full flex items-center justify-between gap-4 rounded-[14px] px-4 py-3 text-left text-sm transition ${selected ? "bg-black text-white" : "text-black hover:bg-neutral-100"}`}><span>{option}</span>{selected && <span>✓</span>}</button>;
-            })}
-          </div>
-        )}
-      </div>
-    );
-  };
-
   const isDay = weather?.isDay ?? getPetersburgIsDay();
   const weatherInfo = weather ? getWeatherInfo(weather.code, isDay) : null;
   const heroTheme = getHeroTheme(weather?.code, isDay);
@@ -176,7 +137,11 @@ export default function HomePage() {
         <div className="absolute z-10 bottom-8 right-8 hidden lg:flex items-center gap-3 text-xs uppercase tracking-[0.22em] text-neutral-500"><span className="w-8 h-px bg-black/20" />{heroTheme.label}</div>
       </section>
 
-            <section id="alma-filters" className="scroll-mt-32 max-w-7xl mx-auto px-3 pt-8 sm:px-6 sm:pt-0 lg:px-8 pb-14 sm:pb-28"><div className="rounded-[28px] sm:rounded-[44px] bg-black text-white p-5 sm:p-9 lg:p-12"><div><p className="text-xs uppercase tracking-[0.22em] text-white/40">Подбор места</p><h2 className="mt-3 sm:mt-4 max-w-full text-[clamp(28px,7vw,48px)] leading-tight font-bold tracking-tight break-words">Что тебе подходит сегодня?</h2><p className="mt-3 sm:mt-4 text-white/55 text-sm sm:text-lg max-w-2xl leading-6 sm:leading-7">Выбери настроение, бюджет, компанию и сколько времени хочется провести вне дома.</p></div><div className="mt-7 sm:mt-9 grid sm:grid-cols-2 lg:grid-cols-4 gap-3">{renderDropdown("Настроение", mood, moods, "mood", setMood)}{renderDropdown("Бюджет", budget, budgets, "budget", setBudget)}{renderDropdown("Компания", company, companies, "company", setCompany)}{renderDropdown("Длительность", duration, durations, "duration", setDuration)}</div><div className="mt-6 sm:mt-7 flex flex-col sm:flex-row sm:items-center gap-3"><button type="button" onClick={openMap} className="rounded-full bg-white text-black px-6 sm:px-8 py-4 font-semibold hover:scale-[1.02] transition">Показать подходящие места →</button><button type="button" onClick={() => { setMood("Любое настроение"); setBudget("Любой"); setCompany("Любая"); setDuration("Любая"); }} className="rounded-full border border-white/15 text-white/60 px-6 py-3.5 sm:py-4 hover:text-white hover:border-white/30 transition">Сбросить</button></div></div></section>
+      <div id="alma-filters" className="scroll-mt-28 pt-8 sm:pt-0">
+        <Suspense fallback={<section className="mx-auto max-w-7xl px-4 pb-10 sm:px-6 lg:px-8"><div className="flex min-h-[560px] items-center justify-center rounded-[28px] bg-[#ebe8e3] text-neutral-500">Загружаем карту…</div></section>}>
+          <UnifiedMap />
+        </Suspense>
+      </div>
 
       <section id="alma-photozones" className="scroll-mt-24 bg-[#171614] text-white py-16 sm:py-28 overflow-hidden"><div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6"><div><p className="text-xs uppercase tracking-[.24em] text-white/45">📸 ALMA · Фотозоны</p><h2 className="mt-4 max-w-full text-[clamp(34px,9vw,72px)] font-bold tracking-tight leading-[.96] break-words">Петербург,<br />который хочется сохранить</h2></div><div className="max-w-md lg:pb-1"><button type="button" onClick={() => window.alert("Приложение ALMA скоро будет доступно для скачивания.")} className="mb-7 inline-flex min-h-12 items-center justify-center rounded-full border border-white/25 bg-white px-6 py-3 text-sm font-semibold text-black transition hover:scale-[1.02] hover:bg-white/90 sm:mb-9">Скачать приложение</button><p className="text-sm leading-7 text-white/55 sm:text-lg">Красивые точки, свет и время для кадра. Листай как визуальный альбом и сохраняй идеи для прогулки.</p></div></div><div className="mt-10 sm:mt-14 columns-2 lg:columns-4 gap-3 sm:gap-4">{photozones.map((place, index) => <button key={place.title} type="button" onClick={() => openPlace(place.title)} aria-label={`Открыть ${place.title}`} className="group relative mb-3 sm:mb-4 block w-full break-inside-avoid overflow-hidden rounded-[22px] sm:rounded-[28px] bg-white/5 text-left cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"><div className={`${index === 0 || index === 3 ? "h-[340px] sm:h-[500px]" : "h-[260px] sm:h-[390px]"} relative`}><img src={place.image} alt={place.title} className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]" /><div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/5" /><span className="absolute left-3 top-3 rounded-full bg-white/90 px-3 py-1.5 text-[11px] text-black">{place.tag}</span><div className="absolute left-3 right-3 bottom-4 sm:left-4 sm:right-4"><p className="text-[11px] sm:text-xs text-white/55 line-clamp-1">{place.time}</p><h3 className="mt-1 line-clamp-2 min-h-[2.2em] max-w-full text-[16px] sm:text-[22px] font-bold leading-[1.08] text-white break-normal">{place.title}</h3></div></div></button>)}</div><div className="mt-8 sm:mt-10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5 border-t border-white/10 pt-7"><div><p className="font-semibold">ALMA+ · подробный фотогид</p><p className="mt-1 text-sm text-white/45">Точная точка съёмки · лучший свет · ракурс · подсказка для образа</p></div><button type="button" onClick={() => router.push("/photozones/add")} className="self-start rounded-full bg-white px-6 py-3.5 text-sm font-semibold text-black shadow-none transition-all duration-300 hover:-translate-y-1 hover:scale-[1.02] hover:bg-[#f4d37c] hover:shadow-[0_14px_34px_rgba(244,211,124,.28)] active:translate-y-0 active:scale-[.98] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#f4d37c]/50">＋ Добавить фотолокацию</button></div></div></section>
 
