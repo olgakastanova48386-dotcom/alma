@@ -32,6 +32,35 @@ export type RestaurantPlace = {
   };
 };
 
+export const confirmedSafetyPlaces = [
+  {
+    id: "safe-bar-is-murino",
+    name: "Bar Is",
+    category: "Бар",
+    address: "Мурино, Екатерининская ул., 3/4",
+    safetySupport: {
+      verified: true as const,
+      codePhrase: "Любая фраза со словом «ключ»",
+      helpText: "Сотрудники знают протокол проекта «Ключевое слово»: помогут укрыться, по просьбе вызвать полицию или такси и безопасно уйти.",
+      verifiedAt: "18.09.2026",
+      sourceUrl: "https://kluch.help/",
+    },
+  },
+  {
+    id: "safe-morvax-murino",
+    name: "Morvax",
+    category: "Кафе",
+    address: "Мурино, Тихая ул., 22",
+    safetySupport: {
+      verified: true as const,
+      codePhrase: "Любая фраза со словом «ключ»",
+      helpText: "Точка отображается на действующей карте проекта «Ключевое слово»; персонал партнёрских точек проходит инструктаж по протоколу помощи.",
+      verifiedAt: "18.09.2026",
+      sourceUrl: "https://kluch.help/",
+    },
+  },
+];
+
 export const restaurantPlaces: RestaurantPlace[] = [
   {
     id: 1,
