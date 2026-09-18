@@ -1,6 +1,113 @@
 "use client";
-import Link from "next/link"; import { FormEvent,Suspense,useState } from "react"; import { useSearchParams } from "next/navigation";
-function LoginContent(){const params=useSearchParams();const next=params.get("next")||"/";const product=params.get("product");const isRoutePurchase=product==="route-199";const destination=isRoutePurchase?"/checkout?product=route-199":next;const registerHref=`/register?next=${encodeURIComponent(next)}${product?`&product=${encodeURIComponent(product)}`:""}`;const[email,setEmail]=useState("");const[password,setPassword]=useState("");const[loading,setLoading]=useState(false);const[error,setError]=useState("");const[needsVerification,setNeedsVerification]=useState(false);
-async function onSubmit(e:FormEvent<HTMLFormElement>){e.preventDefault();setError("");setNeedsVerification(false);setLoading(true);try{const r=await fetch("/api/auth/login",{method:"POST",credentials:"include",headers:{"Content-Type":"application/json"},body:JSON.stringify({email,password})});const d=await r.json();if(!r.ok){if(d.requiresVerification)setNeedsVerification(true);throw new Error(d.error||"Не удалось войти.")}window.location.assign(destination)}catch(x){setError(x instanceof Error?x.message:"Не удалось войти.");setLoading(false)}}const verificationHref=`/verify-phone?email=${encodeURIComponent(email)}&next=${encodeURIComponent(destination)}`;
-return <main className="min-h-screen bg-[#f7f4ef] flex items-center justify-center px-4 pt-24 pb-12"><div className="bg-white p-8 sm:p-10 rounded-[30px] shadow-xl w-full max-w-[430px] border border-black/5"><p className="text-xs uppercase tracking-[.22em] text-neutral-400 text-center">ALMA</p><h1 className="mt-3 text-3xl font-bold text-center">Вход</h1><p className="mt-2 text-center text-sm text-neutral-500">Войдите по электронной почте. Мы не используем её для спама.</p><form className="mt-7" onSubmit={onSubmit}><input value={email} onChange={e=>setEmail(e.target.value)} type="email" autoComplete="email" inputMode="email" placeholder="Электронная почта" className="w-full border border-black/30 rounded-2xl px-4 py-3.5 outline-none focus:border-black"/><input value={password} onChange={e=>setPassword(e.target.value)} type="password" autoComplete="current-password" placeholder="Пароль" className="mt-4 w-full border border-black/30 rounded-2xl px-4 py-3.5 outline-none focus:border-black"/><div className="mt-2 text-right"><Link href="/forgot-password" className="text-xs font-medium text-neutral-500 underline">Забыли пароль?</Link></div>{error&&<div className="mt-5 rounded-2xl bg-red-50 px-4 py-3 text-sm text-red-700">{error}{needsVerification&&<Link href={verificationHref} className="mt-2 block font-semibold underline">Подтвердить почту →</Link>}</div>}<button type="submit" disabled={loading||!email||!password} className="mt-6 w-full bg-black text-white rounded-2xl py-3.5 font-medium disabled:opacity-30">{loading?"Входим…":isRoutePurchase?"Войти и перейти к оплате":"Войти"}</button></form><div className="my-6 h-px bg-black/10"/><p className="text-center text-sm text-neutral-600">Нет аккаунта? <Link href={registerHref} className="font-semibold underline">Зарегистрироваться</Link></p></div></main>}
-export default function LoginPage(){return <Suspense fallback={<main className="min-h-screen bg-[#f7f4ef]"/>}><LoginContent/></Suspense>}
+import Link from "next/link";
+import { FormEvent, Suspense, useState } from "react";
+import { useSearchParams } from "next/navigation";
+function LoginContent() {
+  const params = useSearchParams();
+  const next = params.get("next") || "/";
+  const destination = next;
+  const registerHref = `/register?next=${encodeURIComponent(next)}`;
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [needsVerification, setNeedsVerification] = useState(false);
+  async function onSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setError("");
+    setNeedsVerification(false);
+    setLoading(true);
+    try {
+      const r = await fetch("/api/auth/login", {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+      const d = await r.json();
+      if (!r.ok) {
+        if (d.requiresVerification) setNeedsVerification(true);
+        throw new Error(d.error || "Не удалось войти.");
+      }
+      window.location.assign(destination);
+    } catch (x) {
+      setError(x instanceof Error ? x.message : "Не удалось войти.");
+      setLoading(false);
+    }
+  }
+  const verificationHref = `/verify-phone?email=${encodeURIComponent(email)}&next=${encodeURIComponent(destination)}`;
+  return (
+    <main className="min-h-screen bg-[#f7f4ef] flex items-center justify-center px-4 pt-24 pb-12">
+      <div className="bg-white p-8 sm:p-10 rounded-[30px] shadow-xl w-full max-w-[430px] border border-black/5">
+        <p className="text-xs uppercase tracking-[.22em] text-neutral-400 text-center">
+          ALMA
+        </p>
+        <h1 className="mt-3 text-3xl font-bold text-center">Вход</h1>
+        <p className="mt-2 text-center text-sm text-neutral-500">
+          Войдите по электронной почте. Мы не используем её для спама.
+        </p>
+        <form className="mt-7" onSubmit={onSubmit}>
+          <input
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            type="email"
+            autoComplete="email"
+            inputMode="email"
+            placeholder="Электронная почта"
+            className="w-full border border-black/30 rounded-2xl px-4 py-3.5 outline-none focus:border-black"
+          />
+          <input
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            type="password"
+            autoComplete="current-password"
+            placeholder="Пароль"
+            className="mt-4 w-full border border-black/30 rounded-2xl px-4 py-3.5 outline-none focus:border-black"
+          />
+          <div className="mt-2 text-right">
+            <Link
+              href="/forgot-password"
+              className="text-xs font-medium text-neutral-500 underline"
+            >
+              Забыли пароль?
+            </Link>
+          </div>
+          {error && (
+            <div className="mt-5 rounded-2xl bg-red-50 px-4 py-3 text-sm text-red-700">
+              {error}
+              {needsVerification && (
+                <Link
+                  href={verificationHref}
+                  className="mt-2 block font-semibold underline"
+                >
+                  Подтвердить почту →
+                </Link>
+              )}
+            </div>
+          )}
+          <button
+            type="submit"
+            disabled={loading || !email || !password}
+            className="mt-6 w-full bg-black text-white rounded-2xl py-3.5 font-medium disabled:opacity-30"
+          >
+            {loading ? "Входим…" : "Войти"}
+          </button>
+        </form>
+        <div className="my-6 h-px bg-black/10" />
+        <p className="text-center text-sm text-neutral-600">
+          Нет аккаунта?{" "}
+          <Link href={registerHref} className="font-semibold underline">
+            Зарегистрироваться
+          </Link>
+        </p>
+      </div>
+    </main>
+  );
+}
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<main className="min-h-screen bg-[#f7f4ef]" />}>
+      <LoginContent />
+    </Suspense>
+  );
+}
