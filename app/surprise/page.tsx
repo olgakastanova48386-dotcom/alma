@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { FormEvent, useEffect, useMemo, useState } from "react";
 import { places } from "@/data/places";
 import { restaurantPlaces } from "@/data/restaurantPlaces";
 import { routeStayTimes } from "@/data/routeStories";
@@ -174,7 +174,18 @@ export default function SurprisePage() {
     [selectedInterests, setSelectedInterests] = useState<string[]>([]),
     [generated, setGenerated] = useState(false),
     [restored, setRestored] = useState(false),
-    [restoredPlaceIds, setRestoredPlaceIds] = useState<number[]>([]);
+    [restoredPlaceIds, setRestoredPlaceIds] = useState<number[]>([]),
+    [authChecked, setAuthChecked] = useState(false),
+    [signedIn, setSignedIn] = useState(false),
+    [showRegister, setShowRegister] = useState(false),
+    [registerName, setRegisterName] = useState(""),
+    [registerEmail, setRegisterEmail] = useState(""),
+    [registerPassword, setRegisterPassword] = useState(""),
+    [registerRepeat, setRegisterRepeat] = useState(""),
+    [registerGender, setRegisterGender] = useState<"female" | "male">("female"),
+    [registerConsent, setRegisterConsent] = useState(false),
+    [registerLoading, setRegisterLoading] = useState(false),
+    [registerError, setRegisterError] = useState("");
   useEffect(() => {
     let active = true;
     (async () => {
@@ -230,6 +241,13 @@ export default function SurprisePage() {
     return () => {
       active = false;
     };
+  }, []);
+  useEffect(() => {
+    fetch("/api/auth/me", { credentials: "include" })
+      .then((r) => r.json())
+      .then((d) => setSignedIn(Boolean(d.user)))
+      .catch(() => setSignedIn(false))
+      .finally(() => setAuthChecked(true));
   }, []);
   const hardcore = selectedInterests.includes("Хардкор · успеть максимум");
   const routeInterests = useMemo(
@@ -428,10 +446,54 @@ export default function SurprisePage() {
       localStorage.setItem(DRAFT_KEY, JSON.stringify(draft(placeIds)));
     } catch {}
   };
-  const generateRoute = () => {
-    // Generate first. The route itself is calculated only after generated=true.
-    // Saving before that used to persist an empty route.
+  const revealRoute = () => {
+    setShowRegister(false);
     setGenerated(true);
+  };
+  const generateRoute = () => {
+    if (!authChecked) return;
+    if (!signedIn) {
+      setRegisterError("");
+      setShowRegister(true);
+      return;
+    }
+    revealRoute();
+  };
+  const registerForRoute = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setRegisterError("");
+    if (registerName.trim().length < 2) return setRegisterError("Укажите имя.");
+    if (!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$/.test(registerEmail.trim()))
+      return setRegisterError("Проверьте электронную почту.");
+    if (registerPassword.length < 8)
+      return setRegisterError("Пароль должен содержать минимум 8 символов.");
+    if (registerPassword !== registerRepeat)
+      return setRegisterError("Пароли не совпадают.");
+    if (!registerConsent)
+      return setRegisterError("Нужно согласиться с правилами ALMA и обработкой данных.");
+    setRegisterLoading(true);
+    try {
+      const r = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: registerName,
+          email: registerEmail,
+          gender: registerGender,
+          password: registerPassword,
+          consent: registerConsent,
+        }),
+      });
+      const d = await r.json();
+      if (!r.ok) throw new Error(d.error || "Не удалось создать аккаунт.");
+      saveDraft();
+      window.location.assign(
+        `/verify-phone?email=${encodeURIComponent(d.email || registerEmail)}&next=${encodeURIComponent("/surprise")}`,
+      );
+    } catch (x) {
+      setRegisterError(x instanceof Error ? x.message : "Не удалось создать аккаунт.");
+      setRegisterLoading(false);
+    }
   };
   const reset = () => {
     try {
@@ -461,8 +523,7 @@ export default function SurprisePage() {
             Петербург
           </h1>
           <p className="mt-5 sm:mt-6 max-w-2xl text-base sm:text-xl leading-7 sm:leading-8 text-neutral-500">
-            Ответь на несколько вопросов — ALMA бесплатно соберёт реалистичный
-            маршрут с учётом времени.
+            Ответь на несколько вопросов — ALMA соберёт реалистичный маршрут с учётом времени. После регистрации маршруты можно создавать без ограничений.
           </p>
           {restored && (
             <div className="mt-5 inline-flex rounded-full bg-white border border-black/10 px-4 py-2 text-sm font-medium">
@@ -580,8 +641,7 @@ export default function SurprisePage() {
                     ))}
                   </div>
                   <p className="mt-5 sm:mt-6 text-sm text-neutral-500">
-                    Названия точек, фотографии и полный сценарий откроются сразу
-                    и бесплатно.
+                    Названия точек, фотографии и полный сценарий откроются сразу после входа или регистрации.
                   </p>
                 </>
               )}
@@ -606,10 +666,38 @@ export default function SurprisePage() {
                     onClick={generateRoute}
                     className="min-h-12 rounded-full bg-black text-white px-4 sm:px-8 py-3"
                   >
-                    ✦ Собрать маршрут бесплатно
+                    ✦ Создать маршрут
                   </button>
                 )}
               </div>
+            </div>
+          </div>
+        )}
+        {showRegister && !generated && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/45 p-4 backdrop-blur-sm">
+            <div className="max-h-[92vh] w-full max-w-[430px] overflow-y-auto rounded-[28px] bg-white p-5 shadow-2xl sm:p-8">
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <p className="text-[10px] uppercase tracking-[.22em] text-neutral-400">ALMA</p>
+                  <h2 className="mt-2 text-3xl font-bold">Сохраним твой маршрут</h2>
+                  <p className="mt-2 text-sm leading-6 text-neutral-500">Зарегистрируйся один раз — после этого создавай новые маршруты сколько угодно.</p>
+                </div>
+                <button type="button" onClick={() => setShowRegister(false)} className="rounded-full border border-black/10 px-3 py-2 text-sm">✕</button>
+              </div>
+              <form onSubmit={registerForRoute} className="mt-6 space-y-3">
+                <input value={registerName} onChange={(e) => setRegisterName(e.target.value)} placeholder="Имя" className="w-full rounded-[16px] border border-black/15 px-4 py-3 outline-none focus:border-black" />
+                <input value={registerEmail} onChange={(e) => setRegisterEmail(e.target.value)} type="email" placeholder="Электронная почта" className="w-full rounded-[16px] border border-black/15 px-4 py-3 outline-none focus:border-black" />
+                <div className="grid grid-cols-2 gap-2">
+                  <button type="button" onClick={() => setRegisterGender("female")} className={`rounded-[14px] border px-3 py-2 text-sm ${registerGender === "female" ? "bg-black text-white border-black" : "border-black/10"}`}>Женщина</button>
+                  <button type="button" onClick={() => setRegisterGender("male")} className={`rounded-[14px] border px-3 py-2 text-sm ${registerGender === "male" ? "bg-black text-white border-black" : "border-black/10"}`}>Мужчина</button>
+                </div>
+                <input value={registerPassword} onChange={(e) => setRegisterPassword(e.target.value)} type="password" placeholder="Пароль · минимум 8 символов" className="w-full rounded-[16px] border border-black/15 px-4 py-3 outline-none focus:border-black" />
+                <input value={registerRepeat} onChange={(e) => setRegisterRepeat(e.target.value)} type="password" placeholder="Повторите пароль" className="w-full rounded-[16px] border border-black/15 px-4 py-3 outline-none focus:border-black" />
+                <label className="flex items-start gap-2 text-xs leading-5 text-neutral-600"><input type="checkbox" checked={registerConsent} onChange={(e) => setRegisterConsent(e.target.checked)} className="mt-1" /><span>Согласен(на) с правилами ALMA и обработкой данных.</span></label>
+                {registerError && <div className="rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700">{registerError}</div>}
+                <button disabled={registerLoading} className="w-full rounded-[16px] bg-black py-3 font-semibold text-white disabled:opacity-50">{registerLoading ? "Создаём аккаунт…" : "Зарегистрироваться и получить маршрут"}</button>
+              </form>
+              <p className="mt-4 text-center text-sm text-neutral-500">Уже есть аккаунт? <a className="font-semibold text-black underline" href="/login?next=%2Fsurprise">Войти</a></p>
             </div>
           </div>
         )}
@@ -617,7 +705,7 @@ export default function SurprisePage() {
           <section className="mt-10 sm:mt-16">
             <div className="max-w-3xl">
               <p className="text-[11px] sm:text-xs uppercase tracking-[.18em] sm:tracking-[.22em] text-neutral-500">
-                ALMA собрала твой маршрут бесплатно
+                ALMA собрала твой маршрут
               </p>
               <h2 className="mt-3 sm:mt-4 text-[40px] sm:text-6xl font-bold tracking-tight leading-none">
                 Есть план ✦
