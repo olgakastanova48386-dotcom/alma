@@ -229,15 +229,18 @@ export default function SurprisePage() {
     };
   }, []);
   const hardcore = selectedInterests.includes("Хардкор · успеть максимум");
-  const routeInterests = useMemo(
-    () => selectedInterests.filter((i) => i !== "Хардкор · успеть максимум"),
-    [selectedInterests],
+  const routeInterests = selectedInterests.filter(
+    (i) => i !== "Хардкор · успеть максимум",
   );
   const toggleInterest = (v: string) =>
     setSelectedInterests((x) =>
       x.includes(v) ? x.filter((i) => i !== v) : [...x, v],
     );
   const matchingPlaces = useMemo<PurchasedRouteStop[]>(() => {
+    // Do not build or score a route while the user is still choosing interests.
+    // This keeps step 5 as pure UI state and prevents a second selection from
+    // triggering route-generation side effects.
+    if (!generated && step <= 5) return [];
     if (restoredPlaceIds.length) {
       const restoredStops = restoredPlaceIds
         .map(stopFromMapId)
@@ -347,8 +350,9 @@ export default function SurprisePage() {
     duration,
     selectedInterests,
     hardcore,
-    routeInterests,
     restoredPlaceIds,
+    generated,
+    step,
   ]);
   const can = () =>
     step === 1
