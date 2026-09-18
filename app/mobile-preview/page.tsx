@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function MobilePreviewPage() {
   return (
     <main className="min-h-screen bg-[#ece9e4] px-6 py-10 text-black">
@@ -8,7 +10,7 @@ export default function MobilePreviewPage() {
             <h1 className="mt-2 text-3xl font-bold tracking-tight">Мобильная версия</h1>
             <p className="mt-2 max-w-xl text-sm leading-6 text-black/55">Здесь сайт открывается внутри мобильного экрана шириной 390 px, чтобы можно было проверять мобильную версию прямо с ноутбука.</p>
           </div>
-          <a href="/" className="self-start rounded-full bg-black px-5 py-3 text-sm font-semibold text-white">Открыть обычный сайт</a>
+          <Link href="/" className="self-start rounded-full bg-black px-5 py-3 text-sm font-semibold text-white">Открыть обычный сайт</Link>
         </div>
 
         <div className="flex justify-center">
