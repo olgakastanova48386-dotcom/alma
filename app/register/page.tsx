@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { FormEvent, Suspense, useState } from "react";
 import { useSearchParams } from "next/navigation";
-type Gender = "female" | "male" | "unspecified";
+type Gender = "female" | "male";
 function RegisterContent() {
   const params = useSearchParams();
   const next = params.get("next") || "/";
@@ -10,7 +10,7 @@ function RegisterContent() {
   const loginHref = `/login?next=${encodeURIComponent(next)}`;
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [gender, setGender] = useState<Gender>("unspecified");
+  const [gender, setGender] = useState<Gender>("female");
   const [password, setPassword] = useState("");
   const [repeat, setRepeat] = useState("");
   const [consent, setConsent] = useState(false);
@@ -106,16 +106,12 @@ function RegisterContent() {
           <fieldset>
             <legend className="text-[12px] font-medium text-neutral-500">
               Пол{" "}
-              <span className="font-normal text-neutral-400">
-                · необязательно
-              </span>
             </legend>
-            <div className="mt-2 grid grid-cols-3 gap-2">
+            <div className="mt-2 grid grid-cols-2 gap-2">
               {(
                 [
                   { value: "female", label: "Женщина" },
                   { value: "male", label: "Мужчина" },
-                  { value: "unspecified", label: "Не указывать" },
                 ] as const
               ).map((o) => (
                 <button
