@@ -1,6 +1,4 @@
 import Link from "next/link";
-import { Suspense } from "react";
-import UnifiedMap from "@/components/UnifiedMap";
 
 const collections = [
   { title: "Готовый план", icon: "✨", href: "/surprise", featured: true },
@@ -41,9 +39,6 @@ export default function MapPage() {
           ))}
         </div>
       </section>
-      <Suspense fallback={<section className="mx-auto max-w-7xl px-4 sm:px-6"><div className="min-h-[560px] rounded-[28px] bg-[#ebe8e3] flex items-center justify-center text-neutral-500">Загружаем карту…</div></section>}>
-        <UnifiedMap />
-      </Suspense>
     </main>
   );
 }
