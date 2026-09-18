@@ -64,11 +64,21 @@ function getWeatherInfo(code: number, isDay: boolean) {
   return { icon: "🌤️", text: "Погода" };
 }
 
-function getHeroTheme(code: number | undefined, isDay: boolean): HeroTheme {
+function getHeroTheme(code: number | undefined, isDay: boolean, hour: number): HeroTheme {
   const isDrizzle = [51, 53, 55, 56, 57].includes(code ?? -1);
 
+  const isEveningOrNight = hour >= 18 || hour < 7;
+
+  if (isDrizzle && isEveningOrNight) {
+    return { image: "/images/дождь в питере ночь.jpg", position: "center 45%", label: "Морось в Петербурге" };
+  }
+
+  if (isDrizzle) {
+    return { image: "/images/питер морось.jpg", position: "center 48%", label: "Морось в Петербурге" };
+  }
+
   if (!isDay) {
-    if (isDrizzle) {
+    if (false) {
       return { image: "/images/дождь в питере ночь.jpg", position: "center 45%", label: "Морось в Петербурге" };
     }
 
@@ -83,7 +93,6 @@ function getHeroTheme(code: number | undefined, isDay: boolean): HeroTheme {
   if ([1, 2].includes(code ?? -1)) return { image: "/images/питер главная фотка.jpg", position: "center 42%", label: "Петербург в переменной облачности" };
   if (code === 3) return { image: "/images/питер главная фотка 2.jpg", position: "center 42%", label: "Пасмурный Петербург" };
   if ([45, 48].includes(code ?? -1)) return { image: "/images/пиер главная фотка 3.jpg", position: "center 42%", label: "Петербург в тумане" };
-  if (isDrizzle) return { image: "/images/питер морось.jpg", position: "center 48%", label: "Морось в Петербурге" };
   if ([61, 63, 65, 66, 67, 80, 81, 82].includes(code ?? -1)) return { image: "/images/питер главная фотка 5.jpg", position: "center 46%", label: "Петербург под дождём" };
   if ([71, 73, 75, 77, 85, 86].includes(code ?? -1)) return { image: "/images/питер главная фотка 2.jpg", position: "center 42%", label: "Снежный Петербург" };
   if ([95, 96, 99].includes(code ?? -1)) return { image: "/images/пиер главная фотка 3.jpg", position: "center 42%", label: "Драматичный Петербург" };
@@ -119,7 +128,8 @@ export default function HomePage() {
   };
   const isDay = weather?.isDay ?? getPetersburgIsDay();
   const weatherInfo = weather ? getWeatherInfo(weather.code, isDay) : null;
-  const heroTheme = getHeroTheme(weather?.code, isDay);
+  const petersburgHour = Number(new Intl.DateTimeFormat("en-GB", { timeZone: "Europe/Moscow", hour: "2-digit", hour12: false }).format(new Date()));
+  const heroTheme = getHeroTheme(weather?.code, isDay, petersburgHour);
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-[#f7f4ef] text-black">
