@@ -65,6 +65,8 @@ export async function ensureAuthSchema() {
   const names = (columns?.results || []).map((row: any) => row.name);
   if (!names.includes("email"))
     await database.prepare("ALTER TABLE users ADD COLUMN email TEXT").run();
+  if (!names.includes("login"))
+    await database.prepare("ALTER TABLE users ADD COLUMN login TEXT").run();
   if (!names.includes("email_verified"))
     await database
       .prepare(
@@ -74,6 +76,11 @@ export async function ensureAuthSchema() {
   await database
     .prepare(
       "CREATE UNIQUE INDEX IF NOT EXISTS idx_users_email ON users(email) WHERE email IS NOT NULL",
+    )
+    .run();
+  await database
+    .prepare(
+      "CREATE UNIQUE INDEX IF NOT EXISTS idx_users_login ON users(login) WHERE login IS NOT NULL",
     )
     .run();
 }
@@ -300,7 +307,7 @@ export async function getCurrentUser(request: Request) {
   return (
     (await db()
       .prepare(
-        `SELECT users.id, users.name, users.email, users.email_verified, users.phone, users.gender, users.created_at FROM sessions JOIN users ON users.id = sessions.user_id WHERE sessions.id = ? AND sessions.expires_at > ?`,
+        `SELECT users.id, users.name, users.login, users.email, users.email_verified, users.phone, users.gender, users.created_at FROM sessions JOIN users ON users.id = sessions.user_id WHERE sessions.id = ? AND sessions.expires_at > ?`,
       )
       .bind(id, now)
       .first()) || null
