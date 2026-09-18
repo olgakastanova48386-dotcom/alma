@@ -133,7 +133,7 @@ export default function HomePage() {
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-[#f7f4ef] text-black">
-      <section className="relative min-h-[560px] md:min-h-[820px] flex items-start md:items-center pt-[170px] md:pt-28 pb-8 sm:pb-20 overflow-hidden bg-[#f7f4ef] text-black">
+      <section className="relative min-h-[560px] md:min-h-[760px] flex items-start md:items-center pt-[170px] md:pt-28 pb-0 overflow-hidden bg-[#f7f4ef] text-black">
         <img key={`mobile-bg-${heroTheme.image}`} src={heroTheme.image} alt={heroTheme.label} className="md:hidden absolute inset-0 h-full w-full object-cover transition-opacity duration-700" style={{ objectPosition: heroTheme.position }} />
         <div className="md:hidden absolute inset-0 bg-gradient-to-b from-black/15 via-black/20 to-black/72" />
         <div className="hidden md:block absolute inset-0 bg-[#f7f4ef]" />
@@ -154,7 +154,7 @@ export default function HomePage() {
         <div className="absolute z-10 bottom-8 right-8 hidden lg:flex items-center gap-3 text-xs uppercase tracking-[0.22em] text-neutral-500"><span className="w-8 h-px bg-black/20" />{heroTheme.label}</div>
       </section>
 
-      <div id="alma-filters" className="scroll-mt-28 pt-8 sm:pt-0">
+      <div id="alma-filters" className="scroll-mt-28 pt-0">
         <Suspense fallback={<section className="mx-auto max-w-7xl px-4 pb-10 sm:px-6 lg:px-8"><div className="flex min-h-[560px] items-center justify-center rounded-[28px] bg-[#ebe8e3] text-neutral-500">Загружаем карту…</div></section>}>
           <UnifiedMap />
         </Suspense>
