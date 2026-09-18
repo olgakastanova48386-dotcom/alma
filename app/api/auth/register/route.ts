@@ -6,8 +6,8 @@ const NAME_RE = /^[A-Za-zА-Яа-яЁё][A-Za-zА-Яа-яЁё\- ']{1,39}$/;
 export async function POST(request: Request) {
   try {
     await ensureAuthSchema();
-    const rate = await consumeAuthRateLimit(request, "register", 5, 60 * 60);
-    if (!rate.allowed) return NextResponse.json({ error: "Слишком много попыток регистрации. Попробуйте позже." }, { status: 429 });
+    const rate = await consumeAuthRateLimit(request, "register", 20, 10 * 60);
+    if (!rate.allowed) return NextResponse.json({ error: "Слишком много попыток подряд. Подождите несколько минут и попробуйте снова." }, { status: 429 });
     const body = await request.json();
     const name = String(body.name || "").trim();
     const login = String(body.login || "").trim();
