@@ -234,6 +234,8 @@ export default function SurprisePage() {
         .filter((x): x is PurchasedRouteStop => Boolean(x));
       if (restoredStops.length) return restoredStops;
     }
+    if (!generated) return [];
+
     const score = (p: (typeof places)[number]) =>
       (p.mood === mood ? 4 : 0) +
       (p.budget === budget ? 3 : 0) +
@@ -244,68 +246,29 @@ export default function SurprisePage() {
         0,
       );
     const ranked = [...places].sort((a, b) => score(b) - score(a));
-    const hardMax =
-      duration === "Полдня"
-        ? 5
-        : duration === "2–4 часа"
-          ? 4
-          : duration === "1–2 часа"
-            ? 3
-            : 2;
-    const normalMax =
-      duration === "Полдня"
-        ? 4
-        : duration === "2–4 часа"
-          ? 3
-          : duration === "1–2 часа"
-            ? 2
-            : 1;
-    const requestedStopCount = routeInterests.length;
-    const max = hardcore
-      ? Math.max(hardMax, requestedStopCount)
-      : Math.max(normalMax, requestedStopCount),
-      budgetMinutes = routeBudgetMinutes(duration);
+    const requestedStopCount = Math.max(1, routeInterests.length);
+    const normalMax = duration === "Полдня" ? 4 : duration === "2–4 часа" ? 3 : duration === "1–2 часа" ? 2 : 1;
+    const hardMax = duration === "Полдня" ? 5 : duration === "2–4 часа" ? 4 : duration === "1–2 часа" ? 3 : 2;
+    const max = Math.max(hardcore ? hardMax : normalMax, requestedStopCount);
     const chosen: PurchasedRouteStop[] = [];
     const usedEditorial = new Set<number>();
     const usedRestaurants = new Set<number>();
-    const fits = (candidate: PurchasedRouteStop) => {
-      if (chosen.length >= max) return false;
-      if (hardcore) return true;
-      if (
-        isMainStop(candidate) &&
-        chosen.some(isMainStop) &&
-        chosen.length >= requestedStopCount
-      ) return false;
-      const visit =
-        chosen.reduce((s, p) => s + stopMinutes(p), 0) + stopMinutes(candidate);
-      const travel =
-        chosen
-          .slice(0, -1)
-          .reduce((s, p, i) => s + transferMinutes(p, chosen[i + 1]), 0) +
-        (chosen.length
-          ? transferMinutes(chosen[chosen.length - 1], candidate)
-          : 0);
-      if (chosen.length < requestedStopCount) return true;
-      return visit + travel <= budgetMinutes;
-    };
-    // Если выбрана прогулка вместе с другими интересами, сначала ставим
-    // прогулочную точку-встречу. Следующую остановку подбираем рядом с ней,
-    // чтобы маршрут ощущался как единая прогулка, а не набор разрозненных мест.
-    const orderedInterests = routeInterests.includes("Прогулки") && routeInterests.length > 1
-      ? ["Прогулки", ...routeInterests.filter((i) => i !== "Прогулки")]
-      : routeInterests;
+
+    const orderedInterests =
+      routeInterests.includes("Прогулки") && routeInterests.length > 1
+        ? ["Прогулки", ...routeInterests.filter((i) => i !== "Прогулки")]
+        : routeInterests;
+
     for (const interest of orderedInterests) {
       if (chosen.length >= max) break;
+      const previous = chosen[chosen.length - 1];
+
       if (interest === "Вкусно поесть") {
-        const previous = chosen[chosen.length - 1];
         const candidates = verifiedRestaurants
           .filter((r) => !usedRestaurants.has(r.id))
-          .map(restaurantStop)
-          .filter(fits);
+          .map(restaurantStop);
         const picked = [...candidates].sort((a, b) =>
-          previous
-            ? dist(previous, a) - dist(previous, b)
-            : (b.rating ?? 0) - (a.rating ?? 0),
+          previous ? dist(previous, a) - dist(previous, b) : (b.rating ?? 0) - (a.rating ?? 0),
         )[0];
         if (picked) {
           chosen.push(picked);
@@ -313,47 +276,32 @@ export default function SurprisePage() {
         }
         continue;
       }
-      const previous = chosen[chosen.length - 1];
+
       const candidates = ranked
         .filter((x) => matchesInterest(x, interest) && !usedEditorial.has(x.id))
-        .map(editorialStop)
-        .filter(fits);
-      const p = [...candidates].sort((a, b) =>
+        .map(editorialStop);
+      const picked = [...candidates].sort((a, b) =>
         previous
           ? dist(previous, a) - dist(previous, b)
-          : score(places.find((x) => x.id === b.id)!) -
-            score(places.find((x) => x.id === a.id)!),
+          : score(places.find((x) => x.id === b.id)!) - score(places.find((x) => x.id === a.id)!),
       )[0];
-      if (p) {
-        chosen.push(p);
-        usedEditorial.add(p.id);
+      if (picked) {
+        chosen.push(picked);
+        usedEditorial.add(picked.id);
       }
     }
+
     for (const raw of ranked) {
       if (chosen.length >= max) break;
       if (usedEditorial.has(raw.id)) continue;
       const p = editorialStop(raw);
-      if (
-        (chosen.length === 0 ||
-          hardcore ||
-          dist(chosen[chosen.length - 1], p) <= 4) &&
-        fits(p)
-      ) {
+      if (!chosen.length || dist(chosen[chosen.length - 1], p) <= 4 || hardcore) {
         chosen.push(p);
         usedEditorial.add(raw.id);
       }
     }
     return chosen;
-  }, [
-    mood,
-    budget,
-    company,
-    duration,
-    selectedInterests,
-    hardcore,
-    routeInterests,
-    restoredPlaceIds,
-  ]);
+  }, [generated, mood, budget, company, duration, hardcore, routeInterests, restoredPlaceIds]);
   const can = () =>
     step === 1
       ? !!mood
