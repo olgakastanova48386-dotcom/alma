@@ -35,27 +35,27 @@ export default function MapPage() {
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <p className="text-xs uppercase tracking-[0.24em] text-neutral-500">ALMA · Петербург сейчас</p>
         <div className="mt-4 max-w-4xl">
-          <h1 className="text-[clamp(42px,8vw,88px)] font-bold leading-[0.94] tracking-tight">Что происходит<br />в Петербурге?</h1>
-          <p className="mt-6 max-w-2xl text-base leading-7 text-neutral-600 sm:text-lg">Вечеринки, фестивали, выставки и события в городских пространствах. Выбирай, куда хочется сегодня.</p>
+          <h1 className="text-[clamp(34px,6vw,64px)] font-bold leading-[1.02] tracking-[-0.035em]">Что происходит<br />в Петербурге?</h1>
+          <p className="mt-5 max-w-2xl text-[15px] leading-6 text-neutral-600 sm:text-base">Вечеринки, фестивали, выставки и события в городских пространствах. Выбирай, куда хочется сегодня.</p>
         </div>
 
         <div className="mt-8 -mx-4 flex gap-2 overflow-x-auto px-4 pb-2 sm:mx-0 sm:px-0">
           {filters.map((item) => (
-            <button key={item} type="button" onClick={() => setFilter(item)} className={`shrink-0 rounded-full border px-4 py-2.5 text-sm font-medium transition ${filter === item ? "border-black bg-black text-white" : "border-black/10 bg-white hover:border-black/30"}`}>{item}</button>
+            <button key={item} type="button" onClick={() => setFilter(item)} className={`shrink-0 rounded-full border px-3.5 py-2 text-[13px] font-medium transition ${filter === item ? "border-black bg-black text-white" : "border-black/10 bg-white hover:border-black/30"}`}>{item}</button>
           ))}
         </div>
 
         <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {visible.map((event, index) => (
-            <a key={event.title} href={event.href} target="_blank" rel="noreferrer" className={`group relative flex min-h-[330px] flex-col justify-between overflow-hidden rounded-[30px] border border-black/5 p-6 transition duration-300 hover:-translate-y-1 hover:shadow-xl ${index === 0 ? "bg-[#1c1b1a] text-white md:col-span-2" : "bg-white"}`}>
+            <a key={event.title} href={event.href} target="_blank" rel="noreferrer" className={`group relative flex min-h-[270px] flex-col justify-between overflow-hidden rounded-[24px] border border-black/5 p-5 sm:p-6 transition duration-300 hover:-translate-y-1 hover:shadow-xl ${index === 0 ? "bg-[#1c1b1a] text-white md:col-span-2" : "bg-white"}`}>
               <div className="flex items-start justify-between gap-4">
                 <span className={`rounded-full px-3 py-1.5 text-xs font-medium ${index === 0 ? "bg-white/12" : "bg-[#f1eee9]"}`}>{event.category}</span>
                 <span className="text-3xl" aria-hidden="true">{event.accent}</span>
               </div>
               <div>
                 <p className={`text-sm ${index === 0 ? "text-white/55" : "text-neutral-500"}`}>{event.date} · {event.place}</p>
-                <h2 className="mt-2 text-[clamp(25px,4vw,38px)] font-bold leading-[1.02] tracking-tight">{event.title}</h2>
-                <p className={`mt-3 text-sm leading-6 ${index === 0 ? "text-white/65" : "text-neutral-500"}`}>{event.note}</p>
+                <h2 className="mt-2 text-[clamp(22px,3vw,31px)] font-bold leading-[1.08] tracking-[-0.025em]">{event.title}</h2>
+                <p className={`mt-3 text-[13px] leading-5 sm:text-sm sm:leading-6 ${index === 0 ? "text-white/65" : "text-neutral-500"}`}>{event.note}</p>
                 <div className="mt-6 flex items-center gap-2 text-sm font-semibold">Подробнее <span className="transition group-hover:translate-x-1">→</span></div>
               </div>
             </a>
