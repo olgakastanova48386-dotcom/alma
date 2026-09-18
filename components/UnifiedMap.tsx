@@ -30,8 +30,9 @@ function matchesBudget(place: MapPlace, value: string) {
   const price = maxPrice(place);
   if (value === "Бесплатно") return price === 0;
   if (price === null) return false;
-  if (value === "₽") return price > 0 && price <= 700;
-  if (value === "₽₽") return price > 700 && price <= 1500;
+  if (value === "₽" || value === "До 700 ₽") return price > 0 && price <= 700;
+  if (value === "₽₽" || value === "700–1500 ₽") return price > 700 && price <= 1500;
+  if (value === "₽₽₽" || value === "От 1500 ₽") return price > 1500;
   return price > 1500;
 }
 
@@ -68,7 +69,7 @@ export default function UnifiedMap() {
   const categories = ["Все", "Кофейня", "Ресторан", "🎓 Скидка студенту", "Dog Friendly", "👶 Для малыша", "⚡ Драйв", "Другие места"];
   const driveTags = ["Все", "Активный отдых", "Матчи", "Живая музыка", "Рок", "С друзьями"];
   const moods = ["Любое настроение", ...Array.from(new Set(mapPlaces.map((place) => place.mood))).sort()];
-  const budgets = ["Любой бюджет", "Бесплатно", "₽", "₽₽", "₽₽₽"];
+  const budgets = ["Любой бюджет", "Бесплатно", "До 700 ₽", "700–1500 ₽", "От 1500 ₽"];
   const averageChecks = ["Любой чек", "До 700 ₽", "700–1500 ₽", "1500–3000 ₽", "От 3000 ₽"];
   const placeId = params.get("place");
 
