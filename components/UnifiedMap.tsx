@@ -8,6 +8,7 @@ import MapDirectSearch from "@/components/MapDirectSearch";
 declare global { interface Window { L: any; almaRouteTo?: (id: number) => void; } }
 
 function emoji(place: MapPlace) {
+  if (place.studentDiscount) return "🎓";
   if (place.driveTags?.includes("Активный отдых")) return "🏎️";
   if (place.drive) return "⚡";
   if (place.babyCare) return "👶";
@@ -33,12 +34,13 @@ export default function UnifiedMap() {
   const [driveTag, setDriveTag] = useState("Все");
   const [routeStatus, setRouteStatus] = useState("");
 
-  const categories = ["Все", "Кофейня", "Ресторан", "Dog Friendly", "👶 Для малыша", "⚡ Драйв", "Другие места"];
+  const categories = ["Все", "Кофейня", "Ресторан", "🎓 Студентам", "Dog Friendly", "👶 Для малыша", "⚡ Драйв", "Другие места"];
   const driveTags = ["Все", "Активный отдых", "Матчи", "Живая музыка", "Рок", "С друзьями"];
   const placeId = params.get("place");
 
   const filtered = useMemo(() => mapPlaces.filter((p) => {
     const cat = category === "Все" ||
+      (category === "🎓 Студентам" && Boolean(p.studentDiscount)) ||
       (category === "Dog Friendly" && p.dogFriendly) ||
       (category === "👶 Для малыша" && Boolean(p.babyCare)) ||
       (category === "⚡ Драйв" && p.drive) ||
@@ -124,9 +126,9 @@ export default function UnifiedMap() {
     markers.current.forEach((m) => m.marker.remove());
     markers.current = [];
     filtered.forEach((p) => {
-      const icon = window.L.divIcon({ className: "alma-marker-wrapper", html: `<div class="alma-marker">${emoji(p)}</div>`, iconSize: [40, 40], iconAnchor: [20, 20] });
+      const icon = window.L.divIcon({ className: "alma-marker-wrapper", html: `<div class="alma-marker">${emoji(p)}</div>${p.studentDiscount ? `<div class="alma-student-badge">−${p.studentDiscount}%</div>` : ""}`, iconSize: [40, 40], iconAnchor: [20, 20] });
       const marker = window.L.marker([p.lat, p.lng], { icon }).addTo(map.current);
-      marker.bindPopup(`<div class="alma-popup"><div class="alma-popup-category">${p.category}</div><div class="alma-popup-title">${p.name}</div>${p.rating ? `<div class="alma-popup-rating">★ ${p.rating.toFixed(1)} / 5 · ${p.ratingSource ?? ""}</div>` : ""}<div class="alma-popup-address">${p.address}</div>${p.babyCare ? `<div class="alma-popup-baby">👶 ${p.babyCare}</div>` : ""}${p.driveTags?.length ? `<div class="alma-popup-tags">${p.driveTags.join(" · ")}</div>` : ""}<button class="alma-route-button" onclick="window.almaRouteTo(${p.id})">Маршрут от меня →</button></div>`, { maxWidth: 330, minWidth: 290, className: "alma-leaflet-popup" });
+      marker.bindPopup(`<div class="alma-popup"><div class="alma-popup-category">${p.category}</div><div class="alma-popup-title">${p.name}</div>${p.rating ? `<div class="alma-popup-rating">★ ${p.rating.toFixed(1)} / 5 · ${p.ratingSource ?? ""}</div>` : ""}<div class="alma-popup-address">${p.address}</div>${p.studentDiscount ? `<div class="alma-popup-student">🎓 −${p.studentDiscount}% студентам</div>` : ""}${p.babyCare ? `<div class="alma-popup-baby">👶 ${p.babyCare}</div>` : ""}${p.driveTags?.length ? `<div class="alma-popup-tags">${p.driveTags.join(" · ")}</div>` : ""}<button class="alma-route-button" onclick="window.almaRouteTo(${p.id})">Маршрут от меня →</button></div>`, { maxWidth: 330, minWidth: 290, className: "alma-leaflet-popup" });
       marker.on("click", () => setSelected(p.id));
       markers.current.push({ id: p.id, marker });
     });
@@ -173,6 +175,7 @@ export default function UnifiedMap() {
                 {p.image ? <div className="relative h-28 sm:h-36 w-full bg-[#ece8e2]"><img src={p.image} alt={p.name} className="absolute inset-0 h-full w-full object-cover" loading="lazy" /></div> : <div className="h-20 sm:h-24 w-full bg-gradient-to-br from-[#e9dfd1] via-[#f5eee5] to-[#ddd1c2] flex items-center justify-center text-3xl">{emoji(p)}</div>}
                 <div className="p-3.5 sm:p-4">
                   <div className="flex items-start justify-between gap-3"><div><p className="text-[12px] opacity-60">{p.category}</p><h3 className="mt-1 text-[20px] leading-6 font-semibold sm:text-lg">{p.name}</h3><p className="mt-1.5 text-[12px] opacity-55">Открыть карточку →</p></div>{p.rating && <span className={`shrink-0 rounded-full px-2.5 py-1 text-[12px] font-semibold ${selected === p.id ? "bg-white text-black" : "bg-black text-white"}`}>★ {p.rating.toFixed(1)}</span>}</div>
+                  {p.studentDiscount && <div className="mt-2.5"><span className={`inline-flex rounded-full px-2.5 py-1 text-[11px] font-semibold ${selected === p.id ? "bg-white text-black" : "bg-black text-white"}`}>🎓 −{p.studentDiscount}% студентам</span></div>}
                   {p.babyCare && <div className="mt-2.5"><span className={`inline-flex rounded-full px-2.5 py-1 text-[11px] font-medium ${selected === p.id ? "bg-white/10" : "bg-[#efe5d7]"}`}>👶 {p.babyCare}</span></div>}
                   {p.driveTags?.length && <div className="mt-2.5 flex flex-wrap gap-1.5">{p.driveTags.map((t) => <span key={t} className={`rounded-full px-2 py-0.5 text-[10px] sm:px-2.5 sm:py-1 sm:text-[11px] ${selected === p.id ? "bg-white/10" : "bg-black/5"}`}>{t}</span>)}</div>}
                   <p className="mt-2 text-[12px] leading-4 opacity-70">{p.address}</p>
@@ -197,6 +200,6 @@ export default function UnifiedMap() {
       </div>
     </div>
 
-    <style jsx global>{`.alma-map .leaflet-tile-pane{filter:saturate(.72) sepia(.08) brightness(1.015) contrast(.96)}.alma-map .leaflet-container{background:#e9e5df;font-family:inherit}.alma-map .leaflet-control-attribution{border-radius:10px 0 0 0!important;background:rgba(255,255,255,.78)!important;backdrop-filter:blur(10px);font-size:9px!important;color:#777!important}.alma-map .leaflet-control-container{position:relative;z-index:500}.alma-map .leaflet-control-zoom{overflow:hidden;border:0!important;border-radius:16px!important;box-shadow:0 10px 30px rgba(0,0,0,.16)!important}.alma-map .leaflet-control-zoom a{width:38px!important;height:38px!important;line-height:38px!important;border-color:rgba(0,0,0,.06)!important}.alma-marker-wrapper{background:transparent;border:none}.alma-marker{width:42px;height:42px;display:flex;align-items:center;justify-content:center;border:3px solid #fff;border-radius:999px;background:#111;color:#fff;box-shadow:0 10px 24px rgba(0,0,0,.28);font-size:17px;transition:transform .2s ease,box-shadow .2s ease}.alma-marker:hover{transform:translateY(-3px) scale(1.08);box-shadow:0 14px 30px rgba(0,0,0,.34)}.alma-leaflet-popup .leaflet-popup-content-wrapper{padding:0!important;border-radius:24px!important;overflow:hidden}.alma-leaflet-popup .leaflet-popup-content{margin:0!important;width:300px!important}.alma-popup{padding:20px;color:#111}.alma-popup-category{font-size:10px;text-transform:uppercase;letter-spacing:.14em;color:#999}.alma-popup-title{margin-top:6px;font-size:22px;font-weight:700}.alma-popup-rating,.alma-popup-address,.alma-popup-tags,.alma-popup-baby{margin-top:9px;font-size:12px}.alma-popup-address{color:#666}.alma-popup-tags,.alma-popup-baby{font-weight:600}.alma-route-button{display:flex;width:100%;justify-content:center;margin-top:12px;min-height:42px;align-items:center;border-radius:999px;font-size:13px;font-weight:600;background:#111;color:#fff;border:0;cursor:pointer}@media(max-width:767px){.alma-leaflet-popup .leaflet-popup-content{width:245px!important}.alma-popup{padding:15px}.alma-popup-title{font-size:18px}.alma-map .leaflet-control-zoom{transform:scale(.88);transform-origin:bottom right}}`}</style>
+    <style jsx global>{`.alma-map .leaflet-tile-pane{filter:saturate(.72) sepia(.08) brightness(1.015) contrast(.96)}.alma-map .leaflet-container{background:#e9e5df;font-family:inherit}.alma-map .leaflet-control-attribution{border-radius:10px 0 0 0!important;background:rgba(255,255,255,.78)!important;backdrop-filter:blur(10px);font-size:9px!important;color:#777!important}.alma-map .leaflet-control-container{position:relative;z-index:500}.alma-map .leaflet-control-zoom{overflow:hidden;border:0!important;border-radius:16px!important;box-shadow:0 10px 30px rgba(0,0,0,.16)!important}.alma-map .leaflet-control-zoom a{width:38px!important;height:38px!important;line-height:38px!important;border-color:rgba(0,0,0,.06)!important}.alma-marker-wrapper{background:transparent;border:none;position:relative}.alma-student-badge{position:absolute;left:30px;top:-5px;white-space:nowrap;border:2px solid #fff;border-radius:999px;background:#111;color:#fff;padding:3px 7px;font-size:10px;font-weight:800;line-height:1;box-shadow:0 6px 16px rgba(0,0,0,.22)}.alma-marker{width:42px;height:42px;display:flex;align-items:center;justify-content:center;border:3px solid #fff;border-radius:999px;background:#111;color:#fff;box-shadow:0 10px 24px rgba(0,0,0,.28);font-size:17px;transition:transform .2s ease,box-shadow .2s ease}.alma-marker:hover{transform:translateY(-3px) scale(1.08);box-shadow:0 14px 30px rgba(0,0,0,.34)}.alma-leaflet-popup .leaflet-popup-content-wrapper{padding:0!important;border-radius:24px!important;overflow:hidden}.alma-leaflet-popup .leaflet-popup-content{margin:0!important;width:300px!important}.alma-popup{padding:20px;color:#111}.alma-popup-category{font-size:10px;text-transform:uppercase;letter-spacing:.14em;color:#999}.alma-popup-title{margin-top:6px;font-size:22px;font-weight:700}.alma-popup-rating,.alma-popup-address,.alma-popup-tags,.alma-popup-baby,.alma-popup-student{margin-top:9px;font-size:12px}.alma-popup-student{display:inline-flex;border-radius:999px;background:#111;color:#fff;padding:5px 9px;font-weight:700}.alma-popup-address{color:#666}.alma-popup-tags,.alma-popup-baby{font-weight:600}.alma-route-button{display:flex;width:100%;justify-content:center;margin-top:12px;min-height:42px;align-items:center;border-radius:999px;font-size:13px;font-weight:600;background:#111;color:#fff;border:0;cursor:pointer}@media(max-width:767px){.alma-leaflet-popup .leaflet-popup-content{width:245px!important}.alma-popup{padding:15px}.alma-popup-title{font-size:18px}.alma-map .leaflet-control-zoom{transform:scale(.88);transform-origin:bottom right}}`}</style>
   </section>;
 }
