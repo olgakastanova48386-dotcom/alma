@@ -58,7 +58,59 @@ export const confirmedSafetyPlaces = [
       verifiedAt: "18.09.2026",
       sourceUrl: "https://kluch.help/",
     },
+  },  {
+    id: "safe-energia-v-rukakh-kudrovo",
+    name: "Энергия в руках",
+    category: "Кафе",
+    address: "Кудрово, просп. Строителей, 6",
+    safetySupport: {
+      verified: true as const,
+      codePhrase: "Любая фраза со словом «ключ»",
+      helpText: "Точка отображается на действующей карте проекта «Ключевое слово».",
+      verifiedAt: "18.09.2026",
+      sourceUrl: "https://kluch.help/",
+    },
   },
+  {
+    id: "safe-dom-kultury-kudrovo",
+    name: "Дом Культуры",
+    category: "Кафе",
+    address: "Кудрово, Областная ул., 2, стр. 2",
+    safetySupport: {
+      verified: true as const,
+      codePhrase: "Любая фраза со словом «ключ»",
+      helpText: "Точка отображается на действующей карте проекта «Ключевое слово».",
+      verifiedAt: "18.09.2026",
+      sourceUrl: "https://kluch.help/",
+    },
+  },
+  {
+    id: "safe-dogs-haus-kudrovo",
+    name: "Dogs Haus",
+    category: "Кафе",
+    address: "Кудрово, Пражская ул., 4",
+    safetySupport: {
+      verified: true as const,
+      codePhrase: "Любая фраза со словом «ключ»",
+      helpText: "Точка отображается на действующей карте проекта «Ключевое слово».",
+      verifiedAt: "18.09.2026",
+      sourceUrl: "https://kluch.help/",
+    },
+  },
+  {
+    id: "safe-peterburgskie-pekarni-kudrovo",
+    name: "Петергофские пекарни",
+    category: "Пекарня",
+    address: "Кудрово, Европейский просп., 22",
+    safetySupport: {
+      verified: true as const,
+      codePhrase: "Любая фраза со словом «ключ»",
+      helpText: "Точка отображается на действующей карте проекта «Ключевое слово».",
+      verifiedAt: "18.09.2026",
+      sourceUrl: "https://kluch.help/",
+    },
+  },
+
 ];
 
 export const restaurantPlaces: RestaurantPlace[] = [
