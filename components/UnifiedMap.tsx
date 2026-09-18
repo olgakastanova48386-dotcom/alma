@@ -30,10 +30,10 @@ function matchesBudget(place: MapPlace, value: string) {
   const price = maxPrice(place);
   if (value === "Бесплатно") return price === 0;
   if (price === null) return false;
-  if (value === "₽" || value === "До 700 ₽") return price > 0 && price <= 700;
-  if (value === "₽₽" || value === "700–1500 ₽") return price > 700 && price <= 1500;
-  if (value === "₽₽₽" || value === "От 1500 ₽") return price > 1500;
-  return price > 1500;
+  if (value === "От 1000 до 2500 ₽") return price >= 1000 && price <= 2500;
+  if (value === "От 3000 до 5000 ₽") return price >= 3000 && price <= 5000;
+  if (value === "От 5000 ₽") return price >= 5000;
+  return true;
 }
 
 function matchesAverageCheck(place: MapPlace, value: string) {
@@ -70,7 +70,7 @@ export default function UnifiedMap() {
   const categories = ["Все", "Кофейня", "Ресторан", "🎓 Скидка студенту", "Dog Friendly", "👶 Для малыша", "⚡ Драйв", "Другие места"];
   const driveTags = ["Все", "Активный отдых", "Матчи", "Живая музыка", "Рок", "С друзьями"];
   const moods = ["Настроение", ...Array.from(new Set(mapPlaces.map((place) => place.mood))).sort()];
-  const budgets = ["Бюджет", "Бесплатно", "До 700 ₽", "700–1500 ₽", "От 1500 ₽"];
+  const budgets = ["Бюджет", "Бесплатно", "От 1000 до 2500 ₽", "От 3000 до 5000 ₽", "От 5000 ₽"];
   const companies = ["Компания", ...Array.from(new Set(mapPlaces.flatMap((place) => place.company))).sort()];
   const durations = ["Длительность", ...Array.from(new Set(mapPlaces.map((place) => place.duration))).sort()];
   const placeId = params.get("place");
