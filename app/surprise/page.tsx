@@ -288,7 +288,13 @@ export default function SurprisePage() {
       if (chosen.length < requestedStopCount) return true;
       return visit + travel <= budgetMinutes;
     };
-    for (const interest of routeInterests) {
+    // Если выбрана прогулка вместе с другими интересами, сначала ставим
+    // прогулочную точку-встречу. Следующую остановку подбираем рядом с ней,
+    // чтобы маршрут ощущался как единая прогулка, а не набор разрозненных мест.
+    const orderedInterests = routeInterests.includes("Прогулки") && routeInterests.length > 1
+      ? ["Прогулки", ...routeInterests.filter((i) => i !== "Прогулки")]
+      : routeInterests;
+    for (const interest of orderedInterests) {
       if (chosen.length >= max) break;
       if (interest === "Вкусно поесть") {
         const previous = chosen[chosen.length - 1];
