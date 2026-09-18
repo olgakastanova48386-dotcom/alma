@@ -16,6 +16,7 @@ function RegisterContent() {
   const [consent, setConsent] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false);
   const nameOk = /^[A-Za-zА-Яа-яЁё][A-Za-zА-Яа-яЁё\- ']{1,39}$/.test(
     name.trim(),
   );
@@ -48,7 +49,8 @@ function RegisterContent() {
       });
       const d = await r.json();
       if (!r.ok) throw new Error(d.error || "Не удалось создать аккаунт.");
-      window.location.assign(destination);
+      setSuccess(true);
+      setTimeout(function () { window.location.assign(destination); }, 1200);
     } catch (x) {
       setError(x instanceof Error ? x.message : "Не удалось создать аккаунт.");
       setLoading(false);
@@ -138,6 +140,7 @@ function RegisterContent() {
               аккаунта.
             </span>
           </label>
+          {success && <div className="rounded-2xl bg-green-50 px-4 py-3 text-sm font-medium text-green-800">Готово! Аккаунт создан. Сейчас откроем ALMA.</div>}
           {error && (
             <div className="rounded-2xl bg-red-50 px-4 py-3 text-sm text-red-700">
               {error}
@@ -145,10 +148,10 @@ function RegisterContent() {
           )}
           <button
             type="submit"
-            disabled={loading}
+            disabled={loading || success}
             className="w-full rounded-[18px] bg-black py-3 font-semibold text-white disabled:opacity-50"
           >
-            {loading ? "Создаём аккаунт…" : "Создать аккаунт"}
+            {success ? "Аккаунт создан" : loading ? "Создаём аккаунт…" : "Создать аккаунт"}
           </button>
         </form>
         <p className="mt-5 text-center text-sm text-neutral-600">
