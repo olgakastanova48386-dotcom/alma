@@ -487,9 +487,9 @@ export default function SurprisePage() {
       const d = await r.json();
       if (!r.ok) throw new Error(d.error || "Не удалось создать аккаунт.");
       saveDraft();
-      window.location.assign(
-        `/verify-phone?email=${encodeURIComponent(d.email || registerEmail)}&next=${encodeURIComponent("/surprise")}`,
-      );
+      setSignedIn(true);
+      revealRoute();
+      setRegisterLoading(false);
     } catch (x) {
       setRegisterError(x instanceof Error ? x.message : "Не удалось создать аккаунт.");
       setRegisterLoading(false);
