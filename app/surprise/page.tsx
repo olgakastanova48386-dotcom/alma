@@ -178,7 +178,17 @@ export default function SurprisePage() {
       const startNew =
         new URLSearchParams(window.location.search).get("new") === "1";
       let saved: SavedDraft | null = null;
-      if (!startNew) {
+      if (startNew) {
+        try {
+          localStorage.removeItem(DRAFT_KEY);
+        } catch {}
+        try {
+          await fetch("/api/routes/draft", {
+            method: "DELETE",
+            credentials: "include",
+          });
+        } catch {}
+      } else {
         try {
           const raw = localStorage.getItem(DRAFT_KEY);
           if (raw) saved = JSON.parse(raw) as SavedDraft;
