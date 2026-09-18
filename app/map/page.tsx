@@ -43,16 +43,16 @@ export default function MapPage() {
           ))}
         </div>
 
-        <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-12">
           {visible.map((event, index) => (
-            <a key={event.title} href={event.href} target="_blank" rel="noreferrer" className={`group relative flex min-h-[270px] flex-col justify-between overflow-hidden rounded-[24px] border border-black/5 p-5 sm:p-6 transition duration-300 hover:-translate-y-1 hover:shadow-xl ${index === 0 ? "bg-[#1c1b1a] text-white md:col-span-2" : "bg-white"}`}>
+            <a key={event.title} href={event.href} target="_blank" rel="noreferrer" className={`group relative flex flex-col justify-between overflow-hidden border border-black/5 p-5 sm:p-6 transition duration-300 hover:-translate-y-1 hover:shadow-xl ${index === 0 ? "min-h-[330px] rounded-[30px] bg-[#1c1b1a] text-white lg:col-span-8 lg:row-span-2" : index === 1 ? "min-h-[330px] rounded-[30px] bg-[#eadfd6] lg:col-span-4" : index === 2 ? "min-h-[300px] rounded-[30px] bg-[#e5e8df] lg:col-span-4" : index === 3 ? "min-h-[245px] rounded-[26px] bg-[#e7e1ec] lg:col-span-5" : index === 4 ? "min-h-[245px] rounded-[26px] bg-[#dfe8e7] lg:col-span-7" : "min-h-[255px] rounded-[26px] bg-white lg:col-span-4"}`}>
               <div className="flex items-start justify-between gap-4">
-                <span className={`rounded-full px-3 py-1.5 text-xs font-medium ${index === 0 ? "bg-white/12" : "bg-[#f1eee9]"}`}>{event.category}</span>
-                <span className="text-3xl" aria-hidden="true">{event.accent}</span>
+                <span className={`rounded-full px-3 py-1.5 text-xs font-medium ${index === 0 ? "bg-white/12" : "bg-white/70 backdrop-blur-sm"}`}>{event.category}</span>
+                <span className={`${index < 5 ? "text-4xl sm:text-5xl" : "text-3xl"} transition duration-300 group-hover:scale-110`} aria-hidden="true">{event.accent}</span>
               </div>
               <div>
                 <p className={`text-sm ${index === 0 ? "text-white/55" : "text-neutral-500"}`}>{event.date} · {event.place}</p>
-                <h2 className="mt-2 text-[clamp(22px,3vw,31px)] font-bold leading-[1.08] tracking-[-0.025em]">{event.title}</h2>
+                <h2 className={`mt-2 font-bold leading-[1.04] tracking-[-0.035em] ${index === 0 ? "text-[clamp(30px,5vw,52px)] max-w-2xl" : index < 5 ? "text-[clamp(25px,3.2vw,35px)]" : "text-[clamp(22px,3vw,30px)]"}`}>{event.title}</h2>
                 <p className={`mt-3 text-[13px] leading-5 sm:text-sm sm:leading-6 ${index === 0 ? "text-white/65" : "text-neutral-500"}`}>{event.note}</p>
                 <div className="mt-6 flex items-center gap-2 text-sm font-semibold">Подробнее <span className="transition group-hover:translate-x-1">→</span></div>
               </div>
