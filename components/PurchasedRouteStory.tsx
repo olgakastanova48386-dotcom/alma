@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { routeStories, routeStayTimes } from "@/data/routeStories";
 import RoutePhotoZone from "@/components/RoutePhotoZone";
 
@@ -111,6 +111,13 @@ function visualFor(place:PurchasedRouteStop){
   return restaurantVisuals[normalizedName(place.name)]??null;
 }
 
+function VenuePhoto({src,name}:{src:string|null;name:string}){
+  const [failed,setFailed]=useState(false);
+  useEffect(()=>setFailed(false),[src]);
+  if(!src||failed)return <div className="absolute inset-0 flex items-center justify-center"><div className="text-center"><span className="text-5xl">📍</span><p className="mt-3 text-xs uppercase tracking-[.18em] text-neutral-500">Фото обновляется</p></div></div>;
+  return src.startsWith("http")?<img src={src} alt={name} onError={()=>setFailed(true)} className="absolute inset-0 h-full w-full object-cover"/>:<Image src={src} alt={name} fill sizes="(max-width: 640px) 80vw, 38vw" onError={()=>setFailed(true)} className="object-cover"/>;
+}
+
 export default function PurchasedRouteStory({stops,romantic=false,onReset}:{stops:PurchasedRouteStop[];romantic?:boolean;onReset:()=>void}){
   const [routeShared,setRouteShared]=useState(false);
   const [inviteOpen,setInviteOpen]=useState(false);
@@ -145,7 +152,7 @@ export default function PurchasedRouteStory({stops,romantic=false,onReset}:{stop
       {stops.map((place,i)=>{const reverse=i%2===1,plan=transitions[i],fact=story(place),visual=visualFor(place);return <div key={`${place.category}-${place.id}`} className="relative mb-3 last:mb-0">
         <span className="absolute left-[18px] sm:left-1/2 sm:-translate-x-1/2 top-8 z-10 flex h-12 w-12 items-center justify-center rounded-full bg-black text-white font-bold shadow-lg">{i+1}</span>
         <article className={`ml-16 sm:ml-0 grid sm:grid-cols-2 gap-7 sm:gap-16 lg:gap-24 items-center ${reverse?"sm:[&>*:first-child]:order-2":""}`}>
-          <div className="relative aspect-[4/3] overflow-hidden rounded-[50%] bg-[linear-gradient(135deg,#d9e0d4,#eee3d5)] shadow-sm">{visual?(visual.startsWith("http")?<img src={visual} alt={place.name} className="absolute inset-0 h-full w-full object-cover"/>:<Image src={visual} alt={place.name} fill sizes="(max-width: 640px) 80vw, 38vw" className="object-cover"/>):<div className="absolute inset-0 flex items-center justify-center"><div className="text-center"><span className="text-5xl">📍</span><p className="mt-3 text-xs uppercase tracking-[.18em] text-neutral-500">Фото обновляется</p></div></div>}</div>
+          <div className="relative aspect-[4/3] overflow-hidden rounded-[50%] bg-[linear-gradient(135deg,#d9e0d4,#eee3d5)] shadow-sm"><VenuePhoto src={visual} name={place.name}/></div>
           <div className={reverse?"sm:text-right":""}><p className="text-xs uppercase tracking-[.18em] text-neutral-400">Остановка {i+1} · {place.category}</p><h4 className="mt-3 text-2xl sm:text-3xl font-bold">{place.name}</h4><p className="mt-2 text-sm text-neutral-500">⌖ {place.address}</p>{place.rating&&<p className="mt-2 text-xs text-neutral-500">★ {place.rating.toFixed(1)} · {place.ratingSource}</p>}<div className={`mt-5 flex flex-wrap gap-2 ${reverse?"sm:justify-end":""}`}><span className="rounded-full bg-white px-3 py-2 text-xs">◷ Здесь: {stayTime(place)}</span><span className="rounded-full bg-white px-3 py-2 text-xs">{place.price}</span></div><p className="mt-5 text-sm leading-6 text-neutral-600">{place.description}</p><div className="mt-5 rounded-[20px] bg-white/70 p-4 text-left"><p className="text-xs uppercase tracking-wider text-neutral-400">Что надеть</p><p className="mt-2 text-sm leading-6">{outfit(place.category)}</p></div>{romantic&&fact&&<div className="mt-3 rounded-[20px] bg-[#e8ddd0] p-4 text-left"><p className="text-xs uppercase tracking-wider text-neutral-500">Можно рассказать ✦</p><p className="mt-2 text-sm leading-6">{fact}</p></div>}<Link href={`/map?place=${place.mapPlaceId??place.id}`} className="mt-5 inline-flex items-center gap-2 rounded-full bg-black text-white px-4 py-3 text-xs font-semibold">⌖ Показать на карте ALMA</Link></div>
         </article>
         {plan&&<div className="relative z-10 ml-16 sm:ml-0 py-9 sm:py-12 flex sm:justify-center"><div className="max-w-md rounded-[22px] bg-white border border-black/10 px-5 py-4 shadow-sm"><p className="text-sm font-bold">{plan.mode==="walk"?"🚶":plan.mode==="metro"?"🚇":"🚌"} {plan.title}</p>{plan.details.map((d,j)=><p key={j} className="mt-1.5 text-xs leading-5 text-neutral-500">{d}</p>)}</div></div>}
