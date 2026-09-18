@@ -118,7 +118,7 @@ function visualFor(place:PurchasedRouteStop){
 
 function VenuePhoto({src,name}:{src:string|null;name:string}){
   const [failed,setFailed]=useState(false);
-  useEffect(()=>setFailed(false),[src]);
+  useEffect(()=>{ const timer=window.setTimeout(()=>setFailed(false),0); return()=>window.clearTimeout(timer); },[src]);
   if(!src||failed)return <div className="absolute inset-0 flex items-center justify-center"><div className="text-center"><span className="text-5xl">📍</span><p className="mt-3 text-xs uppercase tracking-[.18em] text-neutral-500">Фото обновляется</p></div></div>;
   return src.startsWith("http")?<img src={src} alt={name} onError={()=>setFailed(true)} className="absolute inset-0 h-full w-full object-cover"/>:<Image src={src} alt={name} fill sizes="(max-width: 640px) 80vw, 38vw" onError={()=>setFailed(true)} className="object-cover"/>;
 }
