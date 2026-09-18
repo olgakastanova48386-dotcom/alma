@@ -383,6 +383,71 @@ export const confirmedSafetyPlaces = [
       sourceUrl: "https://kluch.help/",
     },
   },
+  {
+    id: "safe-hairisma-murino",
+    name: "Hairisma",
+    category: "Кафе",
+    address: "Мурино, бул. Менделеева, 7, корп. 2",
+    safetySupport: {
+      verified: true as const,
+      codePhrase: "Любая фраза со словом «ключ»",
+      helpText: "Точка отображается на действующей карте проекта «Ключевое слово».",
+      verifiedAt: "18.09.2026",
+      sourceUrl: "https://kluch.help/",
+    },
+  },
+  {
+    id: "safe-osipov-pro-murino",
+    name: "Осипов Pro",
+    category: "Кафе",
+    address: "Мурино, бул. Менделеева, 11, корп. 2",
+    safetySupport: {
+      verified: true as const,
+      codePhrase: "Любая фраза со словом «ключ»",
+      helpText: "Точка отображается на действующей карте проекта «Ключевое слово».",
+      verifiedAt: "18.09.2026",
+      sourceUrl: "https://kluch.help/",
+    },
+  },
+  {
+    id: "safe-mesto-bistro-murino",
+    name: "Место Бистро",
+    category: "Ресторан",
+    address: "Мурино, Петровский бульвар, 7",
+    safetySupport: {
+      verified: true as const,
+      codePhrase: "Любая фраза со словом «ключ»",
+      helpText: "Точка отображается на действующей карте проекта «Ключевое слово».",
+      verifiedAt: "18.09.2026",
+      sourceUrl: "https://kluch.help/",
+    },
+  },
+  {
+    id: "safe-hairisma-manikur-murino",
+    name: "Hair'isma Маникюр",
+    category: "Студия красоты",
+    address: "Мурино, бул. Менделеева, 7, корп. 2",
+    safetySupport: {
+      verified: true as const,
+      codePhrase: "Любая фраза со словом «ключ»",
+      helpText: "Точка отображается на действующей карте проекта «Ключевое слово».",
+      verifiedAt: "18.09.2026",
+      sourceUrl: "https://kluch.help/",
+    },
+  },
+  {
+    id: "safe-velar-murino",
+    name: "Velar",
+    category: "Кафе",
+    address: "Мурино, Петровский бул., 5",
+    safetySupport: {
+      verified: true as const,
+      codePhrase: "Любая фраза со словом «ключ»",
+      helpText: "Точка отображается на действующей карте проекта «Ключевое слово».",
+      verifiedAt: "18.09.2026",
+      sourceUrl: "https://kluch.help/",
+    },
+  },
 
 ];
 
