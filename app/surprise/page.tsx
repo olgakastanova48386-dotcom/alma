@@ -149,8 +149,9 @@ const stopMinutes = (p: PurchasedRouteStop) => {
   if (c.includes("прогул") || c.includes("архитект")) return 30;
   return 60;
 };
-const isMainStop = (p: PurchasedRouteStop) => {
-  const c = p.category.toLowerCase();
+const isMainStop = (p?: PurchasedRouteStop | null) => {
+  if (!p) return false;
+  const c = (p.category ?? "").toLowerCase();
   return (
     c.includes("музей") ||
     c.includes("искус") ||
@@ -159,7 +160,7 @@ const isMainStop = (p: PurchasedRouteStop) => {
     stopMinutes(p) >= 90
   );
 };
-const transferMinutes = (a: PurchasedRouteStop, b: PurchasedRouteStop) =>
+const transferMinutes = (a: PurchasedRouteStop | undefined, b: PurchasedRouteStop | undefined) =>
   Math.max(8, Math.round((dist(a, b) / 4.5) * 60));
 
 export default function SurprisePage() {
@@ -289,12 +290,18 @@ export default function SurprisePage() {
       const visit =
         chosen.reduce((s, p) => s + stopMinutes(p), 0) + stopMinutes(candidate);
       const travel =
-        chosen
-          .slice(0, -1)
-          .reduce((s, p, i) => s + transferMinutes(p, chosen[i + 1]), 0) +
-        (chosen.length
-          ? transferMinutes(chosen[chosen.length - 1], candidate)
-          : 0);
+        chosen.length > 1
+          ? chosen.reduce(
+              (s, p, i) =>
+                i < chosen.length - 1
+                  ? s + transferMinutes(p, chosen[i + 1])
+                  : s,
+              0,
+            ) +
+            transferMinutes(chosen[chosen.length - 1], candidate)
+          : chosen.length
+            ? transferMinutes(chosen[0], candidate)
+            : 0;
       return visit + travel <= budgetMinutes;
     };
     for (const interest of routeInterests) {
