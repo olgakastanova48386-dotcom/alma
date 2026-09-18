@@ -129,7 +129,7 @@ export default function UnifiedMap() {
   useEffect(() => {
     if (!ready || !container.current || map.current) return;
     map.current = window.L.map(container.current, { zoomControl: false }).setView([59.9386, 30.3141], 11);
-    window.L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 19, attribution: "© OpenStreetMap" }).addTo(map.current);
+    window.L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", { maxZoom: 20, attribution: "© OpenStreetMap © CARTO", subdomains: "abcd" }).addTo(map.current);
     window.L.control.zoom({ position: "bottomright" }).addTo(map.current);
   }, [ready]);
 
@@ -256,7 +256,7 @@ export default function UnifiedMap() {
           {category === "👶 Для малыша" && <div className="mt-4 rounded-[18px] bg-[#efe5d7] p-3.5"><p className="text-[11px] uppercase tracking-[.16em] text-neutral-500">ALMA · Для малыша</p><p className="mt-1 text-[13px] leading-5 text-neutral-700">Показываем только подтверждённые удобства.</p></div>}
           {category === "⚡ Драйв" && <div className="mt-4 rounded-[18px] bg-black p-3.5 text-white"><p className="text-[10px] uppercase tracking-[.16em] text-white/45">ALMA · Драйв</p><div className="mt-2 flex flex-wrap gap-1.5">{driveTags.map((t) => <button key={t} onClick={() => setDriveTag(t)} className={`rounded-full px-3 py-1.5 text-[11px] ${driveTag === t ? "bg-white text-black" : "bg-white/10 text-white"}`}>{t}</button>)}</div></div>}
 
-          <button type="button" onClick={() => { setMood("Любое настроение"); setBudget("Любой бюджет"); setAverageCheck("Любой чек"); setStudentOnly(false); setCategory("Все"); setDriveTag("Все"); }} className="mt-5 w-full rounded-full border border-black/10 px-4 py-3 text-sm font-medium transition hover:border-black/25">Сбросить фильтры</button>
+          <button type="button" onClick={() => { setMood("Настроение"); setBudget("Бюджет"); setCompany("Компания"); setDuration("Длительность"); setStudentOnly(false); setCategory("Все"); setDriveTag("Все"); setMoreCategoriesOpen(false); }} className="mt-5 w-full rounded-full border border-black/10 px-4 py-3 text-sm font-medium transition hover:border-black/25">Сбросить фильтры</button>
         </aside>
 
         <div>
