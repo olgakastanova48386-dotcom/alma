@@ -4,11 +4,186 @@ import { FormEvent, Suspense, useState } from "react";
 import { useSearchParams } from "next/navigation";
 type Gender = "female" | "male" | "unspecified";
 function RegisterContent() {
-  const params = useSearchParams(); const next = params.get("next") || "/"; const product = params.get("product"); const isRoutePurchase = product === "route-199"; const destination = isRoutePurchase ? "/checkout?product=route-199" : next; const loginHref = `/login?next=${encodeURIComponent(next)}${product ? `&product=${encodeURIComponent(product)}` : ""}`;
-  const [name,setName]=useState(""); const [email,setEmail]=useState(""); const [gender,setGender]=useState<Gender>("unspecified"); const [password,setPassword]=useState(""); const [repeat,setRepeat]=useState(""); const [consent,setConsent]=useState(false); const [loading,setLoading]=useState(false); const [error,setError]=useState("");
-  const emailOk=/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.trim()); const nameOk=/^[A-Za-zА-Яа-яЁё][A-Za-zА-Яа-яЁё\- ']{1,39}$/.test(name.trim());
-  async function onSubmit(e:FormEvent<HTMLFormElement>){e.preventDefault();setError("");if(!nameOk){setError("Укажите имя — минимум 2 буквы.");return}if(!emailOk){setError("Проверьте адрес электронной почты.");return}if(password.length<8){setError("Пароль должен содержать минимум 8 символов.");return}if(password!==repeat){setError("Пароли не совпадают.");return}if(!consent){setError("Нужно согласиться с правилами ALMA и обработкой данных.");return}setLoading(true);try{const r=await fetch("/api/auth/register",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name,email,gender,password,consent})});const d=await r.json();if(!r.ok)throw new Error(d.error||"Не удалось создать аккаунт.");window.location.assign(`/verify-phone?email=${encodeURIComponent(d.email||email)}&next=${encodeURIComponent(destination)}`)}catch(x){setError(x instanceof Error?x.message:"Не удалось создать аккаунт.");setLoading(false)}}
-  const ic="w-full rounded-[18px] border border-black/20 bg-white px-4 py-3 text-base outline-none transition focus:border-black";
-  return <main className="min-h-screen bg-[#f7f4ef] px-3 pt-[76px] pb-28 sm:flex sm:items-center sm:justify-center sm:px-4 sm:pt-24 sm:pb-12"><div className="mx-auto w-full max-w-[430px] rounded-[24px] border border-black/5 bg-white p-5 shadow-lg sm:rounded-[30px] sm:p-10 sm:shadow-xl"><div className="text-center"><p className="text-[10px] uppercase tracking-[.22em] text-neutral-400">ALMA</p><h1 className="mt-2 text-[26px] font-bold sm:text-3xl">Регистрация</h1>{isRoutePurchase?<p className="mt-3 rounded-[18px] bg-[#f2eee7] p-4 text-sm font-semibold">Создай аккаунт — после подтверждения почты сразу перейдём к оплате 199 ₽</p>:<p className="mt-2 text-[13px] leading-5 text-neutral-500">Почта нужна только для подтверждения аккаунта и восстановления доступа. Никакого спама.</p>}</div><form className="mt-5 space-y-3 sm:mt-7 sm:space-y-4" onSubmit={onSubmit}><input value={name} onChange={e=>setName(e.target.value)} autoComplete="name" placeholder="Имя" className={ic}/><div><input value={email} onChange={e=>setEmail(e.target.value)} type="email" autoComplete="email" inputMode="email" placeholder="Электронная почта" className={ic}/><p className="mt-1.5 px-1 text-[11px] leading-4 text-neutral-400">Отправим сюда только код подтверждения и письма для восстановления доступа — рекламных рассылок не будет.</p></div><fieldset><legend className="text-[12px] font-medium text-neutral-500">Пол <span className="font-normal text-neutral-400">· необязательно</span></legend><div className="mt-2 grid grid-cols-3 gap-2">{([{value:"female",label:"Женщина"},{value:"male",label:"Мужчина"},{value:"unspecified",label:"Не указывать"}] as const).map(o=><button key={o.value} type="button" onClick={()=>setGender(o.value)} className={`min-h-10 rounded-[14px] border px-1 py-2 text-[11px] font-medium ${gender===o.value?"border-black bg-black text-white":"border-black/10 text-neutral-600"}`}>{o.label}</button>)}</div></fieldset><input value={password} onChange={e=>setPassword(e.target.value)} type="password" autoComplete="new-password" placeholder="Пароль · минимум 8 символов" className={ic}/><input value={repeat} onChange={e=>setRepeat(e.target.value)} type="password" autoComplete="new-password" placeholder="Повторите пароль" className={ic}/><label className="flex items-start gap-2.5 text-[11px] leading-5 text-neutral-600"><input checked={consent} onChange={e=>setConsent(e.target.checked)} type="checkbox" className="mt-0.5 h-4 w-4"/><span>Согласен(на) с правилами ALMA и обработкой данных для работы аккаунта.</span></label>{error&&<div className="rounded-2xl bg-red-50 px-4 py-3 text-sm text-red-700">{error}</div>}<button type="submit" disabled={loading} className="w-full rounded-[18px] bg-black py-3 font-semibold text-white disabled:opacity-50">{loading?"Отправляем код…":"Создать аккаунт"}</button></form><p className="mt-5 text-center text-sm text-neutral-600">Уже есть аккаунт? <Link href={loginHref} className="font-semibold underline">Войти</Link></p></div></main>;
+  const params = useSearchParams();
+  const next = params.get("next") || "/";
+  const destination = next;
+  const loginHref = `/login?next=${encodeURIComponent(next)}`;
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [gender, setGender] = useState<Gender>("unspecified");
+  const [password, setPassword] = useState("");
+  const [repeat, setRepeat] = useState("");
+  const [consent, setConsent] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.trim());
+  const nameOk = /^[A-Za-zА-Яа-яЁё][A-Za-zА-Яа-яЁё\- ']{1,39}$/.test(
+    name.trim(),
+  );
+  async function onSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setError("");
+    if (!nameOk) {
+      setError("Укажите имя — минимум 2 буквы.");
+      return;
+    }
+    if (!emailOk) {
+      setError("Проверьте адрес электронной почты.");
+      return;
+    }
+    if (password.length < 8) {
+      setError("Пароль должен содержать минимум 8 символов.");
+      return;
+    }
+    if (password !== repeat) {
+      setError("Пароли не совпадают.");
+      return;
+    }
+    if (!consent) {
+      setError("Нужно согласиться с правилами ALMA и обработкой данных.");
+      return;
+    }
+    setLoading(true);
+    try {
+      const r = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, gender, password, consent }),
+      });
+      const d = await r.json();
+      if (!r.ok) throw new Error(d.error || "Не удалось создать аккаунт.");
+      window.location.assign(
+        `/verify-phone?email=${encodeURIComponent(d.email || email)}&next=${encodeURIComponent(destination)}`,
+      );
+    } catch (x) {
+      setError(x instanceof Error ? x.message : "Не удалось создать аккаунт.");
+      setLoading(false);
+    }
+  }
+  const ic =
+    "w-full rounded-[18px] border border-black/20 bg-white px-4 py-3 text-base outline-none transition focus:border-black";
+  return (
+    <main className="min-h-screen bg-[#f7f4ef] px-3 pt-[76px] pb-28 sm:flex sm:items-center sm:justify-center sm:px-4 sm:pt-24 sm:pb-12">
+      <div className="mx-auto w-full max-w-[430px] rounded-[24px] border border-black/5 bg-white p-5 shadow-lg sm:rounded-[30px] sm:p-10 sm:shadow-xl">
+        <div className="text-center">
+          <p className="text-[10px] uppercase tracking-[.22em] text-neutral-400">
+            ALMA
+          </p>
+          <h1 className="mt-2 text-[26px] font-bold sm:text-3xl">
+            Регистрация
+          </h1>
+          <p className="mt-2 text-[13px] leading-5 text-neutral-500">
+            Почта нужна только для подтверждения аккаунта и восстановления
+            доступа. Никакого спама.
+          </p>
+        </div>
+        <form
+          className="mt-5 space-y-3 sm:mt-7 sm:space-y-4"
+          onSubmit={onSubmit}
+        >
+          <input
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            autoComplete="name"
+            placeholder="Имя"
+            className={ic}
+          />
+          <div>
+            <input
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              type="email"
+              autoComplete="email"
+              inputMode="email"
+              placeholder="Электронная почта"
+              className={ic}
+            />
+            <p className="mt-1.5 px-1 text-[11px] leading-4 text-neutral-400">
+              Отправим сюда только код подтверждения и письма для восстановления
+              доступа — рекламных рассылок не будет.
+            </p>
+          </div>
+          <fieldset>
+            <legend className="text-[12px] font-medium text-neutral-500">
+              Пол{" "}
+              <span className="font-normal text-neutral-400">
+                · необязательно
+              </span>
+            </legend>
+            <div className="mt-2 grid grid-cols-3 gap-2">
+              {(
+                [
+                  { value: "female", label: "Женщина" },
+                  { value: "male", label: "Мужчина" },
+                  { value: "unspecified", label: "Не указывать" },
+                ] as const
+              ).map((o) => (
+                <button
+                  key={o.value}
+                  type="button"
+                  onClick={() => setGender(o.value)}
+                  className={`min-h-10 rounded-[14px] border px-1 py-2 text-[11px] font-medium ${gender === o.value ? "border-black bg-black text-white" : "border-black/10 text-neutral-600"}`}
+                >
+                  {o.label}
+                </button>
+              ))}
+            </div>
+          </fieldset>
+          <input
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            type="password"
+            autoComplete="new-password"
+            placeholder="Пароль · минимум 8 символов"
+            className={ic}
+          />
+          <input
+            value={repeat}
+            onChange={(e) => setRepeat(e.target.value)}
+            type="password"
+            autoComplete="new-password"
+            placeholder="Повторите пароль"
+            className={ic}
+          />
+          <label className="flex items-start gap-2.5 text-[11px] leading-5 text-neutral-600">
+            <input
+              checked={consent}
+              onChange={(e) => setConsent(e.target.checked)}
+              type="checkbox"
+              className="mt-0.5 h-4 w-4"
+            />
+            <span>
+              Согласен(на) с правилами ALMA и обработкой данных для работы
+              аккаунта.
+            </span>
+          </label>
+          {error && (
+            <div className="rounded-2xl bg-red-50 px-4 py-3 text-sm text-red-700">
+              {error}
+            </div>
+          )}
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full rounded-[18px] bg-black py-3 font-semibold text-white disabled:opacity-50"
+          >
+            {loading ? "Отправляем код…" : "Создать аккаунт"}
+          </button>
+        </form>
+        <p className="mt-5 text-center text-sm text-neutral-600">
+          Уже есть аккаунт?{" "}
+          <Link href={loginHref} className="font-semibold underline">
+            Войти
+          </Link>
+        </p>
+      </div>
+    </main>
+  );
 }
-export default function RegisterPage(){return <Suspense fallback={<main className="min-h-screen bg-[#f7f4ef]"/>}><RegisterContent/></Suspense>}
+export default function RegisterPage() {
+  return (
+    <Suspense fallback={<main className="min-h-screen bg-[#f7f4ef]" />}>
+      <RegisterContent />
+    </Suspense>
+  );
+}
