@@ -179,7 +179,7 @@ export default function SurprisePage() {
     [signedIn, setSignedIn] = useState(false),
     [showRegister, setShowRegister] = useState(false),
     [registerName, setRegisterName] = useState(""),
-    [registerEmail, setRegisterEmail] = useState(""),
+    [registerLogin, setRegisterLogin] = useState(""),
     [registerPassword, setRegisterPassword] = useState(""),
     [registerRepeat, setRegisterRepeat] = useState(""),
     [registerGender, setRegisterGender] = useState<"female" | "male">("female"),
@@ -463,8 +463,8 @@ export default function SurprisePage() {
     e.preventDefault();
     setRegisterError("");
     if (registerName.trim().length < 2) return setRegisterError("Укажите имя.");
-    if (!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$/.test(registerEmail.trim()))
-      return setRegisterError("Проверьте электронную почту.");
+    if (registerLogin.trim().length < 3)
+      return setRegisterError("Логин должен содержать минимум 3 символа.");
     if (registerPassword.length < 8)
       return setRegisterError("Пароль должен содержать минимум 8 символов.");
     if (registerPassword !== registerRepeat)
@@ -478,7 +478,7 @@ export default function SurprisePage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name: registerName,
-          email: registerEmail,
+          login: registerLogin,
           gender: registerGender,
           password: registerPassword,
           consent: registerConsent,
@@ -686,7 +686,7 @@ export default function SurprisePage() {
               </div>
               <form onSubmit={registerForRoute} className="mt-6 space-y-3">
                 <input value={registerName} onChange={(e) => setRegisterName(e.target.value)} placeholder="Имя" className="w-full rounded-[16px] border border-black/15 px-4 py-3 outline-none focus:border-black" />
-                <input value={registerEmail} onChange={(e) => setRegisterEmail(e.target.value)} type="email" placeholder="Электронная почта" className="w-full rounded-[16px] border border-black/15 px-4 py-3 outline-none focus:border-black" />
+                <input value={registerLogin} onChange={(e) => setRegisterLogin(e.target.value)} type="text" placeholder="Логин" className="w-full rounded-[16px] border border-black/15 px-4 py-3 outline-none focus:border-black" />
                 <div className="grid grid-cols-2 gap-2">
                   <button type="button" onClick={() => setRegisterGender("female")} className={`rounded-[14px] border px-3 py-2 text-sm ${registerGender === "female" ? "bg-black text-white border-black" : "border-black/10"}`}>Женщина</button>
                   <button type="button" onClick={() => setRegisterGender("male")} className={`rounded-[14px] border px-3 py-2 text-sm ${registerGender === "male" ? "bg-black text-white border-black" : "border-black/10"}`}>Мужчина</button>
