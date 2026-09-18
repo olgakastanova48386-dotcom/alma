@@ -26,7 +26,7 @@ function maxPrice(place: MapPlace) {
 }
 
 function matchesBudget(place: MapPlace, value: string) {
-  if (value === "Любой бюджет") return true;
+  if (value === "Бюджет") return true;
   const price = maxPrice(place);
   if (value === "Бесплатно") return price === 0;
   if (price === null) return false;
@@ -61,18 +61,18 @@ export default function UnifiedMap() {
   const [category, setCategory] = useState(initialCategory);
   const [driveTag, setDriveTag] = useState("Все");
   const [routeStatus, setRouteStatus] = useState("");
-  const [mood, setMood] = useState("Любое настроение");
-  const [budget, setBudget] = useState("Любой бюджет");
-  const [company, setCompany] = useState("Любая компания");
-  const [duration, setDuration] = useState("Любая длительность");
+  const [mood, setMood] = useState("Настроение");
+  const [budget, setBudget] = useState("Бюджет");
+  const [company, setCompany] = useState("Компания");
+  const [duration, setDuration] = useState("Длительность");
   const [studentOnly, setStudentOnly] = useState(false);
 
   const categories = ["Все", "Кофейня", "Ресторан", "🎓 Скидка студенту", "Dog Friendly", "👶 Для малыша", "⚡ Драйв", "Другие места"];
   const driveTags = ["Все", "Активный отдых", "Матчи", "Живая музыка", "Рок", "С друзьями"];
-  const moods = ["Любое настроение", ...Array.from(new Set(mapPlaces.map((place) => place.mood))).sort()];
-  const budgets = ["Любой бюджет", "Бесплатно", "До 700 ₽", "700–1500 ₽", "От 1500 ₽"];
-  const companies = ["Любая компания", ...Array.from(new Set(mapPlaces.flatMap((place) => place.company))).sort()];
-  const durations = ["Любая длительность", ...Array.from(new Set(mapPlaces.map((place) => place.duration))).sort()];
+  const moods = ["Настроение", ...Array.from(new Set(mapPlaces.map((place) => place.mood))).sort()];
+  const budgets = ["Бюджет", "Бесплатно", "До 700 ₽", "700–1500 ₽", "От 1500 ₽"];
+  const companies = ["Компания", ...Array.from(new Set(mapPlaces.flatMap((place) => place.company))).sort()];
+  const durations = ["Длительность", ...Array.from(new Set(mapPlaces.map((place) => place.duration))).sort()];
   const placeId = params.get("place");
 
   const filtered = useMemo(() => mapPlaces.filter((p) => {
@@ -85,10 +85,10 @@ export default function UnifiedMap() {
       p.category === category;
     const tag = category !== "⚡ Драйв" || driveTag === "Все" || p.driveTags?.includes(driveTag);
     return cat && tag &&
-      (mood === "Любое настроение" || p.mood === mood) &&
+      (mood === "Настроение" || p.mood === mood) &&
       matchesBudget(p, budget) &&
-      (company === "Любая компания" || p.company.includes(company)) &&
-      (duration === "Любая длительность" || p.duration === duration) &&
+      (company === "Компания" || p.company.includes(company)) &&
+      (duration === "Длительность" || p.duration === duration) &&
       (!studentOnly || Boolean(p.studentDiscount)) &&
       (!params.get("mood") || p.mood === params.get("mood")) &&
       (!params.get("budget") || p.budget === params.get("budget")) &&
