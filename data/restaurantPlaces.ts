@@ -23,6 +23,13 @@ export type RestaurantPlace = {
   babyCareVerifiedAt?: string;
   note: string;
   sourceUrl: string;
+  safetySupport?: {
+    verified: true;
+    codePhrase: string;
+    helpText: string;
+    verifiedAt: string;
+    sourceUrl?: string;
+  };
 };
 
 export const restaurantPlaces: RestaurantPlace[] = [
