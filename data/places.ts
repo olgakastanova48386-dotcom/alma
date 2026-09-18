@@ -306,6 +306,7 @@ export const places: Place[] = [
     priceNote: "Взрослый билет",
     priceDetails: "Льготный — 730 ₽ · детский 4–17 лет — 600 ₽.",
     priceUpdated: "07.09.2026",
+    studentBenefit: {"label":"🎓 Студентам — 730 ₽","details":"Льготный входной билет для студентов — 730 ₽. Полный взрослый билет — 800 ₽.","verifiedAt":"18.09.2026","sourceUrl":"https://peteraqua.ru/"},
   },
   {
     id: 16,
@@ -325,6 +326,7 @@ export const places: Place[] = [
     priceNote: "Посещение и экскурсии",
     priceDetails: "Для организованных групп экскурсии проводятся по предварительной договорённости.",
     priceUpdated: "07.09.2026",
+    studentBenefit: {"label":"🎓 Студентам — 300 ₽","details":"Экскурсионное посещение для школьников, студентов и пенсионеров — 300 ₽; взрослый билет — 500 ₽. Посещение проводится в составе экскурсии.","verifiedAt":"18.09.2026","sourceUrl":"https://freud.ru/visitor"},
   },
   {
     id: 17,
