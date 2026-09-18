@@ -72,7 +72,7 @@ export default function UnifiedMap() {
   const moods = ["Настроение", ...Array.from(new Set(mapPlaces.map((place) => place.mood))).sort()];
   const budgets = ["Бюджет", "Бесплатно", "От 1000 до 2500 ₽", "От 3000 до 5000 ₽", "От 5000 ₽"];
   const companies = ["Компания", ...Array.from(new Set(mapPlaces.flatMap((place) => place.company))).sort()];
-  const durations = ["Длительность", ...Array.from(new Set(mapPlaces.map((place) => place.duration))).sort()];
+  const durations = ["Длительность", "До 1 часа", "1–2 часа", "2–4 часа", "Полдня"];
   const placeId = params.get("place");
 
   const filtered = useMemo(() => mapPlaces.filter((p) => {
@@ -88,7 +88,11 @@ export default function UnifiedMap() {
       (mood === "Настроение" || p.mood === mood) &&
       matchesBudget(p, budget) &&
       (company === "Компания" || p.company.includes(company)) &&
-      (duration === "Длительность" || p.duration === duration) &&
+      (duration === "Длительность" ||
+        (duration === "До 1 часа" && /до 1|30|45|60|1 час/i.test(p.duration)) ||
+        (duration === "1–2 часа" && /1.?2|1–2|1-2|1 час|2 час/i.test(p.duration)) ||
+        (duration === "2–4 часа" && /2.?4|2–4|2-4|3 час|4 час/i.test(p.duration)) ||
+        (duration === "Полдня" && /полдня|полдня|5 час|6 час/i.test(p.duration))) &&
       (!studentOnly || Boolean(p.studentDiscount)) &&
       (!params.get("mood") || p.mood === params.get("mood")) &&
       (!params.get("budget") || p.budget === params.get("budget")) &&
