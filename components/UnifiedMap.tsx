@@ -3,7 +3,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { mapPlaces, type MapPlace } from "@/data/mapPlaces";
-import MapDirectSearch from "@/components/MapDirectSearch";
 
 declare global { interface Window { L: any; almaRouteTo?: (id: number) => void; } }
 
@@ -207,7 +206,6 @@ export default function UnifiedMap() {
             <p className="mt-1 text-xl font-bold tracking-tight">Найди своё место</p>
           </div>
           <div className="grid gap-2.5">
-            <MapDirectSearch />
           <label className="relative block">
             <span className="sr-only">Настроение</span>
             <select value={mood} onChange={(event) => setMood(event.target.value)} className="h-12 w-full appearance-none rounded-2xl border border-black/5 bg-[#f7f4ef] px-4 pr-9 text-sm font-medium outline-none transition focus:border-black/25">
@@ -262,7 +260,6 @@ export default function UnifiedMap() {
             {routeStatus && <div className="absolute z-[600] left-3 top-3 max-w-[calc(100%-24px)] rounded-xl bg-white px-3 py-2.5 text-[13px] font-medium shadow-lg sm:left-4 sm:top-4 sm:max-w-[calc(100%-32px)] sm:rounded-2xl sm:px-4 sm:py-3 sm:text-sm">{routeStatus}</div>}
             <div className="absolute z-[500] left-3 bottom-3 rounded-full bg-black text-white px-3 py-1.5 text-xs font-semibold sm:left-4 sm:bottom-4 sm:px-4 sm:py-2 sm:text-sm">alma</div>
           </div>
-          <p className="mt-2 px-1 text-[12px] text-neutral-400">Нажми на метку или выбери место в ленте ниже.</p>
         </div>
       </div>
 
