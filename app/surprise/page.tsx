@@ -40,8 +40,9 @@ type SavedDraft = {
 };
 const DRAFT_KEY = "alma-surprise-draft";
 
-const matchesInterest = (p: (typeof places)[number], interest: string) => {
-  const c = p.category.toLowerCase();
+const matchesInterest = (p: (typeof places)[number] | undefined | null, interest: string) => {
+  if (!p) return false;
+  const c = String(p.category ?? "").toLowerCase();
   if (interest === "Искусство")
     return c.includes("искус") || c.includes("музей");
   if (interest === "Прогулки")
@@ -138,11 +139,12 @@ const rangeMinutes = (value: string) => {
   const mult = value.includes("час") ? 60 : 1;
   return Math.round(((nums[0] + (nums[1] ?? nums[0])) / 2) * mult);
 };
-const stopMinutes = (p: PurchasedRouteStop) => {
+const stopMinutes = (p?: PurchasedRouteStop | null) => {
+  if (!p) return 0;
   if (p.category === "Ресторан") return 60;
-  const exact = routeStayTimes[p.name.trim().toLowerCase()];
+  const exact = routeStayTimes[String(p.name ?? "").trim().toLowerCase()];
   if (exact) return rangeMinutes(exact);
-  const c = p.category.toLowerCase();
+  const c = String(p.category ?? "").toLowerCase();
   if (c.includes("музей") || c.includes("искус")) return 90;
   if (c.includes("парк") || c.includes("пространство") || c.includes("отдых"))
     return 60;
@@ -160,8 +162,8 @@ const isMainStop = (p?: PurchasedRouteStop | null) => {
     stopMinutes(p) >= 90
   );
 };
-const transferMinutes = (a: PurchasedRouteStop | undefined, b: PurchasedRouteStop | undefined) =>
-  Math.max(8, Math.round((dist(a, b) / 4.5) * 60));
+const transferMinutes = (a?: PurchasedRouteStop | null, b?: PurchasedRouteStop | null) =>
+  !a || !b ? 0 : Math.max(8, Math.round((dist(a, b) / 4.5) * 60));
 
 export default function SurprisePage() {
   const [step, setStep] = useState<Step>(1),
@@ -252,8 +254,9 @@ export default function SurprisePage() {
         .filter((x): x is PurchasedRouteStop => Boolean(x));
       if (restoredStops.length) return restoredStops;
     }
-    const score = (p: (typeof places)[number]) =>
-      (p.mood === mood ? 4 : 0) +
+    const score = (p: (typeof places)[number] | undefined | null) => {
+      if (!p) return -1_000_000;
+      return (p.mood === mood ? 4 : 0) +
       (p.budget === budget ? 3 : 0) +
       (p.company.includes(company) ? 3 : 0) +
       (p.duration === duration ? 2 : 0) +
@@ -261,7 +264,8 @@ export default function SurprisePage() {
         (s, i) => s + (matchesInterest(p, i) ? (i === "Романтика" ? 4 : 3) : 0),
         0,
       );
-    const ranked = [...places].sort((a, b) => score(b) - score(a));
+    };
+    const ranked = places.filter(Boolean).sort((a, b) => score(b) - score(a));
     const hardMax =
       duration === "Полдня"
         ? 5
@@ -331,8 +335,8 @@ export default function SurprisePage() {
       const p = [...candidates].sort((a, b) =>
         previous
           ? dist(previous, a) - dist(previous, b)
-          : score(places.find((x) => x.id === b.id)!) -
-            score(places.find((x) => x.id === a.id)!),
+          : score(places.find((x) => x.id === b.id)) -
+            score(places.find((x) => x.id === a.id)),
       )[0];
       if (p) {
         chosen.push(p);
