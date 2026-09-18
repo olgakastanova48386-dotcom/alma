@@ -6,8 +6,6 @@ const NAME_RE = /^[A-Za-zА-Яа-яЁё][A-Za-zА-Яа-яЁё\- ']{1,39}$/;
 export async function POST(request: Request) {
   try {
     await ensureAuthSchema();
-    const rate = await consumeAuthRateLimit(request, "register", 20, 10 * 60);
-    if (!rate.allowed) return NextResponse.json({ error: "Слишком много попыток подряд. Подождите несколько минут и попробуйте снова." }, { status: 429 });
     const body = await request.json();
     const name = String(body.name || "").trim();
     const login = String(body.login || "").trim();
@@ -19,6 +17,9 @@ export async function POST(request: Request) {
     if (login.length < 3 || login.length > 40) return NextResponse.json({ error: "Логин должен содержать от 3 до 40 символов." }, { status: 400 });
     if (password.length < 8 || password.length > 128) return NextResponse.json({ error: "Пароль должен содержать от 8 до 128 символов." }, { status: 400 });
     if (!consent) return NextResponse.json({ error: "Нужно согласиться с правилами ALMA и обработкой данных." }, { status: 400 });
+
+    const rate = await consumeAuthRateLimit(request, "register", 20, 10 * 60);
+    if (!rate.allowed) return NextResponse.json({ error: "Слишком много попыток подряд. Подождите несколько минут и попробуйте снова." }, { status: 429 });
 
     const database = authDb();
     const existing = await database.prepare("SELECT id FROM users WHERE login = ? COLLATE NOCASE").bind(normalizedLogin).first();
@@ -35,6 +36,10 @@ export async function POST(request: Request) {
     return response;
   } catch (error) {
     console.error("register error", error);
+    const message = error instanceof Error ? error.message : String(error);
+    if (/ALMA_DB|D1|binding|database/i.test(message)) {
+      return NextResponse.json({ error: "Сервис аккаунтов временно недоступен. Попробуйте ещё раз через минуту." }, { status: 503 });
+    }
     return NextResponse.json({ error: "Не удалось создать аккаунт. Попробуйте ещё раз." }, { status: 500 });
   }
 }
