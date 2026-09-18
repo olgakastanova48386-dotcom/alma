@@ -192,9 +192,14 @@ export default function UnifiedMap() {
         <span className="shrink-0 rounded-full border border-black/5 bg-white px-3 py-1.5 text-xs font-semibold shadow-sm">{filtered.length} мест</span>
       </div>
 
-      <div className="mb-4 rounded-[24px] border border-black/5 bg-white p-3 shadow-[0_16px_45px_-32px_rgba(0,0,0,.35)] sm:rounded-[30px] sm:p-4">
-        <div className="grid gap-2.5 md:grid-cols-2 xl:grid-cols-[1.25fr_repeat(3,minmax(0,1fr))_auto] xl:items-center">
-          <MapDirectSearch />
+      <div className="grid items-start gap-4 lg:grid-cols-[320px_minmax(0,1fr)] lg:gap-5">
+        <aside className="rounded-[26px] border border-black/5 bg-white p-4 shadow-[0_18px_55px_-35px_rgba(0,0,0,.35)] sm:rounded-[30px] sm:p-5 lg:sticky lg:top-24">
+          <div className="mb-4">
+            <p className="text-[11px] font-semibold uppercase tracking-[.16em] text-neutral-400">Умная карта</p>
+            <p className="mt-1 text-xl font-bold tracking-tight">Найди своё место</p>
+          </div>
+          <div className="grid gap-2.5">
+            <MapDirectSearch />
           <label className="relative block">
             <span className="sr-only">Настроение</span>
             <select value={mood} onChange={(event) => setMood(event.target.value)} className="h-12 w-full appearance-none rounded-2xl border border-black/5 bg-[#f7f4ef] px-4 pr-9 text-sm font-medium outline-none transition focus:border-black/25">
@@ -220,26 +225,40 @@ export default function UnifiedMap() {
             <span className="whitespace-nowrap">🎓 Скидка студенту</span>
             <span aria-hidden="true" className={`relative h-6 w-10 rounded-full transition ${studentOnly ? "bg-white" : "bg-black/15"}`}><span className={`absolute top-1 h-4 w-4 rounded-full transition ${studentOnly ? "left-5 bg-black" : "left-1 bg-white"}`} /></span>
           </button>
+          </div>
+
+          <div className="mt-5 border-t border-black/5 pt-4">
+            <p className="mb-2 text-[11px] font-semibold uppercase tracking-[.16em] text-neutral-400">Категории</p>
+            <div className="flex flex-wrap gap-1.5">
+              {categories.map((c) => <button key={c} onClick={() => { setCategory(c); if (c !== "⚡ Драйв") setDriveTag("Все"); }} className={`rounded-full border px-3 py-2 text-[12px] font-medium transition-all duration-200 ${category === c ? "border-black bg-black text-white" : "border-black/5 bg-[#f7f4ef] text-black hover:border-black/15"}`}>{c}</button>)}
+            </div>
+          </div>
+
+          {category === "👶 Для малыша" && <div className="mt-4 rounded-[18px] bg-[#efe5d7] p-3.5"><p className="text-[11px] uppercase tracking-[.16em] text-neutral-500">ALMA · Для малыша</p><p className="mt-1 text-[13px] leading-5 text-neutral-700">Показываем только подтверждённые удобства.</p></div>}
+          {category === "⚡ Драйв" && <div className="mt-4 rounded-[18px] bg-black p-3.5 text-white"><p className="text-[10px] uppercase tracking-[.16em] text-white/45">ALMA · Драйв</p><div className="mt-2 flex flex-wrap gap-1.5">{driveTags.map((t) => <button key={t} onClick={() => setDriveTag(t)} className={`rounded-full px-3 py-1.5 text-[11px] ${driveTag === t ? "bg-white text-black" : "bg-white/10 text-white"}`}>{t}</button>)}</div></div>}
+
+          <button type="button" onClick={() => { setMood("Любое настроение"); setBudget("Любой бюджет"); setAverageCheck("Любой чек"); setStudentOnly(false); setCategory("Все"); setDriveTag("Все"); }} className="mt-5 w-full rounded-full border border-black/10 px-4 py-3 text-sm font-medium transition hover:border-black/25">Сбросить фильтры</button>
+        </aside>
+
+        <div>
+          <div className="alma-map relative min-h-[430px] overflow-hidden rounded-[28px] border border-black/5 bg-[#ebe8e3] shadow-[0_24px_70px_-38px_rgba(0,0,0,.45)] sm:min-h-[580px] sm:rounded-[34px] lg:min-h-[720px]">
+            <div ref={container} className="absolute inset-0" />
+            {!ready && <div className="absolute inset-0 z-[500] flex items-center justify-center bg-[#ebe8e3]">Загружаем…</div>}
+            {routeStatus && <div className="absolute z-[600] left-3 top-3 max-w-[calc(100%-24px)] rounded-xl bg-white px-3 py-2.5 text-[13px] font-medium shadow-lg sm:left-4 sm:top-4 sm:max-w-[calc(100%-32px)] sm:rounded-2xl sm:px-4 sm:py-3 sm:text-sm">{routeStatus}</div>}
+            <div className="absolute z-[500] left-3 bottom-3 rounded-full bg-black text-white px-3 py-1.5 text-xs font-semibold sm:left-4 sm:bottom-4 sm:px-4 sm:py-2 sm:text-sm">alma</div>
+          </div>
+          <p className="mt-2 px-1 text-[12px] text-neutral-400">Нажми на метку или выбери место в ленте ниже.</p>
         </div>
       </div>
 
-      <div className="mb-3 -mx-4 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0">
-        {categories.map((c) => <button key={c} onClick={() => { setCategory(c); if (c !== "⚡ Драйв") setDriveTag("Все"); }} className={`shrink-0 rounded-full border px-3.5 py-2 text-[13px] font-medium shadow-sm transition-all duration-200 sm:px-4 sm:py-2.5 sm:text-sm ${category === c ? "border-black bg-black text-white shadow-md" : "border-black/5 bg-white text-black hover:-translate-y-0.5 hover:border-black/15"}`}>{c}</button>)}
-      </div>
-
-      {category === "👶 Для малыша" && <div className="mb-4 rounded-[18px] bg-[#efe5d7] p-3.5 sm:mb-5 sm:rounded-[24px] sm:p-5"><p className="text-[11px] uppercase tracking-[.16em] text-neutral-500">ALMA · Для малыша</p><p className="mt-1 text-[15px] leading-5 text-neutral-700 sm:text-sm">Показываем только подтверждённые удобства: пеленальный столик, комнату матери и ребёнка или отдельную детскую комнату.</p></div>}
-
-      {category === "⚡ Драйв" && <div className="mb-4 rounded-[18px] bg-black px-3.5 py-3 text-white sm:mb-5 sm:rounded-[24px] sm:p-5"><div className="flex flex-col gap-2.5 sm:flex-row sm:items-center sm:justify-between sm:gap-3"><div><p className="text-[10px] uppercase tracking-[.16em] text-white/45 sm:text-xs">ALMA · Драйв</p><p className="mt-1 text-[17px] leading-5 font-medium text-white/90 sm:text-sm">Активный отдых</p></div><div className="-mx-1 flex gap-1.5 overflow-x-auto px-1 pb-0.5 sm:flex-wrap sm:overflow-visible sm:p-0">{driveTags.map((t) => <button key={t} onClick={() => setDriveTag(t)} className={`shrink-0 rounded-full px-3 py-1.5 text-[12px] sm:py-2 sm:text-xs ${driveTag === t ? "bg-white text-black" : "bg-white/10 text-white"}`}>{t}</button>)}</div></div></div>}
-
-      <div className="grid items-start gap-4 lg:grid-cols-[390px_minmax(0,1fr)] lg:gap-6">
-        <div className="order-2 overflow-hidden rounded-[26px] border border-black/5 bg-white/90 shadow-[0_18px_55px_-35px_rgba(0,0,0,.35)] backdrop-blur-xl sm:rounded-[30px] lg:order-1 lg:mt-[52px]">
-          <div className="px-4 pt-4 pb-3 sm:px-6 sm:pt-6 sm:pb-4 border-b border-black/5">
-            <p className="font-semibold text-[20px] sm:text-lg">{category === "⚡ Драйв" ? "Куда за драйвом" : category === "👶 Для малыша" ? "С малышом" : "Выбери место"}</p>
-            <p className="mt-1 text-[14px] sm:text-sm text-neutral-500">Рейтинг 4,5–5,0 · проверено ALMA.</p>
-          </div>
-          <div className="flex snap-x snap-mandatory gap-3 overflow-x-auto p-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:block lg:max-h-[700px] lg:overflow-y-auto">
-            {filtered.length === 0 && <div className="rounded-[18px] bg-[#faf8f5] p-4 text-sm leading-6 text-neutral-500">Пока нет мест с подтверждённым удобством в этой категории.</div>}
-            {filtered.map((p) => <article key={p.id} className={`w-[82vw] max-w-[340px] shrink-0 snap-center overflow-hidden rounded-[22px] border transition-all duration-300 lg:mb-3 lg:w-auto lg:max-w-none ${selected === p.id ? "border-black bg-black text-white shadow-lg" : "border-black/5 bg-[#faf8f5] hover:border-black/15"}`}>
+      <div className="mt-5 overflow-hidden rounded-[26px] border border-black/5 bg-white/90 shadow-[0_18px_55px_-35px_rgba(0,0,0,.35)] backdrop-blur-xl sm:rounded-[30px]">
+        <div className="flex items-end justify-between gap-4 border-b border-black/5 px-4 pb-3 pt-4 sm:px-6 sm:pb-4 sm:pt-5">
+          <div><p className="font-semibold text-[20px] sm:text-lg">{category === "⚡ Драйв" ? "Куда за драйвом" : category === "👶 Для малыша" ? "С малышом" : "Подходящие места"}</p><p className="mt-1 text-[14px] text-neutral-500 sm:text-sm">Листай карточки — выбранные фильтры уже применены.</p></div>
+          <span className="shrink-0 rounded-full bg-black px-3 py-1.5 text-xs font-semibold text-white">{filtered.length}</span>
+        </div>
+        <div className="flex snap-x snap-mandatory gap-3 overflow-x-auto p-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:p-4">
+          {filtered.length === 0 && <div className="w-full rounded-[18px] bg-[#faf8f5] p-4 text-sm leading-6 text-neutral-500">По этим фильтрам пока ничего не найдено. Попробуй изменить параметры.</div>}
+          {filtered.map((p) => <article key={p.id} className={`w-[82vw] max-w-[330px] shrink-0 snap-center overflow-hidden rounded-[22px] border transition-all duration-300 ${selected === p.id ? "border-black bg-black text-white shadow-lg" : "border-black/5 bg-[#faf8f5] hover:border-black/15"}`}>
               <button onClick={() => router.push(p.detailHref)} className="w-full text-left">
                 {p.image ? <div className="relative h-28 sm:h-36 w-full bg-[#ece8e2]"><img src={p.image} alt={p.name} className="absolute inset-0 h-full w-full object-cover" loading="lazy" /></div> : <div className="h-20 sm:h-24 w-full bg-gradient-to-br from-[#e9dfd1] via-[#f5eee5] to-[#ddd1c2] flex items-center justify-center text-3xl">{emoji(p)}</div>}
                 <div className="p-3.5 sm:p-4">
@@ -252,18 +271,7 @@ export default function UnifiedMap() {
                 </div>
               </button>
               <div className="px-3.5 pb-3.5 sm:px-4 sm:pb-4"><button onClick={() => buildRoute(p)} className={`w-full rounded-full px-4 py-2.5 text-sm font-medium ${selected === p.id ? "bg-white text-black" : "bg-white border border-black/10 text-black"}`}>Маршрут от меня →</button></div>
-            </article>)}
-          </div>
-        </div>
-
-        <div className="order-1 lg:order-2">
-          <div className="alma-map relative min-h-[430px] overflow-hidden rounded-[28px] border border-black/5 bg-[#ebe8e3] shadow-[0_24px_70px_-38px_rgba(0,0,0,.45)] sm:min-h-[580px] sm:rounded-[34px] lg:min-h-[760px]">
-            <div ref={container} className="absolute inset-0" />
-            {!ready && <div className="absolute inset-0 z-[500] flex items-center justify-center bg-[#ebe8e3]">Загружаем…</div>}
-            {routeStatus && <div className="absolute z-[600] left-3 top-3 max-w-[calc(100%-24px)] rounded-xl bg-white px-3 py-2.5 text-[13px] font-medium shadow-lg sm:left-4 sm:top-4 sm:max-w-[calc(100%-32px)] sm:rounded-2xl sm:px-4 sm:py-3 sm:text-sm">{routeStatus}</div>}
-            <div className="absolute z-[500] left-3 bottom-3 rounded-full bg-black text-white px-3 py-1.5 text-xs font-semibold sm:left-4 sm:bottom-4 sm:px-4 sm:py-2 sm:text-sm">alma</div>
-          </div>
-          <p className="mt-2 px-1 text-[12px] text-neutral-400 lg:hidden">Нажми на метку или выбери место в ленте ниже.</p>
+          </article>)}
         </div>
       </div>
     </div>
