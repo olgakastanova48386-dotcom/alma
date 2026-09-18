@@ -133,17 +133,17 @@ export default function HomePage() {
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-[#f7f4ef] text-black">
-      <section className="relative h-[540px] sm:h-[580px] md:h-auto md:min-h-[680px] flex items-start md:items-center pt-[150px] sm:pt-[165px] md:pt-28 pb-0 overflow-hidden rounded-b-[42px] sm:rounded-b-[56px] md:rounded-none bg-[#f7f4ef] text-black shadow-[0_18px_40px_-34px_rgba(0,0,0,.55)] md:shadow-none">
+      <section className="relative h-[455px] sm:h-[500px] md:h-auto md:min-h-[680px] flex items-start md:items-center pt-[118px] sm:pt-[135px] md:pt-28 pb-0 overflow-hidden bg-[#f7f4ef] text-black">
         <div className="md:hidden absolute inset-0 overflow-hidden bg-black"><img key={`mobile-bg-${heroTheme.image}`} src={heroTheme.image} alt={heroTheme.label} className="absolute left-1/2 top-1/2 h-auto min-h-full w-auto min-w-full max-w-none -translate-x-1/2 -translate-y-1/2 brightness-[1.13] contrast-[0.88] saturate-[0.9] transition-opacity duration-700" style={{ height: "100%", width: "auto" }} /></div>
         <div className="md:hidden absolute inset-0 bg-gradient-to-b from-black/5 via-transparent to-[#171614]/78" />
         <div className="hidden md:block absolute inset-0 bg-[#f7f4ef]" />
         <div className="hidden md:block absolute z-[2] right-[2%] lg:right-[7%] xl:right-[10%] top-32 bottom-0 w-[360px] lg:w-[440px] xl:w-[490px] pointer-events-none"><div className="relative h-full w-full overflow-hidden rounded-[36px] lg:rounded-[42px] shadow-[0_35px_80px_rgba(0,0,0,.20)] ring-1 ring-black/5 bg-neutral-200"><img key={heroTheme.image} src={heroTheme.image} alt={heroTheme.label} className="h-full w-full object-cover transition-opacity duration-700" style={{ objectPosition: heroTheme.position }} /><div className="absolute inset-0 bg-gradient-to-t from-black/18 via-transparent to-white/5" /></div></div>
 
-        {weather && weatherInfo && <div className="absolute right-4 top-[82px] z-20 md:hidden"><div className="inline-flex items-center gap-1.5 rounded-full bg-black/72 px-2.5 py-1.5 text-white shadow-sm backdrop-blur-md"><span className="text-sm leading-none">{weatherInfo.icon}</span><span className="text-xs font-semibold">{Math.round(weather.temperature) > 0 ? "+" : ""}{Math.round(weather.temperature)}°</span><span className="h-3 w-px bg-white/20" /><span className="text-[11px] text-white/75">{weatherInfo.text}</span></div></div>}
+        {weather && weatherInfo && <div className="absolute right-4 top-[76px] z-20 md:hidden"><div className="inline-flex items-center gap-1.5 rounded-full bg-black/72 px-2.5 py-1.5 text-white shadow-sm backdrop-blur-md"><span className="text-sm leading-none">{weatherInfo.icon}</span><span className="text-xs font-semibold">{Math.round(weather.temperature) > 0 ? "+" : ""}{Math.round(weather.temperature)}°</span><span className="h-3 w-px bg-white/20" /><span className="text-[11px] text-white/75">{weatherInfo.text}</span></div></div>}
 
-        <div className="absolute inset-x-0 bottom-7 z-10 w-full max-w-7xl mx-auto px-5 sm:px-7 md:px-4 md:relative md:inset-auto md:bottom-auto lg:px-8"><div className="max-w-[760px]">
+        <div className="absolute inset-x-0 bottom-5 z-10 w-full max-w-7xl mx-auto px-5 sm:px-7 md:px-4 md:relative md:inset-auto md:bottom-auto lg:px-8"><div className="max-w-[760px]">
           {weather && weatherInfo && <div className="hidden md:block mb-3"><div className="inline-flex items-center gap-2.5 rounded-full bg-black/80 backdrop-blur-md text-white px-3.5 md:px-4 py-2.5 shadow-sm"><span className="text-lg leading-none">{weatherInfo.icon}</span><span className="font-semibold">{Math.round(weather.temperature) > 0 ? "+" : ""}{Math.round(weather.temperature)}°</span><span className="w-px h-4 bg-white/20" /><span className="text-sm text-white/75">{weatherInfo.text}</span><span className="hidden xs:inline text-xs text-white/40">Петербург</span></div></div>}
-          <h1 className="mt-0 md:mt-7 max-w-full text-[clamp(31px,8.5vw,82px)] font-bold leading-[1.02] md:leading-[0.98] tracking-tight text-white md:text-black drop-shadow-[0_2px_12px_rgba(0,0,0,.28)] md:drop-shadow-none break-words">Места, в которые<br />хочется вернуться</h1>
+          <h1 className="mt-0 md:mt-7 max-w-full text-[clamp(29px,8vw,82px)] font-bold leading-[1.02] md:leading-[0.98] tracking-tight text-white md:text-black drop-shadow-[0_2px_12px_rgba(0,0,0,.28)] md:drop-shadow-none break-words">Места, в которые<br />хочется вернуться</h1>
           <p className="mt-2.5 md:mt-7 max-w-[92%] md:max-w-xl text-[14px] md:text-xl leading-5 md:leading-8 md:leading-8 text-white/82 md:text-neutral-600">ALMA помогает находить места Петербурга по настроению, бюджету, компании и времени.</p>
           <div className="mt-4 md:mt-9 grid grid-cols-3 gap-2 md:flex md:flex-wrap md:gap-3">
             <button type="button" onClick={scrollToFilters} className="min-w-0 overflow-hidden whitespace-nowrap rounded-full bg-white text-black md:bg-black md:text-white px-1.5 md:px-7 py-2.5 md:py-4 text-[8px] md:text-base font-semibold leading-none hover:opacity-80 hover:scale-[1.02] transition">Найти место</button>
@@ -154,7 +154,7 @@ export default function HomePage() {
         <div className="absolute z-10 bottom-8 right-8 hidden lg:flex items-center gap-3 text-xs uppercase tracking-[0.22em] text-neutral-500"><span className="w-8 h-px bg-black/20" />{heroTheme.label}</div>
       </section>
 
-      <div id="alma-filters" className="relative z-10 -mt-5 rounded-t-[30px] bg-[#f7f4ef] pt-7 sm:-mt-7 sm:rounded-t-[38px] sm:pt-9 md:mt-0 md:rounded-none md:pt-0">
+      <div id="alma-filters" className="relative z-10 -mt-6 rounded-t-[42px] bg-[#f7f4ef] pt-8 sm:-mt-8 sm:rounded-t-[52px] sm:pt-10 md:mt-0 md:rounded-none md:pt-0">
         <Suspense fallback={<section className="mx-auto max-w-7xl px-4 pb-10 sm:px-6 lg:px-8"><div className="flex min-h-[560px] items-center justify-center rounded-[28px] bg-[#ebe8e3] text-neutral-500">Загружаем карту…</div></section>}>
           <UnifiedMap />
         </Suspense>
