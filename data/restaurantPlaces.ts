@@ -318,6 +318,71 @@ export const confirmedSafetyPlaces = [
       sourceUrl: "https://kluch.help/",
     },
   },
+  {
+    id: "safe-vysokiy-gradus-murino",
+    name: "Высокий градус",
+    category: "Кафе",
+    address: "Мурино, Садовая ул., 1Г",
+    safetySupport: {
+      verified: true as const,
+      codePhrase: "Любая фраза со словом «ключ»",
+      helpText: "Точка отображается на действующей карте проекта «Ключевое слово».",
+      verifiedAt: "18.09.2026",
+      sourceUrl: "https://kluch.help/",
+    },
+  },
+  {
+    id: "safe-hm-wait-lounge-murino",
+    name: "Hm, wait Lounge",
+    category: "Бар",
+    address: "Мурино, Скандинавский просп., 2",
+    safetySupport: {
+      verified: true as const,
+      codePhrase: "Любая фраза со словом «ключ»",
+      helpText: "Точка отображается на действующей карте проекта «Ключевое слово».",
+      verifiedAt: "18.09.2026",
+      sourceUrl: "https://kluch.help/",
+    },
+  },
+  {
+    id: "safe-pixel-cyber-lounge-murino",
+    name: "Пиксель Кибер Лаундж",
+    category: "Бар",
+    address: "Мурино, Скандинавский пр., 8, корп. 1",
+    safetySupport: {
+      verified: true as const,
+      codePhrase: "Любая фраза со словом «ключ»",
+      helpText: "Точка отображается на действующей карте проекта «Ключевое слово».",
+      verifiedAt: "18.09.2026",
+      sourceUrl: "https://kluch.help/",
+    },
+  },
+  {
+    id: "safe-ekaterina-islamova-beauty-murino",
+    name: "Студия красоты Екатерины Исламовой",
+    category: "Студия красоты",
+    address: "Мурино, Привокзальная пл., 3к1",
+    safetySupport: {
+      verified: true as const,
+      codePhrase: "Любая фраза со словом «ключ»",
+      helpText: "Точка отображается на действующей карте проекта «Ключевое слово».",
+      verifiedAt: "18.09.2026",
+      sourceUrl: "https://kluch.help/",
+    },
+  },
+  {
+    id: "safe-kimori-murino",
+    name: "Кимори",
+    category: "Кафе",
+    address: "Мурино, Привокзальная пл., 3к2",
+    safetySupport: {
+      verified: true as const,
+      codePhrase: "Любая фраза со словом «ключ»",
+      helpText: "Точка отображается на действующей карте проекта «Ключевое слово».",
+      verifiedAt: "18.09.2026",
+      sourceUrl: "https://kluch.help/",
+    },
+  },
 
 ];
 
