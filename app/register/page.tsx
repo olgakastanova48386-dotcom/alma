@@ -9,14 +9,13 @@ function RegisterContent() {
   const destination = next;
   const loginHref = `/login?next=${encodeURIComponent(next)}`;
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  const [login, setLogin] = useState("");
   const [gender, setGender] = useState<Gender>("female");
   const [password, setPassword] = useState("");
   const [repeat, setRepeat] = useState("");
   const [consent, setConsent] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.trim());
   const nameOk = /^[A-Za-zА-Яа-яЁё][A-Za-zА-Яа-яЁё\- ']{1,39}$/.test(
     name.trim(),
   );
@@ -27,10 +26,7 @@ function RegisterContent() {
       setError("Укажите имя — минимум 2 буквы.");
       return;
     }
-    if (!emailOk) {
-      setError("Проверьте адрес электронной почты.");
-      return;
-    }
+    if (login.trim().length < 3) { setError("Логин должен содержать минимум 3 символа."); return; }
     if (password.length < 8) {
       setError("Пароль должен содержать минимум 8 символов.");
       return;
@@ -48,7 +44,7 @@ function RegisterContent() {
       const r = await fetch("/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, gender, password, consent }),
+        body: JSON.stringify({ name, login, gender, password, consent }),
       });
       const d = await r.json();
       if (!r.ok) throw new Error(d.error || "Не удалось создать аккаунт.");
@@ -71,7 +67,7 @@ function RegisterContent() {
             Регистрация
           </h1>
           <p className="mt-2 text-[13px] leading-5 text-neutral-500">
-            Почта нужна для входа и восстановления доступа. Никакого спама.
+            Создай логин и пароль — электронная почта не нужна.
           </p>
         </div>
         <form
@@ -85,20 +81,13 @@ function RegisterContent() {
             placeholder="Имя"
             className={ic}
           />
-          <div>
-            <input
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              type="email"
-              autoComplete="email"
-              inputMode="email"
-              placeholder="Электронная почта"
-              className={ic}
-            />
-            <p className="mt-1.5 px-1 text-[11px] leading-4 text-neutral-400">
-              Используем её для входа и восстановления доступа — рекламных рассылок не будет.
-            </p>
-          </div>
+          <input
+            value={login}
+            onChange={(e) => setLogin(e.target.value)}
+            autoComplete="username"
+            placeholder="Логин"
+            className={ic}
+          />
           <fieldset>
             <legend className="text-[12px] font-medium text-neutral-500">
               Пол{" "}
