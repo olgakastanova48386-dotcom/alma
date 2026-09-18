@@ -39,7 +39,7 @@ export default function MapPage() {
 
         <div className="mt-8 -mx-4 flex gap-2 overflow-x-auto px-4 pb-2 sm:mx-0 sm:px-0">
           {filters.map((item) => (
-            <button key={item} type="button" onClick={() => setFilter(item)} className={`shrink-0 rounded-full border px-3.5 py-2 text-[13px] font-medium transition ${filter === item ? "border-black bg-black text-white" : "border-black/10 bg-white hover:border-black/30"}`}>{item}</button>
+            <button key={item} type="button" onClick={() => setFilter(item)} className={`shrink-0 rounded-full border px-2.5 py-1.5 text-[11px] font-medium leading-none transition sm:px-3 sm:py-1.5 sm:text-xs ${filter === item ? "border-black bg-black text-white" : "border-black/10 bg-white hover:border-black/30"}`}>{item}</button>
           ))}
         </div>
 
