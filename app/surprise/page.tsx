@@ -102,6 +102,7 @@ const restaurantStop = (
   mapPlaceId: 2000 + r.id,
   name: r.name,
   category: "Ресторан",
+  image: r.image,
   lat: r.lat,
   lng: r.lng,
   description: r.note,
