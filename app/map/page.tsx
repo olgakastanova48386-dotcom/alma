@@ -39,22 +39,22 @@ export default function MapPage() {
 
         <div className="mt-8 -mx-4 flex gap-2 overflow-x-auto px-4 pb-2 sm:mx-0 sm:px-0">
           {filters.map((item) => (
-            <button key={item} type="button" onClick={() => setFilter(item)} className={`shrink-0 rounded-full border px-2.5 py-1.5 text-[11px] font-medium leading-none transition sm:px-3 sm:py-1.5 sm:text-xs ${filter === item ? "border-black bg-black text-white" : "border-black/10 bg-white hover:border-black/30"}`}>{item}</button>
+            <button key={item} type="button" onClick={() => setFilter(item)} className={`shrink-0 rounded-full border px-3.5 py-2 text-[13px] font-medium transition ${filter === item ? "border-black bg-black text-white" : "border-black/10 bg-white hover:border-black/30"}`}>{item}</button>
           ))}
         </div>
 
-        <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-12">
+        <div className="mt-8 grid gap-3 md:grid-cols-2 lg:grid-cols-12">
           {visible.map((event, index) => (
-            <a key={event.title} href={event.href} target="_blank" rel="noreferrer" className={`group relative flex flex-col justify-between overflow-hidden border border-black/5 p-5 sm:p-6 transition duration-300 hover:-translate-y-1 hover:shadow-xl ${index === 0 ? "min-h-[330px] rounded-[30px] bg-[#1c1b1a] text-white lg:col-span-8 lg:row-span-2" : index === 1 ? "min-h-[330px] rounded-[30px] bg-[#eadfd6] lg:col-span-4" : index === 2 ? "min-h-[300px] rounded-[30px] bg-[#e5e8df] lg:col-span-4" : index === 3 ? "min-h-[245px] rounded-[26px] bg-[#e7e1ec] lg:col-span-5" : index === 4 ? "min-h-[245px] rounded-[26px] bg-[#dfe8e7] lg:col-span-7" : "min-h-[255px] rounded-[26px] bg-white lg:col-span-4"}`}>
+            <a key={event.title} href={event.href} target="_blank" rel="noreferrer" className={`group relative flex flex-col justify-between overflow-hidden border border-black/5 p-5 sm:p-6 transition duration-300 hover:-translate-y-1 hover:shadow-xl ${index === 0 ? "min-h-[220px] rounded-[26px] bg-[#1c1b1a] text-white lg:col-span-6" : index === 1 ? "min-h-[220px] rounded-[26px] bg-[#eadfd6] lg:col-span-3" : index === 2 ? "min-h-[220px] rounded-[26px] bg-[#e5e8df] lg:col-span-3" : index === 3 ? "min-h-[210px] rounded-[24px] bg-[#e7e1ec] lg:col-span-4" : index === 4 ? "min-h-[210px] rounded-[24px] bg-[#dfe8e7] lg:col-span-4" : "min-h-[210px] rounded-[24px] bg-white lg:col-span-4"}`}>
               <div className="flex items-start justify-between gap-4">
                 <span className={`rounded-full px-3 py-1.5 text-xs font-medium ${index === 0 ? "bg-white/12" : "bg-white/70 backdrop-blur-sm"}`}>{event.category}</span>
-                <span className={`${index < 5 ? "text-4xl sm:text-5xl" : "text-3xl"} transition duration-300 group-hover:scale-110`} aria-hidden="true">{event.accent}</span>
+                <span className={`${index < 5 ? "text-3xl sm:text-4xl" : "text-3xl"} transition duration-300 group-hover:scale-110`} aria-hidden="true">{event.accent}</span>
               </div>
               <div>
                 <p className={`text-sm ${index === 0 ? "text-white/55" : "text-neutral-500"}`}>{event.date} · {event.place}</p>
-                <h2 className={`mt-2 font-bold leading-[1.04] tracking-[-0.035em] ${index === 0 ? "text-[clamp(30px,5vw,52px)] max-w-2xl" : index < 5 ? "text-[clamp(25px,3.2vw,35px)]" : "text-[clamp(22px,3vw,30px)]"}`}>{event.title}</h2>
+                <h2 className={`mt-2 font-bold leading-[1.04] tracking-[-0.035em] ${index === 0 ? "text-[clamp(26px,3.8vw,38px)] max-w-xl" : index < 5 ? "text-[clamp(22px,2.7vw,29px)]" : "text-[clamp(21px,2.5vw,27px)]"}`}>{event.title}</h2>
                 <p className={`mt-3 text-[13px] leading-5 sm:text-sm sm:leading-6 ${index === 0 ? "text-white/65" : "text-neutral-500"}`}>{event.note}</p>
-                <div className="mt-6 flex items-center gap-2 text-sm font-semibold">Подробнее <span className="transition group-hover:translate-x-1">→</span></div>
+                <div className="mt-4 flex items-center gap-2 text-sm font-semibold">Подробнее <span className="transition group-hover:translate-x-1">→</span></div>
               </div>
             </a>
           ))}
