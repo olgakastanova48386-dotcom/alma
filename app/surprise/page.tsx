@@ -49,7 +49,8 @@ const matchesInterest = (p: (typeof places)[number], interest: string) => {
       c.includes("прогул") ||
       c.includes("парк") ||
       c.includes("пространство") ||
-      c.includes("отдых")
+      c.includes("отдых") ||
+      c.includes("архитект")
     );
   if (interest === "Необычные места")
     return (
@@ -138,7 +139,7 @@ const rangeMinutes = (value: string) => {
   return Math.round(((nums[0] + (nums[1] ?? nums[0])) / 2) * mult);
 };
 const stopMinutes = (p: PurchasedRouteStop) => {
-  if (p.category === "Ресторан") return 75;
+  if (p.category === "Ресторан") return 60;
   const exact = routeStayTimes[p.name.trim().toLowerCase()];
   if (exact) return rangeMinutes(exact);
   const c = p.category.toLowerCase();
@@ -251,7 +252,13 @@ export default function SurprisePage() {
             ? 3
             : 2;
     const normalMax =
-      duration === "Полдня" ? 3 : duration === "2–4 часа" ? 2 : 1;
+      duration === "Полдня"
+        ? 4
+        : duration === "2–4 часа"
+          ? 3
+          : duration === "1–2 часа"
+            ? 2
+            : 1;
     const max = hardcore ? hardMax : normalMax,
       budgetMinutes = routeBudgetMinutes(duration);
     const chosen: PurchasedRouteStop[] = [];
