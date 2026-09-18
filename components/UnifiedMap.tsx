@@ -195,7 +195,7 @@ export default function UnifiedMap() {
       <div className="grid items-start gap-4 lg:grid-cols-[320px_minmax(0,1fr)] lg:gap-5">
         <aside className="rounded-[26px] border border-black/5 bg-white p-4 shadow-[0_18px_55px_-35px_rgba(0,0,0,.35)] sm:rounded-[30px] sm:p-5 lg:sticky lg:top-24">
           <div className="mb-4">
-            <p className="text-[11px] font-semibold uppercase tracking-[.16em] text-neutral-400">Умная карта</p>
+            
             <p className="mt-1 text-xl font-bold tracking-tight">Найди своё место</p>
           </div>
           <div className="grid gap-2.5">
