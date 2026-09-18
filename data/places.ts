@@ -17,6 +17,7 @@ export type Place = {
   priceNote: string;
   priceDetails: string;
   priceUpdated: string;
+  studentBenefit?: { label: string; details: string; verifiedAt: string; sourceUrl: string };
 };
 
 export const places: Place[] = [
@@ -342,6 +343,7 @@ export const places: Place[] = [
     priceNote: "Комплексный билет одного дня",
     priceDetails: "Включает Михайловский дворец, выставку и Михайловский замок по действующей программе Русского музея.",
     priceUpdated: "07.09.2026",
+    studentBenefit: {"label":"🎓 Студентам бесплатно 18-го числа","details":"Для студентов 18-е число каждого месяца — день бесплатного посещения Русского музея; если 18-е выпадает на вторник, льготный день переносится на среду. Нужен документ, подтверждающий льготу.","verifiedAt":"18.09.2026","sourceUrl":"https://rusmuseum.ru/pages/perechen-lgotnykh-kategoriy-posetiteley-russkogo-muzeya/"},
   },
   {
     id: 18,
