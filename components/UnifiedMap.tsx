@@ -66,6 +66,7 @@ export default function UnifiedMap() {
   const [company, setCompany] = useState("Компания");
   const [duration, setDuration] = useState("Длительность");
   const [studentOnly, setStudentOnly] = useState(false);
+  const [moreCategoriesOpen, setMoreCategoriesOpen] = useState(false);
 
   const categories = ["Все", "Кофейня", "Ресторан", "🎓 Скидка студенту", "Dog Friendly", "👶 Для малыша", "⚡ Драйв", "Другие места"];
   const driveTags = ["Все", "Активный отдых", "Матчи", "Живая музыка", "Рок", "С друзьями"];
@@ -244,8 +245,12 @@ export default function UnifiedMap() {
           <div className="mt-5 border-t border-black/5 pt-4">
             <p className="mb-2 text-[11px] font-semibold uppercase tracking-[.16em] text-neutral-400">Категории</p>
             <div className="flex flex-wrap gap-1.5">
-              {categories.map((c) => <button key={c} onClick={() => { setCategory(c); if (c !== "⚡ Драйв") setDriveTag("Все"); }} className={`rounded-full border px-3 py-2 text-[12px] font-medium transition-all duration-200 ${category === c ? "border-black bg-black text-white" : "border-black/5 bg-[#f7f4ef] text-black hover:border-black/15"}`}>{c}</button>)}
+              {categories.slice(0, 3).map((c) => <button key={c} onClick={() => { setCategory(c); if (c !== "⚡ Драйв") setDriveTag("Все"); }} className={`rounded-full border px-3 py-2 text-[12px] font-medium transition-all duration-200 ${category === c ? "border-black bg-black text-white" : "border-black/5 bg-[#f7f4ef] text-black hover:border-black/15"}`}>{c}</button>)}
+              <button type="button" onClick={() => setMoreCategoriesOpen((value) => !value)} className="rounded-full border border-black/5 bg-[#f7f4ef] px-3 py-2 text-[12px] font-medium text-black transition hover:border-black/15">Ещё {moreCategoriesOpen ? "⌃" : "⌄"}</button>
             </div>
+            {moreCategoriesOpen && <div className="mt-2 flex flex-wrap gap-1.5">
+              {categories.slice(3).map((c) => <button key={c} onClick={() => { setCategory(c); if (c !== "⚡ Драйв") setDriveTag("Все"); }} className={`rounded-full border px-3 py-2 text-[12px] font-medium transition-all duration-200 ${category === c ? "border-black bg-black text-white" : "border-black/5 bg-[#f7f4ef] text-black hover:border-black/15"}`}>{c}</button>)}
+            </div>}
           </div>
 
           {category === "👶 Для малыша" && <div className="mt-4 rounded-[18px] bg-[#efe5d7] p-3.5"><p className="text-[11px] uppercase tracking-[.16em] text-neutral-500">ALMA · Для малыша</p><p className="mt-1 text-[13px] leading-5 text-neutral-700">Показываем только подтверждённые удобства.</p></div>}
