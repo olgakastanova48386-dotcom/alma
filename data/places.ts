@@ -641,6 +641,8 @@ export const places: Place[] = [
     priceNote: "Свободный доступ",
     priceDetails: "Подходит как прогулочная или познавательная точка готового маршрута ALMA.",
     priceUpdated: "18.09.2026",
+    studentBenefitCheckedAt: "18.09.2026",
+    studentBenefitCheckNote: "Бесплатная городская/прогулочная локация; отдельная студенческая скидка для посещения самой точки не требуется.",
   },
   {
     id: 31,
@@ -660,6 +662,8 @@ export const places: Place[] = [
     priceNote: "Свободный доступ",
     priceDetails: "Подходит как прогулочная или познавательная точка готового маршрута ALMA.",
     priceUpdated: "18.09.2026",
+    studentBenefitCheckedAt: "18.09.2026",
+    studentBenefitCheckNote: "Бесплатная городская/прогулочная локация; отдельная студенческая скидка для посещения самой точки не требуется.",
   },
   {
     id: 32,
@@ -679,6 +683,8 @@ export const places: Place[] = [
     priceNote: "Свободный доступ",
     priceDetails: "Подходит как прогулочная или познавательная точка готового маршрута ALMA.",
     priceUpdated: "18.09.2026",
+    studentBenefitCheckedAt: "18.09.2026",
+    studentBenefitCheckNote: "Бесплатная городская/прогулочная локация; отдельная студенческая скидка для посещения самой точки не требуется.",
   },
   {
     id: 33,
@@ -698,6 +704,8 @@ export const places: Place[] = [
     priceNote: "Свободный доступ",
     priceDetails: "Подходит как прогулочная или познавательная точка готового маршрута ALMA.",
     priceUpdated: "18.09.2026",
+    studentBenefitCheckedAt: "18.09.2026",
+    studentBenefitCheckNote: "Вход в Летний сад свободный; отдельная студенческая скидка для прогулки не требуется.",
   },
   {
     id: 34,
@@ -717,6 +725,8 @@ export const places: Place[] = [
     priceNote: "Свободный доступ",
     priceDetails: "Подходит как прогулочная или познавательная точка готового маршрута ALMA.",
     priceUpdated: "18.09.2026",
+    studentBenefitCheckedAt: "18.09.2026",
+    studentBenefitCheckNote: "Вход в Михайловский сад бесплатный; отдельная студенческая скидка для прогулки не требуется.",
   },
   {
     id: 35,
@@ -736,6 +746,8 @@ export const places: Place[] = [
     priceNote: "Свободный доступ",
     priceDetails: "Подходит как прогулочная или познавательная точка готового маршрута ALMA.",
     priceUpdated: "18.09.2026",
+    studentBenefitCheckedAt: "18.09.2026",
+    studentBenefitCheckNote: "Бесплатная городская/прогулочная локация; отдельная студенческая скидка для посещения самой точки не требуется.",
   },
   {
     id: 36,
@@ -755,6 +767,8 @@ export const places: Place[] = [
     priceNote: "Свободный доступ",
     priceDetails: "Подходит как прогулочная или познавательная точка готового маршрута ALMA.",
     priceUpdated: "18.09.2026",
+    studentBenefitCheckedAt: "18.09.2026",
+    studentBenefitCheckNote: "Бесплатная городская/прогулочная локация; отдельная студенческая скидка для посещения самой точки не требуется.",
   },
   {
     id: 37,
@@ -774,6 +788,8 @@ export const places: Place[] = [
     priceNote: "Свободный доступ",
     priceDetails: "Подходит как прогулочная или познавательная точка готового маршрута ALMA.",
     priceUpdated: "18.09.2026",
+    studentBenefitCheckedAt: "18.09.2026",
+    studentBenefitCheckNote: "Вход на прогулочную набережную свободный; льготы отдельных мероприятий Севкабель Порта учитываются отдельно.",
   },
   {
     id: 38,
@@ -793,6 +809,8 @@ export const places: Place[] = [
     priceNote: "Свободный доступ",
     priceDetails: "Подходит как прогулочная или познавательная точка готового маршрута ALMA.",
     priceUpdated: "18.09.2026",
+    studentBenefitCheckedAt: "18.09.2026",
+    studentBenefitCheckNote: "Бесплатная городская/прогулочная локация; отдельная студенческая скидка для посещения самой точки не требуется.",
   },
   {
     id: 39,
