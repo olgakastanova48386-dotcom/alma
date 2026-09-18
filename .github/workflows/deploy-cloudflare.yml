@@ -5,6 +5,8 @@ on:
     branches: [main]
   workflow_dispatch:
 
+# Automatic production deployment for ALMA
+
 concurrency:
   group: alma-production
   cancel-in-progress: true
