@@ -133,7 +133,7 @@ export default function HomePage() {
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-[#f7f4ef] text-black">
-      <section className="relative min-h-[560px] md:min-h-[680px] flex items-start md:items-center pt-[170px] md:pt-28 pb-0 overflow-hidden bg-[#f7f4ef] text-black">
+      <section className="relative h-[500px] sm:h-[540px] md:h-auto md:min-h-[680px] flex items-start md:items-center pt-[150px] sm:pt-[165px] md:pt-28 pb-0 overflow-hidden bg-[#f7f4ef] text-black">
         <div className="md:hidden absolute inset-0 overflow-hidden bg-black"><img key={`mobile-bg-${heroTheme.image}`} src={heroTheme.image} alt={heroTheme.label} className="absolute left-1/2 top-1/2 h-auto min-h-full w-auto min-w-full max-w-none -translate-x-1/2 -translate-y-1/2 brightness-[1.13] contrast-[0.88] saturate-[0.9] transition-opacity duration-700" style={{ height: "100%", width: "auto" }} /></div>
         <div className="md:hidden absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/62" />
         <div className="hidden md:block absolute inset-0 bg-[#f7f4ef]" />
