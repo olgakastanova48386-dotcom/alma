@@ -240,7 +240,7 @@ export default function SurprisePage() {
     // Do not build or score a route while the user is still choosing interests.
     // This keeps step 5 as pure UI state and prevents a second selection from
     // triggering route-generation side effects.
-    if (!generated && step <= 5) return [];
+    if (!generated) return [];
     if (restoredPlaceIds.length) {
       const restoredStops = restoredPlaceIds
         .map(stopFromMapId)
