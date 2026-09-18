@@ -134,7 +134,7 @@ export default function HomePage() {
   return (
     <main className="min-h-screen overflow-x-hidden bg-[#f7f4ef] text-black">
       <section className="relative min-h-[560px] md:min-h-[680px] flex items-start md:items-center pt-[170px] md:pt-28 pb-0 overflow-hidden bg-[#f7f4ef] text-black">
-        <div className="md:hidden absolute inset-0 overflow-hidden bg-black"><img key={`mobile-bg-${heroTheme.image}`} src={heroTheme.image} alt={heroTheme.label} className="absolute inset-0 h-full w-full object-cover transition-opacity duration-700" style={{ objectPosition: "62% center" }} /></div>
+        <div className="md:hidden absolute inset-0 overflow-hidden bg-black"><img key={`mobile-bg-${heroTheme.image}`} src={heroTheme.image} alt={heroTheme.label} className="absolute left-1/2 top-1/2 h-auto min-h-full w-auto min-w-full max-w-none -translate-x-1/2 -translate-y-1/2 transition-opacity duration-700" style={{ height: "100%", width: "auto" }} /></div>
         <div className="md:hidden absolute inset-0 bg-gradient-to-b from-black/10 via-black/15 to-black/78" />
         <div className="hidden md:block absolute inset-0 bg-[#f7f4ef]" />
         <div className="hidden md:block absolute z-[2] right-[2%] lg:right-[7%] xl:right-[10%] top-32 bottom-0 w-[360px] lg:w-[440px] xl:w-[490px] pointer-events-none"><div className="relative h-full w-full overflow-hidden rounded-[36px] lg:rounded-[42px] shadow-[0_35px_80px_rgba(0,0,0,.20)] ring-1 ring-black/5 bg-neutral-200"><img key={heroTheme.image} src={heroTheme.image} alt={heroTheme.label} className="h-full w-full object-cover transition-opacity duration-700" style={{ objectPosition: heroTheme.position }} /><div className="absolute inset-0 bg-gradient-to-t from-black/18 via-transparent to-white/5" /></div></div>
