@@ -110,6 +110,71 @@ export const confirmedSafetyPlaces = [
       sourceUrl: "https://kluch.help/",
     },
   },
+  {
+    id: "safe-netrezvaya-utka-kudrovo",
+    name: "НеТрезвая Утка",
+    category: "Кафе",
+    address: "Кудрово, Пражская ул., 7",
+    safetySupport: {
+      verified: true as const,
+      codePhrase: "Любая фраза со словом «ключ»",
+      helpText: "Точка отображается на действующей карте проекта «Ключевое слово».",
+      verifiedAt: "18.09.2026",
+      sourceUrl: "https://kluch.help/",
+    },
+  },
+  {
+    id: "safe-lv-coffee-kudrovo",
+    name: "ЛВ Кофе",
+    category: "Кафе",
+    address: "Кудрово, Европейский проспект, 18/2",
+    safetySupport: {
+      verified: true as const,
+      codePhrase: "Любая фраза со словом «ключ»",
+      helpText: "Точка отображается на действующей карте проекта «Ключевое слово».",
+      verifiedAt: "18.09.2026",
+      sourceUrl: "https://kluch.help/",
+    },
+  },
+  {
+    id: "safe-vkafe-stroiteley-kudrovo",
+    name: "VK'афе",
+    category: "Кафе",
+    address: "Кудрово, просп. Строителей, 16",
+    safetySupport: {
+      verified: true as const,
+      codePhrase: "Любая фраза со словом «ключ»",
+      helpText: "Точка отображается на действующей карте проекта «Ключевое слово».",
+      verifiedAt: "18.09.2026",
+      sourceUrl: "https://kluch.help/",
+    },
+  },
+  {
+    id: "safe-osipov-pro-kudrovo",
+    name: "Осипов Pro",
+    category: "Кафе",
+    address: "Кудрово, просп. Строителей, 16",
+    safetySupport: {
+      verified: true as const,
+      codePhrase: "Любая фраза со словом «ключ»",
+      helpText: "Точка отображается на действующей карте проекта «Ключевое слово».",
+      verifiedAt: "18.09.2026",
+      sourceUrl: "https://kluch.help/",
+    },
+  },
+  {
+    id: "safe-vkafe-stolichnaya-kudrovo",
+    name: "VK'афе",
+    category: "Кафе",
+    address: "Кудрово, Столичная ул., 11к1",
+    safetySupport: {
+      verified: true as const,
+      codePhrase: "Любая фраза со словом «ключ»",
+      helpText: "Точка отображается на действующей карте проекта «Ключевое слово».",
+      verifiedAt: "18.09.2026",
+      sourceUrl: "https://kluch.help/",
+    },
+  },
 
 ];
 
