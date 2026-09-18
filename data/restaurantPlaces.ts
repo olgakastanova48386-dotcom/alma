@@ -175,6 +175,45 @@ export const confirmedSafetyPlaces = [
       sourceUrl: "https://kluch.help/",
     },
   },
+  {
+    id: "safe-mozhno-vse-kudrovo",
+    name: "Можно Всё",
+    category: "Кафе",
+    address: "Кудрово, просп. Строителей, 19",
+    safetySupport: {
+      verified: true as const,
+      codePhrase: "Любая фраза со словом «ключ»",
+      helpText: "Точка отображается на действующей карте проекта «Ключевое слово».",
+      verifiedAt: "18.09.2026",
+      sourceUrl: "https://kluch.help/",
+    },
+  },
+  {
+    id: "safe-gorod-koshek-kudrovo",
+    name: "ГОРОД КОШЕК | Котокафе",
+    category: "Котокафе",
+    address: "Кудрово, Столичная ул., 11, к. 3",
+    safetySupport: {
+      verified: true as const,
+      codePhrase: "Любая фраза со словом «ключ»",
+      helpText: "Точка отображается на действующей карте проекта «Ключевое слово».",
+      verifiedAt: "18.09.2026",
+      sourceUrl: "https://kluch.help/",
+    },
+  },
+  {
+    id: "safe-kofe-da-yanino",
+    name: "Кофе.Да",
+    category: "Кафе",
+    address: "Янино-1, Тюльпанов, д. 1",
+    safetySupport: {
+      verified: true as const,
+      codePhrase: "Любая фраза со словом «ключ»",
+      helpText: "Точка отображается на действующей карте проекта «Ключевое слово».",
+      verifiedAt: "18.09.2026",
+      sourceUrl: "https://kluch.help/",
+    },
+  },
 
 ];
 
