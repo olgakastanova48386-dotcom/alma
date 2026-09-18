@@ -260,7 +260,10 @@ export default function SurprisePage() {
           : duration === "1–2 часа"
             ? 2
             : 1;
-    const max = hardcore ? hardMax : normalMax,
+    const requestedStopCount = routeInterests.length;
+    const max = hardcore
+      ? Math.max(hardMax, requestedStopCount)
+      : Math.max(normalMax, requestedStopCount),
       budgetMinutes = routeBudgetMinutes(duration);
     const chosen: PurchasedRouteStop[] = [];
     const usedEditorial = new Set<number>();
@@ -268,7 +271,11 @@ export default function SurprisePage() {
     const fits = (candidate: PurchasedRouteStop) => {
       if (chosen.length >= max) return false;
       if (hardcore) return true;
-      if (isMainStop(candidate) && chosen.some(isMainStop)) return false;
+      if (
+        isMainStop(candidate) &&
+        chosen.some(isMainStop) &&
+        chosen.length >= requestedStopCount
+      ) return false;
       const visit =
         chosen.reduce((s, p) => s + stopMinutes(p), 0) + stopMinutes(candidate);
       const travel =
@@ -278,6 +285,7 @@ export default function SurprisePage() {
         (chosen.length
           ? transferMinutes(chosen[chosen.length - 1], candidate)
           : 0);
+      if (chosen.length < requestedStopCount) return true;
       return visit + travel <= budgetMinutes;
     };
     for (const interest of routeInterests) {
