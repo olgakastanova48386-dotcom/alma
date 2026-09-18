@@ -253,7 +253,11 @@ const photoMapPlaces: MapPlace[] = [
     ratingCount: 12,
     ratingSource: "2ГИС",
     drive: true,
-    driveTags: ["Активныconst studentDiscountPlaces: MapPlace[] = [
+    driveTags: ["Активный отдых", "С друзьями"],
+  },
+];
+
+const studentDiscountPlaces: MapPlace[] = [
   {
     id: 6001,
     name: "Meren Coffee",
@@ -279,7 +283,7 @@ const photoMapPlaces: MapPlace[] = [
     studentDiscountVerifiedAt: "18.09.2026",
     studentDiscountSourceUrl: "https://merencoffee.ru/",
     menuUrl: "https://merencoffee.ru/",
-  },,
+  },
   {
     id: 6002,
     name: "Сказки Шахерезады",
@@ -342,8 +346,7 @@ const photoMapPlaces: MapPlace[] = [
     studentDiscountNote: "−10% при предъявлении студенческого билета. Акция заявлена до 01.12.2026.",
     studentDiscountVerifiedAt: "18.09.2026", studentDiscountEndsAt: "01.12.2026",
     studentDiscountSourceUrl: "https://good-itea.clients.site/",
-  }herezady.ru/studentam_skidka",
-  }
+  },
 ];
 
 export const mapPlaces: MapPlace[] = [
