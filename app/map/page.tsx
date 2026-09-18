@@ -29,12 +29,14 @@ export default function MapPage() {
                 <span aria-hidden="true" className="shrink-0 text-xl sm:text-[22px]">{collection.icon}</span>
                 <span className="whitespace-nowrap text-[15px] font-semibold sm:text-base">{collection.title}</span>
               </span>
-              <span
-                aria-hidden="true"
-                className={`shrink-0 text-xl transition duration-300 group-hover:translate-x-1 ${collection.featured ? "text-white/80" : "text-black/45"}`}
-              >
-                →
-              </span>
+              {!collection.featured && (
+                <span
+                  aria-hidden="true"
+                  className="shrink-0 text-xl text-black/45 transition duration-300 group-hover:translate-x-1"
+                >
+                  →
+                </span>
+              )}
             </Link>
           ))}
         </div>
