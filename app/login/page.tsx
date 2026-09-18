@@ -7,7 +7,7 @@ function LoginContent() {
   const next = params.get("next") || "/";
   const destination = next;
   const registerHref = `/register?next=${encodeURIComponent(next)}`;
-  const [email, setEmail] = useState("");
+  const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -22,7 +22,7 @@ function LoginContent() {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ login, password }),
       });
       const d = await r.json();
       if (!r.ok) {
@@ -35,7 +35,6 @@ function LoginContent() {
       setLoading(false);
     }
   }
-  const verificationHref = `/verify-phone?email=${encodeURIComponent(email)}&next=${encodeURIComponent(destination)}`;
   return (
     <main className="min-h-screen bg-[#f7f4ef] flex items-center justify-center px-4 pt-24 pb-12">
       <div className="bg-white p-8 sm:p-10 rounded-[30px] shadow-xl w-full max-w-[430px] border border-black/5">
@@ -44,16 +43,14 @@ function LoginContent() {
         </p>
         <h1 className="mt-3 text-3xl font-bold text-center">Вход</h1>
         <p className="mt-2 text-center text-sm text-neutral-500">
-          Войдите по электронной почте. Мы не используем её для спама.
+          Войдите по логину и паролю.
         </p>
         <form className="mt-7" onSubmit={onSubmit}>
           <input
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            type="email"
-            autoComplete="email"
-            inputMode="email"
-            placeholder="Электронная почта"
+            value={login}
+            onChange={(e) => setLogin(e.target.value)}
+            autoComplete="username"
+            placeholder="Логин"
             className="w-full border border-black/30 rounded-2xl px-4 py-3.5 outline-none focus:border-black"
           />
           <input
@@ -75,19 +72,11 @@ function LoginContent() {
           {error && (
             <div className="mt-5 rounded-2xl bg-red-50 px-4 py-3 text-sm text-red-700">
               {error}
-              {needsVerification && (
-                <Link
-                  href={verificationHref}
-                  className="mt-2 block font-semibold underline"
-                >
-                  Подтвердить почту →
-                </Link>
-              )}
             </div>
           )}
           <button
             type="submit"
-            disabled={loading || !email || !password}
+            disabled={loading || !login || !password}
             className="mt-6 w-full bg-black text-white rounded-2xl py-3.5 font-medium disabled:opacity-30"
           >
             {loading ? "Входим…" : "Войти"}
