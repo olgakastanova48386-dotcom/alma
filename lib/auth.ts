@@ -63,6 +63,18 @@ export async function ensureAuthSchema() {
   ]);
   const columns = await database.prepare("PRAGMA table_info(users)").all();
   const names = (columns?.results || []).map((row: any) => row.name);
+  if (!names.includes("gender"))
+    await database
+      .prepare("ALTER TABLE users ADD COLUMN gender TEXT NOT NULL DEFAULT 'unspecified'")
+      .run();
+  if (!names.includes("marketing_sms"))
+    await database
+      .prepare("ALTER TABLE users ADD COLUMN marketing_sms INTEGER NOT NULL DEFAULT 0")
+      .run();
+  if (!names.includes("phone_verified"))
+    await database
+      .prepare("ALTER TABLE users ADD COLUMN phone_verified INTEGER NOT NULL DEFAULT 0")
+      .run();
   if (!names.includes("email"))
     await database.prepare("ALTER TABLE users ADD COLUMN email TEXT").run();
   if (!names.includes("login"))
