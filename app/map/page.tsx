@@ -33,7 +33,6 @@ export default function MapPage() {
   return (
     <main className="min-h-screen bg-[#f7f4ef] pb-20 pt-28 text-black sm:pt-32">
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <p className="text-xs uppercase tracking-[0.24em] text-neutral-500">ALMA · Петербург сейчас</p>
         <div className="mt-4 grid items-start gap-5 md:grid-cols-[minmax(0,1.1fr)_minmax(280px,.9fr)] md:gap-12">
           <h1 className="text-[clamp(30px,4.5vw,48px)] font-bold leading-[1.08] tracking-[-0.03em]">Что происходит<br />в Петербурге?</h1>
           <p className="max-w-md text-[15px] leading-6 text-neutral-600 sm:text-base">Вечеринки, фестивали, выставки и события в городских пространствах. Выбирай, куда хочется сегодня.</p>
