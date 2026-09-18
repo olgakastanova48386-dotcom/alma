@@ -511,8 +511,8 @@ export default function SurprisePage() {
                           <Option
                             key={v}
                             value={v}
-                            current={question[2]}
-                            set={question[3]}
+                            current={question[2] as string}
+                            set={question[3] as (v: string) => void}
                           />
                         ))}
                       </div>
