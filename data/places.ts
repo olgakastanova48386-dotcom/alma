@@ -18,6 +18,8 @@ export type Place = {
   priceDetails: string;
   priceUpdated: string;
   studentBenefit?: { label: string; details: string; verifiedAt: string; sourceUrl: string };
+  studentBenefitCheckedAt?: string;
+  studentBenefitCheckNote?: string;
 };
 
 export const places: Place[] = [
@@ -39,6 +41,8 @@ export const places: Place[] = [
     priceNote: "Прогулка по площади",
     priceDetails: "Посещение отдельных достопримечательностей рядом оплачивается отдельно.",
     priceUpdated: "07.09.2026",
+    studentBenefitCheckedAt: "18.09.2026",
+    studentBenefitCheckNote: "Бесплатное общественное пространство; отдельная студенческая скидка не требуется.",
   },
   {
     id: 2,
@@ -78,6 +82,8 @@ export const places: Place[] = [
     priceNote: "Свободный доступ",
     priceDetails: "Для прогулки по мосту билет не требуется.",
     priceUpdated: "07.09.2026",
+    studentBenefitCheckedAt: "18.09.2026",
+    studentBenefitCheckNote: "Бесплатное общественное пространство; отдельная студенческая скидка не требуется.",
   },
   {
     id: 4,
@@ -97,6 +103,8 @@ export const places: Place[] = [
     priceNote: "Экскурсии и мероприятия",
     priceDetails: "Стоимость зависит от конкретной экскурсии или события.",
     priceUpdated: "07.09.2026",
+    studentBenefitCheckedAt: "18.09.2026",
+    studentBenefitCheckNote: "Отдельная постоянная студенческая льгота в доступных актуальных условиях не подтверждена.",
   },
   {
     id: 5,
@@ -136,6 +144,8 @@ export const places: Place[] = [
     priceNote: "Цена зависит от выбранной активности",
     priceDetails: "Перед поездкой лучше проверить доступные пространства и условия посещения.",
     priceUpdated: "07.09.2026",
+    studentBenefitCheckedAt: "18.09.2026",
+    studentBenefitCheckNote: "Отдельный постоянный студенческий тариф в доступных актуальных условиях не подтверждён.",
   },
   {
     id: 7,
@@ -155,6 +165,8 @@ export const places: Place[] = [
     priceNote: "Цена зависит от маршрута и перевозчика",
     priceDetails: "Дневные, вечерние и разводные маршруты отличаются по стоимости.",
     priceUpdated: "07.09.2026",
+    studentBenefitCheckedAt: "18.09.2026",
+    studentBenefitCheckNote: "Это собирательная категория разных перевозчиков; единой студенческой скидки для точки ALMA нет.",
   },
   {
     id: 8,
@@ -174,6 +186,8 @@ export const places: Place[] = [
     priceNote: "Вход на территорию свободный",
     priceDetails: "Кафе, выставки и отдельные мероприятия оплачиваются отдельно.",
     priceUpdated: "07.09.2026",
+    studentBenefitCheckedAt: "18.09.2026",
+    studentBenefitCheckNote: "Вход на территорию свободный; скидки отдельных резидентов и событий нужно учитывать отдельно.",
   },
   {
     id: 9,
@@ -213,6 +227,8 @@ export const places: Place[] = [
     priceNote: "Свободный доступ",
     priceDetails: "Для прогулки по дворику билет не требуется.",
     priceUpdated: "07.09.2026",
+    studentBenefitCheckedAt: "18.09.2026",
+    studentBenefitCheckNote: "Свободно доступная городская локация; отдельная студенческая скидка не требуется.",
   },
   {
     id: 11,
@@ -232,6 +248,8 @@ export const places: Place[] = [
     priceNote: "Зависит от выставки или события",
     priceDetails: "Стоимость отдельных выставок и мероприятий может отличаться.",
     priceUpdated: "07.09.2026",
+    studentBenefitCheckedAt: "18.09.2026",
+    studentBenefitCheckNote: "Единая постоянная студенческая скидка для всей площадки в доступных актуальных условиях не подтверждена.",
   },
   {
     id: 12,
@@ -291,6 +309,8 @@ export const places: Place[] = [
     priceNote: "Взрослый билет",
     priceDetails: "Детский билет 3–13 лет — 420 ₽. Перед поездкой рекомендуется проверить актуальную стоимость.",
     priceUpdated: "07.09.2026",
+    studentBenefitCheckedAt: "18.09.2026",
+    studentBenefitCheckNote: "Проверено по официальным правилам: студенты не входят в опубликованный перечень льготных категорий.",
   },
   {
     id: 15,
@@ -390,6 +410,8 @@ export const places: Place[] = [
     priceNote: "Экскурсия в темноте",
     priceDetails: "Основная программа длится 90 минут. На официальном сайте указана стоимость взрослого билета от 1000 ₽; отдельные программы и индивидуальные экскурсии стоят иначе.",
     priceUpdated: "07.09.2026",
+    studentBenefitCheckedAt: "18.09.2026",
+    studentBenefitCheckNote: "Отдельный постоянный студенческий тариф на официальных актуальных условиях не подтверждён.",
   },,
   {
     id: 20,
