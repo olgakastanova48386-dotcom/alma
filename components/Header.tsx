@@ -141,8 +141,8 @@ export default function Header() {
                 {!isCurrentRoute(pathname, "/map") && (
                   <Link
                     href="/map"
-                    aria-label="Карта"
-                    title="Карта"
+                    aria-label="События"
+                    title="События"
                     className="flex h-9 w-9 items-center justify-center rounded-full bg-black/[.04]"
                   >
                     <MapIcon />
@@ -199,7 +199,7 @@ export default function Header() {
               </Link>
 
               <Link href="/map" className="hover:text-black">
-                Карта
+                События
               </Link>
 
               <Link href="/dog-friendly" className="hover:text-black">
