@@ -80,7 +80,12 @@ function busNumber(a:PurchasedRouteStop,b:PurchasedRouteStop){
 
 function smartTransit(a:PurchasedRouteStop,b:PurchasedRouteStop):TransitPlan{
   const walk=walkMinutes(a,b);
-  if(walk<=20)return{mode:"walk",minutes:walk,title:`Пешком · ≈ ${walk} мин`,details:["Это самый простой вариант — без ожидания транспорта и пересадок."]};
+  if(walk<=20)return{mode:"walk",minutes:walk,title:`Пешком · ≈ ${walk} мин`,details:[
+    a.category.toLowerCase().includes("прогул")
+      ? `После прогулки отсюда удобно дойти до «${b.name}» пешком.`
+      : `От «${a.name}» до «${b.name}» удобно пройти пешком.`,
+    "ALMA связала точки в один маршрут — без лишнего транспорта и пересадок."
+  ]};
   const from=nearestMetro(a),to=nearestMetro(b);
   const toFrom=walkMinutes(a,from),fromTo=walkMinutes(b,to);
   const sameStation=from.name===to.name;
