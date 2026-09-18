@@ -39,6 +39,7 @@ export type MapPlace = {
   studentDiscount?: number;
   studentDiscountNote?: string;
   studentDiscountVerifiedAt?: string;
+  studentDiscountEndsAt?: string;
   studentDiscountSourceUrl?: string;
 };
 
@@ -252,11 +253,7 @@ const photoMapPlaces: MapPlace[] = [
     ratingCount: 12,
     ratingSource: "2ГИС",
     drive: true,
-    driveTags: ["Активный отдых", "С друзьями"],
-  },
-];
-
-const studentDiscountPlaces: MapPlace[] = [
+    driveTags: ["Активныconst studentDiscountPlaces: MapPlace[] = [
   {
     id: 6001,
     name: "Meren Coffee",
@@ -324,6 +321,28 @@ const studentDiscountPlaces: MapPlace[] = [
     studentDiscountNote: "−20% при предъявлении студенческого билета. Действует в любое время работы кафе.",
     studentDiscountVerifiedAt: "18.09.2026",
     studentDiscountSourceUrl: "https://skazkishaherezady.ru/studentam_skidka",
+  },
+  {
+    id: 6004, name: "Кофейная роща", category: "Кофейня", mood: "Спокойно",
+    budget: "≈ 300–500 ₽", company: ["Один","Пара","Друзья"], duration: "До 1 часа",
+    image: "", lat: 59.9693, lng: 30.3166,
+    why: "🎓 Скидка студентам 7% · подтверждено ALMA",
+    address: "ул. Рентгена, 15/31, Санкт-Петербург", price: "≈ 300–500 ₽", priceNote: "Средний чек",
+    detailHref: "/place/6004", studentDiscount: 7,
+    studentDiscountNote: "−7% на кофе при предъявлении студенческого билета.",
+    studentDiscountVerifiedAt: "18.09.2026", studentDiscountSourceUrl: "https://kofejnaja-roscha.clients.site/",
+  },
+  {
+    id: 6005, name: "Good Itea", category: "Кафе", mood: "Вкусно поесть",
+    budget: "≈ 500–800 ₽", company: ["Один","Пара","Друзья"], duration: "До 1 часа",
+    image: "", lat: 59.9264, lng: 30.3189,
+    why: "🎓 Скидка студентам 10% · подтверждено ALMA",
+    address: "Гороховая ул., 45, Санкт-Петербург", price: "≈ 500–800 ₽", priceNote: "Средний чек",
+    detailHref: "/place/6005", studentDiscount: 10,
+    studentDiscountNote: "−10% при предъявлении студенческого билета. Акция заявлена до 01.12.2026.",
+    studentDiscountVerifiedAt: "18.09.2026", studentDiscountEndsAt: "01.12.2026",
+    studentDiscountSourceUrl: "https://good-itea.clients.site/",
+  }herezady.ru/studentam_skidka",
   }
 ];
 
