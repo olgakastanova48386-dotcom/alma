@@ -18,6 +18,33 @@ function emoji(place: MapPlace) {
   return "✦";
 }
 
+function maxPrice(place: MapPlace) {
+  const value = `${place.budget} ${place.price}`.toLowerCase();
+  if (value.includes("бесплат")) return 0;
+  const numbers = value.match(/\d[\d\s]*/g)?.map((item) => Number(item.replace(/\s/g, ""))).filter(Number.isFinite) ?? [];
+  return numbers.length ? Math.max(...numbers) : null;
+}
+
+function matchesBudget(place: MapPlace, value: string) {
+  if (value === "Любой бюджет") return true;
+  const price = maxPrice(place);
+  if (value === "Бесплатно") return price === 0;
+  if (price === null) return false;
+  if (value === "₽") return price > 0 && price <= 700;
+  if (value === "₽₽") return price > 700 && price <= 1500;
+  return price > 1500;
+}
+
+function matchesAverageCheck(place: MapPlace, value: string) {
+  if (value === "Любой чек") return true;
+  const price = maxPrice(place);
+  if (price === null) return false;
+  if (value === "До 700 ₽") return price <= 700;
+  if (value === "700–1500 ₽") return price > 700 && price <= 1500;
+  if (value === "1500–3000 ₽") return price > 1500 && price <= 3000;
+  return price > 3000;
+}
+
 export default function UnifiedMap() {
   const router = useRouter();
   const params = useSearchParams();
@@ -33,9 +60,16 @@ export default function UnifiedMap() {
   const [category, setCategory] = useState(initialCategory);
   const [driveTag, setDriveTag] = useState("Все");
   const [routeStatus, setRouteStatus] = useState("");
+  const [mood, setMood] = useState("Любое настроение");
+  const [budget, setBudget] = useState("Любой бюджет");
+  const [averageCheck, setAverageCheck] = useState("Любой чек");
+  const [studentOnly, setStudentOnly] = useState(false);
 
   const categories = ["Все", "Кофейня", "Ресторан", "🎓 Скидка студенту", "Dog Friendly", "👶 Для малыша", "⚡ Драйв", "Другие места"];
   const driveTags = ["Все", "Активный отдых", "Матчи", "Живая музыка", "Рок", "С друзьями"];
+  const moods = ["Любое настроение", ...Array.from(new Set(mapPlaces.map((place) => place.mood))).sort()];
+  const budgets = ["Любой бюджет", "Бесплатно", "₽", "₽₽", "₽₽₽"];
+  const averageChecks = ["Любой чек", "До 700 ₽", "700–1500 ₽", "1500–3000 ₽", "От 3000 ₽"];
   const placeId = params.get("place");
 
   const filtered = useMemo(() => mapPlaces.filter((p) => {
@@ -48,11 +82,15 @@ export default function UnifiedMap() {
       p.category === category;
     const tag = category !== "⚡ Драйв" || driveTag === "Все" || p.driveTags?.includes(driveTag);
     return cat && tag &&
+      (mood === "Любое настроение" || p.mood === mood) &&
+      matchesBudget(p, budget) &&
+      matchesAverageCheck(p, averageCheck) &&
+      (!studentOnly || Boolean(p.studentDiscount)) &&
       (!params.get("mood") || p.mood === params.get("mood")) &&
       (!params.get("budget") || p.budget === params.get("budget")) &&
       (!params.get("company") || p.company.includes(params.get("company")!)) &&
       (!params.get("duration") || p.duration === params.get("duration"));
-  }), [category, driveTag, params]);
+  }), [averageCheck, budget, category, driveTag, mood, params, studentOnly]);
 
   useEffect(() => {
     if (!document.querySelector('link[data-leaflet-css="true"]')) {
@@ -154,6 +192,37 @@ export default function UnifiedMap() {
         <span className="shrink-0 rounded-full border border-black/5 bg-white px-3 py-1.5 text-xs font-semibold shadow-sm">{filtered.length} мест</span>
       </div>
 
+      <div className="mb-4 rounded-[24px] border border-black/5 bg-white p-3 shadow-[0_16px_45px_-32px_rgba(0,0,0,.35)] sm:rounded-[30px] sm:p-4">
+        <div className="grid gap-2.5 md:grid-cols-2 xl:grid-cols-[1.25fr_repeat(3,minmax(0,1fr))_auto] xl:items-center">
+          <MapDirectSearch />
+          <label className="relative block">
+            <span className="sr-only">Настроение</span>
+            <select value={mood} onChange={(event) => setMood(event.target.value)} className="h-12 w-full appearance-none rounded-2xl border border-black/5 bg-[#f7f4ef] px-4 pr-9 text-sm font-medium outline-none transition focus:border-black/25">
+              {moods.map((value) => <option key={value}>{value}</option>)}
+            </select>
+            <span aria-hidden="true" className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-xs">⌄</span>
+          </label>
+          <label className="relative block">
+            <span className="sr-only">Бюджет</span>
+            <select value={budget} onChange={(event) => setBudget(event.target.value)} className="h-12 w-full appearance-none rounded-2xl border border-black/5 bg-[#f7f4ef] px-4 pr-9 text-sm font-medium outline-none transition focus:border-black/25">
+              {budgets.map((value) => <option key={value}>{value}</option>)}
+            </select>
+            <span aria-hidden="true" className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-xs">⌄</span>
+          </label>
+          <label className="relative block">
+            <span className="sr-only">Средний чек</span>
+            <select value={averageCheck} onChange={(event) => setAverageCheck(event.target.value)} className="h-12 w-full appearance-none rounded-2xl border border-black/5 bg-[#f7f4ef] px-4 pr-9 text-sm font-medium outline-none transition focus:border-black/25">
+              {averageChecks.map((value) => <option key={value}>{value}</option>)}
+            </select>
+            <span aria-hidden="true" className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-xs">⌄</span>
+          </label>
+          <button type="button" aria-pressed={studentOnly} onClick={() => setStudentOnly((value) => !value)} className={`flex h-12 items-center justify-between gap-3 rounded-2xl border px-4 text-sm font-semibold transition md:col-span-2 xl:col-span-1 ${studentOnly ? "border-black bg-black text-white" : "border-black/5 bg-[#f7f4ef] text-black"}`}>
+            <span className="whitespace-nowrap">🎓 Скидка студенту</span>
+            <span aria-hidden="true" className={`relative h-6 w-10 rounded-full transition ${studentOnly ? "bg-white" : "bg-black/15"}`}><span className={`absolute top-1 h-4 w-4 rounded-full transition ${studentOnly ? "left-5 bg-black" : "left-1 bg-white"}`} /></span>
+          </button>
+        </div>
+      </div>
+
       <div className="mb-3 -mx-4 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0">
         {categories.map((c) => <button key={c} onClick={() => { setCategory(c); if (c !== "⚡ Драйв") setDriveTag("Все"); }} className={`shrink-0 rounded-full border px-3.5 py-2 text-[13px] font-medium shadow-sm transition-all duration-200 sm:px-4 sm:py-2.5 sm:text-sm ${category === c ? "border-black bg-black text-white shadow-md" : "border-black/5 bg-white text-black hover:-translate-y-0.5 hover:border-black/15"}`}>{c}</button>)}
       </div>
@@ -188,7 +257,6 @@ export default function UnifiedMap() {
         </div>
 
         <div className="order-1 lg:order-2">
-          <div className="mb-3"><MapDirectSearch /></div>
           <div className="alma-map relative min-h-[430px] overflow-hidden rounded-[28px] border border-black/5 bg-[#ebe8e3] shadow-[0_24px_70px_-38px_rgba(0,0,0,.45)] sm:min-h-[580px] sm:rounded-[34px] lg:min-h-[760px]">
             <div ref={container} className="absolute inset-0" />
             {!ready && <div className="absolute inset-0 z-[500] flex items-center justify-center bg-[#ebe8e3]">Загружаем…</div>}
