@@ -39,12 +39,24 @@ const placeIds: Record<string, number> = {
   "Ракета · Кожевенная линия, 27": 5002,
 };
 
-type Weather = { temperature: number; code: number };
+type Weather = { temperature: number; code: number; isDay: boolean };
 type HeroTheme = { image: string; position: string; label: string };
 
-function getWeatherInfo(code: number) {
-  if (code === 0) return { icon: "☀️", text: "Ясно" };
-  if ([1, 2].includes(code)) return { icon: "🌤️", text: "Малооблачно" };
+function getPetersburgIsDay() {
+  const hour = Number(
+    new Intl.DateTimeFormat("en-GB", {
+      timeZone: "Europe/Moscow",
+      hour: "2-digit",
+      hour12: false,
+    }).format(new Date()),
+  );
+
+  return hour >= 7 && hour < 22;
+}
+
+function getWeatherInfo(code: number, isDay: boolean) {
+  if (code === 0) return { icon: isDay ? "☀️" : "🌙", text: "Ясно" };
+  if ([1, 2].includes(code)) return { icon: isDay ? "🌤️" : "🌙", text: "Малооблачно" };
   if (code === 3) return { icon: "☁️", text: "Облачно" };
   if ([45, 48].includes(code)) return { icon: "🌫️", text: "Туман" };
   if ([51, 53, 55, 56, 57].includes(code)) return { icon: "🌦️", text: "Морось" };
@@ -56,7 +68,15 @@ function getWeatherInfo(code: number) {
   return { icon: "🌤️", text: "Погода" };
 }
 
-function getHeroTheme(code?: number): HeroTheme {
+function getHeroTheme(code: number | undefined, isDay: boolean): HeroTheme {
+  if (!isDay) {
+    if ([45, 48, 51, 53, 55, 56, 57, 61, 63, 65, 66, 67, 71, 73, 75, 77, 80, 81, 82, 85, 86, 95, 96, 99].includes(code ?? -1)) {
+      return { image: "/images/ночной питербург.jpg", position: "center 42%", label: "Ночной Петербург" };
+    }
+
+    return { image: "/images/питер ночью.jpg", position: "center 45%", label: "Петербург ночью" };
+  }
+
   if (code === 0) return { image: "/images/питер главная фотка 4.jpg", position: "center 42%", label: "Ясный Петербург" };
   if ([1, 2].includes(code ?? -1)) return { image: "/images/питер главная фотка.jpg", position: "center 42%", label: "Петербург в переменной облачности" };
   if (code === 3) return { image: "/images/питер главная фотка 2.jpg", position: "center 42%", label: "Пасмурный Петербург" };
@@ -79,12 +99,15 @@ export default function HomePage() {
   useEffect(() => {
     const loadWeather = async () => {
       try {
-        const response = await fetch("https://api.open-meteo.com/v1/forecast?latitude=59.9386&longitude=30.3141&current=temperature_2m,weather_code&timezone=Europe%2FMoscow");
+        const response = await fetch("https://api.open-meteo.com/v1/forecast?latitude=59.9386&longitude=30.3141&current=temperature_2m,weather_code,is_day&timezone=Europe%2FMoscow");
         if (!response.ok) return;
         const data = await response.json();
         const temperature = data?.current?.temperature_2m;
         const code = data?.current?.weather_code;
-        if (typeof temperature === "number" && typeof code === "number") setWeather({ temperature, code });
+        const isDay = data?.current?.is_day;
+        if (typeof temperature === "number" && typeof code === "number" && typeof isDay === "number") {
+          setWeather({ temperature, code, isDay: isDay === 1 });
+        }
       } catch {}
     };
     loadWeather();
@@ -126,8 +149,9 @@ export default function HomePage() {
     );
   };
 
-  const weatherInfo = weather ? getWeatherInfo(weather.code) : null;
-  const heroTheme = getHeroTheme(weather?.code);
+  const isDay = weather?.isDay ?? getPetersburgIsDay();
+  const weatherInfo = weather ? getWeatherInfo(weather.code, isDay) : null;
+  const heroTheme = getHeroTheme(weather?.code, isDay);
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-[#f7f4ef] text-black">
