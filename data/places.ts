@@ -267,6 +267,7 @@ export const places: Place[] = [
     priceNote: "Полный входной билет",
     priceDetails: "Льготный — 350 ₽ · экскурсионный сеанс — 1300 ₽ · аудиогид — 300 ₽.",
     priceUpdated: "07.09.2026",
+    studentBenefit: {"label":"🎓 Студентам — 350 ₽","details":"Студенты дневных отделений вузов могут приобрести льготный входной билет за 350 ₽. Нужен документ, подтверждающий льготу.","verifiedAt":"18.09.2026","sourceUrl":"https://fabergemuseum.ru/posetitelyam/biletyi-v-muzej"},
   },
   {
     id: 14,
