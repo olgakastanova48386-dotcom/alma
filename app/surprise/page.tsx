@@ -219,8 +219,9 @@ export default function SurprisePage() {
     };
   }, []);
   const hardcore = selectedInterests.includes("Хардкор · успеть максимум");
-  const routeInterests = selectedInterests.filter(
-    (i) => i !== "Хардкор · успеть максимум",
+  const routeInterests = useMemo(
+    () => selectedInterests.filter((i) => i !== "Хардкор · успеть максимум"),
+    [selectedInterests],
   );
   const toggleInterest = (v: string) =>
     setSelectedInterests((x) =>
