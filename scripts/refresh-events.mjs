@@ -8,6 +8,8 @@ const fixedImages = {
   "spiexff":"https://static.tildacdn.com/tild3766-3666-4164-a537-363637333932/JPEG_SPIEXFF4_000911.jpg",
   "waterfront-workouts":"https://s.inyourpocket.com/gallery/245582.jpg",
   "viktor-tsoi-legenda":"https://media-1.gorbilet.com/3b/a5/fb/DSCF5703_Preview.jpg",
+  "museum-machines":"https://optim.tildacdn.com/tild3038-6666-4338-b934-613333656633/-/format/webp/photo_52471159935600.jpg.webp",
+  "dark-wave":"https://optim.tildacdn.com/tild3134-6131-4532-a432-383961346431/-/format/webp/IMG_1711.JPG.webp",
   "yarkiy-fovizm":"https://s0.rbk.ru/v6_top_pics/media/img/6/86/347503352588866.jpeg",
 };
 
@@ -49,6 +51,8 @@ for (const [id,url] of events) {
     if (!res.ok) throw new Error("image "+res.status);
     const buf=Buffer.from(await res.arrayBuffer());
     if(buf.length<5000) throw new Error("image too small");
+    const type=(res.headers.get("content-type")||"").toLowerCase();
+    if(!type.startsWith("image/")) throw new Error("not an image: "+type);
     await fs.writeFile(path.join("public/events",id+".jpg"),buf);
     report.events[id]={source:url,image:String(new URL(image,url)),ok:true};
   } catch(e) {
