@@ -8,7 +8,7 @@ let source = await fs.readFile(dataPath, "utf8");
 
 const cards = [...source.matchAll(/\{\s*id:\s*(\d+),[\s\S]*?name:\s*"([^"]+)"[\s\S]*?image:\s*"([^"]*)"([\s\S]*?)\n\s*\}/g)]
   .map(m => ({ full:m[0], id:Number(m[1]), name:m[2], image:m[3] }))
-  .filter(p => p.image === "/images/hero.jpg" || p.image === "/images/loft.jpg");
+  .filter(p => p.image === "/images/hero.jpg" || p.image === "/images/loft.jpg" || /^https?:\/\/source\.unsplash\.com\//.test(p.image));
 
 async function commonsPhoto(name) {
   const q = encodeURIComponent('"' + name + '" Санкт-Петербург');
