@@ -1,6 +1,10 @@
 name: Refresh ALMA events
 
 on:
+  push:
+    paths:
+      - "scripts/refresh-events.mjs"
+      - ".github/workflows/refresh-events.yml"
   schedule:
     - cron: "*/30 * * * *"
   workflow_dispatch:
