@@ -70,14 +70,6 @@ export default function MapPage() {
             </a>
           ))}
         </div>
-
-        <div className="mt-10 flex flex-col gap-5 rounded-[26px] border border-black/[.04] bg-white p-6 shadow-[0_8px_30px_rgba(0,0,0,.025)] sm:flex-row sm:items-center sm:justify-between sm:p-8">
-          <div>
-            <h2 className="text-xl font-bold tracking-tight sm:text-2xl">Не пропускай интересные события</h2>
-            <p className="mt-1 text-sm text-neutral-500">ALMA обновляет подборку событий, чтобы здесь оставалось только актуальное.</p>
-          </div>
-          <a href="#events" className="shrink-0 rounded-full bg-black px-7 py-3.5 text-center text-sm font-semibold text-white">Смотреть события</a>
-        </div>
       </section>
     </main>
   );
