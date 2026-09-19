@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-19T01:48:25.109Z",
+  "updatedAt": "2026-09-19T01:54:03.646Z",
   "events": {
     "fin-zaliv-house-party": {
       "source": "https://sevcableport.ru/afisha/finskij-zaliv-under-haus-pati/",
@@ -32,7 +32,7 @@
       "ok": true
     },
     "museum-machines": {
-      "source": "https://brusnitsyn.spb.ru/",
+      "source": "https://brusnitsyn.spb.ru/museambot",
       "ok": false,
       "error": "og:image not found"
     },
@@ -42,7 +42,7 @@
       "error": "og:image not found"
     },
     "dark-wave": {
-      "source": "https://brusnitsyn.spb.ru/",
+      "source": "https://brusnitsyn.spb.ru/darkwave",
       "ok": false,
       "error": "og:image not found"
     }
