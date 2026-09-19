@@ -1009,7 +1009,7 @@ export const places: Place[] = [
     budget: "Бесплатно",
     company: ["Один", "Пара", "Друзья", "Семья"],
     duration: "1–2 часа",
-    image: "/images/loft.jpg",
+    image: "/place-images/48.jpg",
     lat: 59.9655,
     lng: 30.2887,
     description: "Увидеть бережно восстановленную промышленную архитектуру и современную культурную программу.",
