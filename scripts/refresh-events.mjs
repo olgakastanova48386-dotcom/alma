@@ -15,9 +15,13 @@ const events = [
 
 const decode = s => s.replaceAll("&amp;","&").replaceAll("&#038;","&");
 const meta = (html, property) => {
-  const a = html.match(new RegExp('<meta[^>]+(?:property|name)=["\\']'+property+'["\\'][^>]+content=["\\']([^"\\']+)["\\']','i'));
-  const b = html.match(new RegExp('<meta[^>]+content=["\\']([^"\\']+)["\\'][^>]+(?:property|name)=["\\']'+property+'["\\']','i'));
-  return decode((a?.[1] || b?.[1] || "").trim());
+  const tags = html.match(/<meta\\s+[^>]*>/gi) || [];
+  for (const tag of tags) {
+    if (!tag.toLowerCase().includes(property.toLowerCase())) continue;
+    const m = tag.match(/content=(?:"([^"]+)"|'([^']+)')/i);
+    if (m) return decode((m[1] || m[2] || "").trim());
+  }
+  return "";
 };
 await fs.mkdir("public/events",{recursive:true});
 const report={updatedAt:new Date().toISOString(),events:{}};
