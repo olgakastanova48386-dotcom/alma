@@ -22,6 +22,22 @@ async function commonsPhoto(name) {
     if (!info?.url || !String(info.mime || "").startsWith("image/")) continue;
     return info.url;
   }
+  try {
+    const query = encodeURIComponent('"' + name + '" "Санкт-Петербург"');
+    const html = await (await fetch('https://www.bing.com/images/search?q=' + query + '&form=HDRSC3&first=1', {
+      headers: { "User-Agent": "Mozilla/5.0 ALMA-photo-curator/1.0", "Accept-Language": "ru-RU,ru;q=0.9" }
+    })).text();
+    const matches = [...html.matchAll(/murl&quot;:&quot;(https?:\/\/[^&"]+)/g)].map(m => m[1].replaceAll('&amp;','&'));
+    for (const candidate of matches.slice(0, 12)) {
+      if (/logo|icon|avatar|sprite|map|favicon/i.test(candidate)) continue;
+      try {
+        const rr = await fetch(candidate, { headers: { "User-Agent": "Mozilla/5.0" }, redirect: "follow" });
+        const ct = rr.headers.get("content-type") || "";
+        const len = Number(rr.headers.get("content-length") || 0);
+        if (rr.ok && ct.startsWith("image/") && (!len || len > 25000)) return candidate;
+      } catch {}
+    }
+  } catch {}
   return null;
 }
 
