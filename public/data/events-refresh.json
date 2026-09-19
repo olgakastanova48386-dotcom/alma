@@ -1,0 +1,50 @@
+{
+  "updatedAt": "2026-09-19T01:47:12.851Z",
+  "events": {
+    "fin-zaliv-house-party": {
+      "source": "https://sevcableport.ru/afisha/finskij-zaliv-under-haus-pati/",
+      "ok": false,
+      "error": "og:image not found"
+    },
+    "koi-asia-festival": {
+      "source": "https://sevcableport.ru/afisha/koi-aziya-festival/",
+      "ok": false,
+      "error": "og:image not found"
+    },
+    "spiexff": {
+      "source": "https://sevcableport.ru/afisha/sankt-peterburgskij-mezhdunarodnyj-festival-eksperimentalnogo-kino-spiexff/",
+      "ok": false,
+      "error": "og:image not found"
+    },
+    "waterfront-workouts": {
+      "source": "https://sevcableport.ru/afisha/trenirovki-na-naberezhnoj/",
+      "ok": false,
+      "error": "og:image not found"
+    },
+    "viktor-tsoi-legenda": {
+      "source": "https://sevcableport.ru/afisha/",
+      "ok": false,
+      "error": "og:image not found"
+    },
+    "growbox-market": {
+      "source": "https://sevcableport.ru/afisha/",
+      "ok": false,
+      "error": "og:image not found"
+    },
+    "museum-machines": {
+      "source": "https://brusnitsyn.spb.ru/",
+      "ok": false,
+      "error": "og:image not found"
+    },
+    "yarkiy-fovizm": {
+      "source": "https://brusnitsyn.spb.ru/",
+      "ok": false,
+      "error": "og:image not found"
+    },
+    "dark-wave": {
+      "source": "https://brusnitsyn.spb.ru/",
+      "ok": false,
+      "error": "og:image not found"
+    }
+  }
+}
