@@ -48,3 +48,5 @@ for (const p of cards) {
 }
 await fs.writeFile(dataPath, source);
 console.log("Updated", changed, "of", cards.length, "generic photos");
+
+// trigger photo refresh
