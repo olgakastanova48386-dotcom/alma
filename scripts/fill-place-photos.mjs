@@ -20,9 +20,6 @@ async function commonsPhoto(name) {
   for (const page of pages) {
     const info = page?.imageinfo?.[0];
     if (!info?.url || !String(info.mime || "").startsWith("image/")) continue;
-    const title = String(page.title || "").toLowerCase();
-    const words = name.toLowerCase().replace(/[«»"'—–-]/g," ").split(/\s+/).filter(w => w.length > 3);
-    if (words.length && !words.some(w => title.includes(w))) continue;
     return info.url;
   }
   return null;
