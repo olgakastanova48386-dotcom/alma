@@ -28,7 +28,7 @@ async function commonsPhoto(name) {
       headers: { "User-Agent": "Mozilla/5.0 ALMA-photo-curator/1.0", "Accept-Language": "ru-RU,ru;q=0.9" }
     })).text();
     const matches = [...html.matchAll(/murl&quot;:&quot;(https?:\/\/[^&"]+)/g)].map(m => m[1].replaceAll('&amp;','&'));
-    for (const candidate of matches.slice(0, 12)) {
+    for (const candidate of matches.slice(0, 30)) {
       if (/logo|icon|avatar|sprite|map|favicon/i.test(candidate)) continue;
       try {
         const rr = await fetch(candidate, { headers: { "User-Agent": "Mozilla/5.0" }, redirect: "follow" });
