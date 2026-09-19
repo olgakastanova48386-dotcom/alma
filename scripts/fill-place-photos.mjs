@@ -1,14 +1,15 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 
-const dataPath = "data/places.ts";
+const dataPath = process.env.ALMA_DATA_PATH || "data/places.ts";
 const outDir = "public/place-images";
+const targetRestaurantFallback = dataPath.endsWith("mapPlaces.ts");
 await fs.mkdir(outDir, { recursive: true });
 let source = await fs.readFile(dataPath, "utf8");
 
 const cards = [...source.matchAll(/\{\s*id:\s*(\d+),[\s\S]*?name:\s*"([^"]+)"[\s\S]*?image:\s*"([^"]*)"([\s\S]*?)\n\s*\}/g)]
   .map(m => ({ full:m[0], id:Number(m[1]), name:m[2], image:m[3] }))
-  .filter(p => p.image === "/images/hero.jpg" || p.image === "/images/loft.jpg" || /^https?:\/\/source\.unsplash\.com\//.test(p.image));
+  .filter(p => p.image === "/images/hero.jpg" || p.image === "/images/loft.jpg" || /^https?:\/\/source\.unsplash\.com\//.test(p.image) || (targetRestaurantFallback && p.image === "/images/restaurant.jpg"));
 
 async function commonsPhoto(name) {
   const q = encodeURIComponent('"' + name + '" Санкт-Петербург');
