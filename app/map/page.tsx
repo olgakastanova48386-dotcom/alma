@@ -34,38 +34,49 @@ export default function MapPage() {
 
   return (
     <main className="min-h-screen bg-[#f7f4ef] pb-20 pt-28 text-black sm:pt-32">
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mt-4 grid items-start gap-5 md:grid-cols-[minmax(0,1.1fr)_minmax(280px,.9fr)] md:gap-12">
-          <h1 className="whitespace-nowrap text-[clamp(25px,4.5vw,48px)] font-bold leading-[1.08] tracking-[-0.03em]">Что сегодня в городе?</h1>
+      <section className="mx-auto max-w-[1380px] px-4 sm:px-6 lg:px-8">
+        <div className="mt-3 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+          <div>
+            <h1 className="text-[clamp(44px,6vw,76px)] font-bold leading-[.95] tracking-[-0.055em]">События</h1>
+            <p className="mt-3 max-w-3xl text-[15px] leading-6 text-neutral-600 sm:text-lg">Выставки, фестивали, маркеты, кино и другие события в Санкт-Петербурге</p>
+          </div>
+          <label className="flex h-12 w-full items-center gap-3 rounded-full bg-[#ebe7e1] px-5 lg:max-w-[390px]">
+            <span className="text-lg">⌕</span>
+            <input aria-label="Поиск событий" placeholder="Поиск событий" className="w-full bg-transparent text-sm outline-none placeholder:text-neutral-500" />
+          </label>
         </div>
 
-        <div className="mt-8 -mx-4 flex gap-2 overflow-x-auto px-4 pb-2 sm:mx-0 sm:px-0">
+        <div className="mt-7 flex gap-2 overflow-x-auto pb-2">
           {filters.map((item) => (
-            <button key={item} type="button" onClick={() => setFilter(item)} className={`shrink-0 rounded-full border px-3.5 py-2 text-[13px] font-medium transition ${filter === item ? "border-black bg-black text-white" : "border-black/10 bg-white hover:border-black/30"}`}>{item}</button>
+            <button key={item} type="button" onClick={() => setFilter(item)} className={`shrink-0 rounded-full border px-4 py-2.5 text-[13px] font-medium transition ${filter === item ? "border-black bg-black text-white" : "border-black/10 bg-white hover:border-black/30"}`}>{item}</button>
           ))}
         </div>
 
-        <div className="mt-7 grid gap-3 md:grid-cols-2 lg:grid-cols-12">
-          {visible.map((event, index) => (
-            <a key={event.title} href={`/map/${event.id}`} className={`group relative flex flex-col justify-between overflow-hidden border border-black/5 p-4 sm:p-5 transition duration-300 hover:-translate-y-1 hover:shadow-xl ${index === 0 ? "min-h-[175px] rounded-[22px] bg-[#1c1b1a] text-white lg:col-span-5" : index === 1 ? "min-h-[175px] rounded-[22px] bg-[#eadfd6] lg:col-span-3" : index === 2 ? "min-h-[175px] rounded-[22px] bg-[#e5e8df] lg:col-span-4" : index === 3 ? "min-h-[170px] rounded-[22px] bg-[#e7e1ec] lg:col-span-4" : index === 4 ? "min-h-[170px] rounded-[22px] bg-[#dfe8e7] lg:col-span-4" : "min-h-[170px] rounded-[22px] bg-white lg:col-span-4"}`}>
-              <div className="absolute inset-x-0 top-0 h-[72px] overflow-hidden"><img src={event.image} alt="" className="h-full w-full object-cover opacity-90" /><div className={`absolute inset-0 ${index === 0 ? "bg-black/25" : "bg-gradient-to-b from-black/10 to-transparent"}`} /></div><div className="relative z-10 flex items-start justify-between gap-4">
-                <span className={`rounded-full px-3 py-1.5 text-xs font-medium ${index === 0 ? "bg-white/12" : "bg-white/70 backdrop-blur-sm"}`}>{event.category}</span>
-                <span className={`${index < 5 ? "text-2xl sm:text-3xl" : "text-2xl"} transition duration-300 group-hover:scale-110`} aria-hidden="true">{event.accent}</span>
+        <div className="mt-5 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {visible.map((event) => (
+            <a key={event.id} href={`/map/${event.id}`} className="group overflow-hidden rounded-[22px] border border-black/[.06] bg-white shadow-[0_6px_24px_rgba(0,0,0,.035)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_14px_35px_rgba(0,0,0,.08)]">
+              <div className="relative aspect-[16/6.1] overflow-hidden bg-neutral-100">
+                <img src={event.image} alt={event.title} className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.025]" />
+                <span className="absolute left-4 top-4 rounded-full bg-white/90 px-3.5 py-2 text-xs font-medium text-black backdrop-blur-sm">{event.category}</span>
               </div>
-              <div className="relative z-10 mt-[62px]">
-                <div className={`flex flex-wrap items-center gap-x-2 gap-y-1 text-[12px] font-semibold leading-4 ${index === 0 ? "text-white/75" : "text-neutral-700"}`}><span>{event.date}</span><span className={`${index === 0 ? "text-white/30" : "text-black/20"}`}>•</span><span>{event.place}</span></div>
-                <h2 className={`mt-2 font-bold leading-[1.12] tracking-[-0.025em] ${index === 0 ? "max-w-xl text-[clamp(23px,3vw,32px)]" : index < 5 ? "text-[clamp(20px,2.3vw,25px)]" : "text-[clamp(19px,2.2vw,24px)]"}`}>{event.title}</h2>
-                <p className={`mt-3 text-[13px] leading-5 sm:text-sm sm:leading-6 ${index === 0 ? "text-white/78" : "text-neutral-700"}`}>{event.note}</p>
-                <div className={`mt-3 flex items-center gap-2 text-[12px] font-semibold ${index === 0 ? "text-white/70" : "text-black/60"}`}>Открыть событие <span className="transition group-hover:translate-x-1">→</span></div>
+              <div className="flex min-h-[205px] flex-col p-5">
+                <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[12px] font-semibold leading-4 text-neutral-600">
+                  <span>{event.date}</span><span className="text-black/20">•</span><span>{event.place}</span>
+                </div>
+                <h2 className="mt-2.5 text-[clamp(21px,2vw,27px)] font-bold leading-[1.08] tracking-[-0.035em]">{event.title}</h2>
+                <p className="mt-2.5 text-[14px] leading-5 text-neutral-600">{event.note}</p>
+                <div className="mt-auto pt-5 text-[13px] font-semibold text-neutral-700">Подробнее <span className="ml-1 inline-block transition group-hover:translate-x-1">→</span></div>
               </div>
             </a>
           ))}
         </div>
 
-        <div className="mt-12 rounded-[30px] bg-[#e9e4dc] p-6 sm:p-9">
-          <p className="text-xs uppercase tracking-[.2em] text-neutral-500">ALMA следит за городом</p>
-          <h2 className="mt-3 max-w-2xl text-3xl font-bold tracking-tight sm:text-4xl">События будут меняться вместе с Петербургом</h2>
-          <p className="mt-3 max-w-2xl text-sm leading-6 text-neutral-600 sm:text-base">Прошедшее убираем, новое добавляем — чтобы здесь оставалось то, на что действительно можно сходить.</p>
+        <div className="mt-10 flex flex-col gap-5 rounded-[26px] border border-black/[.04] bg-white p-6 shadow-[0_8px_30px_rgba(0,0,0,.025)] sm:flex-row sm:items-center sm:justify-between sm:p-8">
+          <div>
+            <h2 className="text-xl font-bold tracking-tight sm:text-2xl">Не пропускай интересные события</h2>
+            <p className="mt-1 text-sm text-neutral-500">ALMA обновляет подборку событий, чтобы здесь оставалось только актуальное.</p>
+          </div>
+          <a href="#events" className="shrink-0 rounded-full bg-black px-7 py-3.5 text-center text-sm font-semibold text-white">Смотреть события</a>
         </div>
       </section>
     </main>
