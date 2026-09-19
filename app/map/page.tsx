@@ -51,10 +51,10 @@ export default function MapPage() {
                 <span className={`${index < 5 ? "text-2xl sm:text-3xl" : "text-2xl"} transition duration-300 group-hover:scale-110`} aria-hidden="true">{event.accent}</span>
               </div>
               <div>
-                <p className={`text-sm ${index === 0 ? "text-white/55" : "text-neutral-500"}`}>{event.date} · {event.place}</p>
-                <h2 className={`mt-2 font-bold leading-[1.04] tracking-[-0.035em] ${index === 0 ? "text-[clamp(23px,3vw,32px)] max-w-xl" : index < 5 ? "text-[clamp(20px,2.3vw,25px)]" : "text-[clamp(19px,2.2vw,24px)]"}`}>{event.title}</h2>
-                <p className={`mt-3 text-[13px] leading-5 sm:text-sm sm:leading-6 ${index === 0 ? "text-white/65" : "text-neutral-500"}`}>{event.note}</p>
-                <div className="mt-3 flex items-center gap-2 text-[13px] font-semibold">Подробнее <span className="transition group-hover:translate-x-1">→</span></div>
+                <div className={`flex flex-wrap items-center gap-x-2 gap-y-1 text-[12px] font-semibold leading-4 ${index === 0 ? "text-white/75" : "text-neutral-700"}`}><span>{event.date}</span><span className={`${index === 0 ? "text-white/30" : "text-black/20"}`}>•</span><span>{event.place}</span></div>
+                <h2 className={`mt-2 font-bold leading-[1.12] tracking-[-0.025em] ${index === 0 ? "max-w-xl text-[clamp(23px,3vw,32px)]" : index < 5 ? "text-[clamp(20px,2.3vw,25px)]" : "text-[clamp(19px,2.2vw,24px)]"}`}>{event.title}</h2>
+                <p className={`mt-3 text-[13px] leading-5 sm:text-sm sm:leading-6 ${index === 0 ? "text-white/78" : "text-neutral-700"}`}>{event.note}</p>
+                <div className={`mt-3 flex items-center gap-2 text-[13px] font-semibold ${index === 0 ? "text-white" : "text-black/80"}`}>Подробнее <span className="transition group-hover:translate-x-1">→</span></div>
               </div>
             </a>
           ))}
