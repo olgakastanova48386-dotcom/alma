@@ -39,21 +39,47 @@ async function commonsPhoto(name) {
       } catch {}
     }
   } catch {}
+  try {
+    const query = encodeURIComponent(name + " Санкт-Петербург фото");
+    const html = await (await fetch("https://www.google.com/search?tbm=isch&q=" + query, {
+      headers: { "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/131 Safari/537.36", "Accept-Language": "ru-RU,ru;q=0.9" }
+    })).text();
+    const urls = [...new Set(
+      [...html.matchAll(/https?:\\/\\/[^"'<>\\s]+?\\.(?:jpg|jpeg|png|webp)(?:\\?[^"'<>\\s]*)?/gi)]
+        .map(m => m[0].replaceAll("&amp;", "&"))
+    )];
+    for (const candidate of urls.slice(0, 60)) {
+      if (/google|gstatic|logo|icon|avatar|sprite|favicon|maps?/i.test(candidate)) continue;
+      try {
+        const rr = await fetch(candidate, { headers: { "User-Agent": "Mozilla/5.0" }, redirect: "follow" });
+        const ct = rr.headers.get("content-type") || "";
+        const buf = Buffer.from(await rr.arrayBuffer());
+        if (rr.ok && ct.startsWith("image/") && buf.length > 25000) return { url: candidate, buffer: buf, type: ct };
+      } catch {}
+    }
+  } catch {}
   return null;
 }
 
 let changed = 0;
 for (const p of cards) {
   try {
-    const url = await commonsPhoto(p.name);
-    if (!url) { console.log("NO_MATCH", p.id, p.name); continue; }
-    const r = await fetch(url, { headers: { "User-Agent": "ALMA-place-photo-refresh/1.0" }});
-    if (!r.ok) { console.log("DOWNLOAD_FAIL", p.id, p.name, r.status); continue; }
-    const type = r.headers.get("content-type") || "";
-    if (!type.startsWith("image/")) continue;
+    const found = await commonsPhoto(p.name);
+    if (!found) { console.log("NO_MATCH", p.id, p.name); continue; }
+    let url, buffer, type;
+    if (typeof found === "string") {
+      url = found;
+      const r = await fetch(url, { headers: { "User-Agent": "ALMA-place-photo-refresh/1.0" }});
+      if (!r.ok) { console.log("DOWNLOAD_FAIL", p.id, p.name, r.status); continue; }
+      type = r.headers.get("content-type") || "";
+      if (!type.startsWith("image/")) continue;
+      buffer = Buffer.from(await r.arrayBuffer());
+    } else {
+      ({ url, buffer, type } = found);
+    }
     const ext = type.includes("png") ? "png" : type.includes("webp") ? "webp" : "jpg";
     const file = p.id + "." + ext;
-    await fs.writeFile(path.join(outDir,file), Buffer.from(await r.arrayBuffer()));
+    await fs.writeFile(path.join(outDir,file), buffer);
     const next = p.full.replace(/image:\s*"[^"]*"/, 'image: "/place-images/' + file + '"');
     source = source.replace(p.full, next);
     changed++;
