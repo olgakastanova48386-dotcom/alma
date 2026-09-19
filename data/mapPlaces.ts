@@ -360,7 +360,7 @@ const studentDiscountPlaces: MapPlace[] = [
   {
     id: 6007, name: "Pho’n’Roll", category: "Ресторан", mood: "Вкусно поесть",
     budget: "≈ 900–1 500 ₽", company: ["Один", "Пара", "Друзья"], duration: "1–2 часа",
-    image: "/images/restaurant.jpg", lat: 59.9369, lng: 30.3526,
+    image: "/place-images/6007.jpg", lat: 59.9369, lng: 30.3526,
     why: "🎓 Скидка студентам 10% · подтверждено ALMA",
     address: "ул. Жуковского, Санкт-Петербург", price: "≈ 900–1 500 ₽", priceNote: "Средний чек",
     detailHref: "/place/6007", studentDiscount: 10,
@@ -370,7 +370,7 @@ const studentDiscountPlaces: MapPlace[] = [
   {
     id: 6008, name: "Pho’n’Roll Антелово", category: "Кафе", mood: "Вкусно поесть",
     budget: "≈ 700–1 200 ₽", company: ["Один", "Пара", "Друзья"], duration: "1–2 часа",
-    image: "/images/restaurant.jpg", lat: 59.9627, lng: 30.4438,
+    image: "/place-images/6008.jpg", lat: 59.9627, lng: 30.4438,
     why: "🎓 Скидка студентам 15% · подтверждено ALMA",
     address: "Чудская ул., Санкт-Петербург", price: "≈ 700–1 200 ₽", priceNote: "Средний чек",
     detailHref: "/place/6008", studentDiscount: 15,
@@ -380,7 +380,7 @@ const studentDiscountPlaces: MapPlace[] = [
   {
     id: 6009, name: "Такояки", category: "Кафе", mood: "Вкусно поесть",
     budget: "≈ 500–900 ₽", company: ["Один", "Пара", "Друзья"], duration: "До 1 часа",
-    image: "/images/restaurant.jpg", lat: 59.9327, lng: 30.3474,
+    image: "/place-images/6009.jpg", lat: 59.9327, lng: 30.3474,
     why: "🎓 Есть скидка студентам · подтверждено ALMA",
     address: "Санкт-Петербург, Центральный район", price: "≈ 500–900 ₽", priceNote: "Средний чек",
     detailHref: "/place/6009", studentDiscount: 10,
@@ -390,7 +390,7 @@ const studentDiscountPlaces: MapPlace[] = [
   {
     id: 6010, name: "Vлаvаше — центр", category: "Быстрое питание", mood: "Вкусно поесть",
     budget: "≈ 350–550 ₽", company: ["Один", "Пара", "Друзья"], duration: "До 1 часа",
-    image: "/images/restaurant.jpg", lat: 59.9276, lng: 30.3471,
+    image: "/place-images/6010.jpg", lat: 59.9276, lng: 30.3471,
     why: "🎓 Есть скидка студентам · подтверждено ALMA",
     address: "Санкт-Петербург, Центральный район", price: "≈ 350–550 ₽", priceNote: "Средний чек",
     detailHref: "/place/6010", studentDiscount: 10,
@@ -400,7 +400,7 @@ const studentDiscountPlaces: MapPlace[] = [
   {
     id: 6011, name: "Vлаvаше — Петроградская", category: "Быстрое питание", mood: "Вкусно поесть",
     budget: "≈ 350–550 ₽", company: ["Один", "Пара", "Друзья"], duration: "До 1 часа",
-    image: "/images/restaurant.jpg", lat: 59.9662, lng: 30.3115,
+    image: "/place-images/6011.jpg", lat: 59.9662, lng: 30.3115,
     why: "🎓 Есть скидка студентам · подтверждено ALMA",
     address: "Санкт-Петербург, Петроградский район", price: "≈ 350–550 ₽", priceNote: "Средний чек",
     detailHref: "/place/6011", studentDiscount: 10,
@@ -410,7 +410,7 @@ const studentDiscountPlaces: MapPlace[] = [
   {
     id: 6012, name: "Vлаvаше — Васильевский остров", category: "Быстрое питание", mood: "Вкусно поесть",
     budget: "≈ 350–550 ₽", company: ["Один", "Пара", "Друзья"], duration: "До 1 часа",
-    image: "/images/restaurant.jpg", lat: 59.9427, lng: 30.2784,
+    image: "/place-images/6012.jpg", lat: 59.9427, lng: 30.2784,
     why: "🎓 Есть скидка студентам · подтверждено ALMA",
     address: "Санкт-Петербург, Василеостровский район", price: "≈ 350–550 ₽", priceNote: "Средний чек",
     detailHref: "/place/6012", studentDiscount: 10,
@@ -420,7 +420,7 @@ const studentDiscountPlaces: MapPlace[] = [
   {
     id: 6013, name: "Шаверно — Салова", category: "Быстрое питание", mood: "Вкусно поесть",
     budget: "≈ 350–450 ₽", company: ["Один", "Пара", "Друзья"], duration: "До 1 часа",
-    image: "/images/restaurant.jpg", lat: 59.8839, lng: 30.3662,
+    image: "/place-images/6013.jpg", lat: 59.8839, lng: 30.3662,
     why: "🎓 Есть скидка студентам · подтверждено ALMA",
     address: "ул. Салова, 61, Санкт-Петербург", price: "≈ 350–450 ₽", priceNote: "Средний чек",
     detailHref: "/place/6013", studentDiscount: 10,
@@ -430,7 +430,7 @@ const studentDiscountPlaces: MapPlace[] = [
   {
     id: 6014, name: "Шаверно — Пулковская", category: "Быстрое питание", mood: "Вкусно поесть",
     budget: "≈ 350–450 ₽", company: ["Один", "Пара", "Друзья"], duration: "До 1 часа",
-    image: "/images/restaurant.jpg", lat: 59.8422, lng: 30.3494,
+    image: "/place-images/6014.jpg", lat: 59.8422, lng: 30.3494,
     why: "🎓 Есть скидка студентам · подтверждено ALMA",
     address: "Пулковская ул., 10, Санкт-Петербург", price: "≈ 350–450 ₽", priceNote: "Средний чек",
     detailHref: "/place/6014", studentDiscount: 10,
@@ -440,7 +440,7 @@ const studentDiscountPlaces: MapPlace[] = [
   {
     id: 6015, name: "Шаверно — Парнас", category: "Быстрое питание", mood: "Вкусно поесть",
     budget: "≈ 350–450 ₽", company: ["Один", "Пара", "Друзья"], duration: "До 1 часа",
-    image: "/images/restaurant.jpg", lat: 60.0677, lng: 30.3333,
+    image: "/place-images/6015.jpg", lat: 60.0677, lng: 30.3333,
     why: "🎓 Есть скидка студентам · подтверждено ALMA",
     address: "ул. Фёдора Абрамова, 8, Санкт-Петербург", price: "≈ 350–450 ₽", priceNote: "Средний чек",
     detailHref: "/place/6015", studentDiscount: 10,
@@ -450,7 +450,7 @@ const studentDiscountPlaces: MapPlace[] = [
   {
     id: 6016, name: "Uppetit — центр", category: "Кафе", mood: "Вкусно поесть",
     budget: "≈ 290–390 ₽", company: ["Один", "Пара", "Друзья"], duration: "До 1 часа",
-    image: "/images/restaurant.jpg", lat: 59.9344, lng: 30.3351,
+    image: "/place-images/6016.jpg", lat: 59.9344, lng: 30.3351,
     why: "🎓 Скидка студентам 10% · подтверждено ALMA",
     address: "Санкт-Петербург, Центральный район", price: "≈ 290–390 ₽", priceNote: "Средний чек",
     detailHref: "/place/6016", studentDiscount: 10,
@@ -460,7 +460,7 @@ const studentDiscountPlaces: MapPlace[] = [
   {
     id: 6017, name: "Uppetit — Московский район", category: "Кафе", mood: "Вкусно поесть",
     budget: "≈ 290–390 ₽", company: ["Один", "Пара", "Друзья"], duration: "До 1 часа",
-    image: "/images/restaurant.jpg", lat: 59.8791, lng: 30.3191,
+    image: "/place-images/6017.jpg", lat: 59.8791, lng: 30.3191,
     why: "🎓 Скидка студентам 10% · подтверждено ALMA",
     address: "Санкт-Петербург, Московский район", price: "≈ 290–390 ₽", priceNote: "Средний чек",
     detailHref: "/place/6017", studentDiscount: 10,
@@ -470,7 +470,7 @@ const studentDiscountPlaces: MapPlace[] = [
   {
     id: 6018, name: "Wahaha — центр", category: "Кофейня", mood: "Спокойно",
     budget: "≈ 400–700 ₽", company: ["Один", "Пара", "Друзья"], duration: "До 1 часа",
-    image: "/images/restaurant.jpg", lat: 59.9293, lng: 30.3391,
+    image: "/place-images/6018.jpg", lat: 59.9293, lng: 30.3391,
     why: "🎓 Есть скидка студентам · подтверждено ALMA",
     address: "Санкт-Петербург, Центральный район", price: "≈ 400–700 ₽", priceNote: "Средний чек",
     detailHref: "/place/6018", studentDiscount: 10,
@@ -480,7 +480,7 @@ const studentDiscountPlaces: MapPlace[] = [
   {
     id: 6019, name: "Wahaha — Васильевский остров", category: "Кофейня", mood: "Спокойно",
     budget: "от 200 ₽", company: ["Один", "Пара", "Друзья"], duration: "До 1 часа",
-    image: "/images/restaurant.jpg", lat: 59.9434, lng: 30.2846,
+    image: "/place-images/6019.jpg", lat: 59.9434, lng: 30.2846,
     why: "🎓 Есть скидка студентам · подтверждено ALMA",
     address: "Санкт-Петербург, Василеостровский район", price: "от 200 ₽", priceNote: "Средний чек",
     detailHref: "/place/6019", studentDiscount: 10,
@@ -490,7 +490,7 @@ const studentDiscountPlaces: MapPlace[] = [
   {
     id: 6020, name: "РестоШава", category: "Быстрое питание", mood: "Вкусно поесть",
     budget: "≈ 400–600 ₽", company: ["Один", "Пара", "Друзья"], duration: "До 1 часа",
-    image: "/images/restaurant.jpg", lat: 59.9196, lng: 30.3555,
+    image: "/place-images/6020.jpg", lat: 59.9196, lng: 30.3555,
     why: "🎓 Есть скидка студентам · подтверждено ALMA",
     address: "Санкт-Петербург, Центральный район", price: "≈ 400–600 ₽", priceNote: "Средний чек",
     detailHref: "/place/6020", studentDiscount: 10,
