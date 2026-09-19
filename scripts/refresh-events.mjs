@@ -1,6 +1,12 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 
+const fixedImages = {
+  "koi-asia-festival":"https://static.tildacdn.com/tild3133-3062-4332-a465-633661666136/4.jpg",
+  "growbox-market":"https://thb.tildacdn.com/tild6563-3061-4730-b636-373166653962/-/resize/800x/5516884-02_2.png",
+  "viktor-tsoi-legenda":"https://media-1.gorbilet.com/3b/a5/fb/DSCF5703_Preview.jpg"
+};
+
 const events = [
   ["fin-zaliv-house-party","https://sevcableport.ru/afisha/finskij-zaliv-under-haus-pati/"],
   ["koi-asia-festival","https://sevcableport.ru/afisha/koi-aziya-festival/"],
@@ -28,9 +34,9 @@ const report={updatedAt:new Date().toISOString(),events:{}};
 for (const [id,url] of events) {
   try {
     const html=await (await fetch(url,{headers:{"user-agent":"ALMA event updater/1.0"}})).text();
-    const image=meta(html,"og:image");
+    const image=fixedImages[id] || meta(html,"og:image");
     if (!image) throw new Error("og:image not found");
-    const res=await fetch(new URL(image,url),{headers:{"user-agent":"Mozilla/5.0"}});
+    const res=await fetch(new URL(image,url),{headers:{"user-agent":"Mozilla/5.0","referer":url}});
     if (!res.ok) throw new Error("image "+res.status);
     const buf=Buffer.from(await res.arrayBuffer());
     if(buf.length<5000) throw new Error("image too small");
