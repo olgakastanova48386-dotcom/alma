@@ -1,0 +1,40 @@
+import fs from "node:fs/promises";
+import path from "node:path";
+
+const events = [
+  ["fin-zaliv-house-party","https://sevcableport.ru/afisha/finskij-zaliv-under-haus-pati/"],
+  ["koi-asia-festival","https://sevcableport.ru/afisha/koi-aziya-festival/"],
+  ["spiexff","https://sevcableport.ru/afisha/sankt-peterburgskij-mezhdunarodnyj-festival-eksperimentalnogo-kino-spiexff/"],
+  ["waterfront-workouts","https://sevcableport.ru/afisha/trenirovki-na-naberezhnoj/"],
+  ["viktor-tsoi-legenda","https://sevcableport.ru/afisha/"],
+  ["growbox-market","https://sevcableport.ru/afisha/"],
+  ["museum-machines","https://brusnitsyn.spb.ru/"],
+  ["yarkiy-fovizm","https://brusnitsyn.spb.ru/"],
+  ["dark-wave","https://brusnitsyn.spb.ru/"]
+];
+
+const decode = s => s.replaceAll("&amp;","&").replaceAll("&#038;","&");
+const meta = (html, property) => {
+  const a = html.match(new RegExp('<meta[^>]+(?:property|name)=["\\']'+property+'["\\'][^>]+content=["\\']([^"\\']+)["\\']','i'));
+  const b = html.match(new RegExp('<meta[^>]+content=["\\']([^"\\']+)["\\'][^>]+(?:property|name)=["\\']'+property+'["\\']','i'));
+  return decode((a?.[1] || b?.[1] || "").trim());
+};
+await fs.mkdir("public/events",{recursive:true});
+const report={updatedAt:new Date().toISOString(),events:{}};
+for (const [id,url] of events) {
+  try {
+    const html=await (await fetch(url,{headers:{"user-agent":"ALMA event updater/1.0"}})).text();
+    const image=meta(html,"og:image");
+    if (!image) throw new Error("og:image not found");
+    const res=await fetch(new URL(image,url),{headers:{"user-agent":"Mozilla/5.0"}});
+    if (!res.ok) throw new Error("image "+res.status);
+    const buf=Buffer.from(await res.arrayBuffer());
+    if(buf.length<5000) throw new Error("image too small");
+    await fs.writeFile(path.join("public/events",id+".jpg"),buf);
+    report.events[id]={source:url,image:String(new URL(image,url)),ok:true};
+  } catch(e) {
+    report.events[id]={source:url,ok:false,error:String(e.message||e)};
+  }
+}
+await fs.mkdir("public/data",{recursive:true});
+await fs.writeFile("public/data/events-refresh.json",JSON.stringify(report,null,2)+"\n");
