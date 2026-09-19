@@ -8,9 +8,7 @@ const fixedImages = {
   "spiexff":"https://static.tildacdn.com/tild3766-3666-4164-a537-363637333932/JPEG_SPIEXFF4_000911.jpg",
   "waterfront-workouts":"https://s.inyourpocket.com/gallery/245582.jpg",
   "viktor-tsoi-legenda":"https://media-1.gorbilet.com/3b/a5/fb/DSCF5703_Preview.jpg",
-  "museum-machines":"https://thb.tildacdn.com/tild3038-6666-4338-b934-613333656633/-/empty/photo_52471159935600.jpg",
   "yarkiy-fovizm":"https://s0.rbk.ru/v6_top_pics/media/img/6/86/347503352588866.jpeg",
-  "dark-wave":"https://thb.tildacdn.com/tild3134-6131-4532-a432-383961346431/-/empty/IMG_1711.JPG"
 };
 
 const events = [
@@ -26,6 +24,11 @@ const events = [
 ];
 
 const decode = s => s.replaceAll("&amp;","&").replaceAll("&#038;","&");
+const pageImage = (html) => {
+  const matches = [...html.matchAll(/<img\s+[^>]*src=(?:"([^"]+)"|'([^']+)')[^>]*>/gi)];
+  const urls = matches.map(m => decode((m[1] || m[2] || "").trim())).filter(Boolean);
+  return urls.find(u => !/logo|icon|svg|pixel|counter|favicon/i.test(u)) || "";
+};
 const meta = (html, property) => {
   const tags = html.match(/<meta\\s+[^>]*>/gi) || [];
   for (const tag of tags) {
@@ -40,7 +43,7 @@ const report={updatedAt:new Date().toISOString(),events:{}};
 for (const [id,url] of events) {
   try {
     const html=await (await fetch(url,{headers:{"user-agent":"ALMA event updater/1.0"}})).text();
-    const image=fixedImages[id] || meta(html,"og:image");
+    const image=fixedImages[id] || meta(html,"og:image") || pageImage(html);
     if (!image) throw new Error("og:image not found");
     const res=await fetch(new URL(image,url),{headers:{"user-agent":"Mozilla/5.0","referer":url}});
     if (!res.ok) throw new Error("image "+res.status);
