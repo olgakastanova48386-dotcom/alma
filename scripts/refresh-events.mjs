@@ -2,9 +2,15 @@ import fs from "node:fs/promises";
 import path from "node:path";
 
 const fixedImages = {
+  "fin-zaliv-house-party":"https://where.ru/upload/sprint.editor/e68/vhl7rsbbl3bl8bmqaa7hl6at856f9hq4.jpeg",
   "koi-asia-festival":"https://static.tildacdn.com/tild3133-3062-4332-a465-633661666136/4.jpg",
   "growbox-market":"https://thb.tildacdn.com/tild6563-3061-4730-b636-373166653962/-/resize/800x/5516884-02_2.png",
-  "viktor-tsoi-legenda":"https://media-1.gorbilet.com/3b/a5/fb/DSCF5703_Preview.jpg"
+  "spiexff":"https://static.tildacdn.com/tild3766-3666-4164-a537-363637333932/JPEG_SPIEXFF4_000911.jpg",
+  "waterfront-workouts":"https://s.inyourpocket.com/gallery/245582.jpg",
+  "viktor-tsoi-legenda":"https://media-1.gorbilet.com/3b/a5/fb/DSCF5703_Preview.jpg",
+  "museum-machines":"https://thb.tildacdn.com/tild3038-6666-4338-b934-613333656633/-/empty/photo_52471159935600.jpg",
+  "yarkiy-fovizm":"https://s0.rbk.ru/v6_top_pics/media/img/6/86/347503352588866.jpeg",
+  "dark-wave":"https://thb.tildacdn.com/tild3134-6131-4532-a432-383961346431/-/empty/IMG_1711.JPG"
 };
 
 const events = [
