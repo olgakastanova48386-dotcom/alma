@@ -4,10 +4,10 @@ import Link from "next/link";
 const events = {
 "fin-zaliv-house-party":{title:"Финский залив андер хаус пати",place:"Севкабель Порт",date:"19–20 сентября",category:"Вечеринки",note:"Вечеринка у залива",accent:"🌊",image:"/events/fin-zaliv-house-party.jpg"},
 "growbox-market":{title:"Гроубокс маркет",place:"Севкабель Порт",date:"19–20 сентября",category:"Маркеты",note:"Маркет выходного дня в Порту",accent:"🛍️",image: "/events/growbox-market.jpg"},
-"koi-asia-festival":{title:"КОИ Азия Фестиваль",place:"Севкабель Порт · Цех",date:"19–20 сентября",category:"Фестивали",note:"Азия, музыка, еда, маркет и фотозоны · вход по регистрации",accent:"🏮",image: "/images/sevcable.jpg"},
-"spiexff":{title:"SPIEXFF",place:"Севкабель Порт · лекторий’порт",date:"до 20 сентября",category:"Кино",note:"Международный фестиваль экспериментального кино",accent:"🎞️",image: "/images/sevcable.jpg"},
-"waterfront-workouts":{title:"Тренировки на набережной",place:"Севкабель Порт · Набережная",date:"до 30 сентября",category:"Спорт",note:"Йога и функциональные тренировки на берегу · вход свободный",accent:"🧘",image: "/images/sevcable.jpg"},
-"viktor-tsoi-legenda":{title:"Виктор Цой. Легенда",place:"Севкабель Порт",date:"до 27 сентября",category:"Выставки",note:"Выставка в Порту",accent:"🎸",image: "/images/sevcable.jpg"},
+"koi-asia-festival":{title:"КОИ Азия Фестиваль",place:"Севкабель Порт · Цех",date:"19–20 сентября",category:"Фестивали",note:"Азия, музыка, еда, маркет и фотозоны · вход по регистрации",accent:"🏮",image: "/events/koi-asia-festival.jpg"},
+"spiexff":{title:"SPIEXFF",place:"Севкабель Порт · лекторий’порт",date:"до 20 сентября",category:"Кино",note:"Международный фестиваль экспериментального кино",accent:"🎞️",image: "/events/spiexff.jpg"},
+"waterfront-workouts":{title:"Тренировки на набережной",place:"Севкабель Порт · Набережная",date:"до 30 сентября",category:"Спорт",note:"Йога и функциональные тренировки на берегу · вход свободный",accent:"🧘",image: "/events/waterfront-workouts.jpg"},
+"viktor-tsoi-legenda":{title:"Виктор Цой. Легенда",place:"Севкабель Порт",date:"до 27 сентября",category:"Выставки",note:"Выставка в Порту",accent:"🎸",image: "/events/viktor-tsoi-legenda.jpg"},
 "museum-machines":{title:"Музей Восстания Машин",place:"Брусницын",date:"с 20 сентября",category:"Выставки",note:"Новый интерактивный музей · ежедневно",accent:"🤖",image: "/events/museum-machines.jpg"},
 "yarkiy-fovizm":{title:"Яркий фовизм",place:"Брусницын",date:"27 сентября",category:"Лекции",note:"Лекция из цикла «Изменчивый XX век»",accent:"🎨",image: "/events/yarkiy-fovizm.jpg"},
 "dark-wave":{title:"DARK WAVE",place:"Брусницын",date:"31 октября",category:"Вечеринки",note:"Тёмная эстетика, образы и немного мистики",accent:"🖤",image: "/events/dark-wave.jpg"}
