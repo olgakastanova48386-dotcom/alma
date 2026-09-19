@@ -16,11 +16,12 @@ jobs:
         with:
           node-version: 22
       - run: node scripts/fill-place-photos.mjs
+      - run: ALMA_DATA_PATH=data/mapPlaces.ts node scripts/fill-place-photos.mjs
       - name: Commit place photos
         run: |
           git config user.name "alma-photos-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add data/places.ts public/place-images
+          git add data/places.ts data/mapPlaces.ts public/place-images
           git diff --cached --quiet || git commit -m "Replace generic place photos with real photos"
           git pull --rebase origin main
           git push
