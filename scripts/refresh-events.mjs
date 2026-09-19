@@ -14,9 +14,9 @@ const events = [
   ["waterfront-workouts","https://sevcableport.ru/afisha/trenirovki-na-naberezhnoj/"],
   ["viktor-tsoi-legenda","https://sevcableport.ru/afisha/"],
   ["growbox-market","https://sevcableport.ru/afisha/"],
-  ["museum-machines","https://brusnitsyn.spb.ru/"],
+  ["museum-machines","https://brusnitsyn.spb.ru/museambot"],
   ["yarkiy-fovizm","https://brusnitsyn.spb.ru/"],
-  ["dark-wave","https://brusnitsyn.spb.ru/"]
+  ["dark-wave","https://brusnitsyn.spb.ru/darkwave"]
 ];
 
 const decode = s => s.replaceAll("&amp;","&").replaceAll("&#038;","&");
