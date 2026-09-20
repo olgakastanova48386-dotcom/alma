@@ -1303,7 +1303,7 @@ export const places: Place[] = [
     budget: "Бесплатно",
     company: ["Один", "Пара", "Друзья", "Семья"],
     duration: "2–4 часа",
-    image: "https://www.spbmuseum.ru/uploads/images/2024/petropavlovskaya-krepost.jpg",
+    image: "/place-images/62.jpg",
     lat: 59.9502,
     lng: 30.3164,
     description: "Историческое сердце Петербурга: крепость, собор, музеи, пляж и прогулочные пространства на Заячьем острове.",
