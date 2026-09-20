@@ -106,12 +106,12 @@ export default function DogFriendlyPage() {
                   </div>
                 )}
                 <div className="p-3.5 sm:p-7">
-                  <div className="flex items-start justify-between gap-4">
+                  <div className="flex items-start justify-between gap-2 sm:gap-4">
                     <div>
                       <p className="text-xs uppercase tracking-[0.16em] text-neutral-400">
                         {place.category}
                       </p>
-                      <h2 className="mt-1 whitespace-nowrap text-[18px] sm:mt-2 sm:text-3xl font-bold">
+                      <h2 className="mt-1 whitespace-nowrap text-left text-[18px] sm:mt-2 sm:text-3xl font-bold">
                         {place.name}
                       </h2>
                     </div>
