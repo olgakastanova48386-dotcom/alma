@@ -81,7 +81,7 @@ export default function ProfilePage() {
         {user.gender === "female" && (
           <section className="mt-6 rounded-[34px] bg-white border border-black/5 shadow-sm p-7 sm:p-10">
             <div className="flex items-start gap-4">
-              <div className="shrink-0 h-12 w-12 rounded-full bg-black text-white flex items-center justify-center text-xl" aria-hidden="true">🛡</div>
+              <div className="shrink-0 h-12 w-12 rounded-full bg-[#f4d9df] text-[#6f2437] flex items-center justify-center text-xl shadow-sm ring-1 ring-[#dca9b5]/60" aria-hidden="true">🛡</div>
               <div>
                 <p className="text-xs uppercase tracking-[0.16em] text-neutral-400">Безопасность</p>
                 <h2 className="mt-1 text-2xl font-bold tracking-tight">Безопасное место</h2>
