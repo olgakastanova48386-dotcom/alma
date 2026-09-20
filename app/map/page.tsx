@@ -13,9 +13,9 @@ export default function MapPage() {
   );
 
   return (
-    <main className="min-h-screen bg-[#f7f4ef] pb-20 pt-28 text-black sm:pt-32">
+    <main className="min-h-screen bg-[#f7f4ef] pb-20 pt-[88px] text-black sm:pt-[104px]">
       <section className="mx-auto max-w-[1380px] px-4 sm:px-6 lg:px-8">
-        <div className="mt-3 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+        <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <h1 className="text-[clamp(44px,6vw,76px)] font-bold leading-[.95] tracking-[-0.055em]">События</h1>
             <p className="mt-3 max-w-3xl text-[15px] leading-6 text-neutral-600 sm:text-lg">Выставки, фестивали, маркеты, кино и другие события в Санкт-Петербурге</p>
