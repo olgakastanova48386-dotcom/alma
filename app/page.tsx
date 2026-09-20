@@ -16,7 +16,7 @@ const places = [
 ];
 
 const photozones = [
-  { title: "Кафе Зингер", tag: "Архитектура", image: "/images/isaac.jpg", time: "Днём · у окна" },
+  { title: "Кафе Зингер", tag: "Архитектура", image: "/images/кафе зингер.jpg", time: "Днём · у окна" },
   { title: "Поцелуев мост", tag: "Романтика", image: "/images/kisses-bridge.jpg", time: "Перед закатом" },
   { title: "Дворцовая площадь", tag: "Архитектура", image: "/images/isaac.jpg", time: "Утро · золотой час" },
   { title: "Ракета · Кожевенная линия, 27", tag: "Индустриальная эстетика", image: "/images/падл адрес ракета кожевенная линия, 27.jpg", time: "Днём или вечером · в помещении" },
