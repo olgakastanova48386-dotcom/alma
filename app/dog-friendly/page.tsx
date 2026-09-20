@@ -38,17 +38,17 @@ export default function DogFriendlyPage() {
             <h1 className="mt-0 max-w-[62%] text-[26px] sm:text-4xl lg:text-[48px] font-bold tracking-tight leading-[1.02]">
               Петербург вместе с собакой 🐾
             </h1>
-            <div className="hidden sm:flex mt-3 items-center gap-3 text-[11px] sm:text-xs font-semibold uppercase tracking-[0.16em] text-[#56614f]">
-              <span className="h-px w-10 bg-[#78856f]" />
-              <span>Гид Джека по Петербургу</span>
-              <span className="h-px w-16 bg-[#78856f]" />
+            <div className="hidden sm:flex mt-4 items-center gap-2.5 text-[12px] font-medium tracking-[0.02em] text-[#56614f]">
+              <span className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-[#78856f]/45 text-[13px]">🐾</span>
+              <span>Маршруты Джека</span>
+              <span className="text-[#78856f]/60">•</span>
+              <span className="font-normal">места, где рады хвостам</span>
             </div>
           </div>
-          <div className="pointer-events-none absolute bottom-5 left-[48%] hidden lg:block text-[#78856f]/70">
-            <svg width="120" height="42" viewBox="0 0 120 42" fill="none" aria-hidden="true">
-              <path d="M2 31C27 10 55 8 84 20C97 25 107 24 118 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeDasharray="4 7"/>
-              <path d="M110 10L118 13L114 21" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
+          <div className="pointer-events-none absolute bottom-7 left-[48%] hidden lg:flex items-center gap-2 text-[#78856f]/55" aria-hidden="true">
+            <span className="block h-px w-20 bg-current" />
+            <span className="-rotate-12 text-lg">🐾</span>
+            <span className="block h-px w-10 bg-current" />
           </div>
           <img
             src="/images/alma-dog.webp"
