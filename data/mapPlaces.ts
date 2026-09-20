@@ -434,6 +434,14 @@ const southWestGreenCorridorPlaces: MapPlace[] = [
   { id:8125,name:"Южно-Приморский парк",category:"Парк",mood:"Погулять",budget:"Бесплатно",company:["Один","Пара","Друзья","Семья"],duration:"1–2 часа",image:"",lat:59.8537,lng:30.1966,why:"Зелёная прогулочная точка юго-запада Петербурга",address:"Петергофское шоссе, Санкт-Петербург",price:"Бесплатно",priceNote:"Прогулка",detailHref:"/place/8125" },
   { id:8126,name:"Новознаменка",category:"Парк",mood:"Погулять",budget:"Бесплатно",company:["Один","Пара","Друзья","Семья"],duration:"1–2 часа",image:"",lat:59.8498,lng:30.1660,why:"Историческая усадебная территория вдоль Петергофской дороги",address:"Петергофское шоссе, Санкт-Петербург",price:"Бесплатно",priceNote:"Прогулка",detailHref:"/place/8126" },
 ];
+const ulyankaAvtovoPlaces: MapPlace[] = [
+  { id:8127,name:"Парк Александрино",category:"Парк",mood:"Погулять",budget:"Бесплатно",company:["Один","Пара","Друзья","Семья"],duration:"1–2 часа",image:"",lat:59.8377,lng:30.2144,why:"★ 4.6 / 5 · 5047 оценок · проходит порог ALMA",address:"парк Александрино, Санкт-Петербург",price:"Бесплатно",priceNote:"Прогулка",detailHref:"/place/8127",rating:4.6,ratingScale:5,ratingCount:5047,ratingSource:"Google" },
+  { id:8128,name:"Усадьба Кирьяново",category:"Достопримечательность",mood:"Узнать новое",budget:"Цена уточняется",company:["Один","Пара","Друзья","Семья"],duration:"До 1 часа",image:"",lat:59.8794,lng:30.2598,why:"★ 4.6 / 5 · историческая усадьба на проспекте Стачек",address:"пр. Стачек, 45, Санкт-Петербург",price:"Цена уточняется",priceNote:"Режим посещения уточняется",detailHref:"/place/8128",rating:4.6,ratingScale:5,ratingCount:41,ratingSource:"Google" },
+  { id:8129,name:"Музей «Анна Ахматова. Серебряный век»",category:"Музей",mood:"Узнать новое",budget:"Цена уточняется",company:["Один","Пара","Друзья","Семья"],duration:"1–2 часа",image:"",lat:59.8676,lng:30.2687,why:"★ 4.5 / 5 · 78 оценок · проходит порог ALMA",address:"Автовская ул., 14, Санкт-Петербург",price:"Цена уточняется",priceNote:"Билет",detailHref:"/place/8129",rating:4.5,ratingScale:5,ratingCount:78,ratingSource:"Google" },
+  { id:8130,name:"Кузу",category:"Ресторан",mood:"Вкусно поесть",budget:"≈ 2 000–3 000 ₽",company:["Пара","Друзья","Семья"],duration:"1–2 часа",image:"",lat:59.8758,lng:30.2785,why:"★ 4.8 / 5 · 166 оценок · проходит порог ALMA",address:"Краснопутиловская ул., 14/12, Санкт-Петербург",price:"≈ 2 000–3 000 ₽",priceNote:"Средний чек",detailHref:"/place/8130",rating:4.8,ratingScale:5,ratingCount:166,ratingSource:"Google" },
+  { id:8131,name:"Нарвская Застава",category:"Музей",mood:"Узнать новое",budget:"Цена уточняется",company:["Один","Пара","Друзья","Семья"],duration:"1–2 часа",image:"",lat:59.8927,lng:30.2706,why:"★ 4.5 / 5 · 75 оценок · проходит порог ALMA",address:"ул. Ивана Черных, 23, Санкт-Петербург",price:"Цена уточняется",priceNote:"Билет",detailHref:"/place/8131",rating:4.5,ratingScale:5,ratingCount:75,ratingSource:"Google" },
+  { id:8132,name:"Екатерингофский парк",category:"Парк",mood:"Погулять",budget:"Бесплатно",company:["Один","Пара","Друзья","Семья"],duration:"1–2 часа",image:"",lat:59.9001,lng:30.2694,why:"★ 4.7 / 5 · 1549 оценок · проходит порог ALMA",address:"наб. Бумажного канала, 10, Санкт-Петербург",price:"Бесплатно",priceNote:"Прогулка",detailHref:"/place/8132",rating:4.7,ratingScale:5,ratingCount:1549,ratingSource:"Google" },
+];
 const studentDiscountPlaces: MapPlace[] = [
   {
     id: 6001,
@@ -764,6 +772,7 @@ export const mapPlaces: MapPlace[] = [
   ...southWestCorridorPlaces,
   ...southWestCorridorMorePlaces,
   ...southWestGreenCorridorPlaces,
+  ...ulyankaAvtovoPlaces,
   ...studentDiscountPlaces,
   ...safetyMapPlaces,
 ];
