@@ -1,8 +1,10 @@
 import { NextResponse } from "next/server";
-import { authDb, ensureAuthSchema } from "@/lib/auth";
+import { authDb, ensureAuthSchema, getCurrentUser } from "@/lib/auth";
 export async function POST(request:Request){
  try{
   await ensureAuthSchema();
+  const user=await getCurrentUser(request);
+  if(String(user?.login||"").trim().toLowerCase()==="pr_pretty_8") return NextResponse.json({ok:true,excluded:true});
   const body=await request.json().catch(()=>({}));
   const path=String(body?.path||"").trim().slice(0,160);
   const visitorId=String(body?.visitorId||"").trim().slice(0,80);
