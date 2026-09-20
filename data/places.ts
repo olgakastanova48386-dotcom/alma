@@ -1318,7 +1318,7 @@ export const places: Place[] = [
   },
   {
     id: 63,
-    name: "Государственный Эрмитаж",
+    name: "Эрмитаж",
     category: "Музей",
     mood: "Вдохновиться",
     budget: "300–1500 ₽",
