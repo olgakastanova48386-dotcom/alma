@@ -39,13 +39,13 @@ export default function MapPage() {
                 <img src={event.image} alt={event.title} className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.025]" />
                 <span className="absolute left-4 top-4 rounded-full bg-white/90 px-3.5 py-2 text-xs font-medium text-black backdrop-blur-sm">{event.category}</span>
               </div>
-              <div className="flex min-h-[205px] flex-col p-5">
+              <div className="flex min-h-0 flex-col p-4 sm:min-h-[205px] sm:p-5">
                 <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[12px] font-semibold leading-4 text-neutral-600">
                   <span>{event.date}</span><span className="text-black/20">•</span><span>{event.place}</span>
                 </div>
-                <h2 className="mt-2.5 text-[clamp(21px,2vw,27px)] font-bold leading-[1.08] tracking-[-0.035em]">{event.title}</h2>
-                <p className="mt-2.5 text-[14px] leading-5 text-neutral-600">{event.note}</p>
-                <div className="mt-auto pt-5 text-[13px] font-semibold text-neutral-700">Подробнее <span className="ml-1 inline-block transition group-hover:translate-x-1">→</span></div>
+                <h2 className="mt-2 text-[20px] font-bold leading-[1.08] tracking-[-0.035em] sm:mt-2.5 sm:text-[clamp(21px,2vw,27px)]">{event.title}</h2>
+                <p className="mt-2 text-[13px] leading-[1.35] text-neutral-600 sm:mt-2.5 sm:text-[14px] sm:leading-5">{event.note}</p>
+                <div className="mt-3 text-[13px] font-semibold text-neutral-700 sm:mt-auto sm:pt-5">Подробнее <span className="ml-1 inline-block transition group-hover:translate-x-1">→</span></div>
               </div>
             </a>
           ))}
