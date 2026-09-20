@@ -1513,7 +1513,7 @@ export const places: Place[] = [
     budget: "Бесплатно",
     company: ["Один", "Пара", "Друзья", "Семья"],
     duration: "1–2 часа",
-    image: "/place-images/72.jpg",
+    image: "/images/иссакиевский собор.jpg",
     lat: 59.9341,
     lng: 30.3061,
     description: "Место для самостоятельного знакомства с Петербургом и готовых маршрутов ALMA.",
