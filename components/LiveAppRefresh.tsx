@@ -30,7 +30,8 @@ export default function LiveAppRefresh() {
         const method = (init?.method || (input instanceof Request ? input.method : "GET")).toUpperCase();
         const requestUrl = input instanceof Request ? input.url : String(input);
         const sameOrigin = requestUrl.startsWith("/") || requestUrl.startsWith(window.location.origin);
-        if (sameOrigin && response.ok && ["POST", "PUT", "PATCH", "DELETE"].includes(method)) {
+        const isAuthRequest = requestUrl.includes("/api/auth/");
+        if (sameOrigin && !isAuthRequest && response.ok && ["POST", "PUT", "PATCH", "DELETE"].includes(method)) {
           window.dispatchEvent(new Event(REFRESH_EVENT));
         }
       } catch {}
