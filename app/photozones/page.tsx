@@ -22,18 +22,18 @@ export default function PhotozonesPage(){
  const [filter,setFilter]=useState("Все");
  const shown=useMemo(()=>filter==="Все"?zones:zones.filter(z=>z.category===filter),[filter]);
  const mapHref=(name:string)=>{const normalized=name.toLowerCase();const match=mapPlaces.find(p=>p.name.toLowerCase()===normalized||p.name.toLowerCase().includes(normalized)||normalized.includes(p.name.toLowerCase()));return match?`/map?place=${match.id}`:"/map"};
- return <main className="min-h-screen bg-[#f4f0e9] pt-24 sm:pt-28 pb-24 text-black">
+ return <main className="min-h-screen bg-[#f4f0e9] pt-[88px] sm:pt-28 pb-16 sm:pb-24 text-black">
   <section className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-10">
-   <div className="border-b border-black/10 pb-8 sm:pb-12 lg:grid lg:grid-cols-[1.25fr_.75fr] lg:items-end lg:gap-16">
-    <div><h1 className="max-w-4xl text-[48px] sm:text-7xl lg:text-[92px] font-bold leading-[.88] tracking-[-.055em]">Город как<br/><span className="font-serif italic font-normal">в сохранёнках.</span></h1></div>
-    <div className="mt-7 lg:mt-0"><p className="max-w-md text-base sm:text-lg leading-7 text-neutral-600">Не список достопримечательностей, а места, ради которых хочется достать камеру. Выбирай настроение — ALMA подскажет, где получится тот самый кадр.</p><div className="mt-5"><Link href="/photozones/add" className="inline-flex rounded-full bg-black px-5 py-3 text-sm font-semibold text-white">＋ Предложить фотолокацию</Link></div><p className="mt-4 text-xs text-neutral-400">Фотографии используются как иллюстрация локаций. Для заведений ALMA публикует только подтверждённые данные.</p></div>
+   <div className="border-b border-black/10 pb-4 sm:pb-12 lg:grid lg:grid-cols-[1.25fr_.75fr] lg:items-end lg:gap-16">
+    <div><h1 className="text-[42px] sm:text-7xl lg:text-[92px] font-bold leading-[.95] tracking-[-.055em]">Фотолокации</h1></div>
+    <div className="hidden sm:block mt-7 lg:mt-0"><p className="max-w-md text-base sm:text-lg leading-7 text-neutral-600">Не список достопримечательностей, а места, ради которых хочется достать камеру. Выбирай настроение — ALMA подскажет, где получится тот самый кадр.</p><div className="mt-5"><Link href="/photozones/add" className="inline-flex rounded-full bg-black px-5 py-3 text-sm font-semibold text-white">＋ Предложить фотолокацию</Link></div></div>
    </div>
 
-   <div className="sticky top-[76px] z-20 -mx-4 px-4 sm:mx-0 sm:px-0 py-4 bg-[#f4f0e9]/95 backdrop-blur flex gap-2 overflow-x-auto">
+   <div className="sticky top-[76px] z-20 -mx-4 px-4 sm:mx-0 sm:px-0 py-2.5 sm:py-4 bg-[#f4f0e9]/95 backdrop-blur flex gap-2 overflow-x-auto">
     {filters.map(x=><button key={x} onClick={()=>setFilter(x)} className={`shrink-0 rounded-full px-4 py-2.5 text-sm transition ${filter===x?"bg-black text-white":"bg-white border border-black/10 hover:border-black/30"}`}>{x}</button>)}
    </div>
 
-   <div className="mt-3 columns-2 lg:columns-3 gap-3 sm:gap-5 [column-fill:_balance]">
+   <div className="mt-1 sm:mt-3 columns-2 lg:columns-3 gap-3 sm:gap-5 [column-fill:_balance]">
     {shown.map((z)=><article key={z.name} className="group relative mb-3 sm:mb-5 break-inside-avoid overflow-hidden rounded-[18px] sm:rounded-[28px] bg-neutral-200">
       <Link href={mapHref(z.name)} aria-label={`${z.name} на карте ALMA`} className="block"><div className={`${z.tall?"aspect-[3/5]":"aspect-[4/5]"} relative`}><img src={z.image} alt={z.name} loading="lazy" className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-[1.025]"/><div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/5 to-black/5"/><div className="absolute left-3 top-3 sm:left-4 sm:top-4 flex gap-2"><span className="rounded-full bg-white/90 backdrop-blur px-2.5 sm:px-3 py-1.5 text-[10px] sm:text-xs">{z.category}</span>{z.premium&&<span className="rounded-full bg-black/75 backdrop-blur px-2.5 sm:px-3 py-1.5 text-[10px] sm:text-xs text-white">ALMA+</span>}</div><div className="absolute inset-x-0 bottom-0 p-3.5 sm:p-6 text-white"><p className="hidden sm:block text-xs text-white/55">{z.area}</p><h2 className="text-lg sm:text-3xl font-bold leading-tight sm:mt-1">{z.name}</h2><p className="hidden sm:block mt-2 max-w-sm text-sm leading-5 text-white/70">{z.note}</p><div className="mt-2.5 sm:mt-4 flex items-center justify-between gap-2"><span className="text-[10px] sm:text-xs text-white/65">◷ {z.best}</span><span className="grid h-8 w-8 sm:h-10 sm:w-10 place-items-center rounded-full bg-white text-black">↗</span></div></div></div></Link>
     </article>)}
