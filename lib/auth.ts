@@ -67,7 +67,11 @@ export async function ensureAuthSchema() {
       "CREATE INDEX IF NOT EXISTS idx_page_views_path_created ON page_views(path, created_at)",
     ),
   ]);
-  const columns = await database.prepare("PRAGMA table_info(users)").all();
+  const pageViewColumns = await database.prepare("PRAGMA table_info(page_views)").all();
+  const pageViewNames = (pageViewColumns?.results || []).map((row: any) => row.name);
+  if (!pageViewNames.includes("visitor_id")) await database.prepare("ALTER TABLE page_views ADD COLUMN visitor_id TEXT").run();
+  await database.prepare("CREATE INDEX IF NOT EXISTS idx_page_views_visitor_created ON page_views(visitor_id, created_at)").run();
+    const columns = await database.prepare("PRAGMA table_info(users)").all();
   const names = (columns?.results || []).map((row: any) => row.name);
   if (!names.includes("gender"))
     await database
