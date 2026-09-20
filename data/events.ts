@@ -23,5 +23,5 @@ export const events: AlmaEvent[] = [
   {id:"dark-wave",title:"DARK WAVE",place:"Брусницын",date:"31 октября",category:"Вечеринки",note:"Тёмная эстетика, образы и немного мистики",image:"/events/dark-wave.jpg",startsAt:"2026-10-31",endsAt:"2026-10-31"}
 ];
 
-export function moscowDate(){return new Intl.DateTimeFormat("en-CA",{timeZone:"Europe/Moscow",year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date())}
+export function moscowDate(){const parts=new Intl.DateTimeFormat("en-US",{timeZone:"Europe/Moscow",year:"numeric",month:"2-digit",day:"2-digit"}).formatToParts(new Date());const get=(type:string)=>parts.find((part)=>part.type===type)?.value||"";return `${get("year")}-${get("month")}-${get("day")}`}
 export function isEventActive(event:AlmaEvent,today=moscowDate()){return !event.endsAt||event.endsAt>=today}
