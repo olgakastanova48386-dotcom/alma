@@ -1,14 +1,14 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { events } from "@/data/events";
+import { events, isEventActive } from "@/data/events";
 
 const filters = ["Все", "Вечеринки", "Фестивали", "Маркеты", "Кино", "Выставки", "Спорт", "Лекции"];
 
 export default function MapPage() {
   const [filter, setFilter] = useState("Все");
   const visible = useMemo(
-    () => events.filter((event) => filter === "Все" || event.category === filter),
+    () => events.filter((event) => isEventActive(event) && (filter === "Все" || event.category === filter)),
     [filter],
   );
 
@@ -36,17 +36,7 @@ export default function MapPage() {
           {visible.map((event) => (
             <a key={event.id} href={`/map/${event.id}`} className="group overflow-hidden rounded-[22px] border border-black/[.06] bg-white shadow-[0_6px_24px_rgba(0,0,0,.035)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_14px_35px_rgba(0,0,0,.08)]">
               <div className="relative aspect-[16/6.1] overflow-hidden bg-neutral-100">
-                <img
-                  src={event.image}
-                  alt={event.title}
-                  className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.025]"
-                  onError={(e) => {
-                    const img = e.currentTarget;
-                    const fallback = "/images/sevcable.jpg";
-                    if (img.src.endsWith(fallback)) return;
-                    img.src = fallback;
-                  }}
-                />
+                <img src={event.image} alt={event.title} className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.025]" />
                 <span className="absolute left-4 top-4 rounded-full bg-white/90 px-3.5 py-2 text-xs font-medium text-black backdrop-blur-sm">{event.category}</span>
               </div>
               <div className="flex min-h-0 flex-col p-4 sm:min-h-[205px] sm:p-5">
