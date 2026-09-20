@@ -339,6 +339,12 @@ const moreFamilyMapPlaces: MapPlace[] = [
   { id: 7013, name: "ТРК Академ-Парк", category: "Городское пространство", mood: "С семьёй", budget: "Бесплатно", company: ["Один","Пара","Друзья","Семья"], duration: "1–2 часа", image: "", lat: 60.0120, lng: 30.3968, why: "👶 Комната матери и ребёнка", address: "Гражданский пр., 41, лит. Б, корп. 2", price: "Бесплатно", priceNote: "Семейные сервисы", detailHref: "/place/7013", babyCare: "Комната матери и ребёнка", babyCareDetails: ["Комната матери и ребёнка"], babyCareVerifiedAt: "20.09.2026" },
 ];
 
+const verifiedFamilyExpansion: MapPlace[] = [
+  { id:7014,name:"ЛЕТО",category:"Ресторан",mood:"Вкусно поесть",budget:"≈ 1 500–3 000 ₽",company:["Пара","Друзья","Семья"],duration:"1–2 часа",image:"",lat:59.8518,lng:30.3214,why:"👶 Большая детская комната и детское меню",address:"Московский район, Санкт-Петербург",price:"≈ 1 500–3 000 ₽",priceNote:"Средний чек",detailHref:"/place/7014",babyCare:"Детская комната",babyCareDetails:["Большая детская комната","Детское меню","Семейные мастер-классы"],babyCareVerifiedAt:"20.09.2026" },
+  { id:7015,name:"NEVESOMOST",category:"Ресторан",mood:"Вкусно поесть",budget:"≈ 2 000–4 000 ₽",company:["Пара","Друзья","Семья"],duration:"1–2 часа",image:"",lat:59.9587,lng:30.3159,why:"👶 Игровая комната с няней и детское меню",address:"Санкт-Петербург",price:"≈ 2 000–4 000 ₽",priceNote:"Средний чек",detailHref:"/place/7015",babyCare:"Детская комната",babyCareDetails:["Игровая комната","Няня","Детское меню"],babyCareVerifiedAt:"20.09.2026" },
+  { id:7016,name:"Гуси-Лебеди",category:"Ресторан",mood:"Вкусно поесть",budget:"≈ 1 500–3 000 ₽",company:["Пара","Друзья","Семья"],duration:"1–2 часа",image:"",lat:60.0087,lng:30.3003,why:"👶 Оборудованная детская комната с няней",address:"Коломяжский проспект, Санкт-Петербург",price:"≈ 1 500–3 000 ₽",priceNote:"Средний чек",detailHref:"/place/7016",babyCare:"Детская комната",babyCareDetails:["Детская комната","Няня","Развивающие занятия"],babyCareVerifiedAt:"20.09.2026" },
+  { id:7017,name:"Большая кухня · Галерея",category:"Ресторан",mood:"Вкусно поесть",budget:"≈ 1 500–3 000 ₽",company:["Пара","Друзья","Семья"],duration:"1–2 часа",image:"",lat:59.9277,lng:30.3603,why:"👶 Просторная детская комната",address:"Лиговский пр., 30А, ТРЦ «Галерея»",price:"≈ 1 500–3 000 ₽",priceNote:"Средний чек",detailHref:"/place/7017",babyCare:"Детская комната",babyCareDetails:["Детская комната"],babyCareVerifiedAt:"20.09.2026" },
+];
 const studentDiscountPlaces: MapPlace[] = [
   {
     id: 6001,
@@ -659,6 +665,7 @@ export const mapPlaces: MapPlace[] = [
   ...photoMapPlaces,
   ...familyMapPlaces,
   ...moreFamilyMapPlaces,
+  ...verifiedFamilyExpansion,
   ...studentDiscountPlaces,
   ...safetyMapPlaces,
 ];
