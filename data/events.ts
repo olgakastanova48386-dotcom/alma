@@ -24,4 +24,4 @@ export const events: AlmaEvent[] = [
 ];
 
 export function moscowDate(){const parts=new Intl.DateTimeFormat("en-US",{timeZone:"Europe/Moscow",year:"numeric",month:"2-digit",day:"2-digit"}).formatToParts(new Date());const get=(type:string)=>parts.find((part)=>part.type===type)?.value||"";return `${get("year")}-${get("month")}-${get("day")}`}
-export function isEventActive(event:AlmaEvent,today=moscowDate()){const todayKey=Number(today.replaceAll("-",""));const endKey=event.endsAt?Number(event.endsAt.replaceAll("-","")):Infinity;return !event.endsAt||endKey>=todayKey}
+export function isEventActive(event:AlmaEvent,today=moscowDate()){if(!event.endsAt)return true;const todayKey=Number(today.split("-").join(""));const endKey=Number(event.endsAt.split("-").join(""));return Number.isFinite(todayKey)&&Number.isFinite(endKey)&&endKey>=todayKey}
