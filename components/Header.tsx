@@ -47,6 +47,18 @@ function MapIcon() {
   );
 }
 
+function PawIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" className="h-[21px] w-[21px]" fill="currentColor">
+      <circle cx="7" cy="8" r="2.2" />
+      <circle cx="12" cy="5.8" r="2.2" />
+      <circle cx="17" cy="8" r="2.2" />
+      <circle cx="5" cy="12.5" r="2" />
+      <path d="M12 10.5c-3.2 0-5.8 2.3-5.8 5.1 0 2 1.5 3.4 3.4 3.4.9 0 1.6-.4 2.4-.4s1.5.4 2.4.4c1.9 0 3.4-1.4 3.4-3.4 0-2.8-2.6-5.1-5.8-5.1Z" />
+    </svg>
+  );
+}
+
 function HeartIcon() {
   return (
     <svg
@@ -146,6 +158,17 @@ export default function Header() {
                     className="flex h-9 w-9 items-center justify-center rounded-full bg-black/[.04]"
                   >
                     <MapIcon />
+                  </Link>
+                )}
+
+                {!isCurrentRoute(pathname, "/dog-friendly") && (
+                  <Link
+                    href="/dog-friendly"
+                    aria-label="С собакой"
+                    title="С собакой"
+                    className="flex h-9 w-9 items-center justify-center rounded-full bg-black/[.04]"
+                  >
+                    <PawIcon />
                   </Link>
                 )}
 
