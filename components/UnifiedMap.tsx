@@ -215,6 +215,9 @@ export default function UnifiedMap() {
 
   useEffect(() => {
     if (!ready || !map.current) return;
+    const currentMap = map.current;
+    const center = currentMap.getCenter();
+    const zoom = currentMap.getZoom();
     markers.current.forEach((m) => m.marker.remove());
     markers.current = [];
     filtered.forEach((p) => {
@@ -227,7 +230,8 @@ export default function UnifiedMap() {
       });
       markers.current.push({ id: p.id, marker });
     });
-  }, [filtered, ready, router]);
+    if (!placeId) currentMap.setView(center, zoom, { animate: false });
+  }, [filtered, ready, router, placeId]);
 
   const focus = (p: MapPlace) => {
     setSelected(p.id);
