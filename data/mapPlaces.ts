@@ -397,6 +397,11 @@ const novoselyeActivities: MapPlace[] = [
   { id:8029,name:"Avanti",category:"Спорт",mood:"Активно",budget:"Цена уточняется",company:["Один","Пара","Семья"],duration:"1–2 часа",image:"",lat:59.8079,lng:30.0718,why:"★ 4.6 / 5 · 45 оценок · танцевальная школа",address:"Красносельское ш., 16, Новоселье",price:"Цена уточняется",priceNote:"Танцевальные занятия",detailHref:"/place/8029",rating:4.6,ratingScale:5,ratingCount:45,ratingSource:"Яндекс Карты" },
 ];
 
+const novoselyeMoreRatedPlaces: MapPlace[] = [
+  { id:8030,name:"Кидкорт · Адмиралтейская",category:"Спорт",mood:"Активно",budget:"Цена уточняется",company:["Семья"],duration:"1–2 часа",image:"",lat:59.8112,lng:30.0839,why:"★ 4.8 / 5 · 18 оценок · проходит порог ALMA",address:"Адмиралтейская ул., 6, Новоселье, Ленинградская область",price:"Цена уточняется",priceNote:"Детский клуб физического развития",detailHref:"/place/8030",rating:4.8,ratingScale:5,ratingCount:18,ratingSource:"2ГИС" },
+  { id:8031,name:"Джеб",category:"Спорт",mood:"Активно",budget:"Цена уточняется",company:["Один","Друзья"],duration:"1–2 часа",image:"",lat:59.8108,lng:30.0807,why:"★ 4.6 / 5 · проходит порог ALMA",address:"Питерский пр., 7, Новоселье, Ленинградская область",price:"Цена уточняется",priceNote:"Спортивный клуб",detailHref:"/place/8031",rating:4.6,ratingScale:5,ratingCount:7,ratingSource:"2ГИС" },
+  { id:8032,name:"СелебриУм",category:"Развлечения",mood:"С семьёй",budget:"Цена уточняется",company:["Семья"],duration:"1–2 часа",image:"",lat:59.8095,lng:30.0731,why:"★ 4.5 / 5 · 21 оценка · проходит порог ALMA",address:"Красносельское ш., 2, ОДЦ «Графит», Новоселье",price:"Цена уточняется",priceNote:"Детские занятия",detailHref:"/place/8032",rating:4.5,ratingScale:5,ratingCount:21,ratingSource:"2ГИС" },
+];
 const studentDiscountPlaces: MapPlace[] = [
   {
     id: 6001,
@@ -722,6 +727,7 @@ export const mapPlaces: MapPlace[] = [
   ...familyFinalSeven,
   ...novoselyeRatedPlaces,
   ...novoselyeActivities,
+  ...novoselyeMoreRatedPlaces,
   ...studentDiscountPlaces,
   ...safetyMapPlaces,
 ];
