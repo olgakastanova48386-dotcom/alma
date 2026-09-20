@@ -386,6 +386,17 @@ const novoselyeRatedPlaces: MapPlace[] = [
   { id:8021,name:"Будет Вкусно",category:"Кафе",mood:"Вкусно поесть",budget:"Цена уточняется",company:["Один","Пара","Друзья","Семья"],duration:"До 1 часа",image:"",lat:59.8098,lng:30.0778,why:"★ 4.8 / 5 · подходит по рейтингу ALMA",address:"Новоселье, Новоселье, Ленинградская область",price:"Цена уточняется",priceNote:"Средний чек уточняется",detailHref:"/place/8021",rating:4.8,ratingScale:5,ratingCount:0,ratingSource:"Яндекс Карты" },
 ];
 
+const novoselyeActivities: MapPlace[] = [
+  { id:8022,name:"New Gym",category:"Спорт",mood:"Активно",budget:"Цена уточняется",company:["Один","Пара","Друзья","Семья"],duration:"1–2 часа",image:"",lat:59.8101,lng:30.0819,why:"★ 5.0 / 5 · 103 оценки · подходит по рейтингу ALMA",address:"Адмиралтейская ул., 1, Новоселье, Ленинградская область",price:"Цена уточняется",priceNote:"Абонемент / разовое посещение",detailHref:"/place/8022",rating:5,ratingScale:5,ratingCount:103,ratingSource:"Яндекс Карты" },
+  { id:8023,name:"Кидкорт",category:"Развлечения",mood:"Активно",budget:"Цена уточняется",company:["Семья"],duration:"1–2 часа",image:"",lat:59.8089,lng:30.0767,why:"★ 5.0 / 5 · 218 оценок · детский спортивно-развлекательный центр",address:"Красносельское ш., 9, ТЦ «Центральный», Новоселье",price:"Цена уточняется",priceNote:"Занятия и посещение",detailHref:"/place/8023",rating:5,ratingScale:5,ratingCount:218,ratingSource:"Яндекс Карты" },
+  { id:8024,name:"Etalon Space",category:"Спорт",mood:"Активно",budget:"Цена уточняется",company:["Один","Пара","Семья"],duration:"1–2 часа",image:"",lat:59.8089,lng:30.0768,why:"★ высокий рейтинг · 271 отзыв · фитнес, йога и танцы",address:"Красносельское ш., 9, ТЦ «Центральный», Новоселье",price:"Цена уточняется",priceNote:"Фитнес и занятия",detailHref:"/place/8024",rating:5,ratingScale:5,ratingCount:271,ratingSource:"Яндекс Карты" },
+  { id:8025,name:"Ледовая арена Новоселье",category:"Спорт",mood:"Активно",budget:"Цена уточняется",company:["Один","Пара","Друзья","Семья"],duration:"1–2 часа",image:"",lat:59.8098,lng:30.0855,why:"★ 4.7 / 5 · 706 оценок · проходит порог ALMA",address:"Центральная ул., 5, Новоселье, Ленинградская область",price:"Цена уточняется",priceNote:"Каток",detailHref:"/place/8025",rating:4.7,ratingScale:5,ratingCount:706,ratingSource:"Google" },
+  { id:8026,name:"ФШ Юниор Новоселье",category:"Спорт",mood:"Активно",budget:"Цена уточняется",company:["Семья"],duration:"1–2 часа",image:"",lat:59.8097,lng:30.0854,why:"★ 5.0 / 5 · 20 оценок · футбольная школа",address:"Центральная ул., строение 5, Новоселье, Ленинградская область",price:"Цена уточняется",priceNote:"Спортивные занятия",detailHref:"/place/8026",rating:5,ratingScale:5,ratingCount:20,ratingSource:"Google" },
+  { id:8027,name:"Центр детского развития 1+1",category:"Развлечения",mood:"С семьёй",budget:"Цена уточняется",company:["Семья"],duration:"1–2 часа",image:"",lat:59.8092,lng:30.0748,why:"★ 5.0 / 5 · проходит порог ALMA",address:"Красносельское ш., 6, Новоселье",price:"Цена уточняется",priceNote:"Детские занятия",detailHref:"/place/8027",rating:5,ratingScale:5,ratingCount:7,ratingSource:"Google" },
+  { id:8028,name:"Saint Ghetto",category:"Спорт",mood:"Активно",budget:"Цена уточняется",company:["Один","Друзья"],duration:"1–2 часа",image:"",lat:59.8079,lng:30.0719,why:"★ 4.9 / 5 · спортивный зал · Хорошее место 2026",address:"Красносельское ш., 16, Новоселье",price:"Цена уточняется",priceNote:"Спортивный зал",detailHref:"/place/8028",rating:4.9,ratingScale:5,ratingCount:25,ratingSource:"Яндекс Карты" },
+  { id:8029,name:"Avanti",category:"Спорт",mood:"Активно",budget:"Цена уточняется",company:["Один","Пара","Семья"],duration:"1–2 часа",image:"",lat:59.8079,lng:30.0718,why:"★ 4.6 / 5 · 45 оценок · танцевальная школа",address:"Красносельское ш., 16, Новоселье",price:"Цена уточняется",priceNote:"Танцевальные занятия",detailHref:"/place/8029",rating:4.6,ratingScale:5,ratingCount:45,ratingSource:"Яндекс Карты" },
+];
+
 const studentDiscountPlaces: MapPlace[] = [
   {
     id: 6001,
@@ -710,6 +721,7 @@ export const mapPlaces: MapPlace[] = [
   ...officialFamilyPlaces,
   ...familyFinalSeven,
   ...novoselyeRatedPlaces,
+  ...novoselyeActivities,
   ...studentDiscountPlaces,
   ...safetyMapPlaces,
 ];
