@@ -325,7 +325,7 @@ export default function UnifiedMap() {
         </div>
         <div className="flex snap-x snap-mandatory gap-3 overflow-x-auto p-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:p-4">
           {filtered.length === 0 && <div className="w-full rounded-[18px] bg-[#faf8f5] p-4 text-sm leading-6 text-neutral-500">По этим фильтрам пока ничего не найдено. Попробуй изменить параметры.</div>}
-          {filtered.map((p) => <article key={p.id} className={`w-[82vw] max-w-[330px] shrink-0 snap-center overflow-hidden rounded-[22px] border transition-all duration-300 ${selected === p.id ? "border-black bg-black text-white shadow-lg" : "border-black/5 bg-[#faf8f5] hover:border-black/15"}`}>
+          {filtered.map((p) => <article key={p.id} className={`w-[82vw] max-w-[330px] shrink-0 self-start snap-center overflow-hidden rounded-[22px] border transition-all duration-300 ${selected === p.id ? "border-black bg-black text-white shadow-lg" : "border-black/5 bg-[#faf8f5] hover:border-black/15"}`}>
               <button onClick={() => selected === p.id ? router.push(p.detailHref) : focus(p)} className="w-full text-left">
                 {p.image ? <div className="relative h-28 sm:h-36 w-full bg-[#ece8e2]"><img src={p.image} alt={p.name} className="absolute inset-0 h-full w-full object-cover" loading="lazy" /></div> : <div className="h-20 sm:h-24 w-full bg-gradient-to-br from-[#e9dfd1] via-[#f5eee5] to-[#ddd1c2] flex items-center justify-center text-3xl">{emoji(p)}</div>}
                 <div className="p-3.5 sm:p-4">
