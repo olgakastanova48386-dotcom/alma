@@ -1345,7 +1345,7 @@ export const places: Place[] = [
     budget: "300–1500 ₽",
     company: ["Один", "Пара", "Друзья", "Семья"],
     duration: "1–2 часа",
-    image: "https://commons.wikimedia.org/wiki/Special:Redirect/file/Russian_Museum_SPB.jpg",
+    image: "https://triptospb.ru/wp-content/uploads/2023/06/Russian_museum_1.jpg",
     lat: 59.9388,
     lng: 30.3324,
     description: "Место для самостоятельного знакомства с Петербургом и готовых маршрутов ALMA.",
