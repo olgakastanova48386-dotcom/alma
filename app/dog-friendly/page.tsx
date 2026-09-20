@@ -33,21 +33,19 @@ export default function DogFriendlyPage() {
   return (
     <main className="min-h-screen bg-[#f7f4ef] pt-32 sm:pt-36 pb-24 text-black">
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="rounded-[36px] bg-[#dfe8d8] p-7 sm:p-10 lg:p-14">
+        <div className="rounded-[30px] bg-[#dfe8d8] px-7 py-6 sm:px-10 sm:py-7 lg:px-11 lg:py-8">
           <p className="text-xs uppercase tracking-[0.22em] text-neutral-600">
             ALMA · Dog Friendly
           </p>
-          <h1 className="mt-4 max-w-3xl text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[0.96]">
-            Петербург
-            <br />
-            вместе с собакой 🐾
+          <h1 className="mt-3 max-w-4xl text-4xl sm:text-5xl lg:text-[52px] font-bold tracking-tight leading-[1.02]">
+            Петербург вместе с собакой 🐾
           </h1>
-          <p className="mt-6 max-w-2xl text-base sm:text-lg text-neutral-700 leading-7">
+          <p className="mt-4 max-w-3xl text-base sm:text-[17px] text-neutral-700 leading-6">
             Проверенные места, куда можно прийти вместе с питомцем. В ALMA
             публикуем только заведения с подтверждённым рейтингом от 4,5 до 5,0.
           </p>
         </div>
-        <div className="mt-8 rounded-[28px] bg-white border border-black/5 p-5 sm:p-6">
+        <div className="mt-6 rounded-[28px] bg-white border border-black/5 p-5 sm:p-6">
           <div className="flex flex-col md:flex-row gap-4">
             <AlmaSelect
               label="Тип места"
