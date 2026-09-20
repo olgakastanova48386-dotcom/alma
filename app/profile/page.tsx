@@ -62,8 +62,7 @@ export default function ProfilePage() {
   return (
     <main className="min-h-screen bg-[#f7f4ef] pt-32 sm:pt-36 pb-24 px-4">
       <div className="max-w-3xl mx-auto px-1 sm:px-0">
-        <p className="text-[9px] sm:text-xs uppercase tracking-[0.16em] sm:tracking-[0.22em] text-neutral-400">ALMA · Аккаунт</p>
-        <div className="mt-2 sm:mt-5 rounded-[22px] sm:rounded-[34px] bg-white border border-black/5 shadow-sm p-4 sm:p-10">
+        <div className="mt-0 rounded-[22px] sm:rounded-[34px] bg-white border border-black/5 shadow-sm p-4 sm:p-10">
           <div className="flex items-center gap-3 sm:gap-5">
             <div className="h-11 w-11 sm:h-20 sm:w-20 shrink-0 rounded-full bg-black text-white flex items-center justify-center text-lg sm:text-3xl font-semibold uppercase">{user.name.trim().charAt(0) || "A"}</div>
             <div>
