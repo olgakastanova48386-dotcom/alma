@@ -7,7 +7,7 @@ import UnifiedMap from "@/components/UnifiedMap";
 const places = [
   { title: "Русский музей", category: "Музей", image: "/images/русский музей.jpg" },
   { title: "Петергоф", category: "Музей-заповедник", image: "/images/петергоф.jpg" },
-  { title: "Государственный Эрмитаж", category: "Музей", image: "/images/эрмитаж.jpg" },
+  { title: "Эрмитаж", category: "Музей", image: "/images/эрмитаж.jpg" },
   { title: "Спас на Крови", category: "Архитектура", image: "/images/спас на крови.jpg" },
   { title: "Петропавловская крепость", category: "История", image: "/place-images/62.jpg" },
   { title: "Исаакиевский собор", category: "Архитектура", image: "/images/иссакиевский собор.jpg" },
@@ -27,7 +27,7 @@ const photozones = [
 const placeIds: Record<string, number> = {
   "Русский музей": 64,
   "Петергоф": 114,
-  "Государственный Эрмитаж": 63,
+  "Эрмитаж": 63,
   "Спас на Крови": 71,
   "Петропавловская крепость": 62,
   "Исаакиевский собор": 72,
