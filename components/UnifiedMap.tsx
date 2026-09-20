@@ -322,12 +322,12 @@ export default function UnifiedMap() {
         </div>
       </div>
 
-      <div className="mt-5 overflow-hidden rounded-[26px] border border-black/5 bg-white/90 shadow-[0_18px_55px_-35px_rgba(0,0,0,.35)] backdrop-blur-xl sm:rounded-[30px]">
-        <div className="flex items-end justify-between gap-4 border-b border-black/5 px-4 pb-3 pt-4 sm:px-6 sm:pb-4 sm:pt-5">
+      <div className="mt-5 rounded-[26px] sm:overflow-hidden sm:border sm:border-black/5 sm:bg-white/90 sm:shadow-[0_18px_55px_-35px_rgba(0,0,0,.35)] sm:backdrop-blur-xl sm:rounded-[30px]">
+        <div className="flex items-end justify-between gap-4 px-1 pb-2 pt-1 sm:border-b sm:border-black/5 sm:px-6 sm:pb-4 sm:pt-5">
           <div><p className="font-semibold text-[20px] sm:text-lg">{category === "⚡ Драйв" ? "Куда за драйвом" : category === "👶 Для малыша" ? "С малышом" : "Подходящие места"}</p><p className="mt-1 text-[14px] text-neutral-500 sm:text-sm">Листай карточки — выбранные фильтры уже применены.</p></div>
           <span className="shrink-0 rounded-full bg-black px-3 py-1.5 text-xs font-semibold text-white">{filtered.length}</span>
         </div>
-        <div className="flex snap-x snap-mandatory gap-3 overflow-x-auto p-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:p-4">
+        <div className="flex snap-x snap-mandatory items-start gap-3 overflow-x-auto px-0 pb-1 pt-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:p-4">
           {filtered.length === 0 && <div className="w-full rounded-[18px] bg-[#faf8f5] p-4 text-sm leading-6 text-neutral-500">По этим фильтрам пока ничего не найдено. Попробуй изменить параметры.</div>}
           {filtered.map((p) => <article key={p.id} className={`w-[82vw] max-w-[330px] shrink-0 self-start snap-center overflow-hidden rounded-[22px] border transition-all duration-300 ${selected === p.id ? "border-black bg-black text-white shadow-lg" : "border-black/5 bg-[#faf8f5] hover:border-black/15"}`}>
               <button onClick={() => selected === p.id ? router.push(p.detailHref) : focus(p)} className="w-full text-left">
