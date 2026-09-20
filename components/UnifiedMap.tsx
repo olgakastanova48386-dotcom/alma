@@ -67,9 +67,10 @@ export default function UnifiedMap() {
   const [company, setCompany] = useState("Компания");
   const [duration, setDuration] = useState("Длительность");
   const [studentOnly, setStudentOnly] = useState(false);
+  const [isFemale, setIsFemale] = useState(false);
   const [moreCategoriesOpen, setMoreCategoriesOpen] = useState(false);
 
-  const categories = ["Все", "Кофейня", "Ресторан", "🎓 Скидка студенту", "🛡 Безопасное место", "Dog Friendly", "👶 Для малыша", "⚡ Драйв", "Другие места"];
+  const categories = ["Все", "Кофейня", "Ресторан", "🎓 Скидка студенту", ...(isFemale ? ["🛡 Безопасное место"] : []), "Dog Friendly", "👶 Для малыша", "⚡ Драйв", "Другие места"];
   const driveTags = ["Все", "Активный отдых", "Матчи", "Живая музыка", "Рок", "С друзьями"];
   const moods = ["Настроение", ...Array.from(new Set(mapPlaces.map((place) => place.mood))).sort()];
   const budgets = ["Бюджет", "Бесплатно", "От 1000 до 2500 ₽", "От 3000 до 5000 ₽", "От 5000 ₽"];
@@ -78,6 +79,7 @@ export default function UnifiedMap() {
   const placeId = params.get("place");
 
   const filtered = useMemo(() => mapPlaces.filter((p) => {
+    if (p.safePlace && !isFemale) return false;
     const cat = category === "Все" ||
       (category === "🎓 Скидка студенту" && Boolean(p.studentDiscount)) ||
       (category === "🛡 Безопасное место" && Boolean(p.safePlace)) ||
@@ -101,7 +103,14 @@ export default function UnifiedMap() {
       (!params.get("budget") || p.budget === params.get("budget")) &&
       (!params.get("company") || p.company.includes(params.get("company")!)) &&
       (!params.get("duration") || p.duration === params.get("duration"));
-  }), [budget, category, company, driveTag, duration, mood, params, studentOnly]);
+  }), [budget, category, company, driveTag, duration, isFemale, mood, params, studentOnly]);
+
+  useEffect(() => {
+    fetch("/api/auth/me", { cache: "no-store", credentials: "include" })
+      .then((response) => response.ok ? response.json() : { user: null })
+      .then((data) => setIsFemale(data?.user?.gender === "female"))
+      .catch(() => setIsFemale(false));
+  }, []);
 
   useEffect(() => {
     if (!document.querySelector('link[data-leaflet-css="true"]')) {
