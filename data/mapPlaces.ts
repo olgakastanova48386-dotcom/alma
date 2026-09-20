@@ -345,6 +345,14 @@ const verifiedFamilyExpansion: MapPlace[] = [
   { id:7016,name:"Гуси-Лебеди",category:"Ресторан",mood:"Вкусно поесть",budget:"≈ 1 500–3 000 ₽",company:["Пара","Друзья","Семья"],duration:"1–2 часа",image:"",lat:60.0087,lng:30.3003,why:"👶 Оборудованная детская комната с няней",address:"Коломяжский проспект, Санкт-Петербург",price:"≈ 1 500–3 000 ₽",priceNote:"Средний чек",detailHref:"/place/7016",babyCare:"Детская комната",babyCareDetails:["Детская комната","Няня","Развивающие занятия"],babyCareVerifiedAt:"20.09.2026" },
   { id:7017,name:"Большая кухня · Галерея",category:"Ресторан",mood:"Вкусно поесть",budget:"≈ 1 500–3 000 ₽",company:["Пара","Друзья","Семья"],duration:"1–2 часа",image:"",lat:59.9277,lng:30.3603,why:"👶 Просторная детская комната",address:"Лиговский пр., 30А, ТРЦ «Галерея»",price:"≈ 1 500–3 000 ₽",priceNote:"Средний чек",detailHref:"/place/7017",babyCare:"Детская комната",babyCareDetails:["Детская комната"],babyCareVerifiedAt:"20.09.2026" },
 ];
+const officialFamilyPlaces: MapPlace[] = [
+  { id:7018,name:"Маймун",category:"Ресторан",mood:"Вкусно поесть",budget:"≈ 1 000–5 000 ₽",company:["Пара","Друзья","Семья"],duration:"1–2 часа",image:"",lat:59.9388,lng:30.2145,why:"👶 Отдельная детская комната и детское меню",address:"ул. Кораблестроителей, 14",price:"≈ 1 000–5 000 ₽",priceNote:"Средний чек",detailHref:"/place/7018",babyCare:"Детская комната",babyCareDetails:["Детская комната","Детское меню","Мастер-классы"],babyCareVerifiedAt:"20.09.2026" },
+  { id:7019,name:"Сули Гули",category:"Ресторан",mood:"Вкусно поесть",budget:"≈ 2 000–3 000 ₽",company:["Пара","Друзья","Семья"],duration:"1–2 часа",image:"",lat:59.83195,lng:30.50085,why:"👶 Детская комната с няней и пеленальная комната",address:"Тепловозная ул., 31, ТРК «Порт Находка», 4 этаж",price:"≈ 2 000–3 000 ₽",priceNote:"Средний чек",detailHref:"/place/7019",babyCare:"Комната матери и ребёнка",babyCareDetails:["Детская комната","Няня","Пеленальная комната","Детское меню"],babyCareVerifiedAt:"20.09.2026" },
+  { id:7020,name:"Ларисуваннухочу",category:"Ресторан",mood:"Вкусно поесть",budget:"≈ 1 500–3 000 ₽",company:["Пара","Друзья","Семья"],duration:"1–2 часа",image:"",lat:60.012,lng:30.4037,why:"👶 Просторная детская комната с аниматором",address:"пр. Науки, 14, корп. 1, лит. А",price:"≈ 1 500–3 000 ₽",priceNote:"Средний чек",detailHref:"/place/7020",babyCare:"Детская комната",babyCareDetails:["Детская комната","Аниматор","Детское меню","Мастер-классы"],babyCareVerifiedAt:"20.09.2026" },
+  { id:7021,name:"Двор Помидор",category:"Ресторан",mood:"Вкусно поесть",budget:"≈ 1 500–3 000 ₽",company:["Пара","Друзья","Семья"],duration:"1–2 часа",image:"",lat:59.868921,lng:30.350265,why:"👶 Детская и пеленальная комнаты, стульчики для кормления",address:"пр. Космонавтов, 14, ТРК «Питер Радуга», атриум, 2 этаж",price:"≈ 1 500–3 000 ₽",priceNote:"Средний чек",detailHref:"/place/7021",babyCare:"Комната матери и ребёнка",babyCareDetails:["Детская комната","Пеленальная комната","Детские стульчики","Няня","Детское меню"],babyCareVerifiedAt:"20.09.2026" },
+  { id:7022,name:"Баклажан · Горьковская",category:"Ресторан",mood:"Вкусно поесть",budget:"≈ 1 500–3 000 ₽",company:["Пара","Друзья","Семья"],duration:"1–2 часа",image:"",lat:59.956185,lng:30.314743,why:"👶 Большая детская комната с сухим бассейном",address:"Александровский парк, 4/3, лит. А, ТЦ «Великан Парк», 4 этаж",price:"≈ 1 500–3 000 ₽",priceNote:"Средний чек",detailHref:"/place/7022",babyCare:"Детская комната",babyCareDetails:["Детская комната","Сухой бассейн","Детское меню","Мастер-классы"],babyCareVerifiedAt:"20.09.2026" },
+  { id:7023,name:"Москва",category:"Ресторан",mood:"Вкусно поесть",budget:"≈ 2 000–4 000 ₽",company:["Пара","Друзья","Семья"],duration:"1–2 часа",image:"",lat:59.9317,lng:30.3592,why:"👶 Большая тематическая детская комната и детское меню",address:"Невский пр., 114, ТК «Невский центр», 6 этаж",price:"≈ 2 000–4 000 ₽",priceNote:"Средний чек",detailHref:"/place/7023",babyCare:"Детская комната",babyCareDetails:["Большая детская комната","Детское меню","Мастер-классы"],babyCareVerifiedAt:"20.09.2026" },
+];
 const studentDiscountPlaces: MapPlace[] = [
   {
     id: 6001,
@@ -666,6 +674,7 @@ export const mapPlaces: MapPlace[] = [
   ...familyMapPlaces,
   ...moreFamilyMapPlaces,
   ...verifiedFamilyExpansion,
+  ...officialFamilyPlaces,
   ...studentDiscountPlaces,
   ...safetyMapPlaces,
 ];
