@@ -1,6 +1,6 @@
 import { places as editorialPlaces } from "@/data/places";
 import { coffeePlaces } from "@/data/coffeePlaces";
-import { restaurantPlaces } from "@/data/restaurantPlaces";
+import { confirmedSafetyPlaces, restaurantPlaces } from "@/data/restaurantPlaces";
 import { dogFriendlyPlaces } from "@/data/dogFriendlyPlaces";
 import { drivePlaces } from "@/data/drivePlaces";
 
@@ -499,6 +499,75 @@ const studentDiscountPlaces: MapPlace[] = [
   },
 ];
 
+const safetyCoordinates: Record<string, readonly [number, number]> = {
+  "safe-bar-is-murino": [60.057817, 30.435288],
+  "safe-morvax-murino": [59.917218, 30.346528],
+  "safe-energia-v-rukakh-kudrovo": [59.916946, 30.517235],
+  "safe-dom-kultury-kudrovo": [59.915571, 30.50376],
+  "safe-dogs-haus-kudrovo": [59.90984, 30.509359],
+  "safe-peterburgskie-pekarni-kudrovo": [59.911714, 30.520148],
+  "safe-netrezvaya-utka-kudrovo": [59.907937, 30.51391],
+  "safe-lv-coffee-kudrovo": [59.907852, 30.517112],
+  "safe-vkafe-stroiteley-kudrovo": [59.909203, 30.521836],
+  "safe-osipov-pro-kudrovo": [59.909204, 30.522348],
+  "safe-vkafe-stolichnaya-kudrovo": [59.904512, 30.517645],
+  "safe-mozhno-vse-kudrovo": [59.902848, 30.52296],
+  "safe-gorod-koshek-kudrovo": [59.904561, 30.519475],
+  "safe-kofe-da-yanino": [59.952299, 30.577386],
+  "safe-lapa-lyubvi-murino": [59.802929, 30.375507],
+  "safe-archer-wolf-novoselye": [59.809423, 30.094564],
+  "safe-beerday-novoselye": [59.808742, 30.086739],
+  "safe-gio-bistro-novoselye": [59.810205, 30.083569],
+  "safe-domashniy-ochag-novoselye": [59.808785, 30.073827],
+  "safe-alibi-novoselye": [59.81048, 30.078684],
+  "safe-peterburgskie-pekarni-novoselye": [59.811895, 30.080657],
+  "safe-atom-gaming-novoselye": [59.81258, 30.083252],
+  "safe-vysokiy-gradus-murino": [60.041103, 30.453319],
+  "safe-hm-wait-lounge-murino": [60.053381, 30.447157],
+  "safe-pixel-cyber-lounge-murino": [60.053422, 30.451907],
+  "safe-ekaterina-islamova-beauty-murino": [60.052514, 30.446576],
+  "safe-kimori-murino": [60.051942, 30.447594],
+  "safe-hairisma-murino": [60.052027, 30.431578],
+  "safe-osipov-pro-murino": [60.052051, 30.427758],
+  "safe-mesto-bistro-murino": [60.054804, 30.432162],
+  "safe-hairisma-manikur-murino": [60.052405, 30.430581],
+  "safe-velar-murino": [60.055969, 30.435075],
+  "safe-malen-fit-murino": [60.056712, 30.432492],
+  "safe-noce-pizza-wine-murino": [60.056456, 30.43817],
+  "safe-restobar-1715-murino": [60.057246, 30.434698],
+  "safe-golodnye-serdca-murino": [60.057528, 30.435072],
+  "safe-par-studio-1-murino": [60.058364, 30.43402],
+  "safe-alex-coffee-murino": [60.058, 30.436736],
+  "safe-lavegint-murino": [60.058814, 30.433231],
+};
+
+const safetyMapPlaces: MapPlace[] = confirmedSafetyPlaces.flatMap((place, index) => {
+  const coordinates = safetyCoordinates[place.id];
+  if (!coordinates) return [];
+  const [lat, lng] = coordinates;
+  return [{
+    id: 7001 + index,
+    name: place.name,
+    category: place.category,
+    mood: "Спокойно",
+    budget: "Бесплатно",
+    company: ["Один", "Пара", "Друзья"],
+    duration: "До 1 часа",
+    image: "",
+    lat,
+    lng,
+    why: "Подтверждённая точка проекта «Ключевое слово».",
+    address: place.address,
+    price: "Бесплатно",
+    priceNote: "Помощь оказывают бесплатно",
+    detailHref: `/place/${7001 + index}`,
+    safePlace: true,
+    safePlaceCode: place.safetySupport.codePhrase,
+    safePlaceHelp: place.safetySupport.helpText,
+    safePlaceVerifiedAt: place.safetySupport.verifiedAt,
+  }];
+});
+
 export const mapPlaces: MapPlace[] = [
   ...basePlaces,
   ...coffeeMapPlaces,
@@ -507,4 +576,5 @@ export const mapPlaces: MapPlace[] = [
   ...driveMapPlaces,
   ...photoMapPlaces,
   ...studentDiscountPlaces,
+  ...safetyMapPlaces,
 ];
