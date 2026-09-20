@@ -5,13 +5,13 @@ import { useRouter } from "next/navigation";
 import UnifiedMap from "@/components/UnifiedMap";
 
 const places = [
-  { title: "Дворцовая площадь", category: "Архитектура", image: "/images/isaac.jpg" },
-  { title: "Ботанический сад", category: "Прогулка", image: "/images/botanic.jpg" },
-  { title: "Поцелуев мост", category: "Романтика", image: "/images/kisses-bridge.jpg" },
-  { title: "Особняк Демидова", category: "Архитектура", image: "/images/demidov.jpg" },
-  { title: "Академия Штиглица", category: "Искусство", image: "/images/shtiglitz.jpg" },
-  { title: "Лахта Центр", category: "Современный Петербург", image: "/images/lahta-hero.jpg" },
-  { title: "Водная прогулка", category: "Развлечения", image: "/images/hero.jpg" },
+  { title: "Русский музей", category: "Музей", image: "https://commons.wikimedia.org/wiki/Special:Redirect/file/Russian_Museum_SPB.jpg" },
+  { title: "Петергоф", category: "Музей-заповедник", image: "/place-images/114.jpg" },
+  { title: "Государственный Эрмитаж", category: "Музей", image: "/place-images/63.jpg" },
+  { title: "Спас на Крови", category: "Архитектура", image: "https://commons.wikimedia.org/wiki/Special:Redirect/file/Church_of_the_Savior_on_Blood_SPB.jpg" },
+  { title: "Петропавловская крепость", category: "История", image: "https://www.spbmuseum.ru/uploads/images/2024/petropavlovskaya-krepost.jpg" },
+  { title: "Исаакиевский собор", category: "Архитектура", image: "/place-images/72.jpg" },
+  { title: "Дворцовая площадь", category: "Архитектура", image: "/place-images/1.jpg" },
   { title: "Новая Голландия", category: "Отдых", image: "/images/new-holland.jpg" },
 ];
 
@@ -25,13 +25,13 @@ const photozones = [
 ];
 
 const placeIds: Record<string, number> = {
+  "Русский музей": 64,
+  "Петергоф": 114,
+  "Государственный Эрмитаж": 63,
+  "Спас на Крови": 71,
+  "Петропавловская крепость": 62,
+  "Исаакиевский собор": 72,
   "Дворцовая площадь": 1,
-  "Ботанический сад": 2,
-  "Поцелуев мост": 3,
-  "Особняк Демидова": 4,
-  "Академия Штиглица": 5,
-  "Лахта Центр": 6,
-  "Водная прогулка": 7,
   "Новая Голландия": 8,
   "Ракета · Кожевенная линия, 27": 5002,
   "Кафе Зингер": 5003,
