@@ -5,7 +5,7 @@ on:
     branches: [main]
   workflow_dispatch:
 
-# Automatic production deployment for ALMA — restored 2026-09-20 · redeploy dog hero
+# Automatic production deployment for ALMA — restored 2026-09-20 · deploy admin stats route
 
 concurrency:
   group: alma-production
