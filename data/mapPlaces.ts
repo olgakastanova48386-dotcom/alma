@@ -218,8 +218,7 @@ const photoMapPlaces: MapPlace[] = [
     budget: "Бесплатно",
     company: ["Один", "Пара", "Друзья"],
     duration: "До 1 часа",
-    image:
-      "https://cdnstatic.rg.ru/uploads/images/2024/11/12/photo_2024-11-11_17-14-13_ac3.jpg",
+    image: "/place-images/5001.jpg",
     lat: 59.944086,
     lng: 30.357996,
     why: "Воздушные галереи, исторический двор и выразительная архитектура.",
