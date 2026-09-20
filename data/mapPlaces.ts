@@ -428,6 +428,12 @@ const southWestCorridorMorePlaces: MapPlace[] = [
   { id:8121,name:"Не горюй",category:"Ресторан",mood:"Вкусно поесть",budget:"≈ 3 000–4 000 ₽",company:["Пара","Друзья","Семья"],duration:"1–2 часа",image:"",lat:59.8540,lng:30.1738,why:"★ 4.5 / 5 · 362 отзыва · проходит порог ALMA",address:"ул. Адмирала Трибуца, 7 лит. А, Санкт-Петербург",price:"≈ 3 000–4 000 ₽",priceNote:"Средний чек",detailHref:"/place/8121",rating:4.5,ratingScale:5,ratingCount:362,ratingSource:"Google" },
   { id:8122,name:"Шаверма Просто Вася",category:"Фастфуд",mood:"Вкусно поесть",budget:"Цена уточняется",company:["Один","Пара","Друзья"],duration:"До 1 часа",image:"",lat:59.8506,lng:30.1530,why:"★ 4.7 / 5 · 294 оценки · проходит порог ALMA",address:"Петергофское ш., 51Н, Санкт-Петербург",price:"Цена уточняется",priceNote:"Средний чек уточняется",detailHref:"/place/8122",rating:4.7,ratingScale:5,ratingCount:294,ratingSource:"Totadres" },
 ];
+const southWestGreenCorridorPlaces: MapPlace[] = [
+  { id:8123,name:"Демидовский парк",category:"Парк",mood:"Погулять",budget:"Бесплатно",company:["Один","Пара","Друзья","Семья"],duration:"1–2 часа",image:"",lat:59.8338,lng:30.1748,why:"Исторический пейзажный парк XVIII века на Петергофской дороге",address:"Сосновая Поляна, Санкт-Петербург",price:"Бесплатно",priceNote:"Прогулка",detailHref:"/place/8123" },
+  { id:8124,name:"Полежаевский парк",category:"Парк",mood:"Погулять",budget:"Бесплатно",company:["Один","Пара","Друзья","Семья"],duration:"1–2 часа",image:"",lat:59.8408,lng:30.1907,why:"Большой зелёный парк на пути от Стрельны к городской части Петербурга",address:"Красносельский район, Санкт-Петербург",price:"Бесплатно",priceNote:"Прогулка",detailHref:"/place/8124" },
+  { id:8125,name:"Южно-Приморский парк",category:"Парк",mood:"Погулять",budget:"Бесплатно",company:["Один","Пара","Друзья","Семья"],duration:"1–2 часа",image:"",lat:59.8537,lng:30.1966,why:"Зелёная прогулочная точка юго-запада Петербурга",address:"Петергофское шоссе, Санкт-Петербург",price:"Бесплатно",priceNote:"Прогулка",detailHref:"/place/8125" },
+  { id:8126,name:"Новознаменка",category:"Парк",mood:"Погулять",budget:"Бесплатно",company:["Один","Пара","Друзья","Семья"],duration:"1–2 часа",image:"",lat:59.8498,lng:30.1660,why:"Историческая усадебная территория вдоль Петергофской дороги",address:"Петергофское шоссе, Санкт-Петербург",price:"Бесплатно",priceNote:"Прогулка",detailHref:"/place/8126" },
+];
 const studentDiscountPlaces: MapPlace[] = [
   {
     id: 6001,
@@ -757,6 +763,7 @@ export const mapPlaces: MapPlace[] = [
   ...strelnaPlaces,
   ...southWestCorridorPlaces,
   ...southWestCorridorMorePlaces,
+  ...southWestGreenCorridorPlaces,
   ...studentDiscountPlaces,
   ...safetyMapPlaces,
 ];
