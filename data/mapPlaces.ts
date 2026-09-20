@@ -328,6 +328,17 @@ const familyMapPlaces: MapPlace[] = [
   },
 ];
 
+const moreFamilyMapPlaces: MapPlace[] = [
+  { id: 7006, name: "Баклажан · Галерея", category: "Ресторан", mood: "Вкусно поесть", budget: "≈ 1 500–3 000 ₽", company: ["Пара","Друзья","Семья"], duration: "1–2 часа", image: "", lat: 59.9275, lng: 30.3602, why: "👶 Детская комната, детские стульчики и няня", address: "Лиговский пр., 30А, ТРЦ «Галерея», 4 этаж", price: "≈ 1 500–3 000 ₽", priceNote: "Средний чек", detailHref: "/place/7006", babyCare: "Детская комната", babyCareDetails: ["Детская комната","Детские стульчики","Няня"], babyCareVerifiedAt: "20.09.2026" },
+  { id: 7007, name: "Дети на кухне · Московский рынок", category: "Ресторан", mood: "Вкусно поесть", budget: "≈ 1 500–2 000 ₽", company: ["Пара","Друзья","Семья"], duration: "1–2 часа", image: "", lat: 59.8797, lng: 30.3186, why: "👶 Детская комната и детские стульчики", address: "ул. Решетникова, 12, Московский рынок", price: "≈ 1 500–2 000 ₽", priceNote: "Средний чек", detailHref: "/place/7007", babyCare: "Детская комната", babyCareDetails: ["Детская комната","Детские стульчики","Детское меню"], babyCareVerifiedAt: "20.09.2026" },
+  { id: 7008, name: "Пахвала · Охта Молл", category: "Ресторан", mood: "Вкусно поесть", budget: "≈ 1 500–3 000 ₽", company: ["Пара","Друзья","Семья"], duration: "1–2 часа", image: "", lat: 59.9420, lng: 30.4178, why: "👶 Детская комната, стульчики и няня по выходным", address: "Брантовская дорога, 3, ТРЦ «Охта Молл»", price: "≈ 1 500–3 000 ₽", priceNote: "Средний чек", detailHref: "/place/7008", babyCare: "Детская комната", babyCareDetails: ["Детская комната","Детские стульчики","Няня по выходным","Детское меню"], babyCareVerifiedAt: "20.09.2026" },
+  { id: 7009, name: "Матисов", category: "Ресторан", mood: "Вкусно поесть", budget: "≈ 1 500–3 000 ₽", company: ["Пара","Друзья","Семья"], duration: "1–2 часа", image: "", lat: 59.8478, lng: 30.1467, why: "👶 Детская комната, стульчики и няня", address: "ул. Адмирала Трибуца, Санкт-Петербург", price: "≈ 1 500–3 000 ₽", priceNote: "Средний чек", detailHref: "/place/7009", babyCare: "Детская комната", babyCareDetails: ["Детская комната","Детские стульчики","Няня","Детское меню"], babyCareVerifiedAt: "20.09.2026" },
+  { id: 7010, name: "Хачо и Пури", category: "Ресторан", mood: "Вкусно поесть", budget: "≈ 1 000–2 500 ₽", company: ["Пара","Друзья","Семья"], duration: "1–2 часа", image: "", lat: 59.9085, lng: 30.4810, why: "👶 Детская комната и стульчики", address: "Европейский проспект, Санкт-Петербург", price: "≈ 1 000–2 500 ₽", priceNote: "Средний чек", detailHref: "/place/7010", babyCare: "Детская комната", babyCareDetails: ["Детская комната","Детские стульчики","Детское меню"], babyCareVerifiedAt: "20.09.2026" },
+  { id: 7011, name: "ТРК Питер Радуга", category: "Городское пространство", mood: "С семьёй", budget: "Бесплатно", company: ["Один","Пара","Друзья","Семья"], duration: "1–2 часа", image: "", lat: 59.8694, lng: 30.3494, why: "👶 Комнаты матери и ребёнка", address: "просп. Космонавтов, 14", price: "Бесплатно", priceNote: "Семейные сервисы", detailHref: "/place/7011", babyCare: "Комната матери и ребёнка", babyCareDetails: ["Комната матери и ребёнка","Детская площадка"], babyCareVerifiedAt: "20.09.2026" },
+  { id: 7012, name: "ТРК Сити Молл", category: "Городское пространство", mood: "С семьёй", budget: "Бесплатно", company: ["Один","Пара","Друзья","Семья"], duration: "1–2 часа", image: "", lat: 60.0086, lng: 30.3004, why: "👶 Комната матери и ребёнка", address: "Коломяжский пр., 17/2", price: "Бесплатно", priceNote: "Семейные сервисы", detailHref: "/place/7012", babyCare: "Комната матери и ребёнка", babyCareDetails: ["Комната матери и ребёнка"], babyCareVerifiedAt: "20.09.2026" },
+  { id: 7013, name: "ТРК Академ-Парк", category: "Городское пространство", mood: "С семьёй", budget: "Бесплатно", company: ["Один","Пара","Друзья","Семья"], duration: "1–2 часа", image: "", lat: 60.0120, lng: 30.3968, why: "👶 Комната матери и ребёнка", address: "Гражданский пр., 41, лит. Б, корп. 2", price: "Бесплатно", priceNote: "Семейные сервисы", detailHref: "/place/7013", babyCare: "Комната матери и ребёнка", babyCareDetails: ["Комната матери и ребёнка"], babyCareVerifiedAt: "20.09.2026" },
+];
+
 const studentDiscountPlaces: MapPlace[] = [
   {
     id: 6001,
@@ -647,6 +658,7 @@ export const mapPlaces: MapPlace[] = [
   ...driveMapPlaces,
   ...photoMapPlaces,
   ...familyMapPlaces,
+  ...moreFamilyMapPlaces,
   ...studentDiscountPlaces,
   ...safetyMapPlaces,
 ];
