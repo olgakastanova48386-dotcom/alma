@@ -10,14 +10,14 @@ export default function AboutPage() {
   return (
     <main className="min-h-screen bg-[#f7f4ef] pb-20 pt-[92px] text-[#171717] sm:pb-28 sm:pt-32">
       <section className="mx-auto max-w-[1380px] px-4 sm:px-6 lg:px-8">
-        <div className="relative overflow-hidden rounded-[28px] bg-[#eadfd5] px-5 py-8 sm:rounded-[38px] sm:px-10 sm:py-12 lg:min-h-[540px] lg:px-14 lg:py-14">
-          <div className="relative z-10 flex min-h-[390px] max-w-4xl flex-col justify-between sm:min-h-[430px]">
+        <div className="relative overflow-hidden rounded-[28px] bg-[#eadfd5] px-5 py-8 sm:rounded-[38px] sm:px-10 sm:py-12 lg:min-h-[430px] lg:px-14 lg:py-14">
+          <div className="relative z-10 flex min-h-[300px] max-w-4xl flex-col justify-between sm:min-h-[350px]">
             <p className="text-[10px] font-semibold uppercase tracking-[.22em] text-black/45 sm:text-xs">О проекте</p>
             <div>
-              <h1 className="max-w-[1000px] text-[clamp(42px,7.2vw,98px)] font-semibold leading-[.91] tracking-[-.065em]">
+              <h1 className="max-w-[1000px] text-[clamp(34px,5.2vw,68px)] font-semibold leading-[.91] tracking-[-.065em]">
                 Город должен<br />подходить тебе.
               </h1>
-              <p className="mt-6 max-w-xl text-[15px] leading-6 text-black/60 sm:mt-8 sm:text-lg sm:leading-7">
+              <p className="mt-6 max-w-xl text-[15px] leading-6 text-black/60 sm:mt-6 sm:text-base sm:leading-6">
                 ALMA — городской гид по Санкт-Петербургу, который помогает решить не «куда вообще сходить», а куда хочется именно сегодня.
               </p>
             </div>
@@ -27,9 +27,9 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="mx-auto grid max-w-[1380px] gap-8 px-4 py-14 sm:px-6 sm:py-20 lg:grid-cols-[.8fr_1.2fr] lg:gap-20 lg:px-8">
+      <section className="mx-auto grid max-w-[1380px] gap-8 px-4 py-10 sm:px-6 sm:py-14 lg:grid-cols-[.8fr_1.2fr] lg:gap-20 lg:px-8">
         <p className="text-[11px] font-semibold uppercase tracking-[.2em] text-black/40">Зачем появилась ALMA</p>
-        <div className="space-y-6 text-[22px] font-medium leading-[1.25] tracking-[-.025em] sm:text-3xl lg:text-[38px]">
+        <div className="space-y-6 text-[22px] font-medium leading-[1.25] tracking-[-.025em] sm:text-2xl lg:text-[30px]">
           <p>Иногда хочется красиво поужинать. Иногда — долго гулять, взять кофе, побыть одной или придумать день с друзьями.</p>
           <p className="text-black/38">Мы собираем город вокруг таких желаний, а не заставляем тебя подстраиваться под бесконечные каталоги.</p>
         </div>
@@ -38,20 +38,20 @@ export default function AboutPage() {
       <section className="mx-auto max-w-[1380px] px-4 sm:px-6 lg:px-8">
         <div className="grid overflow-hidden rounded-[28px] border border-black/[.07] bg-white sm:rounded-[34px] lg:grid-cols-3">
           {principles.map((item, index) => (
-            <article key={item.number} className={`p-6 sm:p-8 lg:p-10 ${index ? "border-t border-black/[.07] lg:border-l lg:border-t-0" : ""}`}>
+            <article key={item.number} className={`p-5 sm:p-6 lg:p-7 ${index ? "border-t border-black/[.07] lg:border-l lg:border-t-0" : ""}`}>
               <span className="text-xs font-semibold text-black/30">{item.number}</span>
-              <h2 className="mt-10 text-[26px] font-semibold tracking-[-.04em] sm:text-3xl">{item.title}</h2>
+              <h2 className="mt-7 text-[22px] font-semibold tracking-[-.04em] sm:text-2xl">{item.title}</h2>
               <p className="mt-3 max-w-sm text-[14px] leading-6 text-black/55 sm:text-[15px]">{item.text}</p>
             </article>
           ))}
         </div>
       </section>
 
-      <section className="mx-auto max-w-[1380px] px-4 pt-14 sm:px-6 sm:pt-20 lg:px-8">
-        <div className="flex flex-col gap-7 rounded-[28px] bg-[#dfe8d8] p-6 sm:rounded-[34px] sm:p-10 lg:flex-row lg:items-end lg:justify-between lg:p-12">
+      <section className="mx-auto max-w-[1380px] px-4 pt-10 sm:px-6 sm:pt-14 lg:px-8">
+        <div className="flex flex-col gap-7 rounded-[28px] bg-[#dfe8d8] p-6 sm:rounded-[34px] sm:p-8 lg:flex-row lg:items-end lg:justify-between lg:p-9">
           <div>
             <p className="text-[10px] font-semibold uppercase tracking-[.2em] text-black/40">Начни с себя</p>
-            <h2 className="mt-4 max-w-2xl text-[34px] font-semibold leading-[.98] tracking-[-.05em] sm:text-5xl">Как ты хочешь провести сегодняшний день?</h2>
+            <h2 className="mt-4 max-w-2xl text-[28px] font-semibold leading-[.98] tracking-[-.05em] sm:text-4xl">Как ты хочешь провести сегодняшний день?</h2>
           </div>
           <div className="flex flex-wrap gap-2.5">
             <Link href="/#smart-map" className="rounded-full bg-black px-5 py-3 text-sm font-semibold text-white transition hover:scale-[1.02]">Выбрать место</Link>
