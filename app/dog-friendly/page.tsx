@@ -34,8 +34,8 @@ export default function DogFriendlyPage() {
     <main className="min-h-screen bg-[#f7f4ef] pt-[88px] sm:pt-[104px] pb-24 text-black">
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="relative overflow-visible rounded-[28px] bg-[#dfe8d8] px-6 py-5 pr-[145px] min-h-[205px] sm:px-8 sm:py-5 sm:pr-[220px] sm:min-h-[170px] md:min-h-[185px] md:pr-[310px] lg:min-h-[190px] lg:px-9 lg:py-6 lg:pr-[390px]">
-          <div className="relative z-10 lg:max-w-[68%]">
-            <h1 className="mt-2 text-3xl sm:text-4xl lg:text-[42px] font-bold tracking-tight leading-[1.02]">
+          <div className="relative z-10 flex min-h-[165px] items-center sm:min-h-[130px] md:min-h-[145px] lg:min-h-[142px] lg:max-w-[68%]">
+            <h1 className="mt-0 max-w-[62%] text-[26px] sm:text-3xl lg:text-[38px] font-bold tracking-tight leading-[1.04]">
               Петербург вместе с собакой 🐾
             </h1>
           </div>
