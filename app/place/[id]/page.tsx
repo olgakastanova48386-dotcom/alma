@@ -28,6 +28,7 @@ export default function PlacePage() {
   const [favorites, setFavorites] = useState<number[]>([]);
   const [favoritesLoaded, setFavoritesLoaded] = useState(false);
   const [signedIn, setSignedIn] = useState(false);
+  const [isFemale, setIsFemale] = useState(false);
   const [activePhoto, setActivePhoto] = useState(0);
 
   useEffect(() => {
@@ -40,12 +41,16 @@ export default function PlacePage() {
         if (!me.user) {
           if (active) {
             setSignedIn(false);
+            setIsFemale(false);
             setFavorites(localIds);
           }
           return;
         }
 
-        if (active) setSignedIn(true);
+        if (active) {
+          setSignedIn(true);
+          setIsFemale(me.user.gender === "female");
+        }
         for (const placeId of localIds) {
           await fetch("/api/favorites", {
             method: "POST",
@@ -283,7 +288,7 @@ export default function PlacePage() {
                     🐾 Dog Friendly
                   </div>
                 )}
-                {place.safePlace && (
+                {isFemale && place.safePlace && (
                   <div className="mt-3 rounded-[18px] border border-[#dca9b5] bg-[#f8e8ec] px-4 py-4 text-[#5f2030] sm:rounded-[22px] sm:px-5">
                     <div className="flex items-center gap-2 font-bold">
                       <span aria-hidden="true">🛡</span>
