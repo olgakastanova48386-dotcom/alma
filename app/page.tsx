@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import UnifiedMap from "@/components/UnifiedMap";
 
 const places = [
-  { title: "Русский музей", category: "Музей", image: "https://commons.wikimedia.org/wiki/Special:Redirect/file/Russian_Museum_SPB.jpg" },
+  { title: "Русский музей", category: "Музей", image: "https://triptospb.ru/wp-content/uploads/2023/06/Russian_museum_1.jpg" },
   { title: "Петергоф", category: "Музей-заповедник", image: "/place-images/114.jpg" },
   { title: "Государственный Эрмитаж", category: "Музей", image: "/place-images/63.jpg" },
   { title: "Спас на Крови", category: "Архитектура", image: "https://commons.wikimedia.org/wiki/Special:Redirect/file/Church_of_the_Savior_on_Blood_SPB.jpg" },
