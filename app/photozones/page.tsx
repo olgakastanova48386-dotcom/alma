@@ -22,7 +22,7 @@ export default function PhotozonesPage(){
  const [filter,setFilter]=useState("Все");
  const shown=useMemo(()=>filter==="Все"?zones:zones.filter(z=>z.category===filter),[filter]);
  const mapHref=(name:string)=>{const normalized=name.toLowerCase();const match=mapPlaces.find(p=>p.name.toLowerCase()===normalized||p.name.toLowerCase().includes(normalized)||normalized.includes(p.name.toLowerCase()));return match?`/map?place=${match.id}`:"/map"};
- return <main className="min-h-screen bg-[#f4f0e9] pt-[88px] sm:pt-28 pb-16 sm:pb-24 text-black">
+ return <main className="min-h-screen bg-[#f4f0e9] pt-[76px] sm:pt-28 pb-16 sm:pb-24 text-black">
   <section className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-10">
    <div className="border-b border-black/10 pb-4 sm:pb-12 lg:grid lg:grid-cols-[1.25fr_.75fr] lg:items-end lg:gap-16">
     <div><h1 className="text-[42px] sm:text-7xl lg:text-[92px] font-bold leading-[.95] tracking-[-.055em]">Фотолокации</h1></div>
