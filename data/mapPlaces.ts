@@ -646,6 +646,7 @@ export const mapPlaces: MapPlace[] = [
   ...dogMapPlaces,
   ...driveMapPlaces,
   ...photoMapPlaces,
+  ...familyMapPlaces,
   ...studentDiscountPlaces,
   ...safetyMapPlaces,
 ];
