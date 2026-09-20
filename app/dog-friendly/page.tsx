@@ -42,7 +42,7 @@ export default function DogFriendlyPage() {
             публикуем только заведения с подтверждённым рейтингом от 4,5 до 5,0.
           </p>
         </div>
-        <div className="mt-5 rounded-[28px] bg-white border border-black/5 p-5 sm:p-6">
+        <div className="mx-auto mt-5 w-[96%] rounded-[26px] bg-white border border-black/5 p-4 sm:w-[94%] sm:p-5">
           <div className="flex flex-col md:flex-row gap-4">
             <AlmaSelect
               label="Тип места"
