@@ -1,70 +1,64 @@
+import Link from "next/link";
+
+const principles = [
+  { number: "01", title: "По настроению", text: "Не просто список заведений. ALMA помогает выбрать место под конкретный день, компанию и настроение." },
+  { number: "02", title: "Без лишнего поиска", text: "Фильтры, карта и готовый план собирают подходящие варианты в одном месте — без десятков открытых вкладок." },
+  { number: "03", title: "Петербург ближе", text: "Сохраняем места, события и городские пространства, ради которых хочется выйти из дома и увидеть город по-новому." },
+];
+
 export default function AboutPage() {
   return (
-    <main className="min-h-screen bg-[#f7f4ef] pt-36 px-8">
-      <div className="max-w-5xl mx-auto">
-
-        <p className="uppercase tracking-[0.4em] text-neutral-500 text-sm">
-          О проекте
-        </p>
-
-        <h1 className="mt-6 text-6xl font-bold leading-tight">
-          ALMA помогает
-          <br />
-          находить места,
-          <br />
-          которые подходят
-          <br />
-          именно тебе
-        </h1>
-
-        <div className="mt-12 space-y-8 text-lg text-neutral-600 leading-9">
-          <p>
-            Мы верим, что выбор места — это не просто поиск ближайшего кафе
-            или ресторана. Настроение, атмосфера, музыка, интерьер и даже
-            погода делают каждый визит особенным.
-          </p>
-
-          <p>
-            ALMA объединяет красивые кофейни, рестораны, бары, парки и другие
-            локации в одном приложении, чтобы каждый человек мог найти место,
-            соответствующее своему настроению.
-          </p>
-
-          <p>
-            Наша цель — создать современный городской гид, который помогает
-            открывать новые впечатления и любимые места быстрее и проще.
-          </p>
+    <main className="min-h-screen bg-[#f7f4ef] pb-20 pt-[92px] text-[#171717] sm:pb-28 sm:pt-32">
+      <section className="mx-auto max-w-[1380px] px-4 sm:px-6 lg:px-8">
+        <div className="relative overflow-hidden rounded-[28px] bg-[#eadfd5] px-5 py-8 sm:rounded-[38px] sm:px-10 sm:py-12 lg:min-h-[540px] lg:px-14 lg:py-14">
+          <div className="relative z-10 flex min-h-[390px] max-w-4xl flex-col justify-between sm:min-h-[430px]">
+            <p className="text-[10px] font-semibold uppercase tracking-[.22em] text-black/45 sm:text-xs">О проекте</p>
+            <div>
+              <h1 className="max-w-[1000px] text-[clamp(42px,7.2vw,98px)] font-semibold leading-[.91] tracking-[-.065em]">
+                Город должен<br />подходить тебе.
+              </h1>
+              <p className="mt-6 max-w-xl text-[15px] leading-6 text-black/60 sm:mt-8 sm:text-lg sm:leading-7">
+                ALMA — городской гид по Санкт-Петербургу, который помогает решить не «куда вообще сходить», а куда хочется именно сегодня.
+              </p>
+            </div>
+          </div>
+          <div className="pointer-events-none absolute -bottom-20 -right-14 h-64 w-64 rounded-full border-[48px] border-white/25 sm:h-96 sm:w-96 sm:border-[70px]" />
+          <div className="pointer-events-none absolute right-[18%] top-12 h-24 w-24 rounded-full bg-white/25 blur-2xl sm:h-40 sm:w-40" />
         </div>
+      </section>
 
-        <div className="mt-20 grid md:grid-cols-3 gap-8">
-
-          <div className="bg-white rounded-3xl p-8 shadow-lg">
-            <h3 className="text-2xl font-semibold mb-3">🎯 Миссия</h3>
-            <p className="text-neutral-600">
-              Помочь каждому человеку находить идеальные места для отдыха,
-              работы и встреч.
-            </p>
-          </div>
-
-          <div className="bg-white rounded-3xl p-8 shadow-lg">
-            <h3 className="text-2xl font-semibold mb-3">🌍 Идея</h3>
-            <p className="text-neutral-600">
-              Сделать поиск заведений максимально простым, красивым и
-              вдохновляющим.
-            </p>
-          </div>
-
-          <div className="bg-white rounded-3xl p-8 shadow-lg">
-            <h3 className="text-2xl font-semibold mb-3">💛 Ценность</h3>
-            <p className="text-neutral-600">
-              Каждое место должно приносить эмоции, а не быть случайным
-              выбором.
-            </p>
-          </div>
-
+      <section className="mx-auto grid max-w-[1380px] gap-8 px-4 py-14 sm:px-6 sm:py-20 lg:grid-cols-[.8fr_1.2fr] lg:gap-20 lg:px-8">
+        <p className="text-[11px] font-semibold uppercase tracking-[.2em] text-black/40">Зачем появилась ALMA</p>
+        <div className="space-y-6 text-[22px] font-medium leading-[1.25] tracking-[-.025em] sm:text-3xl lg:text-[38px]">
+          <p>Иногда хочется красиво поужинать. Иногда — долго гулять, взять кофе, побыть одной или придумать день с друзьями.</p>
+          <p className="text-black/38">Мы собираем город вокруг таких желаний, а не заставляем тебя подстраиваться под бесконечные каталоги.</p>
         </div>
+      </section>
 
-      </div>
+      <section className="mx-auto max-w-[1380px] px-4 sm:px-6 lg:px-8">
+        <div className="grid overflow-hidden rounded-[28px] border border-black/[.07] bg-white sm:rounded-[34px] lg:grid-cols-3">
+          {principles.map((item, index) => (
+            <article key={item.number} className={`p-6 sm:p-8 lg:p-10 ${index ? "border-t border-black/[.07] lg:border-l lg:border-t-0" : ""}`}>
+              <span className="text-xs font-semibold text-black/30">{item.number}</span>
+              <h2 className="mt-10 text-[26px] font-semibold tracking-[-.04em] sm:text-3xl">{item.title}</h2>
+              <p className="mt-3 max-w-sm text-[14px] leading-6 text-black/55 sm:text-[15px]">{item.text}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-[1380px] px-4 pt-14 sm:px-6 sm:pt-20 lg:px-8">
+        <div className="flex flex-col gap-7 rounded-[28px] bg-[#dfe8d8] p-6 sm:rounded-[34px] sm:p-10 lg:flex-row lg:items-end lg:justify-between lg:p-12">
+          <div>
+            <p className="text-[10px] font-semibold uppercase tracking-[.2em] text-black/40">Начни с себя</p>
+            <h2 className="mt-4 max-w-2xl text-[34px] font-semibold leading-[.98] tracking-[-.05em] sm:text-5xl">Как ты хочешь провести сегодняшний день?</h2>
+          </div>
+          <div className="flex flex-wrap gap-2.5">
+            <Link href="/#smart-map" className="rounded-full bg-black px-5 py-3 text-sm font-semibold text-white transition hover:scale-[1.02]">Выбрать место</Link>
+            <Link href="/route" className="rounded-full border border-black/15 bg-white/55 px-5 py-3 text-sm font-semibold backdrop-blur transition hover:bg-white">Создать маршрут</Link>
+          </div>
+        </div>
+      </section>
     </main>
   );
 }
