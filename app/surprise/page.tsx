@@ -334,11 +334,18 @@ export default function SurprisePage() {
           .filter((r) => !usedRestaurants.has(r.id))
           .map(restaurantStop)
           .filter(fits);
-        const picked = [...candidates].sort((a, b) =>
+        const sortedRestaurants = [...candidates].sort((a, b) =>
           previous
             ? dist(previous, a) - dist(previous, b)
             : (b.rating ?? 0) - (a.rating ?? 0),
-        )[0];
+        );
+        // Не закрепляем маршрут за одним рестораном с максимальным рейтингом:
+        // выбираем из нескольких лучших подходящих вариантов, чтобы новые
+        // генерации реально отличались друг от друга.
+        const restaurantPool = sortedRestaurants.slice(0, Math.min(6, sortedRestaurants.length));
+        const picked = restaurantPool.length
+          ? restaurantPool[Math.floor(Math.random() * restaurantPool.length)]
+          : undefined;
         if (picked) {
           chosen.push(picked);
           usedRestaurants.add(picked.id - 2000);
