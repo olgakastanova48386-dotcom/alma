@@ -1,14 +1,14 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { events, isEventActive } from "@/data/events";
+import { events } from "@/data/events";
 
 const filters = ["Все", "Вечеринки", "Фестивали", "Маркеты", "Кино", "Выставки", "Спорт", "Лекции"];
 
 export default function MapPage() {
   const [filter, setFilter] = useState("Все");
   const visible = useMemo(
-    () => events.filter(isEventActive).filter((event) => filter === "Все" || event.category === filter),
+    () => events.filter((event) => filter === "Все" || event.category === filter),
     [filter],
   );
 
