@@ -38,18 +38,13 @@ export default function DogFriendlyPage() {
             <h1 className="mt-0 max-w-[62%] text-[26px] sm:text-4xl lg:text-[48px] font-bold tracking-tight leading-[1.02]">
               Петербург вместе с собакой 🐾
             </h1>
-            <div className="hidden sm:flex mt-4 items-center gap-2.5 text-[12px] font-medium tracking-[0.02em] text-[#56614f]">
-              <span className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-[#78856f]/45 text-[13px]">🐾</span>
-              <span>Маршруты Джека</span>
-              <span className="text-[#78856f]/60">•</span>
-              <span className="font-normal">места, где рады хвостам</span>
+            <div className="hidden sm:flex mt-4 items-center gap-3 text-[#56614f]">
+              <span className="h-px w-10 bg-[#78856f]/55" />
+              <span className="text-[12px] font-medium tracking-[0.08em] uppercase whitespace-nowrap">Выбор Джека</span>
+              <span className="h-px w-10 bg-[#78856f]/55" />
             </div>
           </div>
-          <div className="pointer-events-none absolute bottom-7 left-[48%] hidden lg:flex items-center gap-2 text-[#78856f]/55" aria-hidden="true">
-            <span className="block h-px w-20 bg-current" />
-            <span className="-rotate-12 text-lg">🐾</span>
-            <span className="block h-px w-10 bg-current" />
-          </div>
+          
           <img
             src="/images/alma-dog.webp"
             alt="Пёс ALMA"
