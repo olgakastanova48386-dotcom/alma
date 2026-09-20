@@ -49,12 +49,12 @@ function MapIcon() {
 
 function PawIcon() {
   return (
-    <svg viewBox="0 0 24 24" aria-hidden="true" className="h-[21px] w-[21px]" fill="currentColor">
-      <circle cx="7" cy="8" r="2.2" />
-      <circle cx="12" cy="5.8" r="2.2" />
-      <circle cx="17" cy="8" r="2.2" />
-      <circle cx="5" cy="12.5" r="2" />
-      <path d="M12 10.5c-3.2 0-5.8 2.3-5.8 5.1 0 2 1.5 3.4 3.4 3.4.9 0 1.6-.4 2.4-.4s1.5.4 2.4.4c1.9 0 3.4-1.4 3.4-3.4 0-2.8-2.6-5.1-5.8-5.1Z" />
+    <svg viewBox="0 0 24 24" aria-hidden="true" className="h-[22px] w-[22px]" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+      <ellipse cx="7.2" cy="7.5" rx="1.75" ry="2.25" transform="rotate(-24 7.2 7.5)" />
+      <ellipse cx="16.8" cy="7.5" rx="1.75" ry="2.25" transform="rotate(24 16.8 7.5)" />
+      <ellipse cx="4.9" cy="12" rx="1.6" ry="2.05" transform="rotate(-38 4.9 12)" />
+      <ellipse cx="19.1" cy="12" rx="1.6" ry="2.05" transform="rotate(38 19.1 12)" />
+      <path d="M12 10.7c-2.7 0-5.25 2.45-5.25 5.15 0 1.75 1.18 3.05 2.85 3.05.95 0 1.55-.55 2.4-.55s1.45.55 2.4.55c1.67 0 2.85-1.3 2.85-3.05 0-2.7-2.55-5.15-5.25-5.15Z" />
     </svg>
   );
 }
