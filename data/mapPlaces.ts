@@ -212,6 +212,27 @@ const driveMapPlaces: MapPlace[] = drivePlaces
 
 const photoMapPlaces: MapPlace[] = [
   {
+    id: 5003,
+    name: "Кафе Зингер",
+    category: "Кафе",
+    mood: "Вдохновиться",
+    budget: "≈ 1 000–2 500 ₽",
+    company: ["Один", "Пара", "Друзья", "Семья"],
+    duration: "До 1 часа",
+    image: "/images/кафе зингер.jpg",
+    lat: 59.9358,
+    lng: 30.325875,
+    why: "Арочные окна с видом на Казанский собор — одна из самых узнаваемых фотолокаций Невского проспекта.",
+    address: "Невский проспект, 28, Санкт-Петербург",
+    price: "≈ 1 000–2 500 ₽",
+    priceNote: "Средний чек",
+    detailHref: "/place/5003",
+    rating: 5,
+    ratingScale: 5,
+    ratingCount: 5178,
+    ratingSource: "Яндекс Карты",
+  },
+  {
     id: 5001,
     name: "Дом Бака",
     category: "Фотолокация",
