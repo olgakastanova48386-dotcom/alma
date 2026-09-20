@@ -681,26 +681,26 @@ export default function SurprisePage() {
           </div>
         )}
         {showRegister && !generated && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/45 p-4 backdrop-blur-sm">
-            <div className="max-h-[92vh] w-full max-w-[430px] overflow-y-auto rounded-[28px] bg-white p-5 shadow-2xl sm:p-8">
+          <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/55 p-3 sm:p-4 backdrop-blur-sm">
+            <div className="max-h-[90dvh] w-full max-w-[430px] overflow-y-auto rounded-[24px] bg-white p-5 text-black shadow-2xl sm:rounded-[28px] sm:p-8">
               <div className="flex items-start justify-between gap-4">
                 <div>
                   <p className="text-[10px] uppercase tracking-[.22em] text-neutral-400">ALMA</p>
-                  <h2 className="mt-2 text-3xl font-bold">Регистрация</h2>
-                  <p className="mt-2 text-sm leading-6 text-neutral-500">Зарегистрируйся и создавай маршруты без ограничений.</p>
+                  <h2 className="mt-2 text-[26px] font-bold leading-tight text-black sm:text-3xl">Регистрация</h2>
+                  <p className="mt-2 text-[13px] leading-5 text-neutral-600 sm:text-sm sm:leading-6">Зарегистрируйся и создавай маршруты без ограничений.</p>
                 </div>
                 <button type="button" onClick={() => setShowRegister(false)} className="rounded-full border border-black/10 px-3 py-2 text-sm">✕</button>
               </div>
-              <form onSubmit={registerForRoute} className="mt-6 space-y-3">
-                <input value={registerName} onChange={(e) => setRegisterName(e.target.value)} placeholder="Имя" className="w-full rounded-[16px] border border-black/15 px-4 py-3 outline-none focus:border-black" />
-                <input value={registerLogin} onChange={(e) => setRegisterLogin(e.target.value)} type="text" placeholder="Логин" className="w-full rounded-[16px] border border-black/15 px-4 py-3 outline-none focus:border-black" />
+              <form onSubmit={registerForRoute} className="mt-4 space-y-2.5 sm:mt-6 sm:space-y-3">
+                <input value={registerName} onChange={(e) => setRegisterName(e.target.value)} placeholder="Имя" className="w-full rounded-[14px] border border-black/15 bg-white px-4 py-2.5 text-[16px] text-black placeholder:text-neutral-400 outline-none focus:border-black sm:rounded-[16px] sm:py-3" />
+                <input value={registerLogin} onChange={(e) => setRegisterLogin(e.target.value)} type="text" placeholder="Логин" className="w-full rounded-[14px] border border-black/15 bg-white px-4 py-2.5 text-[16px] text-black placeholder:text-neutral-400 outline-none focus:border-black sm:rounded-[16px] sm:py-3" />
                 <div className="grid grid-cols-2 gap-2">
                   <button type="button" onClick={() => setRegisterGender("female")} className={`rounded-[14px] border px-3 py-2 text-sm ${registerGender === "female" ? "bg-black text-white border-black" : "border-black/10"}`}>Женщина</button>
                   <button type="button" onClick={() => setRegisterGender("male")} className={`rounded-[14px] border px-3 py-2 text-sm ${registerGender === "male" ? "bg-black text-white border-black" : "border-black/10"}`}>Мужчина</button>
                 </div>
-                <input value={registerPassword} onChange={(e) => setRegisterPassword(e.target.value)} type="password" placeholder="Пароль · минимум 8 символов" className="w-full rounded-[16px] border border-black/15 px-4 py-3 outline-none focus:border-black" />
-                <input value={registerRepeat} onChange={(e) => setRegisterRepeat(e.target.value)} type="password" placeholder="Повторите пароль" className="w-full rounded-[16px] border border-black/15 px-4 py-3 outline-none focus:border-black" />
-                <label className="flex items-start gap-2 text-xs leading-5 text-neutral-600"><input type="checkbox" checked={registerConsent} onChange={(e) => setRegisterConsent(e.target.checked)} className="mt-1" /><span>Согласен(на) с правилами ALMA и обработкой данных.</span></label>
+                <input value={registerPassword} onChange={(e) => setRegisterPassword(e.target.value)} type="password" placeholder="Пароль · минимум 8 символов" className="w-full rounded-[14px] border border-black/15 bg-white px-4 py-2.5 text-[16px] text-black placeholder:text-neutral-400 outline-none focus:border-black sm:rounded-[16px] sm:py-3" />
+                <input value={registerRepeat} onChange={(e) => setRegisterRepeat(e.target.value)} type="password" placeholder="Повторите пароль" className="w-full rounded-[14px] border border-black/15 bg-white px-4 py-2.5 text-[16px] text-black placeholder:text-neutral-400 outline-none focus:border-black sm:rounded-[16px] sm:py-3" />
+                <label className="flex items-start gap-2 text-xs leading-5 text-neutral-700"><input type="checkbox" checked={registerConsent} onChange={(e) => setRegisterConsent(e.target.checked)} className="mt-1" /><span>Согласен(на) с правилами ALMA и обработкой данных.</span></label>
                 {registerError && <div className="rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700">{registerError}</div>}
                 <button disabled={registerLoading} className="w-full rounded-[16px] bg-black py-3 font-semibold text-white disabled:opacity-50">{registerLoading ? "Создаём аккаунт…" : "Зарегистрироваться и создать маршрут"}</button>
               </form>
