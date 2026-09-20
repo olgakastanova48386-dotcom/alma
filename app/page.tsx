@@ -5,10 +5,10 @@ import { useRouter } from "next/navigation";
 import UnifiedMap from "@/components/UnifiedMap";
 
 const places = [
-  { title: "Русский музей", category: "Музей", image: "/place-images/64.jpg" },
+  { title: "Русский музей", category: "Музей", image: "/images/русский музей.jpg" },
   { title: "Петергоф", category: "Музей-заповедник", image: "/place-images/114.jpg" },
   { title: "Государственный Эрмитаж", category: "Музей", image: "/place-images/63.jpg" },
-  { title: "Спас на Крови", category: "Архитектура", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Church_of_the_Savior_on_Blood_SPB.jpg/1280px-Church_of_the_Savior_on_Blood_SPB.jpg" },
+  { title: "Спас на Крови", category: "Архитектура", image: "/images/спас на крови.jpg" },
   { title: "Петропавловская крепость", category: "История", image: "/place-images/62.jpg" },
   { title: "Исаакиевский собор", category: "Архитектура", image: "/place-images/72.jpg" },
   { title: "Дворцовая площадь", category: "Архитектура", image: "/place-images/1.jpg" },
