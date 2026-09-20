@@ -9,7 +9,7 @@ const places = [
   { title: "Петергоф", category: "Музей-заповедник", image: "/place-images/114.jpg" },
   { title: "Государственный Эрмитаж", category: "Музей", image: "/place-images/63.jpg" },
   { title: "Спас на Крови", category: "Архитектура", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Church_of_the_Savior_on_Blood_SPB.jpg/1280px-Church_of_the_Savior_on_Blood_SPB.jpg" },
-  { title: "Петропавловская крепость", category: "История", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Peter_and_Paul_Fortress_Saint_Petersburg.jpg/1280px-Peter_and_Paul_Fortress_Saint_Petersburg.jpg" },
+  { title: "Петропавловская крепость", category: "История", image: "/place-images/62.jpg" },
   { title: "Исаакиевский собор", category: "Архитектура", image: "/place-images/72.jpg" },
   { title: "Дворцовая площадь", category: "Архитектура", image: "/place-images/1.jpg" },
   { title: "Новая Голландия", category: "Отдых", image: "/images/new-holland.jpg" },
