@@ -8,6 +8,7 @@ import LegalFooter from "@/components/LegalFooter";
 import RouteSaveMobileFix from "@/components/RouteSaveMobileFix";
 import PwaInstaller from "@/components/PwaInstaller";
 import LiveAppRefresh from "@/components/LiveAppRefresh";
+import PageViewTracker from "@/components/PageViewTracker";
 import "./globals.css";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
@@ -44,6 +45,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="ru" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
         <LiveAppRefresh />
+        <PageViewTracker />
         <Header />
         <DogFriendlyMapEnhancer />
         <RouteSaveMobileFix />
