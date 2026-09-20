@@ -402,6 +402,15 @@ const novoselyeMoreRatedPlaces: MapPlace[] = [
   { id:8031,name:"Джеб",category:"Спорт",mood:"Активно",budget:"Цена уточняется",company:["Один","Друзья"],duration:"1–2 часа",image:"",lat:59.8108,lng:30.0807,why:"★ 4.6 / 5 · проходит порог ALMA",address:"Питерский пр., 7, Новоселье, Ленинградская область",price:"Цена уточняется",priceNote:"Спортивный клуб",detailHref:"/place/8031",rating:4.6,ratingScale:5,ratingCount:7,ratingSource:"2ГИС" },
   { id:8032,name:"СелебриУм",category:"Развлечения",mood:"С семьёй",budget:"Цена уточняется",company:["Семья"],duration:"1–2 часа",image:"",lat:59.8095,lng:30.0731,why:"★ 4.5 / 5 · 21 оценка · проходит порог ALMA",address:"Красносельское ш., 2, ОДЦ «Графит», Новоселье",price:"Цена уточняется",priceNote:"Детские занятия",detailHref:"/place/8032",rating:4.5,ratingScale:5,ratingCount:21,ratingSource:"2ГИС" },
 ];
+const strelnaPlaces: MapPlace[] = [
+  { id:8101,name:"Дача Линдстрема",category:"Ресторан",mood:"Вкусно поесть",budget:"Цена уточняется",company:["Пара","Друзья","Семья"],duration:"1–2 часа",image:"",lat:59.8558,lng:30.0609,why:"★ 4.6 / 5 · проходит порог ALMA",address:"ул. Глинки, 7, лит. А, Стрельна",price:"Цена уточняется",priceNote:"Средний чек уточняется",detailHref:"/place/8101",rating:4.6,ratingScale:5,ratingCount:204,ratingSource:"Google" },
+  { id:8102,name:"Славянский дворик",category:"Кафе",mood:"Вкусно поесть",budget:"Цена уточняется",company:["Один","Пара","Друзья","Семья"],duration:"1–2 часа",image:"",lat:59.8529,lng:30.0603,why:"★ 4.6 / 5 · проходит порог ALMA",address:"Фронтовая ул., 3, лит. У, Стрельна",price:"Цена уточняется",priceNote:"Средний чек уточняется",detailHref:"/place/8102",rating:4.6,ratingScale:5,ratingCount:520,ratingSource:"Google" },
+  { id:8103,name:"Орловский парк",category:"Парк",mood:"Погулять",budget:"Бесплатно",company:["Один","Пара","Друзья","Семья"],duration:"1–2 часа",image:"",lat:59.8498,lng:30.0540,why:"★ 4.5 / 5 · исторический парк у Орловского пруда",address:"Санкт-Петербургское ш., 78, Стрельна",price:"Бесплатно",priceNote:"Прогулка",detailHref:"/place/8103",rating:4.5,ratingScale:5,ratingCount:1249,ratingSource:"Google" },
+  { id:8104,name:"Русская Версалия",category:"Ресторан",mood:"Вкусно поесть",budget:"Цена уточняется",company:["Пара","Друзья","Семья"],duration:"1–2 часа",image:"",lat:59.8539,lng:30.0474,why:"★ 4.5 / 5 · проходит порог ALMA",address:"Берёзовая ал., 3, Стрельна",price:"Цена уточняется",priceNote:"Средний чек уточняется",detailHref:"/place/8104",rating:4.5,ratingScale:5,ratingCount:8,ratingSource:"Google" },
+  { id:8105,name:"Дворец Петра I в Стрельне",category:"Достопримечательность",mood:"Узнать новое",budget:"Цена уточняется",company:["Один","Пара","Друзья","Семья"],duration:"1–2 часа",image:"",lat:59.8489,lng:30.0412,why:"★ 4.7 / 5 · историческая усадьба Петра I",address:"ул. Больничная Горка, 2, Стрельна",price:"Цена уточняется",priceNote:"Билет",detailHref:"/place/8105",rating:4.7,ratingScale:5,ratingCount:641,ratingSource:"Google" },
+  { id:8106,name:"Яхт-Клуб · Стрельна",category:"Ресторан",mood:"Романтика",budget:"Цена уточняется",company:["Пара","Друзья"],duration:"1–2 часа",image:"",lat:59.8575,lng:30.0340,why:"★ 4.6 / 5 · ресторан у воды",address:"Портовая ул., 25, Стрельна",price:"Цена уточняется",priceNote:"Средний чек уточняется",detailHref:"/place/8106",rating:4.6,ratingScale:5,ratingCount:10,ratingSource:"Google" },
+  { id:8107,name:"Фруктовый сад и огород Стрельны",category:"Парк",mood:"Погулять",budget:"Цена уточняется",company:["Один","Пара","Друзья","Семья"],duration:"1–2 часа",image:"",lat:59.8497,lng:30.0405,why:"Исторический садово-огородный комплекс усадьбы Петра I",address:"Стрельна, Санкт-Петербург",price:"Цена уточняется",priceNote:"Режим посещения уточняется",detailHref:"/place/8107" },
+];
 const studentDiscountPlaces: MapPlace[] = [
   {
     id: 6001,
@@ -728,6 +737,7 @@ export const mapPlaces: MapPlace[] = [
   ...novoselyeRatedPlaces,
   ...novoselyeActivities,
   ...novoselyeMoreRatedPlaces,
+  ...strelnaPlaces,
   ...studentDiscountPlaces,
   ...safetyMapPlaces,
 ];
