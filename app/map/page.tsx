@@ -1,36 +1,16 @@
 "use client";
 
 import { useMemo, useState } from "react";
-
-type EventItem = {
-  id: string;
-  title: string;
-  place: string;
-  date: string;
-  category: string;
-  note: string;
-  href: string;
-  accent: string;
-  image: string;
-};
-
-const events: EventItem[] = [
-  { id: "fin-zaliv-house-party", title: "Финский залив андер хаус пати", place: "Севкабель Порт", date: "19–20 сентября", category: "Вечеринки", note: "Вечеринка у залива", href: "https://sevcableport.ru/afisha/", accent: "", image: "/events/fin-zaliv-house-party.jpg" },
-  { id: "growbox-market", title: "Гроубокс маркет", place: "Севкабель Порт", date: "19–20 сентября", category: "Маркеты", note: "Маркет выходного дня в Порту", href: "https://sevcableport.ru/afisha/", accent: "", image: "/events/growbox-market.jpg" },
-  { id: "koi-asia-festival", title: "КОИ Азия Фестиваль", place: "Севкабель Порт · Цех", date: "19–20 сентября", category: "Фестивали", note: "Азия, музыка, еда, маркет и фотозоны · вход по регистрации", href: "https://sevcableport.ru/afisha/koi-aziya-festival/", accent: "", image: "/events/koi-asia-festival.jpg" },
-  { id: "spiexff", title: "SPIEXFF", place: "Севкабель Порт · лекторий’порт", date: "до 20 сентября", category: "Кино", note: "Международный фестиваль экспериментального кино", href: "https://sevcableport.ru/afisha/sankt-peterburgskij-mezhdunarodnyj-festival-eksperimentalnogo-kino-spiexff/", accent: "", image: "/events/spiexff.jpg" },
-  { id: "waterfront-workouts", title: "Тренировки на набережной", place: "Севкабель Порт · Набережная", date: "до 30 сентября", category: "Спорт", note: "Йога и функциональные тренировки на берегу · вход свободный", href: "https://sevcableport.ru/afisha/trenirovki-na-naberezhnoj/", accent: "", image: "/events/waterfront-workouts.jpg" },
-  { id: "viktor-tsoi-legenda", title: "Виктор Цой. Легенда", place: "Севкабель Порт", date: "до 27 сентября", category: "Выставки", note: "Выставка в Порту", href: "https://sevcableport.ru/afisha/", accent: "", image: "/events/viktor-tsoi-legenda.jpg" },
-  { id: "museum-machines", title: "Музей Восстания Машин", place: "Брусницын", date: "с 20 сентября", category: "Выставки", note: "Новый интерактивный музей · ежедневно", href: "https://brusnitsyn.spb.ru/", accent: "", image: "/events/museum-machines.jpg" },
-  { id: "yarkiy-fovizm", title: "Яркий фовизм", place: "Брусницын", date: "27 сентября", category: "Лекции", note: "Лекция из цикла «Изменчивый XX век»", href: "https://brusnitsyn.spb.ru/", accent: "", image: "/events/yarkiy-fovizm.jpg" },
-  { id: "dark-wave", title: "DARK WAVE", place: "Брусницын", date: "31 октября", category: "Вечеринки", note: "Тёмная эстетика, образы и немного мистики", href: "https://brusnitsyn.spb.ru/", accent: "", image: "/events/dark-wave.jpg" },
-];
+import { events, isEventActive } from "@/data/events";
 
 const filters = ["Все", "Вечеринки", "Фестивали", "Маркеты", "Кино", "Выставки", "Спорт", "Лекции"];
 
 export default function MapPage() {
   const [filter, setFilter] = useState("Все");
-  const visible = useMemo(() => filter === "Все" ? events : events.filter((event) => event.category === filter), [filter]);
+  const visible = useMemo(
+    () => events.filter(isEventActive).filter((event) => filter === "Все" || event.category === filter),
+    [filter],
+  );
 
   return (
     <main className="min-h-screen bg-[#f7f4ef] pb-20 pt-28 text-black sm:pt-32">
