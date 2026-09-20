@@ -34,6 +34,7 @@ const placeIds: Record<string, number> = {
   "Водная прогулка": 7,
   "Новая Голландия": 8,
   "Ракета · Кожевенная линия, 27": 5002,
+  "Кафе Зингер": 5003,
 };
 
 type Weather = { temperature: number; code: number; isDay: boolean };
