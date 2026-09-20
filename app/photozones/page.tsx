@@ -26,7 +26,7 @@ export default function PhotozonesPage(){
   <section className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-10">
    <div className="border-b border-black/10 pb-4 sm:pb-12 lg:grid lg:grid-cols-[1.25fr_.75fr] lg:items-end lg:gap-16">
     <div><h1 className="text-[42px] sm:text-7xl lg:text-[92px] font-bold leading-[.95] tracking-[-.055em]">Фотолокации</h1></div>
-    <div className="hidden sm:block mt-7 lg:mt-0"><p className="max-w-md text-base sm:text-lg leading-7 text-neutral-600">Не список достопримечательностей, а места, ради которых хочется достать камеру. Выбирай настроение — ALMA подскажет, где получится тот самый кадр.</p><div className="mt-5"><Link href="/photozones/add" className="inline-flex rounded-full bg-black px-5 py-3 text-sm font-semibold text-white">＋ Предложить фотолокацию</Link></div></div>
+    <div className="mt-4 flex justify-center sm:mt-7 lg:mt-0 lg:justify-end"><Link href="/photozones/add" className="inline-flex min-h-11 items-center justify-center rounded-full bg-black px-5 py-3 text-center text-sm font-semibold text-white">＋ Предложить фотолокацию</Link></div>
    </div>
 
    <div className="sticky top-[76px] z-20 -mx-4 px-4 sm:mx-0 sm:px-0 py-2.5 sm:py-4 bg-[#f4f0e9]/95 backdrop-blur flex gap-2 overflow-x-auto">
@@ -39,10 +39,6 @@ export default function PhotozonesPage(){
     </article>)}
    </div>
 
-   <div className="mt-12 sm:mt-20 grid lg:grid-cols-2 gap-4 sm:gap-6">
-    <div className="rounded-[28px] sm:rounded-[38px] bg-black p-6 sm:p-10 text-white"><p className="text-xs uppercase tracking-[.2em] text-white/45">ALMA+ · PHOTO GUIDE</p><h2 className="mt-4 text-3xl sm:text-5xl font-bold tracking-tight">Не просто адрес.<br/>Готовый кадр.</h2><p className="mt-4 max-w-lg text-sm sm:text-base leading-7 text-white/60">В полном фотогиде откроем точную точку съёмки, лучший свет, ракурс, подсказку по образу и несколько кадров рядом — чтобы не искать всё по отдельности.</p><div className="mt-7 flex flex-wrap gap-2 text-xs"><span className="rounded-full bg-white/10 px-3 py-2">Точная точка</span><span className="rounded-full bg-white/10 px-3 py-2">Лучшее время</span><span className="rounded-full bg-white/10 px-3 py-2">Ракурс</span><span className="rounded-full bg-white/10 px-3 py-2">Что надеть</span></div></div>
-    <div className="rounded-[28px] sm:rounded-[38px] bg-[#ddd4c8] p-6 sm:p-10 flex flex-col justify-between"><div><p className="text-xs uppercase tracking-[.2em] text-black/40">Фото + прогулка</p><h2 className="mt-4 text-3xl sm:text-5xl font-bold tracking-tight">Собрать целый день вокруг кадра</h2><p className="mt-4 max-w-lg text-sm sm:text-base leading-7 text-black/55">Фототочка может стать короткой остановкой между главными местами — без городского марафона.</p></div><Link href="/surprise" className="mt-8 self-start rounded-full bg-black px-6 py-3.5 text-sm font-semibold text-white">✦ Собрать маршрут</Link></div>
-   </div>
-  </section>
+     </section>
  </main>;
 }
