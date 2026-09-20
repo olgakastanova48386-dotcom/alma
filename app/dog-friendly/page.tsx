@@ -48,7 +48,7 @@ export default function DogFriendlyPage() {
           <img
             src="/images/alma-dog.webp"
             alt="Пёс ALMA"
-            className="pointer-events-none absolute bottom-[-18px] right-[-8px] z-20 block w-[155px] max-h-[185px] object-contain object-bottom drop-shadow-[0_10px_16px_rgba(0,0,0,0.14)] sm:bottom-[-18px] sm:right-[-8px] sm:w-[240px] sm:max-h-none md:bottom-[-20px] md:right-[4px] md:w-[360px] md:max-h-none lg:bottom-[-42px] lg:right-[18px] lg:w-[430px] lg:max-h-none"
+            className="pointer-events-none absolute bottom-[-8px] right-[6px] z-20 block w-[155px] max-h-[185px] object-contain object-bottom drop-shadow-[0_10px_16px_rgba(0,0,0,0.14)] sm:bottom-[-18px] sm:right-[-8px] sm:w-[240px] sm:max-h-none md:bottom-[-20px] md:right-[4px] md:w-[360px] md:max-h-none lg:bottom-[-42px] lg:right-[18px] lg:w-[430px] lg:max-h-none"
           />
         </div>
         <div className="mx-auto mt-4 w-[92%] rounded-[20px] bg-white border border-black/5 p-2.5 sm:mt-5 sm:w-[94%] sm:rounded-[22px] sm:p-5">
