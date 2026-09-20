@@ -1,0 +1,25 @@
+export type AlmaEvent = { id:string; title:string; place:string; date:string; category:string; note:string; image:string; startsAt:string; endsAt?:string };
+
+export const events: AlmaEvent[] = [
+  {id:"fin-zaliv-house-party",title:"Финский залив андер хаус пати",place:"Севкабель Порт",date:"19–20 сентября",category:"Вечеринки",note:"Вечеринка у залива",image:"/events/fin-zaliv-house-party.jpg",startsAt:"2026-09-19",endsAt:"2026-09-20"},
+  {id:"growbox-market",title:"Гроубокс маркет",place:"Севкабель Порт",date:"19–20 сентября",category:"Маркеты",note:"Маркет выходного дня в Порту",image:"/events/growbox-market.jpg",startsAt:"2026-09-19",endsAt:"2026-09-20"},
+  {id:"koi-asia-festival",title:"КОИ Азия Фестиваль",place:"Севкабель Порт · Цех",date:"19–20 сентября",category:"Фестивали",note:"Азия, музыка, еда, маркет и фотозоны · вход по регистрации",image:"/events/koi-asia-festival.jpg",startsAt:"2026-09-19",endsAt:"2026-09-20"},
+  {id:"spiexff",title:"SPIEXFF",place:"Севкабель Порт · лекторий’порт",date:"до 20 сентября",category:"Кино",note:"Международный фестиваль экспериментального кино",image:"/events/spiexff.jpg",startsAt:"2026-09-16",endsAt:"2026-09-20"},
+  {id:"waterfront-workouts",title:"Тренировки на набережной",place:"Севкабель Порт · Набережная",date:"до 30 сентября",category:"Спорт",note:"Йога и функциональные тренировки на берегу · вход свободный",image:"/events/waterfront-workouts.jpg",startsAt:"2026-06-06",endsAt:"2026-09-30"},
+  {id:"viktor-tsoi-legenda",title:"Виктор Цой. Легенда",place:"Севкабель Порт",date:"до 27 сентября",category:"Выставки",note:"Выставка в Порту",image:"/events/viktor-tsoi-legenda.jpg",startsAt:"2026-01-01",endsAt:"2026-09-27"},
+  {id:"museum-machines",title:"Музей Восстания Машин",place:"Брусницын",date:"с 20 сентября · ежедневно",category:"Выставки",note:"Новый интерактивный музей",image:"/events/museum-machines.jpg",startsAt:"2026-09-20"},
+  {id:"trajectories",title:"Траектории интервалов",place:"Севкабель Порт",date:"до 18 октября",category:"Выставки",note:"Выставочный проект о пространстве, времени и движении",image:"/events/trajectories.jpg",startsAt:"2026-03-13",endsAt:"2026-10-18"},
+  {id:"body-horror",title:"В.Н.Е / Body Horror Exhibition",place:"Севкабель Порт",date:"до 22 декабря",category:"Выставки",note:"Выставка о телесности и границах человеческого",image:"/events/body-horror.jpg",startsAt:"2026-08-15",endsAt:"2026-12-22"},
+  {id:"picasso-paragraphs",title:"Пабло Пикассо. Параграфы",place:"Брусницын",date:"ежедневно · 12:00–21:00",category:"Выставки",note:"Работы основных этапов творчества Пабло Пикассо",image:"/events/picasso-paragraphs.jpg",startsAt:"2026-01-01"},
+  {id:"through-universes",title:"Сквозь Вселенные",place:"Брусницын",date:"с 10 сентября · ежедневно",category:"Выставки",note:"Поп-культура, комиксы, кино-реквизит и коллекционирование",image:"/events/through-universes.jpg",startsAt:"2026-09-10"},
+  {id:"rhythm-feeling",title:"Чувство ритма",place:"Севкабель Порт · Барная линия",date:"26–27 сентября · 23:00–07:00",category:"Вечеринки",note:"Два танцпола: техно, электро, евротранс и хардхаус",image:"/events/rhythm-feeling.jpg",startsAt:"2026-09-26",endsAt:"2026-09-27"},
+  {id:"word-and-action",title:"СЛОВО и ДЕЛО",place:"Севкабель Порт · Детский этаж",date:"26–27 сентября",category:"Фестивали",note:"Детские мастер-классы и программа для родителей",image:"/events/word-and-action.jpg",startsAt:"2026-09-26",endsAt:"2026-09-27"},
+  {id:"white-night-auto",title:"Белая ночь / White Night",place:"Севкабель Порт · Цех",date:"26 сентября · 12:00–21:00",category:"Выставки",note:"Редкие, ретро- и тюнингованные автомобили и мототехника",image:"/events/white-night-auto.jpg",startsAt:"2026-09-26",endsAt:"2026-09-26"},
+  {id:"lilac-branch",title:"Ветка сирени",place:"Севкабель Порт · лекторий’порт",date:"26 сентября · 19:00",category:"Кино",note:"Показ фильма Павла Лунгина о Сергее Рахманинове в обновлённом формате 4К",image:"/events/lilac-branch.jpg",startsAt:"2026-09-26",endsAt:"2026-09-26"},
+  {id:"pet-donor-day",title:"День питомца-донора",place:"Брусницын",date:"27 сентября · 11:00–17:00",category:"Фестивали",note:"Праздник для питомцев и владельцев: активности, лекции и мастер-классы",image:"/events/pet-donor-day.jpg",startsAt:"2026-09-27",endsAt:"2026-09-27"},
+  {id:"yarkiy-fovizm",title:"Яркий фовизм",place:"Брусницын",date:"27 сентября",category:"Лекции",note:"Лекция из цикла «Изменчивый XX век»",image:"/events/yarkiy-fovizm.jpg",startsAt:"2026-09-27",endsAt:"2026-09-27"},
+  {id:"dark-wave",title:"DARK WAVE",place:"Брусницын",date:"31 октября",category:"Вечеринки",note:"Тёмная эстетика, образы и немного мистики",image:"/events/dark-wave.jpg",startsAt:"2026-10-31",endsAt:"2026-10-31"}
+];
+
+export function moscowDate(){return new Intl.DateTimeFormat("en-CA",{timeZone:"Europe/Moscow",year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date())}
+export function isEventActive(event:AlmaEvent,today=moscowDate()){return event.startsAt<=today&&(!event.endsAt||event.endsAt>=today)}
