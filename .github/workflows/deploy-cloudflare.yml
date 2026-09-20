@@ -5,11 +5,11 @@ on:
     branches: [main]
   workflow_dispatch:
 
-# Automatic production deployment for ALMA — restored 2026-09-20 · deploy admin stats route
+# Automatic production deployment for ALMA — keep every main deployment queued
 
 concurrency:
   group: alma-production
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   deploy:
