@@ -111,10 +111,22 @@ export default function UnifiedMap() {
   }, [selected]);
 
   useEffect(() => {
-    fetch("/api/auth/me", { cache: "no-store", credentials: "include" })
-      .then((response) => response.ok ? response.json() : { user: null })
-      .then((data) => setIsFemale(data?.user?.gender === "female"))
-      .catch(() => setIsFemale(false));
+    let cancelled = false;
+    const loadAccount = async () => {
+      for (let attempt = 0; attempt < 3; attempt += 1) {
+        try {
+          const response = await fetch("/api/auth/me", { cache: "no-store", credentials: "include" });
+          if (!response.ok) throw new Error("account unavailable");
+          const data = await response.json();
+          if (!cancelled) setIsFemale(data?.user?.gender === "female");
+          return;
+        } catch {
+          if (attempt < 2) await new Promise((resolve) => setTimeout(resolve, 700 * (attempt + 1)));
+        }
+      }
+    };
+    void loadAccount();
+    return () => { cancelled = true; };
   }, []);
 
   useEffect(() => {
@@ -123,6 +135,7 @@ export default function UnifiedMap() {
       l.rel = "stylesheet";
       l.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
       l.dataset.leafletCss = "true";
+      l.onerror = () => { l.href = "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css"; };
       document.head.appendChild(l);
     }
     if (window.L) {
@@ -139,6 +152,15 @@ export default function UnifiedMap() {
     s.async = true;
     s.dataset.leafletJs = "true";
     s.onload = () => setReady(true);
+    s.onerror = () => {
+      s.remove();
+      const fallback = document.createElement("script");
+      fallback.src = "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js";
+      fallback.async = true;
+      fallback.dataset.leafletJs = "true";
+      fallback.onload = () => setReady(true);
+      document.body.appendChild(fallback);
+    };
     document.body.appendChild(s);
   }, []);
 
