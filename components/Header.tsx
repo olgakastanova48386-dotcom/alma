@@ -49,12 +49,22 @@ function MapIcon() {
 
 function PawIcon() {
   return (
-    <svg viewBox="0 0 24 24" aria-hidden="true" className="h-[22px] w-[22px]" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
-      <ellipse cx="7.2" cy="7.5" rx="1.75" ry="2.25" transform="rotate(-24 7.2 7.5)" />
-      <ellipse cx="16.8" cy="7.5" rx="1.75" ry="2.25" transform="rotate(24 16.8 7.5)" />
-      <ellipse cx="4.9" cy="12" rx="1.6" ry="2.05" transform="rotate(-38 4.9 12)" />
-      <ellipse cx="19.1" cy="12" rx="1.6" ry="2.05" transform="rotate(38 19.1 12)" />
-      <path d="M12 10.7c-2.7 0-5.25 2.45-5.25 5.15 0 1.75 1.18 3.05 2.85 3.05.95 0 1.55-.55 2.4-.55s1.45.55 2.4.55c1.67 0 2.85-1.3 2.85-3.05 0-2.7-2.55-5.15-5.25-5.15Z" />
+    <svg viewBox="0 0 24 24" aria-hidden="true" className="h-[21px] w-[21px]" fill="currentColor">
+      <ellipse cx="8" cy="7.2" rx="2" ry="2.7" transform="rotate(-18 8 7.2)" />
+      <ellipse cx="16" cy="7.2" rx="2" ry="2.7" transform="rotate(18 16 7.2)" />
+      <ellipse cx="5.2" cy="11.7" rx="1.8" ry="2.4" transform="rotate(-30 5.2 11.7)" />
+      <ellipse cx="18.8" cy="11.7" rx="1.8" ry="2.4" transform="rotate(30 18.8 11.7)" />
+      <path d="M12 10.8c-3 0-5.7 2.7-5.7 5.5 0 1.9 1.4 3.2 3.1 3.2 1 0 1.7-.55 2.6-.55s1.6.55 2.6.55c1.7 0 3.1-1.3 3.1-3.2 0-2.8-2.7-5.5-5.7-5.5Z" />
+    </svg>
+  );
+}
+
+function EventsIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" className="h-[20px] w-[20px]" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3.5" y="5.5" width="17" height="15" rx="3" />
+      <path d="M7.5 3.5v4M16.5 3.5v4M3.5 10h17" />
+      <path d="m12 13 .7 1.45 1.6.23-1.15 1.12.27 1.58L12 16.63l-1.42.75.27-1.58-1.15-1.12 1.6-.23L12 13Z" />
     </svg>
   );
 }
@@ -157,7 +167,7 @@ export default function Header() {
                     title="События"
                     className="flex h-9 w-9 items-center justify-center rounded-full bg-black/[.04]"
                   >
-                    <MapIcon />
+                    <EventsIcon />
                   </Link>
                 )}
 
