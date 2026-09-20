@@ -34,9 +34,6 @@ export default function DogFriendlyPage() {
     <main className="min-h-screen bg-[#f7f4ef] pt-32 sm:pt-36 pb-24 text-black">
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="rounded-[28px] bg-[#dfe8d8] px-6 py-5 sm:px-8 sm:py-5 lg:px-9 lg:py-6">
-          <p className="text-xs uppercase tracking-[0.22em] text-neutral-600">
-            ALMA · Dog Friendly
-          </p>
           <h1 className="mt-2 max-w-4xl text-3xl sm:text-4xl lg:text-[42px] font-bold tracking-tight leading-[1.02]">
             Петербург вместе с собакой 🐾
           </h1>
