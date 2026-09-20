@@ -256,7 +256,7 @@ const photoMapPlaces: MapPlace[] = [
   },
   {
     id: 5002,
-    name: "Ракета",
+    name: "Падел-клуб «Ракета»",
     category: "Падел-клуб",
     mood: "Драйв",
     budget: "Цена уточняется",
