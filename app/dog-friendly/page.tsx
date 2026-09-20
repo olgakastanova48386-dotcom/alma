@@ -33,8 +33,8 @@ export default function DogFriendlyPage() {
   return (
     <main className="min-h-screen bg-[#f7f4ef] pt-[88px] sm:pt-[104px] pb-24 text-black">
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative overflow-visible rounded-[28px] bg-[#dfe8d8] px-6 py-5 pr-[145px] min-h-[205px] sm:px-8 sm:py-5 sm:pr-[220px] sm:min-h-[170px] md:min-h-[185px] md:pr-[310px] lg:min-h-[190px] lg:px-9 lg:py-6 lg:pr-[390px]">
-          <div className="relative z-10 flex min-h-[165px] items-center sm:min-h-[130px] md:min-h-[145px] lg:min-h-[142px] lg:max-w-[68%]">
+        <div className="relative overflow-visible rounded-[28px] bg-[#dfe8d8] px-5 py-4 pr-[135px] min-h-[170px] sm:px-8 sm:py-5 sm:pr-[220px] sm:min-h-[170px] md:min-h-[185px] md:pr-[310px] lg:min-h-[190px] lg:px-9 lg:py-6 lg:pr-[390px]">
+          <div className="relative z-10 flex min-h-[138px] items-center sm:min-h-[130px] md:min-h-[145px] lg:min-h-[142px] lg:max-w-[68%]">
             <h1 className="mt-0 max-w-[62%] text-[21px] sm:text-[28px] md:text-[34px] lg:text-[48px] font-bold tracking-tight leading-[1.02]">
               Петербург вместе с собакой 🐾
             </h1>
@@ -48,10 +48,10 @@ export default function DogFriendlyPage() {
           <img
             src="/images/alma-dog.webp"
             alt="Пёс ALMA"
-            className="pointer-events-none absolute bottom-[-18px] right-[-8px] z-20 block w-[170px] max-h-[210px] object-contain object-bottom drop-shadow-[0_10px_16px_rgba(0,0,0,0.14)] sm:bottom-[-18px] sm:right-[-8px] sm:w-[240px] sm:max-h-none md:bottom-[-20px] md:right-[4px] md:w-[360px] md:max-h-none lg:bottom-[-42px] lg:right-[18px] lg:w-[430px] lg:max-h-none"
+            className="pointer-events-none absolute bottom-[-18px] right-[-8px] z-20 block w-[155px] max-h-[185px] object-contain object-bottom drop-shadow-[0_10px_16px_rgba(0,0,0,0.14)] sm:bottom-[-18px] sm:right-[-8px] sm:w-[240px] sm:max-h-none md:bottom-[-20px] md:right-[4px] md:w-[360px] md:max-h-none lg:bottom-[-42px] lg:right-[18px] lg:w-[430px] lg:max-h-none"
           />
         </div>
-        <div className="mx-auto mt-5 w-[96%] rounded-[22px] bg-white border border-black/5 p-3 sm:w-[94%] sm:p-5">
+        <div className="mx-auto mt-4 w-[92%] rounded-[20px] bg-white border border-black/5 p-2.5 sm:mt-5 sm:w-[94%] sm:rounded-[22px] sm:p-5">
           <div className="grid grid-cols-2 gap-2 sm:gap-4">
             <AlmaSelect
               label="Тип места"
