@@ -48,7 +48,7 @@ export default function ProfilePage() {
 
   if (!user) {
     return (
-      <main className="min-h-screen bg-[#f7f4ef] pt-24 sm:pt-36 pb-16 sm:pb-24 px-4">
+      <main className="min-h-screen bg-[#f7f4ef] pt-[92px] sm:pt-36 pb-16 sm:pb-24 px-4">
         <section className="max-w-xl mx-auto rounded-[32px] bg-white border border-black/5 p-8 sm:p-10 text-center shadow-sm">
           <div className="mx-auto h-16 w-16 rounded-full bg-[#f2eee7] flex items-center justify-center text-2xl">◎</div>
           <h1 className="mt-6 text-3xl font-bold">Войдите в ALMA</h1>
@@ -61,33 +61,33 @@ export default function ProfilePage() {
 
   return (
     <main className="min-h-screen bg-[#f7f4ef] pt-32 sm:pt-36 pb-24 px-4">
-      <div className="max-w-3xl mx-auto">
-        <p className="text-[10px] sm:text-xs uppercase tracking-[0.18em] sm:tracking-[0.22em] text-neutral-500">ALMA · Аккаунт</p>
-        <div className="mt-3 sm:mt-5 rounded-[24px] sm:rounded-[34px] bg-white border border-black/5 shadow-sm p-5 sm:p-10">
-          <div className="flex flex-col sm:flex-row sm:items-center gap-5">
-            <div className="h-14 w-14 sm:h-20 sm:w-20 rounded-full bg-black text-white flex items-center justify-center text-xl sm:text-3xl font-semibold uppercase">{user.name.trim().charAt(0) || "A"}</div>
+      <div className="max-w-3xl mx-auto px-1 sm:px-0">
+        <p className="text-[9px] sm:text-xs uppercase tracking-[0.16em] sm:tracking-[0.22em] text-neutral-400">ALMA · Аккаунт</p>
+        <div className="mt-2 sm:mt-5 rounded-[22px] sm:rounded-[34px] bg-white border border-black/5 shadow-sm p-4 sm:p-10">
+          <div className="flex items-center gap-3 sm:gap-5">
+            <div className="h-11 w-11 sm:h-20 sm:w-20 shrink-0 rounded-full bg-black text-white flex items-center justify-center text-lg sm:text-3xl font-semibold uppercase">{user.name.trim().charAt(0) || "A"}</div>
             <div>
-              <h1 className="text-2xl sm:text-4xl font-bold">{user.name}</h1>
+              <h1 className="text-xl sm:text-4xl font-bold">{user.name}</h1>
               
             </div>
           </div>
 
-          <div className="mt-5 sm:mt-8 grid sm:grid-cols-2 gap-2.5 sm:gap-3">
-            <Link href="/favorites" className="rounded-[18px] sm:rounded-[22px] bg-[#f2eee7] px-4 py-4 sm:px-5 sm:py-5 hover:bg-[#ebe5dc] transition"><p className="text-sm text-neutral-500">Твои места</p><p className="mt-1 font-semibold text-lg">♡ Избранное</p></Link>
-            <Link href="/surprise" className="rounded-[18px] sm:rounded-[22px] bg-[#f2eee7] px-4 py-4 sm:px-5 sm:py-5 hover:bg-[#ebe5dc] transition"><p className="text-sm text-neutral-500">Новый план</p><p className="mt-1 font-semibold text-lg">✨ Удиви меня</p></Link>
+          <div className="mt-4 sm:mt-8 grid grid-cols-2 gap-2 sm:gap-3">
+            <Link href="/favorites" className="rounded-[16px] sm:rounded-[22px] bg-[#f2eee7] px-3 py-3 sm:px-5 sm:py-5 hover:bg-[#ebe5dc] transition"><p className="text-[11px] sm:text-sm text-neutral-500">Твои места</p><p className="mt-1 font-semibold text-[15px] sm:text-lg">♡ Избранное</p></Link>
+            <Link href="/surprise" className="rounded-[16px] sm:rounded-[22px] bg-[#f2eee7] px-3 py-3 sm:px-5 sm:py-5 hover:bg-[#ebe5dc] transition"><p className="text-[11px] sm:text-sm text-neutral-500">Новый план</p><p className="mt-1 font-semibold text-[15px] sm:text-lg">✨ Удиви меня</p></Link>
           </div>
         </div>
 
         {user.gender === "female" && (
-          <section className="mt-4 sm:mt-6 rounded-[24px] sm:rounded-[34px] bg-white border border-black/5 shadow-sm p-5 sm:p-10">
-            <div className="flex items-start gap-4">
-              <div className="shrink-0 h-12 w-12 rounded-full bg-[#f4d9df] text-[#6f2437] flex items-center justify-center text-xl shadow-sm ring-1 ring-[#dca9b5]/60" aria-hidden="true">🛡</div>
+          <section className="mt-3 sm:mt-6 rounded-[22px] sm:rounded-[34px] bg-white border border-black/5 shadow-sm p-4 sm:p-10">
+            <div className="flex items-start gap-3 sm:gap-4">
+              <div className="shrink-0 h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-[#f4d9df] text-[#6f2437] flex items-center justify-center text-xl shadow-sm ring-1 ring-[#dca9b5]/60" aria-hidden="true">🛡</div>
               <div>
-                <p className="text-xs uppercase tracking-[0.16em] text-neutral-400">Безопасность</p>
-                <h2 className="mt-1 text-2xl font-bold tracking-tight">Безопасное место</h2>
-                <p className="mt-3 text-sm sm:text-base leading-7 text-neutral-600">В некоторых кафе, ресторанах и других местах ALMA ты увидишь этот значок. Он означает, что заведение подтвердило возможность обратиться к сотруднику за помощью, если тебя преследуют, тебе угрожают или рядом с кем-то небезопасно.</p>
-                <p className="mt-3 text-sm sm:text-base leading-7 text-neutral-600">В карточке такого места ALMA покажет <span className="font-semibold text-black">кодовую фразу</span>, которую нужно назвать сотруднику, и объяснит, какую помощь сможет оказать персонал.</p>
-                <p className="mt-3 text-xs leading-5 text-neutral-400">ALMA показывает отметку только после подтверждения заведением. При непосредственной опасности обращайся в экстренные службы.</p>
+                <p className="text-[9px] sm:text-xs uppercase tracking-[0.14em] sm:tracking-[0.16em] text-neutral-400">Безопасность</p>
+                <h2 className="mt-0.5 text-lg sm:mt-1 sm:text-2xl font-bold tracking-tight">Безопасное место</h2>
+                <p className="mt-2 text-[13px] sm:mt-3 sm:text-base leading-5 sm:leading-7 text-neutral-600">В некоторых кафе, ресторанах и других местах ALMA ты увидишь этот значок. Он означает, что заведение подтвердило возможность обратиться к сотруднику за помощью, если тебя преследуют, тебе угрожают или рядом с кем-то небезопасно.</p>
+                <p className="mt-2 text-[13px] sm:mt-3 sm:text-base leading-5 sm:leading-7 text-neutral-600">В карточке такого места ALMA покажет <span className="font-semibold text-black">кодовую фразу</span>, которую нужно назвать сотруднику, и объяснит, какую помощь сможет оказать персонал.</p>
+                <p className="mt-2 sm:mt-3 text-[10px] sm:text-xs leading-4 sm:leading-5 text-neutral-400">ALMA показывает отметку только после подтверждения заведением. При непосредственной опасности обращайся в экстренные службы.</p>
               </div>
             </div>
           </section>
