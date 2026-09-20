@@ -9,7 +9,7 @@ const places = [
   { title: "Петергоф", category: "Музей-заповедник", image: "/images/петергоф.jpg" },
   { title: "Эрмитаж", category: "Музей", image: "/images/эрмитаж.jpg" },
   { title: "Спас на Крови", category: "Архитектура", image: "/images/спас на крови.jpg" },
-  { title: "Петропавловская крепость", category: "История", image: "/place-images/62.jpg" },
+  { title: "Петропавловская крепость", category: "История", image: "/images/петропавловская крепость.jpg" },
   { title: "Исаакиевский собор", category: "Архитектура", image: "/images/иссакиевский собор.jpg" },
   { title: "Дворцовая площадь", category: "Архитектура", image: "/images/дворцовая площадь.jpg" },
   { title: "Новая Голландия", category: "Отдых", image: "/images/new-holland.jpg" },
