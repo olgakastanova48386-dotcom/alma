@@ -35,9 +35,20 @@ export default function DogFriendlyPage() {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="relative overflow-visible rounded-[28px] bg-[#dfe8d8] px-6 py-5 pr-[145px] min-h-[205px] sm:px-8 sm:py-5 sm:pr-[220px] sm:min-h-[170px] md:min-h-[185px] md:pr-[310px] lg:min-h-[190px] lg:px-9 lg:py-6 lg:pr-[390px]">
           <div className="relative z-10 flex min-h-[165px] items-center sm:min-h-[130px] md:min-h-[145px] lg:min-h-[142px] lg:max-w-[68%]">
-            <h1 className="mt-0 max-w-[62%] text-[26px] sm:text-3xl lg:text-[38px] font-bold tracking-tight leading-[1.04]">
+            <h1 className="mt-0 max-w-[62%] text-[26px] sm:text-4xl lg:text-[48px] font-bold tracking-tight leading-[1.02]">
               Петербург вместе с собакой 🐾
             </h1>
+            <div className="hidden sm:flex mt-3 items-center gap-3 text-[11px] sm:text-xs font-semibold uppercase tracking-[0.16em] text-[#56614f]">
+              <span className="h-px w-10 bg-[#78856f]" />
+              <span>Гид Джека по Петербургу</span>
+              <span className="h-px w-16 bg-[#78856f]" />
+            </div>
+          </div>
+          <div className="pointer-events-none absolute bottom-5 left-[48%] hidden lg:block text-[#78856f]/70">
+            <svg width="120" height="42" viewBox="0 0 120 42" fill="none" aria-hidden="true">
+              <path d="M2 31C27 10 55 8 84 20C97 25 107 24 118 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeDasharray="4 7"/>
+              <path d="M110 10L118 13L114 21" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
           </div>
           <img
             src="/images/alma-dog.webp"
