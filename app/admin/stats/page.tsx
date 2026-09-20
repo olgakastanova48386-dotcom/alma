@@ -1,0 +1,8 @@
+"use client";
+import { useEffect, useState } from "react";
+type Stats={total:number;today:number;week:number;month:number;lastRegistration:number|null};
+export default function AdminStatsPage(){
+ const [stats,setStats]=useState<Stats|null>(null); const [error,setError]=useState("");
+ useEffect(()=>{fetch("/api/admin/stats",{cache:"no-store"}).then(async r=>{const d=await r.json();if(!r.ok)throw new Error(d.error||"Ошибка");setStats(d)}).catch(e=>setError(e.message))},[]);
+ return <main className="min-h-screen bg-[#f7f4ef] px-4 pt-28 pb-16 text-black"><section className="mx-auto max-w-4xl"><p className="text-xs uppercase tracking-[.22em] text-neutral-500">ALMA · только для владельца</p><h1 className="mt-3 text-4xl sm:text-6xl font-bold tracking-tight">Регистрации</h1>{error&&<div className="mt-8 rounded-3xl bg-white p-6">{error}</div>}{!error&&!stats&&<div className="mt-8 text-neutral-500">Загружаю статистику…</div>}{stats&&<><div className="mt-8 grid grid-cols-2 lg:grid-cols-4 gap-3">{[["Всего",stats.total],["Сегодня",stats.today],["7 дней",stats.week],["30 дней",stats.month]].map(([label,value])=><div key={String(label)} className="rounded-[24px] bg-white p-5 sm:p-7"><p className="text-sm text-neutral-500">{label}</p><p className="mt-2 text-4xl font-bold">{value}</p></div>)}</div><p className="mt-5 text-sm text-neutral-500">{stats.lastRegistration ? "Последняя регистрация: "+new Date(stats.lastRegistration*1000).toLocaleString("ru-RU",{timeZone:"Europe/Moscow"}) : "Регистраций пока нет"}</p></>}</section></main>;
+}
