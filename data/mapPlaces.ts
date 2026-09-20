@@ -35,6 +35,7 @@ export type MapPlace = {
     | "Детская комната"
     | "Детский стульчик";
   babyCareVerifiedAt?: string;
+  babyCareDetails?: string[];
   menuUrl?: string;
   studentDiscount?: number;
   studentDiscountNote?: string;
@@ -275,6 +276,55 @@ const photoMapPlaces: MapPlace[] = [
     ratingSource: "2ГИС",
     drive: true,
     driveTags: ["Активный отдых", "С друзьями"],
+  },
+];
+
+
+const familyMapPlaces: MapPlace[] = [
+  {
+    id: 7001, name: "Игристые", category: "Ресторан", mood: "Вкусно поесть",
+    budget: "≈ 1 000–2 500 ₽", company: ["Пара","Друзья","Семья"], duration: "1–2 часа",
+    image: "", lat: 59.92725, lng: 30.31668,
+    why: "👶 Детская комната и детские стульчики · проверено 20.09.2026",
+    address: "пер. Гривцова, 13/11, Санкт-Петербург", price: "≈ 1 000–2 500 ₽", priceNote: "Средний чек",
+    detailHref: "/place/7001", rating: 4.5, ratingScale: 5, ratingCount: 195, ratingSource: "Google",
+    babyCare: "Детская комната", babyCareDetails: ["Детская комната", "Детские стульчики"], babyCareVerifiedAt: "20.09.2026",
+  },
+  {
+    id: 7002, name: "Kira", category: "Ресторан", mood: "Вкусно поесть",
+    budget: "≈ 3 000–4 000 ₽", company: ["Пара","Друзья","Семья"], duration: "1–2 часа",
+    image: "", lat: 59.9393, lng: 30.3901,
+    why: "👶 Детская комната и детские стульчики · проверено 20.09.2026",
+    address: "Кирочная ул., 67, стр. 2, Санкт-Петербург", price: "≈ 3 000–4 000 ₽", priceNote: "Средний чек",
+    detailHref: "/place/7002",
+    babyCare: "Детская комната", babyCareDetails: ["Детская комната", "Детские стульчики"], babyCareVerifiedAt: "20.09.2026",
+  },
+  {
+    id: 7003, name: "Вкусновица", category: "Ресторан", mood: "Вкусно поесть",
+    budget: "≈ 1 500–2 000 ₽", company: ["Пара","Друзья","Семья"], duration: "1–2 часа",
+    image: "", lat: 59.940151, lng: 30.418366,
+    why: "👶 Детская комната и детские стульчики · проверено 20.09.2026",
+    address: "Брантовская дорога, 3, ТРЦ «Охта Молл», Санкт-Петербург", price: "≈ 1 500–2 000 ₽", priceNote: "Средний чек",
+    detailHref: "/place/7003", rating: 4.5, ratingScale: 5, ratingCount: 851, ratingSource: "Google",
+    babyCare: "Детская комната", babyCareDetails: ["Детская комната", "Детские стульчики"], babyCareVerifiedAt: "20.09.2026",
+  },
+  {
+    id: 7004, name: "Птичий двор", category: "Ресторан", mood: "Вкусно поесть",
+    budget: "≈ 1 000–4 000 ₽", company: ["Пара","Друзья","Семья"], duration: "1–2 часа",
+    image: "", lat: 59.986281, lng: 30.20357,
+    why: "👶 Детская комната и детские стульчики · проверено 20.09.2026",
+    address: "ул. Савушкина, 126, ТЦ Atlantic City, Санкт-Петербург", price: "≈ 1 000–4 000 ₽", priceNote: "Средний чек",
+    detailHref: "/place/7004", rating: 4.3, ratingScale: 5, ratingCount: 527, ratingSource: "Google",
+    babyCare: "Детская комната", babyCareDetails: ["Детская комната", "Детские стульчики"], babyCareVerifiedAt: "20.09.2026",
+  },
+  {
+    id: 7005, name: "ТРЦ Галерея", category: "Городское пространство", mood: "С семьёй",
+    budget: "Бесплатно", company: ["Один","Пара","Друзья","Семья"], duration: "1–2 часа",
+    image: "", lat: 59.9278, lng: 30.3601,
+    why: "👶 Комнаты матери и ребёнка с пеленальными столиками · проверено 20.09.2026",
+    address: "Лиговский проспект, 30А, Санкт-Петербург", price: "Бесплатно", priceNote: "Детские сервисы",
+    detailHref: "/place/7005",
+    babyCare: "Комната матери и ребёнка", babyCareDetails: ["Комната матери и ребёнка", "Пеленальный столик", "Детская зона на фудкорте"], babyCareVerifiedAt: "20.09.2026",
   },
 ];
 
