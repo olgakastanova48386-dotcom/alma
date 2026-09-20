@@ -33,14 +33,21 @@ export default function DogFriendlyPage() {
   return (
     <main className="min-h-screen bg-[#f7f4ef] pt-32 sm:pt-36 pb-24 text-black">
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="rounded-[28px] bg-[#dfe8d8] px-6 py-5 sm:px-8 sm:py-5 lg:px-9 lg:py-6">
-          <h1 className="mt-2 max-w-4xl text-3xl sm:text-4xl lg:text-[42px] font-bold tracking-tight leading-[1.02]">
-            Петербург вместе с собакой 🐾
-          </h1>
-          <p className="mt-3 max-w-3xl text-sm sm:text-[15px] text-neutral-700 leading-6">
-            Проверенные места, куда можно прийти вместе с питомцем. В ALMA
-            публикуем только заведения с подтверждённым рейтингом от 4,5 до 5,0.
-          </p>
+        <div className="relative overflow-visible rounded-[28px] bg-[#dfe8d8] px-6 py-5 sm:px-8 sm:py-5 lg:px-9 lg:py-6">
+          <div className="relative z-10 lg:max-w-[68%]">
+            <h1 className="mt-2 text-3xl sm:text-4xl lg:text-[42px] font-bold tracking-tight leading-[1.02]">
+              Петербург вместе с собакой 🐾
+            </h1>
+            <p className="mt-3 max-w-3xl text-sm sm:text-[15px] text-neutral-700 leading-6">
+              Проверенные места, куда можно прийти вместе с питомцем. В ALMA
+              публикуем только заведения с подтверждённым рейтингом от 4,5 до 5,0.
+            </p>
+          </div>
+          <img
+            src="/images/alma-dog.webp"
+            alt="Пёс ALMA"
+            className="pointer-events-none absolute bottom-[-18px] right-4 hidden w-[250px] object-contain drop-shadow-[0_12px_18px_rgba(0,0,0,0.16)] md:block lg:right-8 lg:w-[300px]"
+          />
         </div>
         <div className="mx-auto mt-5 w-[96%] rounded-[26px] bg-white border border-black/5 p-4 sm:w-[94%] sm:p-5">
           <div className="flex flex-col md:flex-row gap-4">
