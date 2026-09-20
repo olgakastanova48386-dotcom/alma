@@ -411,6 +411,15 @@ const strelnaPlaces: MapPlace[] = [
   { id:8106,name:"Яхт-Клуб · Стрельна",category:"Ресторан",mood:"Романтика",budget:"Цена уточняется",company:["Пара","Друзья"],duration:"1–2 часа",image:"",lat:59.8575,lng:30.0340,why:"★ 4.6 / 5 · ресторан у воды",address:"Портовая ул., 25, Стрельна",price:"Цена уточняется",priceNote:"Средний чек уточняется",detailHref:"/place/8106",rating:4.6,ratingScale:5,ratingCount:10,ratingSource:"Google" },
   { id:8107,name:"Фруктовый сад и огород Стрельны",category:"Парк",mood:"Погулять",budget:"Цена уточняется",company:["Один","Пара","Друзья","Семья"],duration:"1–2 часа",image:"",lat:59.8497,lng:30.0405,why:"Исторический садово-огородный комплекс усадьбы Петра I",address:"Стрельна, Санкт-Петербург",price:"Цена уточняется",priceNote:"Режим посещения уточняется",detailHref:"/place/8107" },
 ];
+const southWestCorridorPlaces: MapPlace[] = [
+  { id:8110,name:"Ресторан Стрельна",category:"Ресторан",mood:"Вкусно поесть",budget:"≈ 1 000–1 500 ₽",company:["Пара","Друзья","Семья"],duration:"1–2 часа",image:"",lat:59.8534,lng:30.0590,why:"★ 5.0 / 5 · 2297 оценок · у воды, можно с собакой",address:"Санкт-Петербургское ш., 58А, Стрельна",price:"≈ 1 000–1 500 ₽",priceNote:"Средний чек",detailHref:"/place/8110",rating:5,ratingScale:5,ratingCount:2297,ratingSource:"Яндекс Карты",dogFriendly:true },
+  { id:8111,name:"Усадьба Стрелингоф",category:"Ресторан",mood:"Вкусно поесть",budget:"Цена уточняется",company:["Пара","Друзья","Семья"],duration:"1–2 часа",image:"",lat:59.8518,lng:30.0645,why:"★ 4.8 / 5 · 184 оценки · проходит порог ALMA",address:"Стрельна, Санкт-Петербург",price:"Цена уточняется",priceNote:"Средний чек уточняется",detailHref:"/place/8111",rating:4.8,ratingScale:5,ratingCount:184,ratingSource:"Restaurant Guru" },
+  { id:8112,name:"Парк Сосновая Поляна",category:"Парк",mood:"Погулять",budget:"Бесплатно",company:["Один","Пара","Друзья","Семья"],duration:"1–2 часа",image:"",lat:59.8345,lng:30.1840,why:"★ 4.5 / 5 · 2822 оценки · большая прогулочная точка между Стрельной и Петербургом",address:"Сосновая Поляна, Санкт-Петербург",price:"Бесплатно",priceNote:"Прогулка",detailHref:"/place/8112",rating:4.5,ratingScale:5,ratingCount:2822,ratingSource:"Google" },
+  { id:8113,name:"Евразия · Петергофское шоссе",category:"Ресторан",mood:"Вкусно поесть",budget:"Цена уточняется",company:["Один","Пара","Друзья","Семья"],duration:"1–2 часа",image:"",lat:59.8508,lng:30.1539,why:"★ 4.7 / 5 · 1068 оценок · проходит порог ALMA",address:"Петергофское ш., 51А, Санкт-Петербург",price:"Цена уточняется",priceNote:"Средний чек уточняется",detailHref:"/place/8113",rating:4.7,ratingScale:5,ratingCount:1068,ratingSource:"Google" },
+  { id:8114,name:"Tangiers Lounge Pearl",category:"Ресторан",mood:"Вечером",budget:"Цена уточняется",company:["Пара","Друзья"],duration:"1–2 часа",image:"",lat:59.8560,lng:30.1640,why:"★ 5.0 / 5 · 595 оценок · проходит порог ALMA",address:"ул. Катерников, 8 лит. А, Санкт-Петербург",price:"Цена уточняется",priceNote:"Средний чек уточняется",detailHref:"/place/8114",rating:5,ratingScale:5,ratingCount:595,ratingSource:"Google" },
+  { id:8115,name:"Philibert · Матисов канал",category:"Ресторан",mood:"Вкусно поесть",budget:"Цена уточняется",company:["Пара","Друзья","Семья"],duration:"1–2 часа",image:"",lat:59.8537,lng:30.1745,why:"★ 4.5 / 5 · 442 оценки · проходит порог ALMA",address:"наб. Матисова канала, 5 стр. 1, Санкт-Петербург",price:"Цена уточняется",priceNote:"Средний чек уточняется",detailHref:"/place/8115",rating:4.5,ratingScale:5,ratingCount:442,ratingSource:"Google" },
+  { id:8116,name:"Cernovar · Балтийская Жемчужина",category:"Ресторан",mood:"Вкусно поесть",budget:"Цена уточняется",company:["Пара","Друзья"],duration:"1–2 часа",image:"",lat:59.8542,lng:30.1736,why:"★ 4.7 / 5 · 668 оценок · проходит порог ALMA",address:"ул. Адмирала Трибуца, 7, Санкт-Петербург",price:"Цена уточняется",priceNote:"Средний чек уточняется",detailHref:"/place/8116",rating:4.7,ratingScale:5,ratingCount:668,ratingSource:"Google" },
+];
 const studentDiscountPlaces: MapPlace[] = [
   {
     id: 6001,
@@ -738,6 +747,7 @@ export const mapPlaces: MapPlace[] = [
   ...novoselyeActivities,
   ...novoselyeMoreRatedPlaces,
   ...strelnaPlaces,
+  ...southWestCorridorPlaces,
   ...studentDiscountPlaces,
   ...safetyMapPlaces,
 ];
