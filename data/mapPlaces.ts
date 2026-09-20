@@ -420,6 +420,14 @@ const southWestCorridorPlaces: MapPlace[] = [
   { id:8115,name:"Philibert · Матисов канал",category:"Ресторан",mood:"Вкусно поесть",budget:"Цена уточняется",company:["Пара","Друзья","Семья"],duration:"1–2 часа",image:"",lat:59.8537,lng:30.1745,why:"★ 4.5 / 5 · 442 оценки · проходит порог ALMA",address:"наб. Матисова канала, 5 стр. 1, Санкт-Петербург",price:"Цена уточняется",priceNote:"Средний чек уточняется",detailHref:"/place/8115",rating:4.5,ratingScale:5,ratingCount:442,ratingSource:"Google" },
   { id:8116,name:"Cernovar · Балтийская Жемчужина",category:"Ресторан",mood:"Вкусно поесть",budget:"Цена уточняется",company:["Пара","Друзья"],duration:"1–2 часа",image:"",lat:59.8542,lng:30.1736,why:"★ 4.7 / 5 · 668 оценок · проходит порог ALMA",address:"ул. Адмирала Трибуца, 7, Санкт-Петербург",price:"Цена уточняется",priceNote:"Средний чек уточняется",detailHref:"/place/8116",rating:4.7,ratingScale:5,ratingCount:668,ratingSource:"Google" },
 ];
+const southWestCorridorMorePlaces: MapPlace[] = [
+  { id:8117,name:"Friends Market",category:"Ресторан",mood:"Вкусно поесть",budget:"Цена уточняется",company:["Пара","Друзья","Семья"],duration:"1–2 часа",image:"",lat:59.8479,lng:30.1248,why:"★ 4.9 / 5 · 340 отзывов · проходит порог ALMA",address:"Петергофское ш., 84 к19, Санкт-Петербург",price:"Цена уточняется",priceNote:"Средний чек уточняется",detailHref:"/place/8117",rating:4.9,ratingScale:5,ratingCount:340,ratingSource:"Яндекс Карты" },
+  { id:8118,name:"Британские пекарни · Жемчужная Плаза",category:"Кофейня",mood:"Вкусно поесть",budget:"Цена уточняется",company:["Один","Пара","Друзья","Семья"],duration:"До 1 часа",image:"",lat:59.8510,lng:30.1543,why:"★ 4.8 / 5 · 543 оценки · проходит порог ALMA",address:"Петергофское ш., 51, ТРЦ «Жемчужная Плаза», Санкт-Петербург",price:"Цена уточняется",priceNote:"Средний чек уточняется",detailHref:"/place/8118",rating:4.8,ratingScale:5,ratingCount:543,ratingSource:"2ГИС" },
+  { id:8119,name:"Marseille",category:"Ресторан",mood:"Вкусно поесть",budget:"До 1 000 ₽",company:["Пара","Друзья","Семья"],duration:"1–2 часа",image:"",lat:59.8560,lng:30.1910,why:"★ 4.8 / 5 · проходит порог ALMA",address:"Петергофское ш., 17 к1, Санкт-Петербург",price:"До 1 000 ₽",priceNote:"Средний чек",detailHref:"/place/8119",rating:4.8,ratingScale:5,ratingSource:"Allcafe" },
+  { id:8120,name:"Matisov · Адмирала Трибуца",category:"Ресторан",mood:"Вкусно поесть",budget:"Цена уточняется",company:["Пара","Друзья","Семья"],duration:"1–2 часа",image:"",lat:59.8539,lng:30.1737,why:"★ 4.6 / 5 · 246 отзывов · проходит порог ALMA",address:"ул. Адмирала Трибуца, 7, Санкт-Петербург",price:"Цена уточняется",priceNote:"Средний чек уточняется",detailHref:"/place/8120",rating:4.6,ratingScale:5,ratingCount:246,ratingSource:"Google" },
+  { id:8121,name:"Не горюй",category:"Ресторан",mood:"Вкусно поесть",budget:"≈ 3 000–4 000 ₽",company:["Пара","Друзья","Семья"],duration:"1–2 часа",image:"",lat:59.8540,lng:30.1738,why:"★ 4.5 / 5 · 362 отзыва · проходит порог ALMA",address:"ул. Адмирала Трибуца, 7 лит. А, Санкт-Петербург",price:"≈ 3 000–4 000 ₽",priceNote:"Средний чек",detailHref:"/place/8121",rating:4.5,ratingScale:5,ratingCount:362,ratingSource:"Google" },
+  { id:8122,name:"Шаверма Просто Вася",category:"Фастфуд",mood:"Вкусно поесть",budget:"Цена уточняется",company:["Один","Пара","Друзья"],duration:"До 1 часа",image:"",lat:59.8506,lng:30.1530,why:"★ 4.7 / 5 · 294 оценки · проходит порог ALMA",address:"Петергофское ш., 51Н, Санкт-Петербург",price:"Цена уточняется",priceNote:"Средний чек уточняется",detailHref:"/place/8122",rating:4.7,ratingScale:5,ratingCount:294,ratingSource:"Totadres" },
+];
 const studentDiscountPlaces: MapPlace[] = [
   {
     id: 6001,
@@ -748,6 +756,7 @@ export const mapPlaces: MapPlace[] = [
   ...novoselyeMoreRatedPlaces,
   ...strelnaPlaces,
   ...southWestCorridorPlaces,
+  ...southWestCorridorMorePlaces,
   ...studentDiscountPlaces,
   ...safetyMapPlaces,
 ];
