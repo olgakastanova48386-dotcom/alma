@@ -283,6 +283,27 @@ export default function PlacePage() {
                     🐾 Dog Friendly
                   </div>
                 )}
+                {place.safePlace && (
+                  <div className="mt-3 rounded-[18px] border border-[#dca9b5] bg-[#f8e8ec] px-4 py-4 text-[#5f2030] sm:rounded-[22px] sm:px-5">
+                    <div className="flex items-center gap-2 font-bold">
+                      <span aria-hidden="true">🛡</span>
+                      <span>Безопасное место</span>
+                    </div>
+                    <p className="mt-2 text-xs leading-5 sm:text-sm sm:leading-6 text-[#70404c]">
+                      Персонал подтвердил, что здесь можно обратиться за помощью в небезопасной ситуации.
+                    </p>
+                    {place.safePlaceCode && (
+                      <p className="mt-2 text-xs sm:text-sm"><span className="font-semibold">Кодовая фраза:</span> {place.safePlaceCode}</p>
+                    )}
+                    {place.safePlaceHelp && (
+                      <p className="mt-1 text-xs sm:text-sm"><span className="font-semibold">Что сделают:</span> {place.safePlaceHelp}</p>
+                    )}
+                    {place.safePlaceVerifiedAt && (
+                      <p className="mt-2 text-[11px] text-[#8b6470]">Подтверждено ALMA: {place.safePlaceVerifiedAt}</p>
+                    )}
+                  </div>
+                )}
+
                 <PlaceMenu placeId={place.id} signedIn={signedIn} />
               </div>
 
