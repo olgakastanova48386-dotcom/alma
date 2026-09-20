@@ -1492,7 +1492,7 @@ export const places: Place[] = [
     budget: "Бесплатно",
     company: ["Один", "Пара", "Друзья", "Семья"],
     duration: "1–2 часа",
-    image: "https://commons.wikimedia.org/wiki/Special:Redirect/file/Church_of_the_Savior_on_Blood_SPB.jpg",
+    image: "/images/спас на крови.jpg",
     lat: 59.9401,
     lng: 30.3289,
     description: "Место для самостоятельного знакомства с Петербургом и готовых маршрутов ALMA.",
