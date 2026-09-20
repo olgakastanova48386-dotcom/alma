@@ -41,6 +41,10 @@ export type MapPlace = {
   studentDiscountVerifiedAt?: string;
   studentDiscountEndsAt?: string;
   studentDiscountSourceUrl?: string;
+  safePlace?: boolean;
+  safePlaceCode?: string;
+  safePlaceHelp?: string;
+  safePlaceVerifiedAt?: string;
 };
 
 const hasAlmaRating = (rating: number, scale = 5) =>
