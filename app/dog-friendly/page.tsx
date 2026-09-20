@@ -33,7 +33,7 @@ export default function DogFriendlyPage() {
   return (
     <main className="min-h-screen bg-[#f7f4ef] pt-32 sm:pt-36 pb-24 text-black">
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative overflow-hidden rounded-[28px] bg-[#dfe8d8] px-6 py-5 sm:px-8 sm:py-5 lg:px-9 lg:py-6">
+        <div className="relative overflow-visible rounded-[28px] bg-[#dfe8d8] px-6 py-5 sm:px-8 sm:py-5 lg:px-9 lg:py-6">
           <div className="relative z-10 lg:max-w-[68%]">
             <h1 className="mt-2 text-3xl sm:text-4xl lg:text-[42px] font-bold tracking-tight leading-[1.02]">
               Петербург вместе с собакой 🐾
@@ -46,7 +46,7 @@ export default function DogFriendlyPage() {
           <img
             src="/images/alma-dog.webp"
             alt="Пёс ALMA"
-            className="pointer-events-none absolute bottom-0 right-[-18px] hidden w-[360px] object-contain object-bottom drop-shadow-[0_12px_18px_rgba(0,0,0,0.14)] md:block lg:right-[-8px] lg:w-[430px]"
+            className="pointer-events-none absolute bottom-[-42px] right-[-18px] z-20 hidden w-[360px] object-contain object-bottom drop-shadow-[0_12px_18px_rgba(0,0,0,0.14)] md:block lg:right-[-8px] lg:w-[430px]"
           />
         </div>
         <div className="mx-auto mt-5 w-[96%] rounded-[26px] bg-white border border-black/5 p-4 sm:w-[94%] sm:p-5">
