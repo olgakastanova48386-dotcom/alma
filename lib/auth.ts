@@ -37,6 +37,9 @@ export async function ensureAuthSchema() {
       `CREATE TABLE IF NOT EXISTS menu_votes (user_id TEXT NOT NULL, place_id INTEGER NOT NULL, item_id TEXT NOT NULL, created_at INTEGER NOT NULL, PRIMARY KEY(user_id, place_id, item_id), FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE)`,
     ),
     database.prepare(
+      `CREATE TABLE IF NOT EXISTS page_views (id TEXT PRIMARY KEY, path TEXT NOT NULL, created_at INTEGER NOT NULL)`,
+    ),
+    database.prepare(
       "CREATE INDEX IF NOT EXISTS idx_sessions_user_id ON sessions(user_id)",
     ),
     database.prepare(
@@ -59,6 +62,9 @@ export async function ensureAuthSchema() {
     ),
     database.prepare(
       "CREATE INDEX IF NOT EXISTS idx_menu_votes_place_item ON menu_votes(place_id, item_id)",
+    ),
+    database.prepare(
+      "CREATE INDEX IF NOT EXISTS idx_page_views_path_created ON page_views(path, created_at)",
     ),
   ]);
   const columns = await database.prepare("PRAGMA table_info(users)").all();
