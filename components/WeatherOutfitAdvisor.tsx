@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 
 type Weather = {
   temperature: number;
@@ -44,6 +45,7 @@ function outfitAdvice(w: Weather) {
 }
 
 export default function WeatherOutfitAdvisor() {
+  const pathname = usePathname();
   const [weather, setWeather] = useState<Weather | null>(null);
   const [status, setStatus] = useState<Status>("idle");
   const [open, setOpen] = useState(false);
@@ -99,6 +101,8 @@ export default function WeatherOutfitAdvisor() {
     void requestOnFirstVisit();
     return () => { cancelled = true; };
   }, []);
+
+  if (pathname === "/") return null;
 
   return (
     <div className="fixed bottom-[calc(94px+env(safe-area-inset-bottom))] right-3 z-[70] sm:bottom-5 sm:left-6 sm:right-auto">
