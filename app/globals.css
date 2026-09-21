@@ -79,14 +79,26 @@ select:-webkit-autofill {
 
   /* Homepage hero itself, including the photo, extends behind the iPhone status bar. */
   .alma-home-hero {
-    margin-top: calc(-1 * env(safe-area-inset-top)) !important;
-    height: calc(350px + env(safe-area-inset-top)) !important;
+    margin-top: 0 !important;
+    height: 350px !important;
     overflow: visible !important;
   }
+  /* Fixed positioning uses the physical viewport edge, so the SAME hero photo
+     reaches y=0 behind the iPhone status bar instead of starting below safe-area. */
   .alma-home-hero-image {
-    top: calc(-1 * env(safe-area-inset-top)) !important;
-    height: calc(100% + env(safe-area-inset-top)) !important;
+    position: fixed !important;
+    z-index: 0 !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100vw !important;
+    height: calc(350px + env(safe-area-inset-top)) !important;
     bottom: auto !important;
+    pointer-events: none;
+  }
+  .alma-home-hero > :not(.alma-home-hero-image) {
+    position: relative;
+    z-index: 1;
   }
 
   button, a { -webkit-tap-highlight-color: transparent; }
