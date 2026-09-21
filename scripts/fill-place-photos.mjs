@@ -35,7 +35,14 @@ for (const p of cards) {
     let url = p.image;
     if (!/^https?:\/\//.test(url)) url = await commonsPhoto(p.name);
     if (!url) { console.log("NO_MATCH", p.id, p.name); continue; }
-    const r = await fetch(url, { headers: { "User-Agent": "ALMA-place-photo-refresh/1.0" }, redirect: "follow" });
+    let r = await fetch(url, { headers: { "User-Agent": "ALMA-place-photo-refresh/1.0" }, redirect: "follow" });
+    if (!r.ok || !(r.headers.get("content-type") || "").startsWith("image/")) {
+      const commonsUrl = await commonsPhoto(p.name);
+      if (commonsUrl && commonsUrl !== url) {
+        url = commonsUrl;
+        r = await fetch(url, { headers: { "User-Agent": "ALMA-place-photo-refresh/1.0" }, redirect: "follow" });
+      }
+    }
     if (!r.ok) { console.log("DOWNLOAD_FAIL", p.id, p.name, r.status); continue; }
     const type = r.headers.get("content-type") || "";
     if (!type.startsWith("image/")) continue;
