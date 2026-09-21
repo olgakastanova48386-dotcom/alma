@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-21T07:36:22.327Z",
+  "updatedAt": "2026-09-21T07:54:52.080Z",
   "events": {
     "fin-zaliv-house-party": {
       "source": "https://sevcableport.ru/afisha/finskij-zaliv-under-haus-pati/",
@@ -45,6 +45,21 @@
       "source": "https://brusnitsyn.spb.ru/darkwave",
       "image": "https://optim.tildacdn.com/tild3134-6131-4532-a432-383961346431/-/format/webp/IMG_1711.JPG.webp",
       "ok": true
+    },
+    "word-and-action": {
+      "source": "https://sevcableport.ru/afisha/detskij-festival-slovo-i-delo/",
+      "ok": false,
+      "error": "image too small"
+    },
+    "white-night-auto": {
+      "source": "https://sevcableport.ru/afisha/avtovystavka-belaya-noch-white-night/",
+      "ok": false,
+      "error": "image too small"
+    },
+    "lilac-branch": {
+      "source": "https://sevcableport.ru/afisha/vetka-sireni/",
+      "ok": false,
+      "error": "image too small"
     }
   }
 }
