@@ -187,7 +187,7 @@ export default function Header() {
                     href="/favorites"
                     aria-label="Избранное"
                     title="Избранное"
-                    className="flex h-9 w-9 items-center justify-center rounded-full bg-black/[.04]"
+                    className={`flex h-9 w-9 items-center justify-center rounded-full ${pathname === "/" ? "bg-black/45 text-white shadow-sm backdrop-blur-md ring-1 ring-white/15" : "bg-black/[.04] text-black"}`}
                   >
                     <HeartIcon />
                   </Link>
