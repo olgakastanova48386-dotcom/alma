@@ -37,7 +37,7 @@ export const metadata: Metadata = {
   },
 };
 
-export const viewport = { themeColor: "#171614", viewportFit: "cover" };
+export const viewport = { themeColor: "#171614", viewportFit: "cover", width: "device-width", initialScale: 1 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const analyticsToken = process.env.NEXT_PUBLIC_CF_WEB_ANALYTICS_TOKEN;
