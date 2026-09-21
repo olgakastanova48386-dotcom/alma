@@ -1933,7 +1933,7 @@ export const places: Place[] = [
     budget: "Бесплатно",
     company: ["Один", "Пара", "Друзья", "Семья"],
     duration: "2–4 часа",
-    image: "https://commons.wikimedia.org/wiki/Special:Redirect/file/Park_300th_Anniversary_SPB.jpg",
+    image: "/place-images/places-92.jpg",
     lat: 59.9835,
     lng: 30.2028,
     description: "Место для самостоятельного знакомства с Петербургом и готовых маршрутов ALMA.",
