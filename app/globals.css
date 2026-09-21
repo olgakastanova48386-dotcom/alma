@@ -76,6 +76,15 @@ select:-webkit-autofill {
     padding-bottom: calc(82px + env(safe-area-inset-bottom));
   }
 
+  /* On the mobile homepage the hero must paint behind the iPhone status bar. */
+  body:has(main > section:first-child) {
+    background: #171614;
+  }
+  main > section:first-child {
+    margin-top: calc(-1 * env(safe-area-inset-top));
+    padding-top: env(safe-area-inset-top) !important;
+  }
+
   button, a { -webkit-tap-highlight-color: transparent; }
   input, textarea, select, button { font-size: 16px; }
 
