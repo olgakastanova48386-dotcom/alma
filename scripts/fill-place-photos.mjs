@@ -9,7 +9,7 @@ let source = await fs.readFile(dataPath, "utf8");
 
 const cards = [...source.matchAll(/\{\s*id:\s*(\d+),[\s\S]*?name:\s*"([^"]+)"[\s\S]*?image:\s*"([^"]*)"([\s\S]*?)\n\s*\}/g)]
   .map(m => ({ full:m[0], id:Number(m[1]), name:m[2], image:m[3] }))
-  .filter(p => p.image === "/images/hero.jpg" || p.image === "/images/loft.jpg" || /^https?:\/\//.test(p.image) || (targetRestaurantFallback && p.image === "/images/restaurant.jpg"));
+  .filter(p => !p.image || p.image === "/images/hero.jpg" || p.image === "/images/loft.jpg" || /^https?:\/\//.test(p.image) || (targetRestaurantFallback && p.image === "/images/restaurant.jpg"));
 
 async function commonsPhoto(name) {
   try {
@@ -30,6 +30,8 @@ async function commonsPhoto(name) {
 let changed = 0;
 for (const p of cards) {
   try {
+    // Never touch a local image chosen/uploaded by ALMA. Only empty,
+    // generic fallback and external images reach this loop.
     let url = p.image;
     if (!/^https?:\/\//.test(url)) url = await commonsPhoto(p.name);
     if (!url) { console.log("NO_MATCH", p.id, p.name); continue; }
