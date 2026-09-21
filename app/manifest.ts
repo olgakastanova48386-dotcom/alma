@@ -7,8 +7,8 @@ export default function manifest(): MetadataRoute.Manifest {
     description: "Места и готовые маршруты Санкт-Петербурга под твоё настроение.",
     start_url: "/?source=app",
     display: "standalone",
-    background_color: "#ffffff",
-    theme_color: "#ffffff",
+    background_color: "#171614",
+    theme_color: "#171614",
     orientation: "portrait",
     lang: "ru",
     icons: [
