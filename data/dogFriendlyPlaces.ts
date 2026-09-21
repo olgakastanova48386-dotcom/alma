@@ -42,7 +42,7 @@ export const dogFriendlyPlaces: DogFriendlyPlace[] = [
     ratingScale: 5,
     ratingCount: 6524,
     ratingSource: "Яндекс Карты",
-    imageUrl: "https://static.gorbilet.com/media/00/c5/bd/DSC_4552.jpg",
+    imageUrl: "",
     imageSourceUrl: "https://gorbilet.com/blog/news/berthold-centre",
   },
   {
