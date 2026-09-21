@@ -246,18 +246,18 @@ export default function UnifiedMap() {
     if (p) setTimeout(() => focus(p), 100);
   }, [placeId, ready, filtered]);
 
-  return <section className="bg-[#f7f4ef] pb-10 text-black">
+  return <section className="bg-[#f7f4ef] pb-10 pt-0 text-black">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="mb-4 flex items-end justify-between gap-4">
         <div><h2 className="w-full text-left text-3xl font-bold tracking-tight sm:text-4xl">Карта</h2></div>
         <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-black/5 bg-white px-3 py-1.5 text-xs font-semibold shadow-sm"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m3 6 5-2 8 3 5-2v13l-5 2-8-3-5 2V6Z"/><path d="M8 4v13M16 7v13"/></svg>{filtered.length} мест</span>
       </div>
 
-      <div className="grid items-start gap-4 lg:grid-cols-[320px_minmax(0,1fr)] lg:gap-5">
+      <div className="grid items-start gap-3 lg:grid-cols-[320px_minmax(0,1fr)] lg:gap-5">
         <aside className="rounded-[26px] border border-black/5 bg-white p-4 shadow-[0_18px_55px_-35px_rgba(0,0,0,.35)] sm:rounded-[30px] sm:p-5 lg:sticky lg:top-24">
           <div className="mb-4">
             
-            <p className="mt-1 text-xl font-bold tracking-tight">Найди своё место</p>
+            <p className="mt-1 text-xl font-bold tracking-tight">Найди то самое место</p>
           </div>
           <div className="mx-auto grid w-[88%] gap-2 sm:w-full sm:gap-2.5">
           <label className="relative block">
@@ -313,7 +313,7 @@ export default function UnifiedMap() {
 
         <div>
           <div className="alma-map relative min-h-[430px] overflow-hidden rounded-[28px] border border-black/5 bg-[#ebe8e3] shadow-[0_24px_70px_-38px_rgba(0,0,0,.45)] sm:min-h-[580px] sm:rounded-[34px] lg:min-h-[720px]">
-            <div ref={container} className="absolute inset-0" />
+            <div ref={container} className="absolute inset-0" />\n            <div className="absolute right-3 top-3 z-[600] inline-flex items-center gap-1.5 rounded-full border border-black/5 bg-white/95 px-3 py-1.5 text-xs font-semibold shadow-md backdrop-blur sm:right-4 sm:top-4"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m3 6 5-2 8 3 5-2v13l-5 2-8-3-5 2V6Z"/><path d="M8 4v13M16 7v13"/></svg>{filtered.length} мест</div>
             {!ready && <div className="absolute inset-0 z-[500] flex items-center justify-center bg-[#ebe8e3]">Загружаем…</div>}
             {routeStatus && <div className="absolute z-[600] left-3 top-3 max-w-[calc(100%-24px)] rounded-xl bg-white px-3 py-2.5 text-[13px] font-medium shadow-lg sm:left-4 sm:top-4 sm:max-w-[calc(100%-32px)] sm:rounded-2xl sm:px-4 sm:py-3 sm:text-sm">{routeStatus}</div>}
             <div className="absolute z-[500] left-3 bottom-3 rounded-full bg-black text-white px-3 py-1.5 text-xs font-semibold sm:left-4 sm:bottom-4 sm:px-4 sm:py-2 sm:text-sm">alma</div>
