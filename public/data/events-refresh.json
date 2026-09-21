@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-21T08:02:56.031Z",
+  "updatedAt": "2026-09-21T08:31:41.955Z",
   "events": {
     "fin-zaliv-house-party": {
       "source": "https://sevcableport.ru/afisha/finskij-zaliv-under-haus-pati/",
@@ -48,18 +48,18 @@
     },
     "word-and-action": {
       "source": "https://sevcableport.ru/afisha/detskij-festival-slovo-i-delo/",
-      "ok": false,
-      "error": "image too small"
+      "image": "https://sevcableport.ru/wp-content/uploads/2026/08/5221929789940244193.jpg",
+      "ok": true
     },
     "white-night-auto": {
       "source": "https://sevcableport.ru/afisha/avtovystavka-belaya-noch-white-night/",
-      "ok": false,
-      "error": "image too small"
+      "image": "https://sevcableport.ru/wp-content/uploads/2026/09/10_jtse8lsxj_p6zmuvbm1o1uqouz4n9azd050pubzzecx8ybcfewoqduvqk7bqpqigc_wstka2piqtxd9snjvks-scaled.jpg",
+      "ok": true
     },
     "lilac-branch": {
       "source": "https://sevcableport.ru/afisha/vetka-sireni/",
-      "ok": false,
-      "error": "image too small"
+      "image": "https://sevcableport.ru/wp-content/uploads/2026/09/j4tfjhutq32pksjl2jfzuqfnkj7hdhf9u9hsz5hp2s5xqu5qdqd_geirfizqvj0xud9z74frcftve2kvpkeihlyl.jpg",
+      "ok": true
     }
   }
 }
