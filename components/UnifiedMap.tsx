@@ -290,23 +290,24 @@ export default function UnifiedMap() {
             <span aria-hidden="true" className={`relative h-6 w-10 rounded-full transition ${studentOnly ? "bg-white" : "bg-black/15"}`}><span className={`absolute top-1 h-4 w-4 rounded-full transition ${studentOnly ? "left-5 bg-black" : "left-1 bg-white"}`} /></span>
           </button>
           {isFemale && <button type="button" aria-pressed={safeOnly} onClick={() => setSafeOnly((value) => !value)} className={`flex h-9 sm:h-12 items-center justify-between gap-3 rounded-2xl border px-4 text-sm font-semibold transition md:col-span-2 xl:col-span-1 ${safeOnly ? "border-[#6f2437] bg-[#6f2437] text-white" : "border-[#ead0d7] bg-[#f8e8ec] text-[#6f2437]"}`}><span className="whitespace-nowrap">🛡 Безопасное место</span><span aria-hidden="true" className={`relative h-6 w-10 rounded-full transition ${safeOnly ? "bg-white" : "bg-[#6f2437]/15"}`}><span className={`absolute top-1 h-4 w-4 rounded-full transition ${safeOnly ? "left-5 bg-[#6f2437]" : "left-1 bg-white"}`} /></span></button>}
+          <button type="button" onClick={() => { setMood("Настроение"); setBudget("Бюджет"); setCompany("Компания"); setDuration("Длительность"); setStudentOnly(false); setSafeOnly(false); }} className="mt-1 w-full rounded-full border border-black/10 px-4 py-2 text-xs font-medium text-neutral-600 transition hover:border-black/25 hover:text-black">Сбросить фильтры</button>
           </div>
 
           <div className="mx-auto mt-4 w-[88%] border-t border-black/5 pt-3 sm:mt-5 sm:w-full sm:pt-4">
             <p className="mb-2 text-[11px] font-semibold uppercase tracking-[.16em] text-neutral-400">Категории</p>
             <div className="flex flex-wrap gap-1.5">
-              {categories.slice(0, isFemale ? 5 : 4).map((c) => <button key={c} onClick={() => { setCategory(c); if (c !== "⚡ Драйв") setDriveTag("Все"); }} className={`rounded-full border px-3 py-2 text-[12px] font-medium transition-all duration-200 ${category === c ? "border-black bg-black text-white" : "border-black/5 bg-[#f7f4ef] text-black hover:border-black/15"}`}>{c}</button>)}
+              {categories.slice(0, 3).map((c) => <button key={c} onClick={() => { setCategory(c); if (c !== "⚡ Драйв") setDriveTag("Все"); }} className={`rounded-full border px-3 py-2 text-[12px] font-medium transition-all duration-200 ${category === c ? "border-black bg-black text-white" : "border-black/5 bg-[#f7f4ef] text-black hover:border-black/15"}`}>{c}</button>)}
               <button type="button" onClick={() => setMoreCategoriesOpen((value) => !value)} className="rounded-full border border-black/5 bg-[#f7f4ef] px-3 py-2 text-[12px] font-medium text-black transition hover:border-black/15">Ещё {moreCategoriesOpen ? "⌃" : "⌄"}</button>
             </div>
             {moreCategoriesOpen && <div className="mt-2 flex flex-wrap gap-1.5">
-              {categories.slice(isFemale ? 5 : 4).map((c) => <button key={c} onClick={() => { setCategory(c); if (c !== "⚡ Драйв") setDriveTag("Все"); }} className={`rounded-full border px-3 py-2 text-[12px] font-medium transition-all duration-200 ${category === c ? "border-black bg-black text-white" : "border-black/5 bg-[#f7f4ef] text-black hover:border-black/15"}`}>{c}</button>)}
+              {categories.slice(3).map((c) => <button key={c} onClick={() => { setCategory(c); if (c !== "⚡ Драйв") setDriveTag("Все"); }} className={`rounded-full border px-3 py-2 text-[12px] font-medium transition-all duration-200 ${category === c ? "border-black bg-black text-white" : "border-black/5 bg-[#f7f4ef] text-black hover:border-black/15"}`}>{c}</button>)}
             </div>}
           </div>
 
           {category === "👶 Для малыша" && <div className="mt-4 rounded-[18px] bg-[#efe5d7] p-3.5"><p className="text-[11px] uppercase tracking-[.16em] text-neutral-500">ALMA · Для малыша</p><p className="mt-1 text-[13px] leading-5 text-neutral-700">Показываем только подтверждённые удобства.</p></div>}
           {category === "⚡ Драйв" && <div className="mt-4 rounded-[18px] bg-black p-3.5 text-white"><p className="text-[10px] uppercase tracking-[.16em] text-white/45">ALMA · Драйв</p><div className="mt-2 flex flex-wrap gap-1.5">{driveTags.map((t) => <button key={t} onClick={() => setDriveTag(t)} className={`rounded-full px-3 py-1.5 text-[11px] ${driveTag === t ? "bg-white text-black" : "bg-white/10 text-white"}`}>{t}</button>)}</div></div>}
 
-          <button type="button" onClick={() => { setMood("Настроение"); setBudget("Бюджет"); setCompany("Компания"); setDuration("Длительность"); setStudentOnly(false); setSafeOnly(false); setCategory("Все"); setDriveTag("Все"); setMoreCategoriesOpen(false); }} className="mt-5 w-full rounded-full border border-black/10 px-4 py-3 text-sm font-medium transition hover:border-black/25">Сбросить фильтры</button>
+          
         </aside>
 
         <div>
