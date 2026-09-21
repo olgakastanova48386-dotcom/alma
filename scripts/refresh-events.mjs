@@ -30,6 +30,9 @@ const events = [
 
 const decode = s => s.replaceAll("&amp;","&").replaceAll("&#038;","&");
 const pageImage = (html) => {
+  const officialUploads = [...html.matchAll(/https?:\/\/sevcableport\.ru\/wp-content\/uploads\/[^\s"'<>]+/gi)]
+    .map(m => decode(m[0])).filter(u => !/logo|icon|svg|pixel|counter|favicon/i.test(u));
+  if (officialUploads.length) return officialUploads[0];
   const matches = [...html.matchAll(/<img\s+[^>]*src=(?:"([^"]+)"|'([^']+)')[^>]*>/gi)];
   const urls = matches.map(m => decode((m[1] || m[2] || "").trim())).filter(Boolean);
   return urls.find(u => !/logo|icon|svg|pixel|counter|favicon/i.test(u)) || "";
@@ -48,7 +51,7 @@ const report={updatedAt:new Date().toISOString(),events:{}};
 for (const [id,url] of events) {
   try {
     const html=await (await fetch(url,{headers:{"user-agent":"ALMA event updater/1.0"}})).text();
-    const image=fixedImages[id] || meta(html,"og:image") || meta(html,"twitter:image") || pageImage(html);
+    const image=fixedImages[id] || pageImage(html) || meta(html,"og:image") || meta(html,"twitter:image");
     if (!image) throw new Error("event image not found");
     const res=await fetch(new URL(image,url),{headers:{"user-agent":"Mozilla/5.0","referer":url}});
     if (!res.ok) throw new Error("image "+res.status);
