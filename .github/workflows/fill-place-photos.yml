@@ -21,11 +21,12 @@ jobs:
           node-version: 22
       - run: node scripts/fill-place-photos.mjs
       - run: ALMA_DATA_PATH=data/mapPlaces.ts node scripts/fill-place-photos.mjs
+      - run: ALMA_DATA_PATH=data/coffeePlaces.ts node scripts/fill-place-photos.mjs
       - name: Commit place photos
         run: |
           git config user.name "alma-photos-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add data/places.ts data/mapPlaces.ts public/place-images
+          git add data/places.ts data/mapPlaces.ts data/coffeePlaces.ts public/place-images
           if git diff --cached --quiet; then
             echo "No photo changes"
             exit 0
