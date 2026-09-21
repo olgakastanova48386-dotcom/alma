@@ -21,6 +21,8 @@ const events = [
   ["viktor-tsoi-legenda","https://sevcableport.ru/afisha/"],
   ["growbox-market","https://sevcableport.ru/afisha/"],
   ["museum-machines","https://brusnitsyn.spb.ru/museambot"],
+  ["picasso-paragraphs","https://brusnitsyn.spb.ru/art-center"],
+  ["through-universes","https://brusnitsyn.spb.ru/art-center"],
   ["yarkiy-fovizm","https://brusnitsyn.spb.ru/"],
   ["dark-wave","https://brusnitsyn.spb.ru/darkwave"],
   ["word-and-action","https://sevcableport.ru/afisha/detskij-festival-slovo-i-delo/"],
