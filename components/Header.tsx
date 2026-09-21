@@ -133,7 +133,7 @@ export default function Header() {
 
   return (
     <header className="fixed top-0 left-0 w-full z-[9999]">
-      <div className="max-w-7xl mx-auto mt-2.5 sm:mt-4 px-2.5 sm:px-6">
+      <div className="max-w-7xl mx-auto mt-[calc(env(safe-area-inset-top)+10px)] sm:mt-4 px-2.5 sm:px-6">
         <div className="rounded-[20px] sm:rounded-full bg-white/92 backdrop-blur-xl border border-black/5 shadow-lg px-3 sm:px-8 py-2 sm:py-3">
 
           {/* MOBILE */}
