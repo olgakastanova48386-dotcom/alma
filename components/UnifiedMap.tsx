@@ -73,7 +73,7 @@ export default function UnifiedMap() {
 
   const categories = ["Все", "Кофейня", "Ресторан", "🎓 Скидка студенту", ...(isFemale ? ["🛡 Безопасное место"] : []), "Dog Friendly", "👶 Для малыша", "⚡ Драйв", "Другие места"];
   const driveTags = ["Все", "Активный отдых", "Матчи", "Живая музыка", "Рок", "С друзьями"];
-  const moods = ["Настроение", ...Array.from(new Set(mapPlaces.map((place) => place.mood))).sort()];
+  const moods = ["Настроение", "Весёлое", "Грустное", "Нейтральное", "Энергичное"];
   const budgets = ["Бюджет", "Бесплатно", "От 1000 до 2500 ₽", "От 3000 до 5000 ₽", "От 5000 ₽"];
   const companies = ["Компания", "С собакой", ...Array.from(new Set(mapPlaces.flatMap((place) => place.company))).filter((value) => value !== "С собакой").sort()];
   const durations = ["Длительность", "До 1 часа", "1–2 часа", "2–4 часа", "Полдня"];
@@ -250,7 +250,7 @@ export default function UnifiedMap() {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="mb-4 flex items-end justify-between gap-4">
         <div><h2 className="w-full text-left text-3xl font-bold tracking-tight sm:text-4xl">Карта</h2></div>
-        <span className="shrink-0 rounded-full border border-black/5 bg-white px-3 py-1.5 text-xs font-semibold shadow-sm">{filtered.length} мест</span>
+        <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-black/5 bg-white px-3 py-1.5 text-xs font-semibold shadow-sm"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m3 6 5-2 8 3 5-2v13l-5 2-8-3-5 2V6Z"/><path d="M8 4v13M16 7v13"/></svg>{filtered.length} мест</span>
       </div>
 
       <div className="grid items-start gap-4 lg:grid-cols-[320px_minmax(0,1fr)] lg:gap-5">
@@ -262,7 +262,7 @@ export default function UnifiedMap() {
           <div className="grid gap-2.5">
           <label className="relative block">
             <span className="sr-only">Настроение</span>
-            <select value={mood} onChange={(event) => setMood(event.target.value)} className="h-12 w-full appearance-none rounded-2xl border border-black/5 bg-[#f7f4ef] px-4 pr-9 text-sm font-medium outline-none transition focus:border-black/25">
+            <select value={mood} onChange={(event) => setMood(event.target.value)} className="h-10 sm:h-10 sm:h-10 sm:h-10 sm:h-12 w-full appearance-none rounded-2xl border border-black/5 bg-[#f7f4ef] px-4 pr-9 text-sm font-medium outline-none transition focus:border-black/25">
               {moods.map((value) => <option key={value}>{value}</option>)}
             </select>
             <span aria-hidden="true" className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-xs">⌄</span>
@@ -288,7 +288,7 @@ export default function UnifiedMap() {
             </select>
             <span aria-hidden="true" className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-xs">⌄</span>
           </label>
-          <button type="button" aria-pressed={studentOnly} onClick={() => setStudentOnly((value) => !value)} className={`flex h-12 items-center justify-between gap-3 rounded-2xl border px-4 text-sm font-semibold transition md:col-span-2 xl:col-span-1 ${studentOnly ? "border-black bg-black text-white" : "border-black/5 bg-[#f7f4ef] text-black"}`}>
+          <button type="button" aria-pressed={studentOnly} onClick={() => setStudentOnly((value) => !value)} className={`flex h-10 sm:h-12 items-center justify-between gap-3 rounded-2xl border px-4 text-sm font-semibold transition md:col-span-2 xl:col-span-1 ${studentOnly ? "border-black bg-black text-white" : "border-black/5 bg-[#f7f4ef] text-black"}`}>
             <span className="whitespace-nowrap">🎓 Скидка студенту</span>
             <span aria-hidden="true" className={`relative h-6 w-10 rounded-full transition ${studentOnly ? "bg-white" : "bg-black/15"}`}><span className={`absolute top-1 h-4 w-4 rounded-full transition ${studentOnly ? "left-5 bg-black" : "left-1 bg-white"}`} /></span>
           </button>
