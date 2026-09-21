@@ -259,7 +259,7 @@ export default function UnifiedMap() {
             
             <p className="mt-1 text-xl font-bold tracking-tight">Найди своё место</p>
           </div>
-          <div className="grid gap-2.5">
+          <div className="mx-auto grid w-[88%] gap-2 sm:w-full sm:gap-2.5">
           <label className="relative block">
             <span className="sr-only">Настроение</span>
             <select value={mood} onChange={(event) => setMood(event.target.value)} className="h-10 sm:h-10 sm:h-10 sm:h-10 sm:h-12 w-full appearance-none rounded-2xl border border-black/5 bg-[#f7f4ef] px-4 pr-9 text-sm font-medium outline-none transition focus:border-black/25">
@@ -288,20 +288,20 @@ export default function UnifiedMap() {
             </select>
             <span aria-hidden="true" className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-xs">⌄</span>
           </label>
-          <button type="button" aria-pressed={studentOnly} onClick={() => setStudentOnly((value) => !value)} className={`flex h-10 sm:h-12 items-center justify-between gap-3 rounded-2xl border px-4 text-sm font-semibold transition md:col-span-2 xl:col-span-1 ${studentOnly ? "border-black bg-black text-white" : "border-black/5 bg-[#f7f4ef] text-black"}`}>
+          <button type="button" aria-pressed={studentOnly} onClick={() => setStudentOnly((value) => !value)} className={`flex h-9 sm:h-12 items-center justify-between gap-3 rounded-2xl border px-4 text-sm font-semibold transition md:col-span-2 xl:col-span-1 ${studentOnly ? "border-black bg-black text-white" : "border-black/5 bg-[#f7f4ef] text-black"}`}>
             <span className="whitespace-nowrap">🎓 Скидка студенту</span>
             <span aria-hidden="true" className={`relative h-6 w-10 rounded-full transition ${studentOnly ? "bg-white" : "bg-black/15"}`}><span className={`absolute top-1 h-4 w-4 rounded-full transition ${studentOnly ? "left-5 bg-black" : "left-1 bg-white"}`} /></span>
           </button>
           </div>
 
-          <div className="mt-5 border-t border-black/5 pt-4">
+          <div className="mx-auto mt-4 w-[88%] border-t border-black/5 pt-3 sm:mt-5 sm:w-full sm:pt-4">
             <p className="mb-2 text-[11px] font-semibold uppercase tracking-[.16em] text-neutral-400">Категории</p>
             <div className="flex flex-wrap gap-1.5">
-              {categories.slice(0, 3).map((c) => <button key={c} onClick={() => { setCategory(c); if (c !== "⚡ Драйв") setDriveTag("Все"); }} className={`rounded-full border px-3 py-2 text-[12px] font-medium transition-all duration-200 ${category === c ? "border-black bg-black text-white" : "border-black/5 bg-[#f7f4ef] text-black hover:border-black/15"}`}>{c}</button>)}
+              {categories.slice(0, isFemale ? 5 : 4).map((c) => <button key={c} onClick={() => { setCategory(c); if (c !== "⚡ Драйв") setDriveTag("Все"); }} className={`rounded-full border px-3 py-2 text-[12px] font-medium transition-all duration-200 ${category === c ? "border-black bg-black text-white" : "border-black/5 bg-[#f7f4ef] text-black hover:border-black/15"}`}>{c}</button>)}
               <button type="button" onClick={() => setMoreCategoriesOpen((value) => !value)} className="rounded-full border border-black/5 bg-[#f7f4ef] px-3 py-2 text-[12px] font-medium text-black transition hover:border-black/15">Ещё {moreCategoriesOpen ? "⌃" : "⌄"}</button>
             </div>
             {moreCategoriesOpen && <div className="mt-2 flex flex-wrap gap-1.5">
-              {categories.slice(3).map((c) => <button key={c} onClick={() => { setCategory(c); if (c !== "⚡ Драйв") setDriveTag("Все"); }} className={`rounded-full border px-3 py-2 text-[12px] font-medium transition-all duration-200 ${category === c ? "border-black bg-black text-white" : "border-black/5 bg-[#f7f4ef] text-black hover:border-black/15"}`}>{c}</button>)}
+              {categories.slice(isFemale ? 5 : 4).map((c) => <button key={c} onClick={() => { setCategory(c); if (c !== "⚡ Драйв") setDriveTag("Все"); }} className={`rounded-full border px-3 py-2 text-[12px] font-medium transition-all duration-200 ${category === c ? "border-black bg-black text-white" : "border-black/5 bg-[#f7f4ef] text-black hover:border-black/15"}`}>{c}</button>)}
             </div>}
           </div>
 
