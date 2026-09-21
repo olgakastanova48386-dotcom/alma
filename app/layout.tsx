@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   ],
   applicationName: "ALMA",
   manifest: "/manifest.webmanifest",
-  appleWebApp: { capable: true, title: "ALMA", statusBarStyle: "default" },
+  appleWebApp: { capable: true, title: "ALMA", statusBarStyle: "black-translucent" },
   icons: { icon: "/alma-icon.svg", apple: "/alma-icon.svg" },
   openGraph: {
     title: "ALMA — найди место, которое подходит именно тебе",
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
   },
 };
 
-export const viewport = { themeColor: "#ffffff" };
+export const viewport = { themeColor: "#171614", viewportFit: "cover" };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const analyticsToken = process.env.NEXT_PUBLIC_CF_WEB_ANALYTICS_TOKEN;
