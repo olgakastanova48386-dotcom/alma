@@ -134,14 +134,14 @@ export default function Header() {
   return (
     <header className="fixed top-0 left-0 w-full z-[9999]">
       <div className="max-w-7xl mx-auto mt-[calc(env(safe-area-inset-top)+10px)] sm:mt-4 px-2.5 sm:px-6">
-        <div className="rounded-[20px] sm:rounded-full bg-white/92 backdrop-blur-xl border border-black/5 shadow-lg px-3 sm:px-8 py-2 sm:py-3">
+        <div className={`rounded-[20px] sm:rounded-full px-3 sm:px-8 py-2 sm:py-3 ${pathname === "/" ? "bg-transparent border-transparent shadow-none backdrop-blur-none md:bg-white/92 md:border-black/5 md:shadow-lg md:backdrop-blur-xl" : "bg-white/92 backdrop-blur-xl border border-black/5 shadow-lg"}`}>
 
           {/* MOBILE */}
           <div className="md:hidden flex h-10 items-center">
 
             <Link
               href="/"
-              className="shrink-0 pl-1 text-[15px] font-bold tracking-[0.19em]"
+              className={`shrink-0 pl-1 text-[15px] font-bold tracking-[0.19em] ${pathname === "/" ? "text-white drop-shadow-md" : "text-black"}`}
             >
               alma
             </Link>
@@ -154,7 +154,7 @@ export default function Header() {
                     href="/"
                     aria-label="Главная"
                     title="Главная"
-                    className="flex h-9 w-9 items-center justify-center rounded-full bg-black/[.04]"
+                    className={`flex h-9 w-9 items-center justify-center rounded-full ${pathname === "/" ? "bg-black/35 text-white backdrop-blur-md" : "bg-black/[.04]"}`}
                   >
                     <HomeIcon />
                   </Link>
@@ -165,7 +165,7 @@ export default function Header() {
                     href="/map"
                     aria-label="События"
                     title="События"
-                    className="flex h-9 w-9 items-center justify-center rounded-full bg-black/[.04]"
+                    className={`flex h-9 w-9 items-center justify-center rounded-full ${pathname === "/" ? "bg-black/35 text-white backdrop-blur-md" : "bg-black/[.04]"}`}
                   >
                     <EventsIcon />
                   </Link>
@@ -176,7 +176,7 @@ export default function Header() {
                     href="/dog-friendly"
                     aria-label="С собакой"
                     title="С собакой"
-                    className="flex h-9 w-9 items-center justify-center rounded-full bg-black/[.04]"
+                    className={`flex h-9 w-9 items-center justify-center rounded-full ${pathname === "/" ? "bg-black/35 text-white backdrop-blur-md" : "bg-black/[.04]"}`}
                   >
                     <PawIcon />
                   </Link>
