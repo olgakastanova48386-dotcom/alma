@@ -42,7 +42,8 @@ for (const p of cards) {
     const buffer = Buffer.from(await r.arrayBuffer());
     if (buffer.length < 25000) continue;
     const ext = type.includes("png") ? "png" : type.includes("webp") ? "webp" : "jpg";
-    const file = p.id + "." + ext;
+    const namespace = path.basename(dataPath, path.extname(dataPath)).replace(/[^a-zA-Z0-9_-]/g, "-");
+    const file = namespace + "-" + p.id + "." + ext;
     await fs.writeFile(path.join(outDir,file), buffer);
     const next = p.full.replace(/image:\s*"[^"]*"/, 'image: "/place-images/' + file + '"');
     source = source.replace(p.full, next);
