@@ -166,6 +166,34 @@ select:-webkit-autofill {
   will-change: transform;
 }
 
+
+/* ALMA mobile compact pass — desktop is intentionally untouched. */
+@media (max-width: 767px) {
+  main > section:first-child { height: 350px !important; }
+  main > section:first-child h1 { font-size: clamp(27px, 7.7vw, 36px) !important; line-height: 1 !important; }
+  main > section:first-child p { font-size: 12px !important; line-height: 1.3 !important; }
+  main > section:first-child button { min-height: 34px !important; padding-top: 8px !important; padding-bottom: 8px !important; }
+
+  #alma-filters { padding-top: 0 !important; }
+  #alma-filters > section { padding-bottom: 22px !important; }
+  #alma-filters > section > div { padding-left: 10px !important; padding-right: 10px !important; }
+  #alma-filters aside { border-radius: 20px !important; padding: 11px !important; }
+  #alma-filters aside > div:first-child { margin-bottom: 8px !important; }
+  #alma-filters aside > div:first-child p { font-size: 17px !important; line-height: 1.1 !important; }
+  #alma-filters aside select { height: 34px !important; border-radius: 12px !important; padding-left: 12px !important; font-size: 13px !important; }
+  #alma-filters aside button { min-height: 34px !important; border-radius: 12px !important; padding-top: 6px !important; padding-bottom: 6px !important; font-size: 12px !important; }
+  #alma-filters .alma-map { min-height: 52vh !important; border-radius: 18px !important; }
+
+  #alma-photozones { padding-top: 12px !important; padding-bottom: 16px !important; }
+  #alma-photozones h2 { font-size: 25px !important; }
+  #alma-photozones button { min-height: 34px !important; padding-top: 8px !important; padding-bottom: 8px !important; font-size: 12px !important; }
+  #alma-photozones .columns-2 { margin-top: 12px !important; gap: 8px !important; }
+
+  main > section.max-w-7xl { padding-left: 12px !important; padding-right: 12px !important; }
+  main > section.max-w-7xl h2 { font-size: 25px !important; line-height: 1.05 !important; }
+  main > section.max-w-7xl button { min-height: 36px; font-size: 12px; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .alma-cta-shine { animation: none; }
 }
