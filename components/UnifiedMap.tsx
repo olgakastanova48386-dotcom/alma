@@ -68,10 +68,11 @@ export default function UnifiedMap() {
   const [company, setCompany] = useState("Компания");
   const [duration, setDuration] = useState("Длительность");
   const [studentOnly, setStudentOnly] = useState(false);
+  const [safeOnly, setSafeOnly] = useState(false);
   const [isFemale, setIsFemale] = useState(false);
   const [moreCategoriesOpen, setMoreCategoriesOpen] = useState(false);
 
-  const categories = ["Все", "Кофейня", "Ресторан", "🎓 Скидка студенту", ...(isFemale ? ["🛡 Безопасное место"] : []), "Dog Friendly", "👶 Для малыша", "⚡ Драйв", "Другие места"];
+  const categories = ["Все", "Кофейня", "Ресторан", "Dog Friendly", "👶 Для малыша", "⚡ Драйв", "Другие места"];
   const driveTags = ["Все", "Активный отдых", "Матчи", "Живая музыка", "Рок", "С друзьями"];
   const moods = ["Настроение", "Весёлое", "Грустное", "Нейтральное", "Энергичное"];
   const budgets = ["Бюджет", "Бесплатно", "От 1000 до 2500 ₽", "От 3000 до 5000 ₽", "От 5000 ₽"];
@@ -100,11 +101,12 @@ export default function UnifiedMap() {
         (duration === "2–4 часа" && /2.?4|2–4|2-4|3 час|4 час/i.test(p.duration)) ||
         (duration === "Полдня" && /полдня|полдня|5 час|6 час/i.test(p.duration))) &&
       (!studentOnly || Boolean(p.studentDiscount)) &&
+      (!safeOnly || Boolean(p.safePlace)) &&
       (!params.get("mood") || p.mood === params.get("mood")) &&
       (!params.get("budget") || p.budget === params.get("budget")) &&
       (!params.get("company") || p.company.includes(params.get("company")!)) &&
       (!params.get("duration") || p.duration === params.get("duration"));
-  }), [budget, category, company, driveTag, duration, isFemale, mood, params, studentOnly]);
+  }), [budget, category, company, driveTag, duration, isFemale, mood, params, safeOnly, studentOnly]);
 
   useEffect(() => {
     selectedRef.current = selected;
@@ -287,6 +289,7 @@ export default function UnifiedMap() {
             <span className="whitespace-nowrap">🎓 Скидка студенту</span>
             <span aria-hidden="true" className={`relative h-6 w-10 rounded-full transition ${studentOnly ? "bg-white" : "bg-black/15"}`}><span className={`absolute top-1 h-4 w-4 rounded-full transition ${studentOnly ? "left-5 bg-black" : "left-1 bg-white"}`} /></span>
           </button>
+          {isFemale && <button type="button" aria-pressed={safeOnly} onClick={() => setSafeOnly((value) => !value)} className={`flex h-9 sm:h-12 items-center justify-between gap-3 rounded-2xl border px-4 text-sm font-semibold transition md:col-span-2 xl:col-span-1 ${safeOnly ? "border-[#6f2437] bg-[#6f2437] text-white" : "border-[#ead0d7] bg-[#f8e8ec] text-[#6f2437]"}`}><span className="whitespace-nowrap">🛡 Безопасное место</span><span aria-hidden="true" className={`relative h-6 w-10 rounded-full transition ${safeOnly ? "bg-white" : "bg-[#6f2437]/15"}`}><span className={`absolute top-1 h-4 w-4 rounded-full transition ${safeOnly ? "left-5 bg-[#6f2437]" : "left-1 bg-white"}`} /></span></button>}
           </div>
 
           <div className="mx-auto mt-4 w-[88%] border-t border-black/5 pt-3 sm:mt-5 sm:w-full sm:pt-4">
@@ -303,7 +306,7 @@ export default function UnifiedMap() {
           {category === "👶 Для малыша" && <div className="mt-4 rounded-[18px] bg-[#efe5d7] p-3.5"><p className="text-[11px] uppercase tracking-[.16em] text-neutral-500">ALMA · Для малыша</p><p className="mt-1 text-[13px] leading-5 text-neutral-700">Показываем только подтверждённые удобства.</p></div>}
           {category === "⚡ Драйв" && <div className="mt-4 rounded-[18px] bg-black p-3.5 text-white"><p className="text-[10px] uppercase tracking-[.16em] text-white/45">ALMA · Драйв</p><div className="mt-2 flex flex-wrap gap-1.5">{driveTags.map((t) => <button key={t} onClick={() => setDriveTag(t)} className={`rounded-full px-3 py-1.5 text-[11px] ${driveTag === t ? "bg-white text-black" : "bg-white/10 text-white"}`}>{t}</button>)}</div></div>}
 
-          <button type="button" onClick={() => { setMood("Настроение"); setBudget("Бюджет"); setCompany("Компания"); setDuration("Длительность"); setStudentOnly(false); setCategory("Все"); setDriveTag("Все"); setMoreCategoriesOpen(false); }} className="mt-5 w-full rounded-full border border-black/10 px-4 py-3 text-sm font-medium transition hover:border-black/25">Сбросить фильтры</button>
+          <button type="button" onClick={() => { setMood("Настроение"); setBudget("Бюджет"); setCompany("Компания"); setDuration("Длительность"); setStudentOnly(false); setSafeOnly(false); setCategory("Все"); setDriveTag("Все"); setMoreCategoriesOpen(false); }} className="mt-5 w-full rounded-full border border-black/10 px-4 py-3 text-sm font-medium transition hover:border-black/25">Сбросить фильтры</button>
         </aside>
 
         <div>
