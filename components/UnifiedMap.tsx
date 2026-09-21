@@ -252,10 +252,6 @@ export default function UnifiedMap() {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="grid items-start gap-3 lg:grid-cols-[320px_minmax(0,1fr)] lg:gap-5">
         <aside className="rounded-[26px] border border-black/5 bg-white p-4 shadow-[0_18px_55px_-35px_rgba(0,0,0,.35)] sm:rounded-[30px] sm:p-5 lg:sticky lg:top-24">
-          <div className="mb-4">
-            
-            <p className="mt-1 text-xl font-bold tracking-tight">Найди то самое место</p>
-          </div>
           <div className="mx-auto grid w-[88%] gap-2 sm:w-full sm:gap-2.5">
           <label className="relative block">
             <span className="sr-only">Настроение</span>
