@@ -77,6 +77,16 @@ select:-webkit-autofill {
   }
 
 
+  /* Homepage hero itself, including the photo, extends behind the iPhone status bar. */
+  .alma-home-hero {
+    margin-top: calc(-1 * env(safe-area-inset-top)) !important;
+    height: calc(350px + env(safe-area-inset-top)) !important;
+  }
+  .alma-home-hero-image {
+    top: 0 !important;
+    bottom: 0 !important;
+  }
+
   button, a { -webkit-tap-highlight-color: transparent; }
   input, textarea, select, button { font-size: 16px; }
 
