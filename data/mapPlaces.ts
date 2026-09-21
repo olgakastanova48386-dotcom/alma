@@ -293,7 +293,7 @@ const familyMapPlaces: MapPlace[] = [
   {
     id: 7002, name: "Kira", category: "Ресторан", mood: "Вкусно поесть",
     budget: "≈ 3 000–4 000 ₽", company: ["Пара","Друзья","Семья"], duration: "1–2 часа",
-    image: "", lat: 59.9393, lng: 30.3901,
+    image: "/place-images/7002.jpg", lat: 59.9393, lng: 30.3901,
     why: "👶 Детская комната и детские стульчики · проверено 20.09.2026",
     address: "Кирочная ул., 67, стр. 2, Санкт-Петербург", price: "≈ 3 000–4 000 ₽", priceNote: "Средний чек",
     detailHref: "/place/7002",
@@ -311,7 +311,7 @@ const familyMapPlaces: MapPlace[] = [
   {
     id: 7004, name: "Птичий двор", category: "Ресторан", mood: "Вкусно поесть",
     budget: "≈ 1 000–4 000 ₽", company: ["Пара","Друзья","Семья"], duration: "1–2 часа",
-    image: "", lat: 59.986281, lng: 30.20357,
+    image: "/place-images/7004.jpg", lat: 59.986281, lng: 30.20357,
     why: "👶 Детская комната и детские стульчики · проверено 20.09.2026",
     address: "ул. Савушкина, 126, ТЦ Atlantic City, Санкт-Петербург", price: "≈ 1 000–4 000 ₽", priceNote: "Средний чек",
     detailHref: "/place/7004", rating: 4.3, ratingScale: 5, ratingCount: 527, ratingSource: "Google",
