@@ -81,10 +81,12 @@ select:-webkit-autofill {
   .alma-home-hero {
     margin-top: calc(-1 * env(safe-area-inset-top)) !important;
     height: calc(350px + env(safe-area-inset-top)) !important;
+    overflow: visible !important;
   }
   .alma-home-hero-image {
-    top: 0 !important;
-    bottom: 0 !important;
+    top: calc(-1 * env(safe-area-inset-top)) !important;
+    height: calc(100% + env(safe-area-inset-top)) !important;
+    bottom: auto !important;
   }
 
   button, a { -webkit-tap-highlight-color: transparent; }
