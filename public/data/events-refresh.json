@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-21T12:37:00.251Z",
+  "updatedAt": "2026-09-21T12:44:31.492Z",
   "events": {
     "fin-zaliv-house-party": {
       "source": "https://sevcableport.ru/afisha/finskij-zaliv-under-haus-pati/",
@@ -35,6 +35,16 @@
       "source": "https://brusnitsyn.spb.ru/museambot",
       "image": "https://optim.tildacdn.com/tild3038-6666-4338-b934-613333656633/-/format/webp/photo_52471159935600.jpg.webp",
       "ok": true
+    },
+    "picasso-paragraphs": {
+      "source": "https://brusnitsyn.spb.ru/art-center",
+      "ok": false,
+      "error": "image too small"
+    },
+    "through-universes": {
+      "source": "https://brusnitsyn.spb.ru/art-center",
+      "ok": false,
+      "error": "image too small"
     },
     "yarkiy-fovizm": {
       "source": "https://brusnitsyn.spb.ru/",
