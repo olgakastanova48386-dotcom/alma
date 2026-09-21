@@ -67,6 +67,7 @@ export default function UnifiedMap() {
   const [budget, setBudget] = useState("Бюджет");
   const [company, setCompany] = useState("Компания");
   const [duration, setDuration] = useState("Длительность");
+  const [openFilter, setOpenFilter] = useState<string | null>(null);
   const [studentOnly, setStudentOnly] = useState(false);
   const [safeOnly, setSafeOnly] = useState(false);
   const [isFemale, setIsFemale] = useState(false);
@@ -253,34 +254,28 @@ export default function UnifiedMap() {
       <div className="grid items-start gap-3 lg:grid-cols-[320px_minmax(0,1fr)] lg:gap-5">
         <aside className="rounded-[26px] border border-black/5 bg-white p-4 shadow-[0_18px_55px_-35px_rgba(0,0,0,.35)] sm:rounded-[30px] sm:p-5 lg:sticky lg:top-24">
           <div className="mx-auto grid w-[88%] gap-2 sm:w-full sm:gap-2.5">
-          <label className="relative block">
-            <span className="sr-only">Настроение</span>
-            <select value={mood} onChange={(event) => setMood(event.target.value)} className="h-10 sm:h-10 sm:h-10 sm:h-10 sm:h-12 w-full appearance-none rounded-2xl border border-black/5 bg-[#f7f4ef] px-4 pr-9 text-sm font-medium outline-none transition focus:border-black/25">
-              {moods.map((value) => <option key={value}>{value}</option>)}
-            </select>
-            <span aria-hidden="true" className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-xs">⌄</span>
-          </label>
-          <label className="relative block">
-            <span className="sr-only">Бюджет</span>
-            <select value={budget} onChange={(event) => setBudget(event.target.value)} className="h-12 w-full appearance-none rounded-2xl border border-black/5 bg-[#f7f4ef] px-4 pr-9 text-sm font-medium outline-none transition focus:border-black/25">
-              {budgets.map((value) => <option key={value}>{value}</option>)}
-            </select>
-            <span aria-hidden="true" className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-xs">⌄</span>
-          </label>
-          <label className="relative block">
-            <span className="sr-only">Компания</span>
-            <select value={company} onChange={(event) => setCompany(event.target.value)} className="h-12 w-full appearance-none rounded-2xl border border-black/5 bg-[#f7f4ef] px-4 pr-9 text-sm font-medium outline-none transition focus:border-black/25">
-              {companies.map((value) => <option key={value}>{value}</option>)}
-            </select>
-            <span aria-hidden="true" className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-xs">⌄</span>
-          </label>
-          <label className="relative block">
-            <span className="sr-only">Длительность прогулки</span>
-            <select value={duration} onChange={(event) => setDuration(event.target.value)} className="h-12 w-full appearance-none rounded-2xl border border-black/5 bg-[#f7f4ef] px-4 pr-9 text-sm font-medium outline-none transition focus:border-black/25">
-              {durations.map((value) => <option key={value}>{value}</option>)}
-            </select>
-            <span aria-hidden="true" className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-xs">⌄</span>
-          </label>
+          {[
+            { value: mood, setValue: setMood, options: moods, label: "Настроение" },
+            { value: budget, setValue: setBudget, options: budgets, label: "Бюджет" },
+            { value: company, setValue: setCompany, options: companies, label: "Компания" },
+            { value: duration, setValue: setDuration, options: durations, label: "Длительность" },
+          ].map((filter) => (
+            <div key={filter.label} className="relative">
+              <button type="button" onClick={() => setOpenFilter((current) => current === filter.label ? null : filter.label)} className="flex h-12 w-full items-center justify-between rounded-2xl border border-black/5 bg-[#f7f4ef] px-4 text-left text-sm font-medium transition hover:border-black/15">
+                <span>{filter.value}</span>
+                <span aria-hidden="true" className={`text-xs transition-transform ${openFilter === filter.label ? "rotate-180" : ""}`}>⌄</span>
+              </button>
+              {openFilter === filter.label && (
+                <div className="absolute left-0 right-0 top-[calc(100%+6px)] z-[1200] overflow-hidden rounded-2xl border border-black/10 bg-white p-1.5 shadow-[0_16px_45px_rgba(0,0,0,.16)]">
+                  {filter.options.map((option) => (
+                    <button key={option} type="button" onClick={() => { filter.setValue(option); setOpenFilter(null); }} className={`flex w-full items-center rounded-xl px-3 py-2.5 text-left text-sm transition ${filter.value === option ? "bg-black text-white" : "text-black hover:bg-[#f3efe9]"}`}>
+                      {option}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
           <button type="button" aria-pressed={studentOnly} onClick={() => setStudentOnly((value) => !value)} className={`flex h-9 sm:h-12 items-center justify-between gap-3 rounded-2xl border px-4 text-sm font-semibold transition md:col-span-2 xl:col-span-1 ${studentOnly ? "border-black bg-black text-white" : "border-black/5 bg-[#f7f4ef] text-black"}`}>
             <span className="whitespace-nowrap">🎓 Скидка студенту</span>
             <span aria-hidden="true" className={`relative h-6 w-10 rounded-full transition ${studentOnly ? "bg-white" : "bg-black/15"}`}><span className={`absolute top-1 h-4 w-4 rounded-full transition ${studentOnly ? "left-5 bg-black" : "left-1 bg-white"}`} /></span>
