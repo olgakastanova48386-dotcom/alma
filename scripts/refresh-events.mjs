@@ -22,7 +22,10 @@ const events = [
   ["growbox-market","https://sevcableport.ru/afisha/"],
   ["museum-machines","https://brusnitsyn.spb.ru/museambot"],
   ["yarkiy-fovizm","https://brusnitsyn.spb.ru/"],
-  ["dark-wave","https://brusnitsyn.spb.ru/darkwave"]
+  ["dark-wave","https://brusnitsyn.spb.ru/darkwave"],
+  ["word-and-action","https://sevcableport.ru/afisha/detskij-festival-slovo-i-delo/"],
+  ["white-night-auto","https://sevcableport.ru/afisha/avtovystavka-belaya-noch-white-night/"],
+  ["lilac-branch","https://sevcableport.ru/afisha/vetka-sireni/"]
 ];
 
 const decode = s => s.replaceAll("&amp;","&").replaceAll("&#038;","&");
@@ -32,7 +35,7 @@ const pageImage = (html) => {
   return urls.find(u => !/logo|icon|svg|pixel|counter|favicon/i.test(u)) || "";
 };
 const meta = (html, property) => {
-  const tags = html.match(/<meta\\s+[^>]*>/gi) || [];
+  const tags = html.match(/<meta\s+[^>]*>/gi) || [];
   for (const tag of tags) {
     if (!tag.toLowerCase().includes(property.toLowerCase())) continue;
     const m = tag.match(/content=(?:"([^"]+)"|'([^']+)')/i);
@@ -45,8 +48,8 @@ const report={updatedAt:new Date().toISOString(),events:{}};
 for (const [id,url] of events) {
   try {
     const html=await (await fetch(url,{headers:{"user-agent":"ALMA event updater/1.0"}})).text();
-    const image=fixedImages[id] || meta(html,"og:image") || pageImage(html);
-    if (!image) throw new Error("og:image not found");
+    const image=fixedImages[id] || meta(html,"og:image") || meta(html,"twitter:image") || pageImage(html);
+    if (!image) throw new Error("event image not found");
     const res=await fetch(new URL(image,url),{headers:{"user-agent":"Mozilla/5.0","referer":url}});
     if (!res.ok) throw new Error("image "+res.status);
     const buf=Buffer.from(await res.arrayBuffer());
