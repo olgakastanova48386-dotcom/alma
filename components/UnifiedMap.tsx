@@ -248,11 +248,6 @@ export default function UnifiedMap() {
 
   return <section className="bg-[#f7f4ef] pb-10 pt-0 text-black">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="mb-4 flex items-end justify-between gap-4">
-        <div><h2 className="w-full text-left text-3xl font-bold tracking-tight sm:text-4xl">Карта</h2></div>
-        <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-black/5 bg-white px-3 py-1.5 text-xs font-semibold shadow-sm"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m3 6 5-2 8 3 5-2v13l-5 2-8-3-5 2V6Z"/><path d="M8 4v13M16 7v13"/></svg>{filtered.length} мест</span>
-      </div>
-
       <div className="grid items-start gap-3 lg:grid-cols-[320px_minmax(0,1fr)] lg:gap-5">
         <aside className="rounded-[26px] border border-black/5 bg-white p-4 shadow-[0_18px_55px_-35px_rgba(0,0,0,.35)] sm:rounded-[30px] sm:p-5 lg:sticky lg:top-24">
           <div className="mb-4">
