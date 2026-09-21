@@ -26,5 +26,10 @@ jobs:
           git config user.name "alma-events-bot"
           git config user.email "actions@users.noreply.github.com"
           git add public/events public/data/events-refresh.json
-          git diff --cached --quiet || git commit -m "Refresh current ALMA event media"
+          if git diff --cached --quiet; then
+            echo "No event media changes"
+            exit 0
+          fi
+          git commit -m "Refresh current ALMA event media"
+          git pull --rebase origin main
           git push
