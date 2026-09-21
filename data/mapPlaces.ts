@@ -731,7 +731,7 @@ const safetyMapPlaces: MapPlace[] = confirmedSafetyPlaces.flatMap((place, index)
   if (!coordinates) return [];
   const [lat, lng] = coordinates;
   return [{
-    id: 7001 + index,
+    id: 9001 + index,
     name: place.name,
     category: place.category,
     mood: "Спокойно",
@@ -745,7 +745,7 @@ const safetyMapPlaces: MapPlace[] = confirmedSafetyPlaces.flatMap((place, index)
     address: place.address,
     price: "Бесплатно",
     priceNote: "Помощь оказывают бесплатно",
-    detailHref: `/place/${7001 + index}`,
+    detailHref: `/place/${9001 + index}`,
     safePlace: true,
     safePlaceCode: place.safetySupport.codePhrase,
     safePlaceHelp: place.safetySupport.helpText,
