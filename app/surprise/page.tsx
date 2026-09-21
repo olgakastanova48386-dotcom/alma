@@ -343,8 +343,9 @@ export default function SurprisePage() {
         // выбираем из нескольких лучших подходящих вариантов, чтобы новые
         // генерации реально отличались друг от друга.
         const restaurantPool = sortedRestaurants.slice(0, Math.min(6, sortedRestaurants.length));
+        const rotationSeed = routeInterests.join("|").length + chosen.length + usedRestaurants.size;
         const picked = restaurantPool.length
-          ? restaurantPool[Math.floor(Math.random() * restaurantPool.length)]
+          ? restaurantPool[rotationSeed % restaurantPool.length]
           : undefined;
         if (picked) {
           chosen.push(picked);
