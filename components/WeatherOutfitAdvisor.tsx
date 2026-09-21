@@ -101,14 +101,14 @@ export default function WeatherOutfitAdvisor() {
   }, []);
 
   return (
-    <div className="fixed bottom-5 left-4 z-[70] sm:left-6">
+    <div className="fixed bottom-[calc(94px+env(safe-area-inset-bottom))] right-3 z-[70] sm:bottom-5 sm:left-6 sm:right-auto">
       {open && <div className="mb-3 w-[min(360px,calc(100vw-32px))] rounded-[24px] border border-black/10 bg-[#fffdf9]/95 p-5 shadow-2xl backdrop-blur-xl">
         <div className="flex items-start justify-between gap-4"><div><p className="text-xs uppercase tracking-[0.16em] text-neutral-500">ALMA · по погоде рядом</p><h3 className="mt-1 text-xl font-semibold text-black">Что надеть сегодня</h3></div><button type="button" onClick={() => setOpen(false)} className="rounded-full px-2 py-1 text-neutral-500 hover:bg-black/5" aria-label="Закрыть">×</button></div>
         {status === "loading" && <p className="mt-4 text-sm text-neutral-600">Определяю погоду рядом с тобой…</p>}
         {status === "weather-error" && <div className="mt-4"><p className="text-sm leading-6 text-neutral-600">Сейчас не получилось загрузить данные о погоде.</p><button type="button" onClick={() => requestLocation(false)} className="mt-3 rounded-full bg-black px-4 py-2 text-sm font-semibold text-white">Попробовать ещё раз</button></div>}
         {weather && <div className="mt-4">{usingFallback && <p className="mb-3 rounded-2xl bg-black/5 px-3 py-2 text-xs leading-5 text-neutral-600">Точное местоположение не определилось, поэтому пока показываю погоду по Санкт-Петербургу.</p>}<div className="flex flex-wrap items-center gap-2 text-sm"><span className="rounded-full bg-black px-3 py-1.5 font-semibold text-white">{Math.round(weather.temperature) > 0 ? "+" : ""}{Math.round(weather.temperature)}°</span><span className="rounded-full bg-black/5 px-3 py-1.5 text-neutral-700">ощущается {Math.round(weather.apparent) > 0 ? "+" : ""}{Math.round(weather.apparent)}°</span><span className="text-neutral-500">{weatherLabel(weather.code)}</span></div><p className="mt-4 text-[15px] leading-6 text-neutral-800">{outfitAdvice(weather)}</p><p className="mt-3 text-xs leading-5 text-neutral-400">Совет ориентировочный: учитывай свою чувствительность к холоду и длительность прогулки.</p></div>}
       </div>}
-      <button type="button" onClick={() => { if (weather) { setOpen(true); return; } requestLocation(true); }} className="rounded-full border border-black/10 bg-black px-5 py-3 text-sm font-semibold text-white shadow-xl transition hover:scale-[1.02] hover:bg-neutral-800">☁️ Что надеть?</button>
+      <button type="button" onClick={() => { if (weather) { setOpen(true); return; } requestLocation(true); }} className="rounded-full border border-black/10 bg-black px-3.5 py-2.5 text-[12px] font-semibold text-white shadow-xl transition hover:scale-[1.02] hover:bg-neutral-800 sm:px-5 sm:py-3 sm:text-sm">☁️ Что надеть?</button>
     </div>
   );
 }
