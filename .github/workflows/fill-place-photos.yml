@@ -5,7 +5,7 @@ on:
       - "scripts/fill-place-photos.mjs"
       - ".github/workflows/fill-place-photos.yml"
   schedule:
-    - cron: "17 * * * *"
+    - cron: "*/30 * * * *"
   workflow_dispatch:
 permissions:
   contents: write
