@@ -77,7 +77,7 @@ export default function UnifiedMap() {
   const driveTags = ["Все", "Активный отдых", "Матчи", "Живая музыка", "Рок", "С друзьями"];
   const moods = ["Настроение", "Весёлое", "Грустное", "Нейтральное", "Энергичное"];
   const budgets = ["Бюджет", "Бесплатно", "От 1000 до 2500 ₽", "От 3000 до 5000 ₽", "От 5000 ₽"];
-  const companies = ["Компания", "С собакой", ...Array.from(new Set(mapPlaces.flatMap((place) => place.company))).filter((value) => value !== "С собакой").sort()];
+  const companies = ["Компания", "С собакой", ...Array.from(new Set(mapPlaces.flatMap((place) => place.company))).filter((value) => value !== "С собакой").sort()].map((value) => value === "Друзья" ? "Друзьями" : value);
   const durations = ["Длительность", "До 1 часа", "1–2 часа", "2–4 часа", "Полдня"];
   const placeId = params.get("place");
 
@@ -95,7 +95,7 @@ export default function UnifiedMap() {
     return cat && tag &&
       (mood === "Настроение" || p.mood === mood) &&
       matchesBudget(p, budget) &&
-      (company === "Компания" || (company === "С собакой" ? Boolean(p.dogFriendly) : p.company.includes(company))) &&
+      (company === "Компания" || (company === "С собакой" ? Boolean(p.dogFriendly) : company === "Друзьями" ? p.company.includes("Друзья") : p.company.includes(company))) &&
       (duration === "Длительность" ||
         (duration === "До 1 часа" && /до 1|30|45|60|1 час/i.test(p.duration)) ||
         (duration === "1–2 часа" && /1.?2|1–2|1-2|1 час|2 час/i.test(p.duration)) ||
