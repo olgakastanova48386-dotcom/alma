@@ -156,7 +156,7 @@ export default function HomePage() {
         <div className="absolute z-10 bottom-8 right-8 hidden lg:flex items-center gap-3 text-xs uppercase tracking-[0.22em] text-neutral-500"><span className="w-8 h-px bg-black/20" />{heroTheme.label}</div>
       </section>
 
-      <div id="alma-filters" className="relative z-10 bg-[#f7f4ef] pt-2 sm:pt-4 md:pt-0">
+      <div id="alma-filters" className="relative z-10 bg-[#f7f4ef] pt-5 sm:pt-6 md:pt-12 lg:pt-14">
         <Suspense fallback={<section className="mx-auto max-w-7xl px-4 pb-10 sm:px-6 lg:px-8"><div className="flex min-h-[560px] items-center justify-center rounded-[28px] bg-[#ebe8e3] text-neutral-500">Загружаем карту…</div></section>}>
           <UnifiedMap />
         </Suspense>
