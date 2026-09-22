@@ -291,7 +291,7 @@ export default function PlacePage() {
                 {isFemale && place.safePlace && (
                   <div className="mt-3 rounded-[18px] border border-[#dca9b5] bg-[#f8e8ec] px-4 py-4 text-[#5f2030] sm:rounded-[22px] sm:px-5">
                     <div className="flex items-center gap-2 font-bold">
-                      <span aria-hidden="true">🛡</span>
+                      <span aria-hidden="true" className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-[#f4d9df] text-[#6f2437]"><svg viewBox="0 0 24 24" aria-hidden="true" className="h-4 w-4" fill="currentColor"><path d="M12 2.5 19 5.4v5.4c0 4.8-2.9 8.8-7 10.7-4.1-1.9-7-5.9-7-10.7V5.4L12 2.5Z"/><circle cx="12" cy="10.2" r="2.1" fill="#f4d9df"/><path d="M11.2 11.8h1.6l.7 4h-3l.7-4Z" fill="#f4d9df"/></svg></span>
                       <span>Безопасное место</span>
                     </div>
                     <p className="mt-2 text-xs leading-5 sm:text-sm sm:leading-6 text-[#70404c]">
