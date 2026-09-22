@@ -227,10 +227,10 @@ export default function PlacePage() {
 
               <div className="mt-3 sm:mt-6 rounded-[18px] sm:rounded-[28px] bg-black text-white p-4 sm:p-7">
                 <p className="text-[10px] sm:text-xs uppercase tracking-[0.16em] sm:tracking-[0.18em] text-white/45">
-                  Почему сюда
+                  Плюсы места
                 </p>
                 <p className="mt-2 text-[17px] leading-6 sm:mt-3 sm:text-2xl sm:leading-8 font-medium">
-                  {place.why}
+                  {place.why && place.why !== "undefined" ? place.why : place.description || "Интересное место для прогулки, отдыха и новых впечатлений."}
                 </p>
               </div>
 
