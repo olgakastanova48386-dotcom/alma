@@ -102,7 +102,7 @@ export default function WeatherOutfitAdvisor() {
     return () => { cancelled = true; };
   }, []);
 
-  if (pathname === "/") return null;
+  if (pathname === "/" || pathname.startsWith("/profile")) return null;
 
   return (
     <div className="fixed bottom-[calc(94px+env(safe-area-inset-bottom))] right-3 z-[70] sm:bottom-5 sm:left-6 sm:right-auto">
