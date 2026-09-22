@@ -82,9 +82,6 @@ export default function ProfilePage() {
               <p className="text-[9px] sm:text-xs uppercase tracking-[0.14em] sm:tracking-[0.16em] text-neutral-400">Поделиться</p>
               <h2 className="mt-1 text-lg sm:text-2xl font-bold tracking-tight">Покажи ALMA другу</h2>
               <p className="mt-1.5 text-[12px] sm:text-sm leading-5 text-neutral-500">Наведи камеру другого телефона на QR-код.</p>
-              <a href="https://alma.almacity.workers.dev" className="mt-3 inline-flex min-h-9 items-center justify-center rounded-full bg-black px-4 py-2 text-[11px] sm:text-xs font-semibold text-white transition hover:opacity-80">
-                Открыть сайт
-              </a>
             </div>
           </div>
         </section>
