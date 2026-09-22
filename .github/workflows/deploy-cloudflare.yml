@@ -5,6 +5,8 @@ on:
     branches: [main]
   workflow_dispatch:
 
+# Keep this workflow active: pushes to main publish the current ALMA production build.
+
 # Automatic production deployment for ALMA — keep every main deployment queued
 
 concurrency:
