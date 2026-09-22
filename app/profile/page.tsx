@@ -97,14 +97,14 @@ export default function ProfilePage() {
                 <p className="text-[9px] sm:text-xs uppercase tracking-[0.14em] text-neutral-400">Безопасность</p>
                 <h2 className="mt-0.5 text-lg sm:text-2xl font-bold tracking-tight">Нужна помощь?</h2>
                 <p className="mt-1.5 text-[13px] sm:text-sm leading-5 text-neutral-700">
-                  Открой ближайшее место со значком щита. В карточке сразу будет крупно указано, <span className="font-semibold text-black">что сказать сотруднику</span>.
+                  Найди место со значком щита и скажи сотруднику кодовую фразу со словом <span className="font-extrabold text-black">«КЛЮЧ» / «КЛЮЧИ»</span>. Сотрудник поймёт, что тебе нужна помощь.
                 </p>
                 <details className="mt-3 group">
                   <summary className="cursor-pointer list-none text-[12px] sm:text-sm font-semibold underline underline-offset-4 decoration-black/20">
                     Как работает безопасное место
                   </summary>
                   <div className="mt-3 rounded-[16px] bg-[#f7f4ef] p-3 text-[12px] sm:text-sm leading-5 text-neutral-600">
-                    <p>ALMA показывает только те места, для которых помощь и способ обращения подтверждены. Кодовая фраза может отличаться — поэтому мы показываем её прямо в карточке конкретного места.</p>
+                    <p>ALMA показывает места, где действует безопасный способ обращения. В карточке конкретного места дополнительно указано, как обратиться к сотруднику и какую помощь там могут оказать.</p>
                     <p className="mt-2 text-neutral-500">Если есть непосредственная опасность, не жди кодовой фразы: прямо скажи сотруднику, что тебе нужна помощь, и обратись в экстренные службы.</p>
                   </div>
                 </details>
