@@ -97,14 +97,14 @@ export default function ProfilePage() {
                 <p className="text-[9px] sm:text-xs uppercase tracking-[0.14em] text-neutral-400">Безопасность</p>
                 <h2 className="mt-0.5 text-lg sm:text-2xl font-bold tracking-tight">Нужна помощь?</h2>
                 <p className="mt-1.5 text-[13px] sm:text-sm leading-5 text-neutral-700">
-                  Найди место со значком щита и скажи сотруднику кодовую фразу со словом <span className="font-extrabold text-black">«КЛЮЧ» / «КЛЮЧИ»</span>. Сотрудник поймёт, что тебе нужна помощь.
+                  Место с отметкой щита — безопасное место. Скажи сотруднику кодовую фразу <span className="font-extrabold text-black">«Я потеряла ключи»</span> или любые другие слова со словом <span className="font-extrabold text-black">«ключ»</span> — тебе помогут.
                 </p>
                 <details className="mt-3 group">
                   <summary className="cursor-pointer list-none text-[12px] sm:text-sm font-semibold underline underline-offset-4 decoration-black/20">
                     Как работает безопасное место
                   </summary>
                   <div className="mt-3 rounded-[16px] bg-[#f7f4ef] p-3 text-[12px] sm:text-sm leading-5 text-neutral-600">
-                    <p>ALMA показывает места, где действует безопасный способ обращения. В карточке конкретного места дополнительно указано, как обратиться к сотруднику и какую помощь там могут оказать.</p>
+                    <p>По правилам проекта «Ключевое слово» подойдут, например, фразы «Я потеряла ключи», «Мне оставили ключи», «У вас нет моего ключа» — или любые другие слова со словом «ключ». Сотрудники партнёрской точки знают протокол: помогут укрыться от преследователя и по твоему выбору вызовут полицию или такси.</p>
                     <p className="mt-2 text-neutral-500">Если есть непосредственная опасность, не жди кодовой фразы: прямо скажи сотруднику, что тебе нужна помощь, и обратись в экстренные службы.</p>
                   </div>
                 </details>
