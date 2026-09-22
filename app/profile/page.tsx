@@ -77,7 +77,25 @@ export default function ProfilePage() {
           </div>
         </div>
 
-        {user.gender === "female" && (
+                <section className="mt-3 sm:mt-6 rounded-[22px] sm:rounded-[34px] bg-white border border-black/5 shadow-sm p-4 sm:p-6">
+          <div className="flex items-center gap-4 sm:gap-6">
+            <img
+              src="/alma-qr.svg"
+              alt="QR-код со ссылкой на ALMA"
+              className="h-[104px] w-[104px] shrink-0 rounded-[16px] bg-white p-1.5 ring-1 ring-black/10 sm:h-[132px] sm:w-[132px]"
+            />
+            <div className="min-w-0">
+              <p className="text-[9px] sm:text-xs uppercase tracking-[0.14em] sm:tracking-[0.16em] text-neutral-400">Поделиться</p>
+              <h2 className="mt-1 text-lg sm:text-2xl font-bold tracking-tight">Покажи ALMA другу</h2>
+              <p className="mt-1.5 text-[12px] sm:text-sm leading-5 text-neutral-500">Наведи камеру другого телефона на QR-код.</p>
+              <a href="https://alma.almacity.workers.dev" className="mt-3 inline-flex min-h-9 items-center justify-center rounded-full bg-black px-4 py-2 text-[11px] sm:text-xs font-semibold text-white transition hover:opacity-80">
+                Открыть сайт
+              </a>
+            </div>
+          </div>
+        </section>
+
+{user.gender === "female" && (
           <section className="mt-3 sm:mt-6 rounded-[22px] sm:rounded-[34px] bg-white border border-black/5 shadow-sm p-4 sm:p-10">
             <div className="flex items-start gap-3 sm:gap-4">
               <div className="shrink-0 h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-[#f4d9df] text-[#6f2437] flex items-center justify-center text-xl shadow-sm ring-1 ring-[#dca9b5]/60" aria-hidden="true">🛡</div>
