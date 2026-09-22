@@ -89,7 +89,7 @@ export default function ProfilePage() {
 {user.gender === "female" && (
           <section className="mt-3 sm:mt-6 rounded-[22px] sm:rounded-[34px] bg-white border border-black/5 shadow-sm p-4 sm:p-7">
             <div className="flex items-start gap-3">
-              <div className="shrink-0 h-10 w-10 rounded-full bg-[#f4d9df] text-[#6f2437] flex items-center justify-center text-xl shadow-sm ring-1 ring-[#dca9b5]/60" aria-hidden="true">🛡</div>
+              <div className="shrink-0 h-10 w-10 rounded-full bg-[#f4d9df] text-[#6f2437] flex items-center justify-center text-xl shadow-sm ring-1 ring-[#dca9b5]/60" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true" className="h-6 w-6" fill="currentColor"><path d="M12 2.5 19 5.4v5.4c0 4.8-2.9 8.8-7 10.7-4.1-1.9-7-5.9-7-10.7V5.4L12 2.5Z"/><circle cx="12" cy="10.2" r="2.1" fill="#f4d9df"/><path d="M11.2 11.8h1.6l.7 4h-3l.7-4Z" fill="#f4d9df"/></svg></div>
               <div className="min-w-0 flex-1">
                 <p className="text-[9px] sm:text-xs uppercase tracking-[0.14em] text-neutral-400">Безопасность</p>
                 <h2 className="mt-0.5 text-lg sm:text-2xl font-bold tracking-tight">Нужна помощь?</h2>
