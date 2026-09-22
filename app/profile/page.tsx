@@ -59,13 +59,13 @@ export default function ProfilePage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#f7f4ef] pt-[78px] sm:pt-36 pb-24 px-4">
+    <main className="min-h-screen bg-[#f7f4ef] pt-[96px] sm:pt-36 pb-24 px-4">
       <div className="max-w-3xl mx-auto px-1 sm:px-0">
         <div className="mt-0 rounded-[22px] sm:rounded-[34px] bg-white border border-black/5 shadow-sm p-4 sm:p-10">
-          <div className="flex items-center gap-3 sm:gap-5">
+          <div className="flex items-center gap-2.5 sm:gap-5">
             <div className="h-11 w-11 sm:h-20 sm:w-20 shrink-0 rounded-full bg-black text-white flex items-center justify-center text-lg sm:text-3xl font-semibold uppercase">{user.name.trim().charAt(0) || "A"}</div>
-            <h1 className="min-w-0 flex-1 truncate text-xl sm:text-4xl font-bold">{user.name}</h1>
-            <Link href="/favorites" className="ml-auto shrink-0 inline-flex items-center gap-1.5 rounded-full bg-[#f2eee7] px-3 py-2 text-[13px] sm:px-5 sm:py-3 sm:text-base font-semibold hover:bg-[#ebe5dc] transition" aria-label="Избранное">
+            <h1 className="min-w-0 flex-1 text-[18px] leading-tight sm:text-4xl font-bold break-words">{user.name}</h1>
+            <Link href="/favorites" className="ml-auto shrink-0 inline-flex items-center gap-1 rounded-full bg-[#f2eee7] px-2.5 py-2 text-[12px] sm:px-5 sm:py-3 sm:text-base font-semibold hover:bg-[#ebe5dc] transition" aria-label="Избранное">
               <span aria-hidden="true">♡</span><span>Избранное</span>
             </Link>
           </div>
