@@ -88,7 +88,7 @@ select:-webkit-autofill {
   .alma-home-hero-image {
     position: fixed !important;
     z-index: 0 !important;
-    top: 0 !important;
+        top: calc(-1 * env(safe-area-inset-top)) !important;
     left: 0 !important;
     right: 0 !important;
     width: 100vw !important;
