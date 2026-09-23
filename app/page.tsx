@@ -125,7 +125,7 @@ export default function HomePage() {
   }, []);
 
   useEffect(() => {
-    const minTimer = window.setTimeout(() => setSplashMinElapsed(true), 900);
+    const minTimer = window.setTimeout(() => setSplashMinElapsed(true), 1400);
     return () => window.clearTimeout(minTimer);
   }, []);
 
