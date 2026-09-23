@@ -104,6 +104,7 @@ function getHeroTheme(code: number | undefined, isDay: boolean, hour: number): H
 export default function HomePage() {
   const router = useRouter();
   const [weather, setWeather] = useState<Weather | null>(null);
+  const [mobileReady, setMobileReady] = useState(false);
 
   useEffect(() => {
     const loadWeather = async () => {
@@ -122,6 +123,23 @@ export default function HomePage() {
     loadWeather();
   }, []);
 
+  useEffect(() => {
+    if (window.matchMedia("(min-width: 768px)").matches) {
+      setMobileReady(true);
+      return;
+    }
+    if (!weather) return;
+    const hour = Number(new Intl.DateTimeFormat("en-GB", { timeZone: "Europe/Moscow", hour: "2-digit", hour12: false }).format(new Date()));
+    const theme = getHeroTheme(weather.code, weather.isDay, hour);
+    const image = new Image();
+    const finish = () => setMobileReady(true);
+    image.onload = finish;
+    image.onerror = finish;
+    image.src = `${theme.image}?v=20260923-cloudy-2`;
+    const timeout = window.setTimeout(finish, 3500);
+    return () => window.clearTimeout(timeout);
+  }, [weather]);
+
   const scrollToFilters = () => document.getElementById("alma-filters")?.scrollIntoView({ behavior: "smooth", block: "center" });
   const scrollToPhotozones = () => document.getElementById("alma-photozones")?.scrollIntoView({ behavior: "smooth", block: "start" });
   const openPlace = (title: string) => {
@@ -134,7 +152,9 @@ export default function HomePage() {
   const heroTheme = getHeroTheme(weather?.code, isDay, petersburgHour);
 
   return (
-    <main className="min-h-screen overflow-x-hidden bg-[#f7f4ef] text-black">
+    <>
+      {!mobileReady && <div className="fixed inset-0 z-[99999] flex md:hidden flex-col items-center justify-center bg-[#f7f4ef] text-black"><div className="text-[34px] font-bold tracking-[-0.06em]">ALMA</div><div className="mt-5 flex items-center gap-2 text-[12px] font-medium tracking-[0.12em] text-neutral-500"><span className="h-1.5 w-1.5 animate-pulse rounded-full bg-black/45" />Загрузка…</div></div>}
+      <main className="min-h-screen overflow-x-hidden bg-[#f7f4ef] text-black">
       <section className="alma-home-hero relative h-[390px] sm:h-[430px] md:h-auto md:min-h-[680px] flex items-start md:items-center pt-0 md:pt-28 pb-0 overflow-hidden bg-[#f7f4ef] text-black">
         <div className="alma-home-hero-image md:hidden absolute inset-0 overflow-hidden bg-[#171614]"><img key={`mobile-bg-${heroTheme.image}`} src={`${heroTheme.image}?v=20260923-cloudy-2`} alt={heroTheme.label} className="absolute inset-0 h-full w-full object-cover brightness-[1.08] contrast-[0.9] saturate-[0.88] transition-opacity duration-700" style={{ objectPosition: "center 42%" }} /></div>
         <div className="md:hidden absolute inset-0 bg-gradient-to-b from-black/5 via-transparent to-[#171614]/78" />
@@ -178,5 +198,6 @@ export default function HomePage() {
 
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-7 sm:pb-16 text-black"><div className="overflow-hidden rounded-[20px] sm:rounded-[28px] bg-[#e9e4dc] p-4 sm:p-8 sm:p-8 lg:p-10 text-black"><div className="max-w-3xl"><p className="text-xs uppercase tracking-[0.22em] text-neutral-500">ALMA</p><h2 className="mt-2 sm:mt-4 max-w-full text-[clamp(23px,6vw,44px)] font-bold tracking-tight leading-[1.04] text-black break-words [overflow-wrap:anywhere]">Петербург под твоё настроение</h2><p className="mt-2 sm:mt-4 text-[13px] sm:text-base text-neutral-600 leading-6 sm:leading-7 max-w-2xl">Не нужно заранее знать, куда именно идти. Достаточно понять, чего хочется сегодня.</p><button type="button" onClick={scrollToFilters} className="mt-4 sm:mt-6 rounded-full bg-black text-white px-6 py-3 font-medium hover:opacity-80 transition">Подобрать место</button></div></div></section>
     </main>
+    </>
   );
 }
