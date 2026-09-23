@@ -341,8 +341,8 @@ export default function UnifiedMap() {
 .alma-map-layout .alma-map .alma-marker{transform:scale(.70)}
 .alma-map-layout .alma-map .alma-safe-badge,.alma-map-layout .alma-map .alma-student-badge{display:none}
 .alma-map-layout .alma-map>div+div{max-width:120px}
-.alma-leaflet-popup .leaflet-popup-content{width:190px!important}
-.alma-popup{padding:11px}.alma-popup-title{font-size:15px}
+.alma-leaflet-popup .leaflet-popup-content{width:160px!important}
+.alma-popup{padding:8px}.alma-popup-title{font-size:13px;line-height:1.12}.alma-popup-category{font-size:8px}.alma-popup-rating,.alma-popup-address,.alma-popup-tags,.alma-popup-baby,.alma-popup-student,.alma-popup-safe{margin-top:4px;font-size:9px;line-height:1.2}.alma-open-button,.alma-route-button{min-height:30px!important;font-size:10px!important}.alma-open-button{margin-top:6px!important}.alma-route-button{margin-top:4px!important}
 }}`}</style>
   </section>;
 }
