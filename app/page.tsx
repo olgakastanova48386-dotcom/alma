@@ -92,7 +92,7 @@ function getHeroTheme(code: number | undefined, isDay: boolean, hour: number): H
   }
 
   if (code === 0) return { image: "/images/питер главная фотка 4.jpg", position: "center 42%", label: "Ясный Петербург" };
-  if ([1, 2].includes(code ?? -1)) return { image: "/images/питер главная фотка.jpg", position: "center 42%", label: "Петербург в переменной облачности" };
+  if ([1, 2].includes(code ?? -1)) return { image: "/images/облачно день.jpg", position: "center 42%", label: "Петербург в переменной облачности" };
   if (code === 3) return { image: "/images/облачно день.jpg", position: "center 42%", label: "Облачный Петербург" };
   if ([45, 48].includes(code ?? -1)) return { image: "/images/пиер главная фотка 3.jpg", position: "center 42%", label: "Петербург в тумане" };
   if ([61, 63, 65, 66, 67, 80, 81, 82].includes(code ?? -1)) return { image: "/images/питер главная фотка 5.jpg", position: "center 46%", label: "Петербург под дождём" };
