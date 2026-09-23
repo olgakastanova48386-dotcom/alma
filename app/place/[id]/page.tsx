@@ -158,6 +158,7 @@ export default function PlacePage() {
                   src={heroImage}
                   alt={place.name}
                   className="absolute inset-0 w-full h-full object-cover"
+                  onError={(event) => { const img = event.currentTarget; if (!img.src.endsWith("/images/hero.jpg")) img.src = "/images/hero.jpg"; }}
                 />
               ) : (
                 <div className="absolute inset-0 bg-gradient-to-br from-[#ddd0c0] via-[#f3ece4] to-[#cfc1af]" />
@@ -189,6 +190,7 @@ export default function PlacePage() {
                       src={photo}
                       alt={`${place.name}, фото ${index + 1}`}
                       className="absolute inset-0 h-full w-full object-cover"
+                      onError={(event) => { const img = event.currentTarget; if (!img.src.endsWith("/images/hero.jpg")) img.src = "/images/hero.jpg"; }}
                     />
                   </button>
                 ))}
