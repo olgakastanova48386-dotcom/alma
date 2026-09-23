@@ -336,7 +336,7 @@ export default function UnifiedMap() {
 .alma-map-filters>div:nth-child(2),.alma-map-filters>div:nth-child(3),.alma-map-filters>div:nth-child(4){display:none}
 .alma-map-layout>div:nth-child(2){width:100%!important}
 .alma-map-layout .alma-map{width:100%!important;height:190px!important;min-height:190px!important;border-radius:24px!important}
-.alma-map-search{width:78%!important;max-width:300px!important;margin-top:10px!important;margin-left:auto!important;margin-right:auto!important}
+.alma-map-search{width:62%!important;max-width:235px!important;margin-top:10px!important;margin-left:auto!important;margin-right:auto!important}\n.alma-map-search input{font-size:11px!important}\n.alma-map-search svg{width:16px!important;height:16px!important;margin-right:7px!important}\n.alma-map-search>div>div:first-child{padding:10px 12px!important;border-radius:14px!important}
 .alma-map-layout .alma-map .leaflet-control-zoom{display:none}
 .alma-map-layout .alma-map .alma-marker{transform:scale(.70)}
 .alma-map-layout .alma-map .alma-safe-badge,.alma-map-layout .alma-map .alma-student-badge{display:none}
