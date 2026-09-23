@@ -105,6 +105,7 @@ export default function HomePage() {
   const router = useRouter();
   const [weather, setWeather] = useState<Weather | null>(null);
   const [mobileReady, setMobileReady] = useState(false);
+  const [splashMinElapsed, setSplashMinElapsed] = useState(false);
 
   useEffect(() => {
     const loadWeather = async () => {
@@ -121,6 +122,11 @@ export default function HomePage() {
       } catch {}
     };
     loadWeather();
+  }, []);
+
+  useEffect(() => {
+    const minTimer = window.setTimeout(() => setSplashMinElapsed(true), 900);
+    return () => window.clearTimeout(minTimer);
   }, []);
 
   useEffect(() => {
@@ -153,7 +159,7 @@ export default function HomePage() {
 
   return (
     <>
-      {!mobileReady && <div className="fixed inset-0 z-[99999] flex md:hidden flex-col items-center justify-center bg-[#f7f4ef] text-black"><div className="text-[34px] font-bold tracking-[-0.06em]">ALMA</div><div className="mt-5 flex items-center gap-2 text-[12px] font-medium tracking-[0.12em] text-neutral-500"><span className="h-1.5 w-1.5 animate-pulse rounded-full bg-black/45" />Загрузка…</div></div>}
+      {!(mobileReady && splashMinElapsed) && <div className="fixed inset-0 z-[99999] flex md:hidden flex-col items-center justify-center bg-[#f7f4ef] text-black"><div className="text-[34px] font-bold tracking-[-0.06em]">ALMA</div><div className="mt-5 flex items-center gap-2 text-[12px] font-medium tracking-[0.12em] text-neutral-500"><span className="h-1.5 w-1.5 animate-pulse rounded-full bg-black/45" />Загрузка…</div></div>}
       <main className="min-h-screen overflow-x-hidden bg-[#f7f4ef] text-black">
       <section className="alma-home-hero relative h-[390px] sm:h-[430px] md:h-auto md:min-h-[680px] flex items-start md:items-center pt-0 md:pt-28 pb-0 overflow-hidden bg-[#f7f4ef] text-black">
         <div className="alma-home-hero-image md:hidden absolute inset-0 overflow-hidden bg-[#171614]"><img key={`mobile-bg-${heroTheme.image}`} src={`${heroTheme.image}?v=20260923-cloudy-2`} alt={heroTheme.label} className="absolute inset-0 h-full w-full object-cover brightness-[1.08] contrast-[0.9] saturate-[0.88] transition-opacity duration-700" style={{ objectPosition: "center 42%" }} /></div>
