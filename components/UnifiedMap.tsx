@@ -316,32 +316,33 @@ export default function UnifiedMap() {
     </div>
 
     <style jsx global>{`.alma-map .leaflet-tile-pane{filter:sepia(.22) saturate(.62) brightness(1.14) contrast(.76) hue-rotate(-8deg) opacity(.82)}.alma-map .leaflet-tile{mix-blend-mode:multiply}.alma-map .leaflet-pane.leaflet-tile-pane{background:#f7f2e8}.alma-map .leaflet-container{background:#f8f4ec}.alma-map::after{content:"";position:absolute;inset:0;z-index:250;pointer-events:none;background:rgba(255,248,237,.20);mix-blend-mode:screen;}font-family:inherit}.alma-map .leaflet-control-attribution{border-radius:10px 0 0 0!important;background:rgba(255,255,255,.78)!important;backdrop-filter:blur(10px);font-size:9px!important;color:#777!important}.alma-map .leaflet-control-container{position:relative;z-index:500}.alma-map .leaflet-control-zoom{overflow:hidden;border:0!important;border-radius:16px!important;box-shadow:0 10px 30px rgba(0,0,0,.16)!important}.alma-map .leaflet-control-zoom a{width:38px!important;height:38px!important;line-height:38px!important;border-color:rgba(0,0,0,.06)!important}.alma-marker-wrapper{background:transparent;border:none;position:relative}.alma-marker svg{width:24px;height:24px;fill:#6f2437}.alma-marker svg circle,.alma-marker svg path:last-child{fill:#f4d9df}.alma-safe-inline{display:inline-flex;vertical-align:middle;margin-right:3px}.alma-safe-inline svg{width:15px;height:15px;fill:#6f2437}.alma-safe-inline svg circle,.alma-safe-inline svg path:last-child{fill:#f4d9df}.alma-safe-badge{position:absolute;left:30px;top:-5px;white-space:nowrap;border:2px solid #fff;border-radius:999px;background:#f4d9df;color:#6f2437;padding:4px 8px;font-size:9px;font-weight:800;line-height:1;box-shadow:0 6px 16px rgba(0,0,0,.16)}.alma-student-badge{position:absolute;left:30px;top:-5px;white-space:nowrap;border:2px solid #fff;border-radius:999px;background:#111;color:#fff;padding:3px 7px;font-size:10px;font-weight:800;line-height:1;box-shadow:0 6px 16px rgba(0,0,0,.22)}.alma-marker{width:42px;height:42px;display:flex;align-items:center;justify-content:center;border:3px solid #fff;border-radius:999px;background:#111;color:#fff;box-shadow:0 10px 24px rgba(0,0,0,.28);font-size:17px;transition:transform .2s ease,box-shadow .2s ease}.alma-marker:hover{transform:translateY(-3px) scale(1.08);box-shadow:0 14px 30px rgba(0,0,0,.34)}.alma-leaflet-popup .leaflet-popup-content-wrapper{padding:0!important;border-radius:24px!important;overflow:hidden}.alma-leaflet-popup .leaflet-popup-content{margin:0!important;width:300px!important}.alma-popup{padding:20px;color:#111}.alma-popup-category{font-size:10px;text-transform:uppercase;letter-spacing:.14em;color:#999}.alma-popup-title{margin-top:6px;font-size:22px;font-weight:700}.alma-popup-open{display:block;width:100%;padding:0;border:0;background:transparent;color:inherit;text-align:left;cursor:pointer}.alma-popup-open:hover{text-decoration:underline}.alma-popup-rating,.alma-popup-address,.alma-popup-tags,.alma-popup-baby,.alma-popup-student,.alma-popup-safe{margin-top:9px;font-size:12px}.alma-popup-safe{display:inline-flex;border-radius:999px;background:#f4d9df;color:#6f2437;padding:5px 9px;font-weight:800}.alma-popup-student{display:inline-flex;border-radius:999px;background:#111;color:#fff;padding:5px 9px;font-weight:700}.alma-popup-address{color:#666}.alma-popup-tags,.alma-popup-baby{font-weight:600}.alma-open-button,.alma-route-button{display:flex;width:100%;justify-content:center;min-height:42px;align-items:center;border-radius:999px;font-size:13px;font-weight:600;cursor:pointer}.alma-open-button{margin-top:14px;border:1px solid rgba(0,0,0,.12);background:#fff;color:#111}.alma-route-button{margin-top:8px;background:#111;color:#fff;border:0}@media(max-width:639px){
-.alma-map-layout{grid-template-columns:minmax(0,40%) minmax(0,60%)!important;align-items:stretch!important;gap:8px!important}
+.alma-map-layout{position:relative!important;display:block!important;min-height:500px!important}
 .alma-map-layout>div{min-width:0}
-.alma-map-filters{width:100%!important;height:430px!important;min-height:430px!important;overflow:hidden!important;padding:9px!important;border-radius:22px!important;display:flex!important;flex-direction:column!important}
-.alma-map-filter-stack{display:flex!important;flex-direction:column!important;gap:7px!important;width:100%!important}
+.alma-map-filters{position:absolute!important;z-index:900!important;left:10px!important;top:12px!important;width:132px!important;height:auto!important;min-height:0!important;overflow:visible!important;padding:8px!important;border-radius:20px!important;background:rgba(255,255,255,.94)!important;backdrop-filter:blur(14px);box-shadow:0 12px 35px rgba(0,0,0,.12)!important}
+.alma-map-filter-stack{display:flex!important;flex-direction:column!important;gap:6px!important;width:100%!important}
 .alma-map-filter-stack>div{min-width:0;width:100%}
-.alma-map-filter-button{height:43px!important;width:100%!important;border-radius:14px!important;padding:0 9px!important;font-size:11px!important}
+.alma-map-filter-button{height:39px!important;width:100%!important;border-radius:13px!important;padding:0 8px!important;font-size:10.5px!important;background:rgba(247,244,239,.96)!important}
 .alma-map-filter-button span:first-child{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .alma-map-filter-button span:last-child{flex:0 0 auto;margin-left:3px}
 .alma-map-filter-button+div{position:fixed!important;z-index:5000!important;left:16px!important;right:16px!important;top:auto!important;bottom:82px!important;min-width:0!important;max-height:48vh;overflow:auto;border-radius:22px!important;padding:7px!important}
 .alma-map-filter-button+div button{font-size:14px!important;padding:11px 12px!important}
-.alma-map-filters button[aria-pressed]{width:100%!important;height:48px!important;min-height:48px!important;gap:4px!important;border-radius:14px!important;padding:6px 7px!important;font-size:9.5px!important;line-height:1.05;text-align:left}
+.alma-map-filters button[aria-pressed]{width:100%!important;height:43px!important;min-height:43px!important;gap:3px!important;border-radius:13px!important;padding:5px 6px!important;font-size:9px!important;line-height:1.02;text-align:left}
 .alma-map-filters button[aria-pressed]>span:first-child{min-width:0;white-space:normal!important}
-.alma-map-filters button[aria-pressed]>span:last-child{flex:0 0 30px!important;width:30px!important;height:19px!important}
-.alma-map-filters button[aria-pressed]>span:last-child>span{top:3px!important;width:13px!important;height:13px!important}
-.alma-map-filters button[aria-pressed="true"]>span:last-child>span{left:14px!important}
+.alma-map-filters button[aria-pressed]>span:last-child{flex:0 0 28px!important;width:28px!important;height:18px!important}
+.alma-map-filters button[aria-pressed]>span:last-child>span{top:3px!important;width:12px!important;height:12px!important}
+.alma-map-filters button[aria-pressed="true"]>span:last-child>span{left:13px!important}
 .alma-map-filters button[aria-pressed="false"]>span:last-child>span{left:3px!important}
-.alma-map-filter-stack>button:last-child{width:100%!important;margin-top:0!important;padding:7px 3px!important;font-size:9px!important;line-height:1.05}
+.alma-map-filter-stack>button:last-child{width:100%!important;margin-top:0!important;padding:6px 2px!important;font-size:8.5px!important;line-height:1.05;background:rgba(255,255,255,.8)!important}
 .alma-map-filters>div:nth-child(2),.alma-map-filters>div:nth-child(3),.alma-map-filters>div:nth-child(4){display:none}
-.alma-map-layout .alma-map{height:430px!important;min-height:430px!important;border-radius:22px!important}
-.alma-map-search{grid-column:1/-1!important;margin-top:2px!important}
+.alma-map-layout>div:nth-child(2){width:100%!important}
+.alma-map-layout .alma-map{width:100%!important;height:500px!important;min-height:500px!important;border-radius:24px!important}
+.alma-map-search{width:100%!important;margin-top:10px!important}
 .alma-map-layout .alma-map .leaflet-control-zoom{display:none}
-.alma-map-layout .alma-map .alma-marker{transform:scale(.68)}
+.alma-map-layout .alma-map .alma-marker{transform:scale(.70)}
 .alma-map-layout .alma-map .alma-safe-badge,.alma-map-layout .alma-map .alma-student-badge{display:none}
-.alma-map-layout .alma-map .leaflet-popup{max-width:190px!important}
-.alma-leaflet-popup .leaflet-popup-content{width:185px!important}
-.alma-popup{padding:12px}.alma-popup-title{font-size:16px}
+.alma-map-layout .alma-map>div+div{max-width:120px}
+.alma-leaflet-popup .leaflet-popup-content{width:220px!important}
+.alma-popup{padding:14px}.alma-popup-title{font-size:17px}
 }}`}</style>
   </section>;
 }
