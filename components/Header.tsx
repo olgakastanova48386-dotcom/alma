@@ -86,6 +86,15 @@ function HeartIcon() {
   );
 }
 
+function ProfileIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" className="h-[17px] w-[17px]" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="8" r="3.5" />
+      <path d="M5.5 20c.8-4 3-6 6.5-6s5.7 2 6.5 6" />
+    </svg>
+  );
+}
+
 function isCurrentRoute(pathname: string, href: string) {
   if (href === "/") return pathname === "/";
   return pathname === href || pathname.startsWith(`${href}/`);
@@ -197,9 +206,10 @@ export default function Header() {
                   (user ? (
                     <Link
                       href="/profile"
-                      className="max-w-[90px] truncate rounded-full bg-black px-3 py-2 text-[11px] text-white"
+                      className="flex max-w-[112px] items-center gap-1.5 rounded-full bg-black px-3 py-2 text-[11px] text-white"
                     >
-                      {user.name}
+                      <ProfileIcon />
+                      <span className="truncate">{user.name}</span>
                     </Link>
                   ) : (
                     <Link
@@ -253,9 +263,10 @@ export default function Header() {
             {authLoaded && user ? (
               <Link
                 href="/profile"
-                className="rounded-full bg-black text-white px-5 py-2.5"
+                className="inline-flex items-center gap-2 rounded-full bg-black text-white px-5 py-2.5"
               >
-                {user.name}
+                <ProfileIcon />
+                <span>{user.name}</span>
               </Link>
             ) : (
               <Link
