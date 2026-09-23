@@ -337,7 +337,7 @@ export default function UnifiedMap() {
 .alma-map-filters>div:nth-child(2),.alma-map-filters>div:nth-child(3),.alma-map-filters>div:nth-child(4){display:none}
 .alma-map-layout>div:nth-child(2){width:100%!important}
 .alma-map-layout .alma-map{width:100%!important;height:155px!important;min-height:155px!important;border-radius:24px!important}
-.alma-map-search{width:100%!important;max-width:none!important;margin-top:10px!important}.alma-map-search>div{width:min(100%,210px)!important;margin-inline:auto!important}\n.alma-map-search input{font-size:10px!important}\n.alma-map-search svg{width:16px!important;height:16px!important;margin-right:7px!important}\n.alma-map-search>div>div:first-child{padding:10px 12px!important;border-radius:14px!important}
+.alma-map-search{width:100%!important;max-width:none!important;margin-top:10px!important}.alma-map-search>div{width:min(100%,230px)!important;margin-inline:auto!important}\n.alma-map-search input{font-size:11px!important}\n.alma-map-search svg{width:16px!important;height:16px!important;margin-right:7px!important}\n.alma-map-search>div>div:first-child{padding:10px 12px!important;border-radius:14px!important}
 .alma-map-layout .alma-map .leaflet-control-zoom{display:none}
 .alma-map-layout .alma-map .alma-marker{transform:scale(.70)}
 .alma-map-layout .alma-map .alma-safe-badge,.alma-map-layout .alma-map .alma-student-badge{display:none}
