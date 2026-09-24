@@ -76,7 +76,7 @@ export default function DogFriendlyPage() {
             return (
               <article
                 key={place.id}
-                className="relative overflow-hidden rounded-[20px] sm:rounded-[30px] bg-white border border-black/5 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
+                className="alma-paper relative overflow-hidden rounded-[20px] sm:rounded-[30px] bg-white border border-black/5 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
               >
                 {mapId && (
                   <Link
