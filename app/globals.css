@@ -167,6 +167,26 @@ select:-webkit-autofill {
   .alma-route-actions button, .alma-route-actions a { min-height: 44px; }
 }
 
+/* Living city scene on the first screen. */
+.alma-city-scene { display: block; width: 100%; height: 100%; }
+.alma-city-cloud-a { animation: alma-cloud-drift 26s ease-in-out infinite alternate; }
+.alma-city-cloud-b { animation: alma-cloud-drift-reverse 31s ease-in-out infinite alternate; }
+.alma-city-halo { transform-origin: 830px 192px; animation: alma-city-breathe 7s ease-in-out infinite alternate; }
+.alma-city-light { animation: alma-city-light 5s ease-in-out infinite alternate; }
+.alma-city-windows { animation: alma-city-windows 4.8s ease-in-out infinite alternate; }
+.alma-city-reflections { animation: alma-water-flow 6s ease-in-out infinite alternate; }
+.alma-city-boat { animation: alma-boat-glide 28s linear infinite alternate; }
+@keyframes alma-cloud-drift { from { transform: translateX(-46px); } to { transform: translateX(86px); } }
+@keyframes alma-cloud-drift-reverse { from { transform: translateX(68px); } to { transform: translateX(-84px); } }
+@keyframes alma-city-breathe { from { opacity: .7; transform: scale(.94); } to { opacity: 1; transform: scale(1.08); } }
+@keyframes alma-city-light { from { opacity: .7; } to { opacity: 1; } }
+@keyframes alma-city-windows { from { opacity: .52; } to { opacity: .88; } }
+@keyframes alma-water-flow { from { transform: translateX(-28px) scaleX(.97); opacity: .26; } to { transform: translateX(38px) scaleX(1.02); opacity: .64; } }
+@keyframes alma-boat-glide { from { transform: translateX(-220px); } to { transform: translateX(370px); } }
+@media (prefers-reduced-motion: reduce) {
+  .alma-city-scene * { animation: none !important; }
+}
+
 @keyframes alma-cta-shine {
   0%, 58% {
     opacity: 0;
