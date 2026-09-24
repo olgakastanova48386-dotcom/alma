@@ -112,7 +112,7 @@ export default function PlacePage() {
     return (
       <main className="min-h-screen bg-[#f7f4ef] pt-[calc(env(safe-area-inset-top)+68px)] sm:pt-36 pb-20">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="rounded-[32px] bg-white p-8 sm:p-12 border border-black/5">
+          <div className="alma-paper rounded-[32px] bg-white p-8 sm:p-12 border border-black/5">
             <p className="text-sm uppercase tracking-[0.2em] text-neutral-500">
               ALMA
             </p>
@@ -217,7 +217,7 @@ export default function PlacePage() {
               )}
 
               {place.description && (
-                <div className="mt-3 sm:mt-7 rounded-[18px] sm:rounded-[28px] bg-white border border-black/5 p-4 sm:p-7">
+                <div className="mt-3 sm:mt-7 alma-paper rounded-[18px] sm:rounded-[28px] bg-white border border-black/5 p-4 sm:p-7">
                   <p className="text-[10px] sm:text-xs uppercase tracking-[0.16em] sm:tracking-[0.18em] text-neutral-400">
                     О месте
                   </p>
@@ -236,7 +236,7 @@ export default function PlacePage() {
                 </p>
               </div>
 
-              <div className="mt-3 sm:mt-6 rounded-[18px] sm:rounded-[28px] bg-white border border-black/5 p-4 sm:p-7">
+              <div className="mt-3 sm:mt-6 alma-paper rounded-[18px] sm:rounded-[28px] bg-white border border-black/5 p-4 sm:p-7">
                 <p className="text-xs sm:text-sm text-neutral-500">
                   {isFoodVenue ? "Средний чек" : "Стоимость"}
                 </p>
@@ -251,7 +251,7 @@ export default function PlacePage() {
               </div>
 
               <div className="mt-3 sm:mt-4 grid grid-cols-3 gap-2 sm:gap-3">
-                <div className="rounded-[16px] sm:rounded-[24px] bg-white border border-black/5 p-3 sm:p-5">
+                <div className="alma-paper rounded-[16px] sm:rounded-[24px] bg-white border border-black/5 p-3 sm:p-5">
                   <p className="text-[11px] sm:text-sm text-neutral-500">
                     Настроение
                   </p>
@@ -259,7 +259,7 @@ export default function PlacePage() {
                     {place.mood}
                   </p>
                 </div>
-                <div className="rounded-[16px] sm:rounded-[24px] bg-white border border-black/5 p-3 sm:p-5">
+                <div className="alma-paper rounded-[16px] sm:rounded-[24px] bg-white border border-black/5 p-3 sm:p-5">
                   <p className="text-[11px] sm:text-sm text-neutral-500">
                     Время
                   </p>
@@ -267,7 +267,7 @@ export default function PlacePage() {
                     {place.duration}
                   </p>
                 </div>
-                <div className="rounded-[16px] sm:rounded-[24px] bg-white border border-black/5 p-3 sm:p-5">
+                <div className="alma-paper rounded-[16px] sm:rounded-[24px] bg-white border border-black/5 p-3 sm:p-5">
                   <p className="text-[11px] sm:text-sm text-neutral-500">
                     Компания
                   </p>
@@ -277,7 +277,7 @@ export default function PlacePage() {
                 </div>
               </div>
 
-              <div className="mt-3 sm:mt-4 rounded-[18px] sm:rounded-[24px] bg-white border border-black/5 p-4 sm:p-6">
+              <div className="mt-3 sm:mt-4 alma-paper rounded-[18px] sm:rounded-[24px] bg-white border border-black/5 p-4 sm:p-6">
                 <p className="text-xs sm:text-sm text-neutral-500">Адрес</p>
                 <div className="mt-2 flex items-start gap-2 sm:gap-3">
                   <span className="text-base sm:text-lg">📍</span>
@@ -315,7 +315,7 @@ export default function PlacePage() {
               </div>
 
               {isFoodVenue && (
-                <div className="mt-3 sm:mt-4 rounded-[18px] sm:rounded-[24px] bg-white border border-black/5 p-4 sm:p-6">
+                <div className="mt-3 sm:mt-4 alma-paper rounded-[18px] sm:rounded-[24px] bg-white border border-black/5 p-4 sm:p-6">
                   <p className="text-xs sm:text-sm text-neutral-500">
                     Условия в заведении
                   </p>
@@ -368,7 +368,7 @@ export default function PlacePage() {
             <div className="mt-3 sm:mt-8 grid grid-cols-2 gap-2.5 sm:flex sm:flex-row sm:gap-3">
               <Link
                 href={`/?place=${place.id}#alma-filters`}
-                className="sm:flex-1 rounded-full bg-black text-white px-4 py-3.5 sm:px-7 sm:py-4 text-center text-sm sm:text-base font-medium hover:opacity-85 transition"
+                className="alma-pressable sm:flex-1 rounded-full bg-black text-white px-4 py-3.5 sm:px-7 sm:py-4 text-center text-sm sm:text-base font-medium hover:opacity-85 transition"
               >
                 На карте
               </Link>
@@ -377,7 +377,7 @@ export default function PlacePage() {
                 onClick={toggleFavorite}
                 disabled={!favoritesLoaded}
                 aria-pressed={isFavorite}
-                className={`sm:flex-1 rounded-full border px-4 py-3.5 sm:px-7 sm:py-4 text-sm sm:text-base font-medium transition-all duration-300 ${isFavorite ? "bg-black border-black text-white" : "bg-white border-black/10 text-black hover:bg-black hover:text-white"}`}
+                className={`alma-pressable sm:flex-1 rounded-full border px-4 py-3.5 sm:px-7 sm:py-4 text-sm sm:text-base font-medium transition-all duration-300 ${isFavorite ? "bg-black border-black text-white" : "bg-white border-black/10 text-black hover:bg-black hover:text-white"}`}
               >
                 {isFavorite ? "♥ Сохранено" : "♡ В избранное"}
               </button>
