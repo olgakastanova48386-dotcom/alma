@@ -31,11 +31,11 @@ export default function DogFriendlyPage() {
       ?.id;
 
   return (
-    <main className="min-h-screen bg-[#f7f4ef] pt-[72px] sm:pt-[104px] pb-10 sm:pb-24 text-black">
+    <main className="min-h-screen bg-[#f7f4ef] pt-[88px] sm:pt-[104px] pb-10 sm:pb-24 text-black">
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="relative overflow-visible rounded-[20px] sm:rounded-[28px] bg-[#dfe8d8] px-4 py-3 pr-[112px] min-h-[125px] sm:px-8 sm:py-5 sm:pr-[220px] sm:min-h-[170px] md:min-h-[185px] md:pr-[310px] lg:min-h-[190px] lg:px-9 lg:py-6 lg:pr-[390px]">
           <div className="relative z-10 flex min-h-[101px] items-center sm:min-h-[130px] md:min-h-[145px] lg:min-h-[142px] lg:max-w-[68%]">
-            <h1 className="mt-0 max-w-[68%] text-[18px] sm:text-[28px] md:text-[34px] lg:text-[48px] font-bold tracking-tight leading-[1.02]">
+            <h1 className="mt-0 max-w-full text-[22px] sm:text-[28px] md:text-[34px] lg:text-[48px] font-bold tracking-tight leading-[1.02]">
               Петербург вместе с собакой 🐾
             </h1>
             <div className="hidden sm:flex mt-4 items-center gap-3 text-[#56614f]">
@@ -111,11 +111,11 @@ export default function DogFriendlyPage() {
                       <p className="text-xs uppercase tracking-[0.16em] text-neutral-400">
                         {place.category}
                       </p>
-                      <h2 className="mt-1 whitespace-nowrap text-left text-[18px] sm:mt-2 sm:text-3xl font-bold">
+                      <h2 className="mt-1 break-words text-left text-[20px] sm:mt-2 sm:text-3xl font-bold">
                         {place.name}
                       </h2>
                     </div>
-                    <span className="shrink-0 rounded-full bg-[#dfe8d8] px-2 py-1.5 text-[10px] sm:px-3 sm:py-2 sm:text-xs font-medium">
+                    <span className="shrink-0 rounded-full bg-[#dfe8d8] px-2 py-1.5 text-[11px] sm:px-3 sm:py-2 sm:text-xs font-medium">
                       🐾 Dog Friendly
                     </span>
                   </div>
