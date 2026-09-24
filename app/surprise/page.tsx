@@ -682,7 +682,7 @@ export default function SurprisePage() {
           </div>
         )}
         {showRegister && !generated && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/55 p-3 sm:p-4 backdrop-blur-sm">
+          <div className="fixed inset-0 z-[20000] flex items-center justify-center bg-black/55 p-3 sm:p-4 backdrop-blur-sm">
             <div className="max-h-[90dvh] w-full max-w-[430px] overflow-y-auto rounded-[24px] bg-white p-5 text-black shadow-2xl sm:rounded-[28px] sm:p-8">
               <div className="flex items-start justify-between gap-4">
                 <div>
