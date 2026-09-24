@@ -279,7 +279,7 @@ export default function UnifiedMap() {
   return <section className="bg-[#f7f4ef] pb-10 pt-0 text-black">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="alma-map-layout grid grid-cols-[40%_minmax(0,1fr)] items-start gap-2 sm:grid-cols-1 sm:gap-3 lg:grid-cols-[320px_minmax(0,1fr)] lg:gap-5">
-        <aside className="alma-map-filters rounded-[20px] border border-black/5 bg-white p-2.5 shadow-[0_18px_55px_-35px_rgba(0,0,0,.35)] sm:rounded-[30px] sm:p-5 lg:sticky lg:top-24">
+        <aside className="alma-map-filters alma-paper rounded-[20px] border border-black/5 bg-white p-2.5 shadow-[0_18px_55px_-35px_rgba(0,0,0,.35)] sm:rounded-[30px] sm:p-5 lg:sticky lg:top-24">
           <div className="alma-map-filter-stack mx-auto grid w-full gap-1.5 sm:gap-2.5">
           {[
             { value: mood, setValue: setMood, options: moods, label: "Настроение" },
