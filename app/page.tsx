@@ -67,46 +67,38 @@ function getWeatherInfo(code: number, isDay: boolean) {
 
 function InteractiveAura() {
   const scene = useRef<HTMLDivElement>(null);
-  const [mood, setMood] = useState(0);
-  const [pulse, setPulse] = useState(0);
-  const changeMood = () => { setMood((current) => (current + 1) % 3); setPulse((current) => current + 1); };
+
   return (
     <div
       ref={scene}
-      className="alma-aura"
-      data-mood={mood}
-      role="button"
-      tabIndex={0}
-      aria-label="Изменить цвет светящейся формы"
+      className="alma-route-art"
+      aria-hidden="true"
       onPointerMove={(event) => {
         const bounds = event.currentTarget.getBoundingClientRect();
-        scene.current?.style.setProperty("--move-x", (((event.clientX - bounds.left) / bounds.width - .5) * 48).toFixed(1) + "px");
-        scene.current?.style.setProperty("--move-y", (((event.clientY - bounds.top) / bounds.height - .5) * 48).toFixed(1) + "px");
+        scene.current?.style.setProperty("--route-x", ((((event.clientX - bounds.left) / bounds.width) - .5) * 18).toFixed(1) + "px");
+        scene.current?.style.setProperty("--route-y", ((((event.clientY - bounds.top) / bounds.height) - .5) * 14).toFixed(1) + "px");
       }}
       onPointerLeave={() => {
-        scene.current?.style.setProperty("--move-x", "0px");
-        scene.current?.style.setProperty("--move-y", "0px");
+        scene.current?.style.setProperty("--route-x", "0px");
+        scene.current?.style.setProperty("--route-y", "0px");
       }}
-      onClick={changeMood}
-      onKeyDown={(event) => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); changeMood(); } }}
     >
-      <div className="alma-aura-grain" />
-      <div className="alma-aura-glow alma-aura-glow-one" />
-      <div className="alma-aura-glow alma-aura-glow-two" />
-      <div className="alma-aura-glow alma-aura-glow-three" />
-      <div className="alma-aura-stage">
-        <div className="alma-aura-ring alma-aura-ring-one" />
-        <div className="alma-aura-ring alma-aura-ring-two" />
-        <div className="alma-aura-form">
-          <div className="alma-aura-form-inner" />
-          <div className="alma-aura-form-highlight" />
-        </div>
-        <div key={pulse} className="alma-aura-touch-wave" />
-        <span className="alma-aura-spark alma-aura-spark-one" />
-        <span className="alma-aura-spark alma-aura-spark-two" />
-        <span className="alma-aura-spark alma-aura-spark-three" />
-      </div>
-      <span className="alma-aura-hint">Коснись — и настроение изменится <span aria-hidden="true">↗</span></span>
+      <svg className="alma-route-svg" viewBox="0 0 900 700" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <linearGradient id="almaRouteGradient" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stopColor="#ff6f61" />
+            <stop offset="52%" stopColor="#f4b83f" />
+            <stop offset="100%" stopColor="#ff4f72" />
+          </linearGradient>
+        </defs>
+        <path className="alma-route-ghost" d="M-70 410 C65 382 142 396 214 386 C270 378 309 410 350 395 C387 381 396 335 432 337 C458 339 454 378 439 391 C421 406 395 397 405 373 C418 342 470 357 504 347 C548 334 565 294 606 282 C651 269 688 280 724 250 C754 225 766 180 804 159 C844 137 884 118 956 77" />
+        <path className="alma-route-main" pathLength="1" d="M-70 410 C65 382 142 396 214 386 C270 378 309 410 350 395 C387 381 396 335 432 337 C458 339 454 378 439 391 C421 406 395 397 405 373 C418 342 470 357 504 347 C548 334 565 294 606 282 C651 269 688 280 724 250 C754 225 766 180 804 159 C844 137 884 118 956 77" />
+        <path className="alma-route-head" pathLength="1" d="M-70 410 C65 382 142 396 214 386 C270 378 309 410 350 395 C387 381 396 335 432 337 C458 339 454 378 439 391 C421 406 395 397 405 373 C418 342 470 357 504 347 C548 334 565 294 606 282 C651 269 688 280 724 250 C754 225 766 180 804 159 C844 137 884 118 956 77" />
+      </svg>
+      <span className="alma-route-dot alma-route-dot-one" />
+      <span className="alma-route-dot alma-route-dot-two" />
+      <span className="alma-route-dot alma-route-dot-three" />
+      <span className="alma-route-caption">твой маршрут начинается здесь</span>
     </div>
   );
 }
