@@ -77,8 +77,8 @@ select:-webkit-autofill {
   input, textarea, select { font-size: 16px; }
 
   .alma-home-hero {
-    height: min(510px, 68svh) !important;
-    min-height: 420px;
+    height: min(430px, 58svh) !important;
+    min-height: 355px;
     overflow: hidden !important;
   }
   .alma-home-hero-image {
@@ -89,17 +89,17 @@ select:-webkit-autofill {
     pointer-events: none;
   }
   .alma-home-hero h1 {
-    font-size: clamp(30px, 8.5vw, 42px) !important;
+    font-size: clamp(27px, 7.5vw, 37px) !important;
     line-height: 1.02 !important;
     text-align: left !important;
   }
-  .alma-home-hero p { font-size: 14px !important; line-height: 1.35 !important; }
+  .alma-home-hero p { font-size: 13px !important; line-height: 1.35 !important; }
   .alma-home-hero button {
     min-height: 44px !important;
     font-size: 12px !important;
     padding: 10px 6px !important;
   }
-  #alma-filters { padding-top: 20px !important; scroll-margin-top: 76px; }
+  #alma-filters { padding-top: 14px !important; scroll-margin-top: 76px; }
   #alma-photozones { scroll-margin-top: 76px; }
   #alma-photozones h2 { font-size: clamp(27px, 8vw, 36px) !important; }
   #alma-photozones .columns-2 { gap: 10px !important; }
@@ -141,7 +141,7 @@ select:-webkit-autofill {
 }
 
 @media (max-width: 374px) {
-  .alma-home-hero h1 { font-size: 28px !important; }
+  .alma-home-hero h1 { font-size: 26px !important; }
   .alma-home-hero button { font-size: 11px !important; }
 }
 
