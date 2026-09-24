@@ -344,7 +344,7 @@ export default function UnifiedMap() {
     </div>
 
     <style jsx global>{`.alma-map-filters .alma-embossed-button,.alma-map-filters .alma-embossed-toggle{box-shadow:inset 0 1px 0 rgba(255,255,255,.95),inset 0 -1px 0 rgba(0,0,0,.06),0 3px 0 #e6e1da,0 7px 14px rgba(41,34,28,.08);background-image:linear-gradient(160deg,#fff 0%,#f5f1eb 100%);transition:transform .16s ease,box-shadow .16s ease,background .2s ease}
-.alma-map-filters .alma-embossed-button:active,.alma-map-filters .alma-embossed-toggle:active{transform:translateY(2px);box-shadow:inset 0 2px 5px rgba(0,0,0,.12),0 1px 0 #e6e1da}
+.alma-map-filters .alma-embossed-button:active,.alma-map-filters .alma-embossed-toggle:active{transform:translateY(1px);box-shadow:inset 0 2px 5px rgba(0,0,0,.12),0 1px 0 #e6e1da}
 .alma-map-filters .alma-embossed-button.bg-black,.alma-map-filters .alma-embossed-toggle[aria-pressed="true"]{background-image:linear-gradient(145deg,#34312f,#0f0e0d);box-shadow:inset 0 1px 0 rgba(255,255,255,.2),inset 0 -2px 5px rgba(0,0,0,.3),0 3px 0 #98918a,0 7px 14px rgba(0,0,0,.15)}
 .alma-map-filters .alma-embossed-toggle:has(svg):not([aria-pressed="true"]){background-image:linear-gradient(145deg,#fff9fa,#f7e5eb);box-shadow:inset 0 1px 0 #fff,0 3px 0 #e8cbd4,0 7px 14px rgba(111,36,55,.08)}
 .alma-map-filters .alma-embossed-toggle[aria-pressed="true"]:has(svg){background-image:linear-gradient(145deg,#8f455f,#57243a);box-shadow:inset 0 1px 0 rgba(255,255,255,.26),inset 0 -2px 5px rgba(0,0,0,.2),0 3px 0 #cf9eac,0 7px 14px rgba(89,38,58,.16)}
@@ -367,9 +367,9 @@ export default function UnifiedMap() {
 .alma-map-filter-stack>button.alma-safe-toggle svg{display:none}
 .alma-map-filters button[aria-pressed]{min-height:44px!important;gap:6px!important;border-radius:14px!important;padding:6px 8px!important;font-size:12px!important;line-height:1.15;text-align:left}
 .alma-map-filters button[aria-pressed]>span:first-child{white-space:normal!important}
-.alma-map-filters button[aria-pressed]>span:last-child{flex:0 0 34px!important;width:34px!important;height:20px!important}
-.alma-map-filters button[aria-pressed]>span:last-child>span{top:3px!important;width:14px!important;height:14px!important}
-.alma-map-filters button[aria-pressed="true"]>span:last-child>span{left:17px!important}
+.alma-map-filters button[aria-pressed]>span:last-child{flex:0 0 38px!important;width:38px!important;height:22px!important}
+.alma-map-filters button[aria-pressed]>span:last-child>span{top:3px!important;width:16px!important;height:16px!important}
+.alma-map-filters button[aria-pressed="true"]>span:last-child>span{left:19px!important}
 .alma-map-filters button[aria-pressed="false"]>span:last-child>span{left:3px!important}
 .alma-map-filter-stack>button.alma-map-reset{grid-column:1/-1;min-height:40px!important;font-size:12px!important}
 .alma-map-filters>div:nth-child(2){display:block!important;margin-top:8px!important;padding-top:8px!important}
