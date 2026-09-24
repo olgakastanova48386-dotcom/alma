@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-24T19:33:24.648Z",
+  "updatedAt": "2026-09-24T20:01:44.140Z",
   "events": {
     "fin-zaliv-house-party": {
       "source": "https://sevcableport.ru/afisha/finskij-zaliv-under-haus-pati/",
@@ -33,8 +33,8 @@
     },
     "museum-machines": {
       "source": "https://brusnitsyn.spb.ru/museambot",
-      "image": "https://optim.tildacdn.com/tild3038-6666-4338-b934-613333656633/-/format/webp/photo_52471159935600.jpg.webp",
-      "ok": true
+      "ok": false,
+      "error": "fetch failed"
     },
     "picasso-paragraphs": {
       "source": "https://brusnitsyn.spb.ru/art-center",
