@@ -42,24 +42,24 @@ export default function ProfilePage() {
   }
 
   if (!loaded) {
-    return <main className="min-h-screen bg-[#f7f4ef] pt-[calc(env(safe-area-inset-top)+96px)] sm:pt-36 px-4"><div className="max-w-3xl mx-auto text-neutral-500">Загружаем профиль…</div></main>;
+    return <main className="min-h-screen bg-[#f7f4ef] pt-[calc(env(safe-area-inset-top)+68px)] sm:pt-36 px-4"><div className="max-w-3xl mx-auto text-neutral-500">Загружаем профиль…</div></main>;
   }
 
   if (!user) {
     return (
-      <main className="min-h-screen bg-[#f7f4ef] pt-[calc(env(safe-area-inset-top)+96px)] sm:pt-36 pb-16 sm:pb-24 px-4">
-        <section className="max-w-xl mx-auto rounded-[32px] bg-white border border-black/5 p-8 sm:p-10 text-center shadow-sm">
-          <div className="mx-auto h-16 w-16 rounded-full bg-[#f2eee7] flex items-center justify-center text-2xl">◎</div>
-          <h1 className="mt-6 text-3xl font-bold">Войдите в ALMA</h1>
+      <main className="min-h-screen bg-[#f7f4ef] pt-[calc(env(safe-area-inset-top)+68px)] sm:pt-36 pb-16 sm:pb-24 px-4">
+        <section className="max-w-xl mx-auto rounded-[22px] bg-white border border-black/5 p-5 sm:p-10 text-center shadow-sm">
+          <div className="mx-auto h-12 w-12 rounded-full bg-[#f2eee7] flex items-center justify-center text-2xl">◎</div>
+          <h1 className="mt-3 text-[24px] font-bold">Войдите в ALMA</h1>
           <p className="mt-3 text-neutral-500 leading-7">Профиль доступен после входа в аккаунт.</p>
-          <Link href="/login?next=%2Fprofile" className="inline-flex mt-7 rounded-full bg-black text-white px-7 py-3.5 font-medium hover:opacity-80 transition">Войти</Link>
+          <Link href="/login?next=%2Fprofile" className="inline-flex mt-4 rounded-full bg-black text-white px-7 py-3.5 font-medium hover:opacity-80 transition">Войти</Link>
         </section>
       </main>
     );
   }
 
   return (
-    <main className="min-h-screen bg-[#f7f4ef] pt-[calc(env(safe-area-inset-top)+96px)] sm:pt-36 pb-24 px-4">
+    <main className="min-h-screen bg-[#f7f4ef] pt-[calc(env(safe-area-inset-top)+68px)] sm:pt-36 pb-24 px-4">
       <div className="max-w-3xl mx-auto px-1 sm:px-0">
         <div className="mt-0 rounded-[22px] sm:rounded-[34px] bg-white border border-black/5 shadow-sm p-4 sm:p-10">
           <div className="flex items-center gap-2.5 sm:gap-5">
@@ -76,7 +76,7 @@ export default function ProfilePage() {
             <img
               src="/alma-qr.svg"
               alt="QR-код со ссылкой на ALMA"
-              className="h-[104px] w-[104px] shrink-0 rounded-[16px] bg-white p-1.5 ring-1 ring-black/10 sm:h-[132px] sm:w-[132px]"
+              className="h-[88px] w-[88px] shrink-0 rounded-[16px] bg-white p-1.5 ring-1 ring-black/10 sm:h-[132px] sm:w-[132px]"
             />
             <div className="min-w-0">
               <p className="text-[9px] sm:text-xs uppercase tracking-[0.14em] sm:tracking-[0.16em] text-neutral-400">Поделиться</p>
@@ -110,11 +110,11 @@ export default function ProfilePage() {
           </section>
         )}
 
-        <div className="mt-6 rounded-[34px] bg-white border border-black/5 shadow-sm p-7 sm:p-10">
-          <div className="border-t border-black/10 pt-6">
+        <div className="mt-3 sm:mt-6 rounded-[22px] sm:rounded-[34px] bg-white border border-black/5 shadow-sm p-4 sm:p-10">
+          <div>
             <p className="text-xs uppercase tracking-[0.16em] text-neutral-400">Аккаунт</p>
-            <p className="mt-3 text-sm text-neutral-500 leading-6">Сейчас вход работает по номеру телефона и паролю. Подтверждение номера и восстановление доступа добавим следующим этапом.</p>
-            <button type="button" onClick={logout} disabled={loggingOut} className="mt-6 rounded-full border border-black/15 px-6 py-3 text-sm font-medium hover:bg-black hover:text-white transition disabled:opacity-50">{loggingOut ? "Выходим…" : "Выйти из аккаунта"}</button>
+            
+            <button type="button" onClick={logout} disabled={loggingOut} className="mt-3 rounded-full border border-black/15 px-5 py-3 text-sm font-medium hover:bg-black hover:text-white transition disabled:opacity-50">{loggingOut ? "Выходим…" : "Выйти из аккаунта"}</button>
           </div>
         </div>
       </div>
