@@ -43,7 +43,7 @@ export default function AlmaSelect({
         aria-haspopup="listbox"
         aria-expanded={open}
         onClick={() => setOpen((current) => !current)}
-        className={`flex w-full items-center justify-between gap-2 border text-left transition ${compact ? "mt-1 min-h-11 rounded-xl px-3 py-2 text-[13px] sm:mt-2 sm:rounded-2xl sm:px-4 sm:py-3.5 sm:text-sm" : "mt-2 rounded-2xl px-4 py-3.5 text-sm"} ${open ? "border-black bg-white shadow-[0_12px_35px_rgba(0,0,0,0.10)]" : compact ? "border-black/10 bg-white hover:bg-[#f7f4ef]" : "border-transparent bg-[#f3f1ed] hover:bg-[#ece8e2]"}`}
+        className={`alma-well flex w-full items-center justify-between gap-2 border text-left transition ${compact ? "mt-1 min-h-11 rounded-xl px-3 py-2 text-[13px] sm:mt-2 sm:rounded-2xl sm:px-4 sm:py-3.5 sm:text-sm" : "mt-2 rounded-2xl px-4 py-3.5 text-sm"} ${open ? "border-black bg-white shadow-[0_12px_35px_rgba(0,0,0,0.10)]" : compact ? "border-black/10 bg-white hover:bg-[#f7f4ef]" : "border-transparent bg-[#f3f1ed] hover:bg-[#ece8e2]"}`}
       >
         <span className="min-w-0 truncate">{value}</span>
         <svg
@@ -64,7 +64,7 @@ export default function AlmaSelect({
       {open && (
         <div
           role="listbox"
-          className="absolute left-0 right-0 z-40 mt-2 max-h-72 overflow-auto rounded-[20px] border border-black/5 bg-white p-2 shadow-[0_20px_55px_rgba(0,0,0,0.16)]"
+          className="alma-glass absolute left-0 right-0 z-40 mt-2 max-h-72 overflow-auto rounded-[20px] border border-black/5 bg-white p-2 shadow-[0_20px_55px_rgba(0,0,0,0.16)]"
         >
           {options.map((option) => {
             const selected = option === value;
