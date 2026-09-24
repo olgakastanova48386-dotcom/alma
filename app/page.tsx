@@ -66,39 +66,94 @@ function getWeatherInfo(code: number, isDay: boolean) {
 }
 
 function InteractiveAura() {
-  const scene = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const pointerRef = useRef<{ x: number; y: number } | null>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+    let frame = 0;
+    let width = 0;
+    let height = 0;
+    let raf = 0;
+    let last = 0;
+    let tick = 0;
+    let x = 0;
+    let y = 0;
+    let angle = -.3;
+    const trail: { x: number; y: number }[] = [];
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const resize = () => {
+      const bounds = canvas.getBoundingClientRect();
+      width = bounds.width;
+      height = bounds.height;
+      const ratio = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.round(width * ratio);
+      canvas.height = Math.round(height * ratio);
+      ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+      x = width * .22;
+      y = height * .43;
+      trail.length = 0;
+    };
+    const observer = new ResizeObserver(resize);
+    observer.observe(canvas);
+    resize();
+
+    const draw = (now: number) => {
+      raf = window.requestAnimationFrame(draw);
+      if (now - last < 30) return;
+      const delta = Math.min((now - last || 33) / 33, 2);
+      last = now;
+      tick += delta;
+      ctx.clearRect(0, 0, width, height);
+      if (!reducedMotion) {
+        // Several incommensurate waves keep the movement irregular rather than looping a fixed SVG path.
+        angle += (.028 * Math.sin(tick * .031) + .043 * Math.sin(tick * .017 + 2.1) + .025 * Math.sin(tick * .071 + 1.4)) * delta;
+        const pointer = pointerRef.current;
+        if (pointer) {
+          const desired = Math.atan2(pointer.y - y, pointer.x - x);
+          angle += Math.atan2(Math.sin(desired - angle), Math.cos(desired - angle)) * .013 * delta;
+        }
+        const speed = Math.min(width, height) * .012 * delta;
+        x += Math.cos(angle) * speed;
+        y += Math.sin(angle) * speed;
+        if (x < -30 || x > width + 30 || y < -30 || y > height + 30 || trail.length > 240) {
+          x = width * (.15 + Math.random() * .7);
+          y = height * (.18 + Math.random() * .58);
+          angle = Math.random() * Math.PI * 2;
+          trail.length = 0;
+        }
+        trail.push({ x, y });
+        if (trail.length > 115) trail.shift();
+      } else if (!trail.length) {
+        for (let i = 0; i < 95; i++) trail.push({ x: width * (.08 + i / 110), y: height * (.45 + .12 * Math.sin(i * .085)) });
+      }
+      ctx.lineCap = "round";
+      ctx.lineJoin = "round";
+      // Thick older tail, hairline moving tip; a single vivid red like the reference.
+      for (let i = 1; i < trail.length; i++) {
+        const age = (trail.length - i) / Math.max(1, trail.length);
+        ctx.beginPath();
+        ctx.moveTo(trail[i - 1].x, trail[i - 1].y);
+        ctx.lineTo(trail[i].x, trail[i].y);
+        ctx.lineWidth = 1.6 + Math.pow(age, 2.2) * 29;
+        ctx.strokeStyle = "#ff202b";
+        ctx.stroke();
+      }
+      frame++;
+    };
+    raf = window.requestAnimationFrame(draw);
+    return () => { window.cancelAnimationFrame(raf); observer.disconnect(); };
+  }, []);
 
   return (
-    <div
-      ref={scene}
-      className="alma-route-art"
-      aria-hidden="true"
-      onPointerMove={(event) => {
-        const bounds = event.currentTarget.getBoundingClientRect();
-        scene.current?.style.setProperty("--route-x", ((((event.clientX - bounds.left) / bounds.width) - .5) * 18).toFixed(1) + "px");
-        scene.current?.style.setProperty("--route-y", ((((event.clientY - bounds.top) / bounds.height) - .5) * 14).toFixed(1) + "px");
-      }}
-      onPointerLeave={() => {
-        scene.current?.style.setProperty("--route-x", "0px");
-        scene.current?.style.setProperty("--route-y", "0px");
-      }}
-    >
-      <svg className="alma-route-svg" viewBox="0 0 900 700" preserveAspectRatio="xMidYMid meet">
-        <defs>
-          <linearGradient id="almaRouteGradient" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stopColor="#ff6f61" />
-            <stop offset="52%" stopColor="#f4b83f" />
-            <stop offset="100%" stopColor="#ff4f72" />
-          </linearGradient>
-        </defs>
-        <path className="alma-route-ghost" d="M-70 410 C65 382 142 396 214 386 C270 378 309 410 350 395 C387 381 396 335 432 337 C458 339 454 378 439 391 C421 406 395 397 405 373 C418 342 470 357 504 347 C548 334 565 294 606 282 C651 269 688 280 724 250 C754 225 766 180 804 159 C844 137 884 118 956 77" />
-        <path className="alma-route-main" pathLength="1" d="M-70 410 C65 382 142 396 214 386 C270 378 309 410 350 395 C387 381 396 335 432 337 C458 339 454 378 439 391 C421 406 395 397 405 373 C418 342 470 357 504 347 C548 334 565 294 606 282 C651 269 688 280 724 250 C754 225 766 180 804 159 C844 137 884 118 956 77" />
-        <path className="alma-route-head" pathLength="1" d="M-70 410 C65 382 142 396 214 386 C270 378 309 410 350 395 C387 381 396 335 432 337 C458 339 454 378 439 391 C421 406 395 397 405 373 C418 342 470 357 504 347 C548 334 565 294 606 282 C651 269 688 280 724 250 C754 225 766 180 804 159 C844 137 884 118 956 77" />
-      </svg>
-      <span className="alma-route-dot alma-route-dot-one" />
-      <span className="alma-route-dot alma-route-dot-two" />
-      <span className="alma-route-dot alma-route-dot-three" />
-      <span className="alma-route-caption">твой маршрут начинается здесь</span>
+    <div className="alma-chaos-art" onPointerMove={(event) => {
+      const bounds = event.currentTarget.getBoundingClientRect();
+      pointerRef.current = { x: event.clientX - bounds.left, y: event.clientY - bounds.top };
+    }} onPointerLeave={() => { pointerRef.current = null; }}>
+      <canvas ref={canvasRef} className="alma-chaos-canvas" aria-label="Хаотично движущаяся красная линия" role="img" />
     </div>
   );
 }
@@ -175,21 +230,21 @@ export default function HomePage() {
       )}
       <main className="min-h-screen overflow-x-hidden bg-[#f7f4ef] text-black">
       <section className="alma-home-hero relative h-[390px] sm:h-[430px] md:h-auto md:min-h-[680px] flex items-start md:items-center pt-0 md:pt-28 pb-0 overflow-hidden bg-[#f7f4ef] text-black">
-        <div className="alma-home-hero-image alma-aura-host md:hidden absolute inset-0 overflow-hidden bg-[#101e2b]"><InteractiveAura /></div>
-        <div className="md:hidden pointer-events-none absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-[#101720]/78" />
+        <div className="alma-home-hero-image alma-aura-host md:hidden absolute inset-0 overflow-hidden bg-[#fbfaf7]"><InteractiveAura /></div>
+        <div className="md:hidden pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#fbfaf7]/95" />
         <div className="hidden md:block absolute inset-0 bg-[#f7f4ef]" />
-        <div className="hidden md:block absolute z-[11] right-[2%] lg:right-[7%] xl:right-[10%] top-32 bottom-0 w-[360px] lg:w-[440px] xl:w-[490px]"><div className="relative h-full w-full overflow-hidden rounded-[36px] lg:rounded-[42px] shadow-[0_35px_80px_rgba(0,0,0,.20)] ring-1 ring-black/5 bg-[#101e2b]"><InteractiveAura /></div></div>
+        <div className="hidden md:block absolute z-[11] right-[2%] lg:right-[7%] xl:right-[10%] top-32 bottom-0 w-[360px] lg:w-[440px] xl:w-[490px]"><div className="relative h-full w-full overflow-hidden rounded-[36px] lg:rounded-[42px] shadow-[0_35px_80px_rgba(0,0,0,.20)] ring-1 ring-black/5 bg-[#fbfaf7]"><InteractiveAura /></div></div>
 
                 {weather && weatherInfo && <div className="absolute right-4 top-[calc(env(safe-area-inset-top)+76px)] z-20 md:hidden"><div className="inline-flex items-center gap-1.5 rounded-full bg-black/72 px-2.5 py-1.5 text-white shadow-sm backdrop-blur-md"><span className="text-sm leading-none">{weatherInfo.icon}</span><span className="text-xs font-semibold">{Math.round(weather.temperature) > 0 ? "+" : ""}{Math.round(weather.temperature)}°</span><span className="h-3 w-px bg-white/20" /><span className="text-[11px] text-white/75">{weatherInfo.text}</span></div></div>}
 
         <div className="absolute inset-x-0 bottom-3 z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-4 md:relative md:inset-auto md:bottom-auto lg:px-8"><div className="max-w-[650px]">
           {weather && weatherInfo && <div className="hidden md:block mb-3"><div className="inline-flex items-center gap-2.5 rounded-full bg-black/80 backdrop-blur-md text-white px-3.5 md:px-4 py-2.5 shadow-sm"><span className="text-lg leading-none">{weatherInfo.icon}</span><span className="font-semibold">{Math.round(weather.temperature) > 0 ? "+" : ""}{Math.round(weather.temperature)}°</span><span className="w-px h-4 bg-white/20" /><span className="text-sm text-white/75">{weatherInfo.text}</span><span className="hidden xs:inline text-xs text-white/40">Петербург</span></div></div>}
-          <h1 className="mt-0 md:mt-7 max-w-full text-[clamp(25px,7vw,82px)] md:text-[clamp(52px,5vw,70px)] font-bold leading-[1.02] md:leading-[0.98] tracking-tight text-white md:text-black drop-shadow-[0_2px_12px_rgba(0,0,0,.28)] md:drop-shadow-none break-words">Места, в которые<br />хочется вернуться</h1>
-          <p className="mt-1.5 md:mt-7 max-w-[94%] md:max-w-xl text-[13px] md:text-xl leading-[1.35] md:leading-8 text-white/82 md:text-neutral-600"><span className="md:hidden">ALMA помогает находить места Петербурга<br />по настроению, бюджету, компании и времени.</span><span className="hidden md:inline">ALMA помогает находить места Петербурга по настроению, бюджету, компании и времени.</span></p>
+          <h1 className="mt-0 md:mt-7 max-w-full text-[clamp(25px,7vw,82px)] md:text-[clamp(52px,5vw,70px)] font-bold leading-[1.02] md:leading-[0.98] tracking-tight text-black drop-shadow-none break-words">Места, в которые<br />хочется вернуться</h1>
+          <p className="mt-1.5 md:mt-7 max-w-[94%] md:max-w-xl text-[13px] md:text-xl leading-[1.35] md:leading-8 text-neutral-600"><span className="md:hidden">ALMA помогает находить места Петербурга<br />по настроению, бюджету, компании и времени.</span><span className="hidden md:inline">ALMA помогает находить места Петербурга по настроению, бюджету, компании и времени.</span></p>
           <div className="mt-2.5 md:mt-9 grid grid-cols-3 gap-1.5 md:flex md:flex-wrap md:gap-3">
             <button type="button" onClick={scrollToFilters} className="alma-pressable min-w-0 overflow-hidden whitespace-nowrap rounded-full bg-white text-black md:bg-black md:text-white px-1.5 md:px-7 py-2.5 md:py-4 text-[12px] md:text-base font-semibold leading-none hover:opacity-80 hover:scale-[1.02] transition">Найти место</button>
             <button type="button" onClick={() => router.push("/surprise?new=1")} className="alma-glow group relative min-w-0 overflow-hidden whitespace-nowrap rounded-full border border-[#f4d37c] bg-[#f4d37c] px-3 py-2.5 text-[11px] font-bold leading-none text-black shadow-[0_14px_32px_-10px_rgba(118,82,0,.38)] ring-2 ring-[#f4d37c]/35 transition duration-300 hover:-translate-y-0.5 hover:scale-[1.06] hover:bg-[#ffe39a] hover:shadow-[0_12px_38px_rgba(244,211,124,.72)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#f4d37c]/50 md:px-7 md:py-4 md:text-base"><span className="alma-cta-shine pointer-events-none absolute -inset-y-2 -left-1/2 w-1/3 bg-gradient-to-r from-transparent via-white/85 to-transparent blur-[1px]" aria-hidden="true"/><span className="relative z-10"><span className="mr-1.5" aria-hidden="true">✦</span>Удиви меня</span></button>
-            <button type="button" onClick={scrollToPhotozones} className="alma-pressable min-w-0 overflow-hidden whitespace-nowrap rounded-full bg-black/55 md:bg-white/80 backdrop-blur-md border border-white/25 md:border-black/10 text-white md:text-black px-1.5 md:px-7 py-2.5 md:py-4 text-[12px] md:text-base font-medium leading-none hover:scale-[1.02] transition shadow-sm">📸 Фотозоны</button>
+            <button type="button" onClick={scrollToPhotozones} className="alma-pressable min-w-0 overflow-hidden whitespace-nowrap rounded-full bg-white/85 backdrop-blur-md border border-black/10 text-black px-1.5 md:px-7 py-2.5 md:py-4 text-[12px] md:text-base font-medium leading-none hover:scale-[1.02] transition shadow-sm">📸 Фотозоны</button>
           </div>
         </div></div>
         <div className="absolute z-10 bottom-8 right-8 hidden lg:flex items-center gap-3 text-xs uppercase tracking-[0.22em] text-neutral-500"><span className="w-8 h-px bg-black/20" />ALMA в движении</div>
