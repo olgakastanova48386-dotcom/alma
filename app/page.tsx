@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import UnifiedMap from "@/components/UnifiedMap";
 
@@ -65,80 +65,49 @@ function getWeatherInfo(code: number, isDay: boolean) {
   return { icon: "🌤️", text: "Погода" };
 }
 
-function AnimatedCityScene({ isDay, cloudy }: { isDay: boolean; cloudy: boolean }) {
-  const skyTop = isDay ? "#426c84" : "#091625";
-  const skyBottom = isDay ? "#c7a995" : "#57435b";
-  const cityBack = isDay ? "#677485" : "#283347";
-  const cityFront = isDay ? "#384a5b" : "#172333";
-  const windowLight = isDay ? "#f2dbac" : "#f5cf85";
-
+function InteractiveAura() {
+  const scene = useRef<HTMLDivElement>(null);
+  const [mood, setMood] = useState(0);
+  const [pulse, setPulse] = useState(0);
+  const changeMood = () => { setMood((current) => (current + 1) % 3); setPulse((current) => current + 1); };
   return (
-    <svg className="alma-city-scene" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Анимированный Петербург: собор, мост и отражения на воде">
-      <defs>
-        <linearGradient id="alma-animated-sky" x1="0" y1="0" x2="0" y2="1">
-          <stop stopColor={skyTop} />
-          <stop offset=".64" stopColor={skyBottom} />
-          <stop offset="1" stopColor={isDay ? "#9b8390" : "#283146"} />
-        </linearGradient>
-        <linearGradient id="alma-animated-reflection" x1="0" y1="0" x2="0" y2="1"><stop stopColor="#f8d7a0" stopOpacity=".65" /><stop offset="1" stopColor="#f8d7a0" stopOpacity="0" /></linearGradient>
-        <radialGradient id="alma-animated-halo">
-          <stop stopColor={isDay ? "#ffe1b3" : "#f1d49b"} stopOpacity=".58" />
-          <stop offset="1" stopColor="#ffe1b3" stopOpacity="0" />
-        </radialGradient>
-        <linearGradient id="alma-animated-water" x1="0" y1="0" x2="0" y2="1">
-          <stop stopColor={isDay ? "#536f7c" : "#22394a"} />
-          <stop offset="1" stopColor={isDay ? "#263c51" : "#091a2b"} />
-        </linearGradient>
-        <mask id="alma-animated-bridge-cutouts">
-          <rect width="1200" height="150" y="550" fill="white" />
-          <path d="M35 665a105 105 0 0 1 210 0ZM260 665a105 105 0 0 1 210 0ZM485 665a105 105 0 0 1 210 0ZM710 665a105 105 0 0 1 210 0ZM935 665a105 105 0 0 1 210 0Z" fill="black" />
-        </mask>
-      </defs>
-      <rect width="1200" height="800" fill="url(#alma-animated-sky)" />
-      <ellipse className="alma-city-halo" cx="830" cy="192" rx="290" ry="240" fill="url(#alma-animated-halo)" />
-      <circle className="alma-city-light" cx="830" cy="192" r={isDay ? "53" : "39"} fill={isDay ? "#f8dfb2" : "#f5e6c5"} opacity={isDay ? ".82" : ".9"} />
-      <g className="alma-city-cloud-a" opacity={cloudy ? ".34" : ".16"} fill="#e8e4e0">
-        <path d="M-100 190c74-38 132-42 212-8 82-53 147-36 218-4 68-15 112 2 160 32-157 39-378 34-590-20Z" />
-        <path d="M620 140c72-25 123-15 165 12 86-36 158-25 230 21 79-9 118 8 166 38-187 20-388 15-561-71Z" />
-      </g>
-      <g className="alma-city-cloud-b" opacity={cloudy ? ".22" : ".1"} fill="#f6e9d9">
-        <path d="M30 281c154-35 248-22 352 14 75-18 149-13 229 22-208 35-421 17-581-36Z" />
-      </g>
-      <path d="M0 464V353h58v-43h27v43h102v-69h38v69h83v-34h62v34h115v-21h78v132Zm700 0V344h49v-56h24v56h67v-30h43v30h98v-70h36v70h74v-34h47v34h62v120Z" fill={cityBack} />
-      <path d="M0 542V400h74v-36h107v36h92v-58h54v58h150v142Zm746 0V391h75v-49h68v49h105v-31h67v31h139v151Z" fill={cityFront} />
-      <g fill={windowLight} className="alma-city-windows" opacity={isDay ? ".42" : ".78"}>
-        <path d="M50 433h6v11h-6zm32 0h6v11h-6zm32 0h6v11h-6zm32 0h6v11h-6zm-96 35h6v11h-6zm64 0h6v11h-6zm32 0h6v11h-6zm150-62h6v11h-6zm32 0h6v11h-6zm32 0h6v11h-6zm160 31h6v11h-6zm32 0h6v11h-6zm32 0h6v11h-6zm309-20h6v11h-6zm32 0h6v11h-6zm32 0h6v11h-6zm126-19h6v11h-6zm32 0h6v11h-6zm32 0h6v11h-6zm-64 33h6v11h-6zm32 0h6v11h-6z" />
-      </g>
-      <g className="alma-city-dome">
-        <path d="M542 360c3-66 27-110 66-123 42 13 66 57 69 123Z" fill={isDay ? "#b2a28d" : "#a28a76"} />
-        <path d="M549 359c8-56 27-95 59-107 35 12 55 51 62 107" fill="none" stroke={isDay ? "#e5d5b6" : "#d6b991"} strokeWidth="8" opacity=".7" />
-        <path d="M592 234v-22h32v22m-16-23v-51m-10 19h20" stroke="#e8c99d" strokeWidth="6" fill="none" />
-        <rect x="520" y="359" width="178" height="24" fill={isDay ? "#a39283" : "#695d60"} />
-        <path d="M505 403h208l-24-24H529Z" fill={isDay ? "#c5b4a1" : "#8b7672"} />
-        <rect x="511" y="403" width="196" height="139" fill={isDay ? "#9b928c" : "#554f5b"} />
-        <path d="M523 422h172m-172 90h172" stroke={isDay ? "#ded0bd" : "#ad9a8e"} strokeWidth="7" />
-        {Array.from({ length: 7 }, (_, index) => <rect key={index} x={530 + index * 25} y="430" width="8" height="83" fill={isDay ? "#d5c5af" : "#978d87"} />)}
-        <path d="M485 542h251v17H485Z" fill={cityFront} />
-      </g>
-      <path d="M0 555H1200v105H0Z" fill="url(#alma-animated-water)" />
-      <path d="M0 550h1200v112H0Z" fill={cityFront} mask="url(#alma-animated-bridge-cutouts)" />
-      <path d="M0 548h1200m0 16H0" stroke={isDay ? "#c6ad91" : "#b69377"} strokeWidth="5" opacity=".8" />
-      <path d="M0 568h1200" stroke="#d7b38b" strokeWidth="2" strokeDasharray="4 11" opacity=".5" />
-      <g className="alma-city-lamps" fill="#f5d9a7">
-        {[112, 338, 563, 788, 1012].map((x) => <g key={x}><path d={`M${x} 546v-29`} stroke="#2a3038" strokeWidth="4" /><circle cx={x} cy="514" r="5" /><circle cx={x} cy="514" r="22" fill="#f4c784" opacity=".12" /></g>)}
-      </g>
-      <rect y="662" width="1200" height="138" fill="url(#alma-animated-water)" />
-      <path className="alma-city-water-glow" d="M593 575h55l145 225H454Z" fill="url(#alma-animated-reflection)" opacity=".48" />
-      <path className="alma-city-water-glow" d="M815 580h31l91 220H727Z" fill="url(#alma-animated-reflection)" opacity=".3" />
-      <g className="alma-city-reflections" stroke={isDay ? "#f2d3a5" : "#efc990"} strokeLinecap="round" opacity=".47" fill="none">
-        <path d="M80 686h36m34 10h90m-82 21h47m285-32h130m-95 21h100m110-26h60m-23 34h112m150-19h80m-48 31h120" strokeWidth="3" />
-        <path d="M92 744h72m90-24h48m275 34h102m114-12h47m160-32h90m-490 26h95m72 13h72m-170-10h40" strokeWidth="2" />
-      </g>
-      <g className="alma-city-boat" fill={isDay ? "#1b3546" : "#0c1a28"}>
-        <path d="M565 722h126l-18 20h-90Z" /><path d="M625 722v-62m0 8 42 45h-42Z" stroke={isDay ? "#ead7bf" : "#d0c2b7"} strokeWidth="3" fill="none" />
-      </g>
-      <rect y="763" width="1200" height="37" fill={isDay ? "#1e3445" : "#071421"} opacity=".45" />
-    </svg>
+    <div
+      ref={scene}
+      className="alma-aura"
+      data-mood={mood}
+      role="button"
+      tabIndex={0}
+      aria-label="Изменить цвет светящейся формы"
+      onPointerMove={(event) => {
+        const bounds = event.currentTarget.getBoundingClientRect();
+        scene.current?.style.setProperty("--move-x", (((event.clientX - bounds.left) / bounds.width - .5) * 48).toFixed(1) + "px");
+        scene.current?.style.setProperty("--move-y", (((event.clientY - bounds.top) / bounds.height - .5) * 48).toFixed(1) + "px");
+      }}
+      onPointerLeave={() => {
+        scene.current?.style.setProperty("--move-x", "0px");
+        scene.current?.style.setProperty("--move-y", "0px");
+      }}
+      onClick={changeMood}
+      onKeyDown={(event) => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); changeMood(); } }}
+    >
+      <div className="alma-aura-grain" />
+      <div className="alma-aura-glow alma-aura-glow-one" />
+      <div className="alma-aura-glow alma-aura-glow-two" />
+      <div className="alma-aura-glow alma-aura-glow-three" />
+      <div className="alma-aura-stage">
+        <div className="alma-aura-ring alma-aura-ring-one" />
+        <div className="alma-aura-ring alma-aura-ring-two" />
+        <div className="alma-aura-form">
+          <div className="alma-aura-form-inner" />
+          <div className="alma-aura-form-highlight" />
+        </div>
+        <div key={pulse} className="alma-aura-touch-wave" />
+        <span className="alma-aura-spark alma-aura-spark-one" />
+        <span className="alma-aura-spark alma-aura-spark-two" />
+        <span className="alma-aura-spark alma-aura-spark-three" />
+      </div>
+      <span className="alma-aura-hint">Коснись — и настроение изменится <span aria-hidden="true">↗</span></span>
+    </div>
   );
 }
 
@@ -196,7 +165,6 @@ export default function HomePage() {
   };
   const isDay = weather?.isDay ?? getPetersburgIsDay();
   const weatherInfo = weather ? getWeatherInfo(weather.code, isDay) : null;
-  const cloudy = weather ? weather.code !== 0 : true;
 
   return (
     <>
@@ -215,10 +183,10 @@ export default function HomePage() {
       )}
       <main className="min-h-screen overflow-x-hidden bg-[#f7f4ef] text-black">
       <section className="alma-home-hero relative h-[390px] sm:h-[430px] md:h-auto md:min-h-[680px] flex items-start md:items-center pt-0 md:pt-28 pb-0 overflow-hidden bg-[#f7f4ef] text-black">
-        <div className="alma-home-hero-image md:hidden absolute inset-0 overflow-hidden bg-[#101e2b]"><AnimatedCityScene isDay={isDay} cloudy={cloudy} /></div>
-        <div className="md:hidden absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-[#101720]/78" />
+        <div className="alma-home-hero-image alma-aura-host md:hidden absolute inset-0 overflow-hidden bg-[#101e2b]"><InteractiveAura /></div>
+        <div className="md:hidden pointer-events-none absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-[#101720]/78" />
         <div className="hidden md:block absolute inset-0 bg-[#f7f4ef]" />
-        <div className="hidden md:block absolute z-[2] right-[2%] lg:right-[7%] xl:right-[10%] top-32 bottom-0 w-[360px] lg:w-[440px] xl:w-[490px] pointer-events-none"><div className="relative h-full w-full overflow-hidden rounded-[36px] lg:rounded-[42px] shadow-[0_35px_80px_rgba(0,0,0,.20)] ring-1 ring-black/5 bg-[#101e2b]"><AnimatedCityScene isDay={isDay} cloudy={cloudy} /></div></div>
+        <div className="hidden md:block absolute z-[2] right-[2%] lg:right-[7%] xl:right-[10%] top-32 bottom-0 w-[360px] lg:w-[440px] xl:w-[490px]"><div className="relative h-full w-full overflow-hidden rounded-[36px] lg:rounded-[42px] shadow-[0_35px_80px_rgba(0,0,0,.20)] ring-1 ring-black/5 bg-[#101e2b]"><InteractiveAura /></div></div>
 
                 {weather && weatherInfo && <div className="absolute right-4 top-[calc(env(safe-area-inset-top)+76px)] z-20 md:hidden"><div className="inline-flex items-center gap-1.5 rounded-full bg-black/72 px-2.5 py-1.5 text-white shadow-sm backdrop-blur-md"><span className="text-sm leading-none">{weatherInfo.icon}</span><span className="text-xs font-semibold">{Math.round(weather.temperature) > 0 ? "+" : ""}{Math.round(weather.temperature)}°</span><span className="h-3 w-px bg-white/20" /><span className="text-[11px] text-white/75">{weatherInfo.text}</span></div></div>}
 
