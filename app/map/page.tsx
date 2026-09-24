@@ -13,7 +13,7 @@ export default function MapPage() {
   );
 
   return (
-    <main className="min-h-screen bg-[#f7f4ef] pb-20 pt-[88px] text-black sm:pt-[104px]">
+    <main className="min-h-screen bg-[#f7f4ef] pb-20 pt-[calc(env(safe-area-inset-top)+96px)] text-black sm:pt-[104px]">
       <section className="mx-auto max-w-[1380px] px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
           <div>
