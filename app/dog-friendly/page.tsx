@@ -31,12 +31,13 @@ export default function DogFriendlyPage() {
       ?.id;
 
   return (
-    <main className="min-h-screen bg-[#f7f4ef] pt-[calc(env(safe-area-inset-top)+96px)] sm:pt-[104px] pb-10 sm:pb-24 text-black">
+    <main className="min-h-screen bg-[#f7f4ef] pt-[calc(env(safe-area-inset-top)+68px)] sm:pt-[104px] pb-10 sm:pb-24 text-black">
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative overflow-hidden rounded-[22px] sm:overflow-visible sm:rounded-[28px] bg-[#dfe8d8] px-5 py-4 pr-[43%] min-h-[160px] sm:px-8 sm:py-5 sm:pr-[220px] sm:min-h-[170px] md:min-h-[185px] md:pr-[310px] lg:min-h-[190px] lg:px-9 lg:py-6 lg:pr-[390px]">
-          <div className="relative z-10 flex min-h-[128px] items-center sm:min-h-[130px] md:min-h-[145px] lg:min-h-[142px] lg:max-w-[68%]">
-            <h1 className="mt-0 max-w-full text-[24px] sm:text-[28px] md:text-[34px] lg:text-[48px] font-bold tracking-tight leading-[1.02]">
-              Петербург вместе с собакой
+        <div className="relative overflow-hidden rounded-[22px] sm:overflow-visible sm:rounded-[28px] bg-[#dfe8d8] px-4 py-3 min-h-[126px] sm:px-8 sm:py-5 sm:pr-[220px] sm:min-h-[170px] md:min-h-[185px] md:pr-[310px] lg:min-h-[190px] lg:px-9 lg:py-6 lg:pr-[390px]">
+          <div className="relative z-10 flex min-h-[102px] items-start pt-2 sm:min-h-[130px] md:min-h-[145px] lg:min-h-[142px] lg:max-w-[68%]">
+            <h1 className="mt-0 max-w-full text-[clamp(18px,5.7vw,23px)] sm:text-[28px] md:text-[34px] lg:text-[48px] font-bold tracking-tight leading-[1.08]">
+              <span className="block whitespace-nowrap">Петербург вместе</span>
+              <span className="block">с собакой</span>
             </h1>
             <div className="hidden sm:flex mt-4 items-center gap-3 text-[#56614f]">
               <span className="h-px w-10 bg-[#78856f]/55" />
@@ -48,10 +49,10 @@ export default function DogFriendlyPage() {
           <img
             src="/images/alma-dog.webp"
             alt="Пёс ALMA"
-            className="pointer-events-none absolute bottom-0 right-1 z-20 block h-[160px] w-[46%] max-h-none object-contain object-bottom drop-shadow-[0_10px_16px_rgba(0,0,0,0.14)] sm:bottom-[-18px] sm:right-[-8px] sm:w-[240px] sm:max-h-none md:bottom-[-20px] md:right-[4px] md:w-[360px] md:max-h-none lg:bottom-[-42px] lg:right-[18px] lg:w-[430px] lg:max-h-none"
+            className="pointer-events-none absolute bottom-0 right-0 z-20 block h-[126px] w-[39%] max-h-none object-contain object-bottom drop-shadow-[0_10px_16px_rgba(0,0,0,0.14)] sm:bottom-[-18px] sm:right-[-8px] sm:w-[240px] sm:max-h-none md:bottom-[-20px] md:right-[4px] md:w-[360px] md:max-h-none lg:bottom-[-42px] lg:right-[18px] lg:w-[430px] lg:max-h-none"
           />
         </div>
-        <div className="relative z-30 mx-auto mt-3 w-full rounded-[16px] sm:rounded-[20px] bg-transparent sm:bg-white border-0 sm:border sm:border-black/5 p-0 sm:p-2 sm:mt-5 sm:w-[94%] sm:rounded-[22px] sm:p-5">
+        <div className="relative z-30 mx-auto mt-2 w-full rounded-[16px] sm:rounded-[20px] bg-transparent sm:bg-white border-0 sm:border sm:border-black/5 p-0 sm:p-2 sm:mt-5 sm:w-[94%] sm:rounded-[22px] sm:p-5">
           <div className="grid grid-cols-2 gap-2 sm:gap-4">
             <AlmaSelect
               compact
@@ -69,7 +70,7 @@ export default function DogFriendlyPage() {
             />
           </div>
         </div>
-        <div className="mt-4 sm:mt-8 grid md:grid-cols-2 gap-3 sm:gap-5 sm:gap-6">
+        <div className="mt-3 sm:mt-8 grid md:grid-cols-2 gap-3 sm:gap-5 sm:gap-6">
           {filtered.map((place) => {
             const mapId = mapIdFor(place.name);
             return (
@@ -89,7 +90,7 @@ export default function DogFriendlyPage() {
                   </Link>
                 )}
                 {place.imageUrl ? (
-                  <div className="h-28 sm:h-48 overflow-hidden bg-[#ebe7df]">
+                  <div className="h-24 sm:h-48 overflow-hidden bg-[#ebe7df]">
                     <img
                       src={place.imageUrl}
                       alt={`${place.name} — место, куда можно с собакой`}
@@ -181,7 +182,7 @@ export default function DogFriendlyPage() {
             );
           })}
         </div>
-        <div className="mt-5 sm:mt-10 rounded-[20px] sm:rounded-[28px] bg-black text-white p-4 sm:p-8">
+        <div className="mt-4 sm:mt-10 rounded-[20px] sm:rounded-[28px] bg-black text-white p-4 sm:p-8">
           <p className="text-sm font-semibold">Правило ALMA</p>
           <p className="mt-3 max-w-4xl text-sm sm:text-base leading-7 text-white/70">
             Публикуем заведения только с подтверждённой оценкой от 4,5 до 5,0 по
