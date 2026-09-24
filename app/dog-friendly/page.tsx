@@ -33,7 +33,7 @@ export default function DogFriendlyPage() {
   return (
     <main className="min-h-screen bg-[#f7f4ef] pt-[calc(env(safe-area-inset-top)+68px)] sm:pt-[104px] pb-10 sm:pb-24 text-black">
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative overflow-hidden rounded-[22px] sm:overflow-visible sm:rounded-[28px] bg-[#dfe8d8] px-4 py-3 min-h-[118px] sm:px-8 sm:py-5 sm:pr-[220px] sm:min-h-[170px] md:min-h-[185px] md:pr-[310px] lg:min-h-[190px] lg:px-9 lg:py-6 lg:pr-[390px]">
+        <div className="alma-satin relative overflow-hidden rounded-[22px] sm:overflow-visible sm:rounded-[28px] bg-[#dfe8d8] px-4 py-3 min-h-[118px] sm:px-8 sm:py-5 sm:pr-[220px] sm:min-h-[170px] md:min-h-[185px] md:pr-[310px] lg:min-h-[190px] lg:px-9 lg:py-6 lg:pr-[390px]">
           <div className="relative z-10 flex min-h-[94px] items-start pt-2 sm:min-h-[130px] md:min-h-[145px] lg:min-h-[142px] lg:max-w-[68%]">
             <h1 className="mt-0 max-w-full text-[clamp(18px,5.7vw,23px)] sm:text-[28px] md:text-[34px] lg:text-[48px] font-bold tracking-tight leading-[1.08]">
               <span className="block whitespace-nowrap">Петербург вместе</span>
