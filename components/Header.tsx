@@ -143,87 +143,15 @@ export default function Header() {
   return (
     <header className="fixed top-0 left-0 w-full z-[9999]">
       <div className="max-w-7xl mx-auto mt-[calc(env(safe-area-inset-top)+10px)] sm:mt-4 px-2.5 sm:px-6">
-        <div className={`rounded-[20px] sm:rounded-full px-3 sm:px-8 py-2 sm:py-3 ${pathname === "/" ? "bg-transparent border-transparent shadow-none backdrop-blur-none md:bg-white/92 md:border-black/5 md:shadow-lg md:backdrop-blur-xl" : "bg-white/92 backdrop-blur-xl border border-black/5 shadow-lg"}`}>
+        <div className={`rounded-[22px] sm:rounded-full px-3 sm:px-8 py-1.5 sm:py-3 bg-white/92 border border-black/5 shadow-lg backdrop-blur-xl`}>
 
-          {/* MOBILE */}
-          <div className="md:hidden flex h-10 items-center">
-
-            <Link
-              href="/"
-              className={`shrink-0 pl-1 text-[15px] font-bold tracking-[0.19em] ${pathname === "/" ? "text-white drop-shadow-md" : "text-black"}`}
-            >
-              alma
-            </Link>
-
-            {!authScreen && (
-              <div className="ml-auto flex items-center gap-2">
-
-                {!isCurrentRoute(pathname, "/") && (
-                  <Link
-                    href="/"
-                    aria-label="Главная"
-                    title="Главная"
-                    className={`flex h-9 w-9 items-center justify-center rounded-full ${pathname === "/" ? "bg-black/35 text-white backdrop-blur-md" : "bg-black/[.04]"}`}
-                  >
-                    <HomeIcon />
-                  </Link>
-                )}
-
-                {!isCurrentRoute(pathname, "/map") && (
-                  <Link
-                    href="/map"
-                    aria-label="События"
-                    title="События"
-                    className={`flex h-9 w-9 items-center justify-center rounded-full ${pathname === "/" ? "bg-black/35 text-white backdrop-blur-md" : "bg-black/[.04]"}`}
-                  >
-                    <EventsIcon />
-                  </Link>
-                )}
-
-                {!isCurrentRoute(pathname, "/dog-friendly") && (
-                  <Link
-                    href="/dog-friendly"
-                    aria-label="С собакой"
-                    title="С собакой"
-                    className={`flex h-9 w-9 items-center justify-center rounded-full ${pathname === "/" ? "bg-black/35 text-white backdrop-blur-md" : "bg-black/[.04]"}`}
-                  >
-                    <PawIcon />
-                  </Link>
-                )}
-
-                {!isCurrentRoute(pathname, "/favorites") && (
-                  <Link
-                    href="/favorites"
-                    aria-label="Избранное"
-                    title="Избранное"
-                    className={`flex h-9 w-9 items-center justify-center rounded-full ${pathname === "/" ? "bg-black/45 text-white shadow-sm backdrop-blur-md" : "bg-black/[.04] text-black"}`}
-                  >
-                    <HeartIcon />
-                  </Link>
-                )}
-
-                {authLoaded &&
-                  (user ? (
-                    <Link
-                      href="/profile"
-                      className="flex max-w-[112px] items-center gap-1.5 rounded-full bg-black px-3 py-2 text-[11px] text-white"
-                    >
-                      <ProfileIcon />
-                      <span className="truncate">{user.name}</span>
-                    </Link>
-                  ) : (
-                    <Link
-                      href="/login"
-                      className="rounded-full bg-black px-3 py-2 text-[11px] text-white"
-                    >
-                      Войти
-                    </Link>
-                  ))}
-              </div>
-            )}
-
+          {/* MOBILE: a clear header and an app-style bottom navigation. */}
+          <div className="flex h-11 items-center justify-between md:hidden">
+            <Link href="/" aria-label="ALMA — главная" className="pl-1 text-[18px] font-bold tracking-[0.2em] text-black">alma</Link>
+            {!authScreen && <Link href={user ? "/profile" : "/login"} aria-label={user ? "Профиль" : "Войти"} className="flex min-h-11 items-center gap-1.5 rounded-full bg-black px-3 text-xs font-semibold text-white">
+              <ProfileIcon /><span className="max-w-[90px] truncate">{user ? user.name : "Войти"}</span>
+            </Link>}
           </div>
-
 
           {/* DESKTOP */}
           <div className="hidden md:flex items-center justify-between">
@@ -281,6 +209,21 @@ export default function Header() {
 
         </div>
       </div>
+          {!authScreen && <nav aria-label="Основная навигация" className="fixed inset-x-3 bottom-[calc(10px+env(safe-area-inset-bottom))] z-[10000] mx-auto grid max-w-[480px] grid-cols-5 rounded-[24px] border border-black/10 bg-white/95 px-1.5 py-1.5 shadow-[0_12px_40px_rgba(0,0,0,.16)] backdrop-blur-xl md:hidden">
+            {[
+              { href: "/", label: "Главная", icon: <HomeIcon /> },
+              { href: "/map", label: "События", icon: <EventsIcon /> },
+              { href: "/dog-friendly", label: "С собакой", icon: <PawIcon /> },
+              { href: "/favorites", label: "Избранное", icon: <HeartIcon /> },
+              { href: user ? "/profile" : "/login", label: "Профиль", icon: <ProfileIcon /> },
+            ].map(({ href, label, icon }) => {
+              const active = isCurrentRoute(pathname, href);
+              return <Link key={label} href={href} aria-label={label} aria-current={active ? "page" : undefined} className={`flex min-h-[56px] min-w-0 flex-col items-center justify-center gap-0.5 rounded-[18px] text-[10px] font-medium leading-none ${active ? "bg-[#f3e9e6] text-black" : "text-neutral-600"}`}>
+                {icon}<span className="truncate">{label}</span>
+              </Link>;
+            })}
+          </nav>}
+
     </header>
   );
 }
