@@ -7,6 +7,7 @@ type AlmaSelectProps = {
   value: string;
   options: string[];
   onChange: (value: string) => void;
+  compact?: boolean;
 };
 
 export default function AlmaSelect({
@@ -14,6 +15,7 @@ export default function AlmaSelect({
   value,
   options,
   onChange,
+  compact = false,
 }: AlmaSelectProps) {
   const [open, setOpen] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
@@ -34,16 +36,16 @@ export default function AlmaSelect({
   }, []);
 
   return (
-    <div ref={rootRef} className="relative flex-1">
-      <span className="text-sm font-medium">{label}</span>
+    <div ref={rootRef} className="relative min-w-0 flex-1">
+      <span className={compact ? "text-xs font-medium text-neutral-600 sm:text-sm" : "text-sm font-medium"}>{label}</span>
       <button
         type="button"
         aria-haspopup="listbox"
         aria-expanded={open}
         onClick={() => setOpen((current) => !current)}
-        className={`mt-2 flex w-full items-center justify-between rounded-2xl border px-4 py-3.5 text-left text-sm transition ${open ? "border-black bg-white shadow-[0_12px_35px_rgba(0,0,0,0.10)]" : "border-transparent bg-[#f3f1ed] hover:bg-[#ece8e2]"}`}
+        className={`flex w-full items-center justify-between gap-2 border text-left transition ${compact ? "mt-1 min-h-11 rounded-xl px-3 py-2 text-[13px] sm:mt-2 sm:rounded-2xl sm:px-4 sm:py-3.5 sm:text-sm" : "mt-2 rounded-2xl px-4 py-3.5 text-sm"} ${open ? "border-black bg-white shadow-[0_12px_35px_rgba(0,0,0,0.10)]" : compact ? "border-black/10 bg-white hover:bg-[#f7f4ef]" : "border-transparent bg-[#f3f1ed] hover:bg-[#ece8e2]"}`}
       >
-        <span>{value}</span>
+        <span className="min-w-0 truncate">{value}</span>
         <svg
           className={`h-4 w-4 transition-transform ${open ? "rotate-180" : ""}`}
           viewBox="0 0 20 20"
