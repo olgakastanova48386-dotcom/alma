@@ -25,7 +25,7 @@ export default function MapDirectSearch() {
 
   return (
     <div className="relative block w-full">
-      <div className="flex items-center rounded-2xl bg-white border border-black/5 shadow-sm px-4 py-3.5">
+      <div className="alma-well flex items-center rounded-2xl bg-white border border-black/5 shadow-sm px-4 py-3.5">
         <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true" className="mr-3 shrink-0 text-neutral-400"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
         <input
           value={query}
@@ -38,7 +38,7 @@ export default function MapDirectSearch() {
       </div>
 
       {query && (
-        <div className="absolute z-[1300] right-0 left-0 mt-2 overflow-hidden rounded-[20px] bg-white border border-black/5 shadow-xl">
+        <div className="alma-glass absolute z-[1300] right-0 left-0 mt-2 overflow-hidden rounded-[20px] bg-white border border-black/5 shadow-xl">
           {results.length ? results.map((place) => (
             <button type="button" key={place.id} onClick={() => { setQuery(""); router.push(`/?place=${place.id}#alma-filters`); }} className="w-full text-left px-4 py-3 hover:bg-[#f7f4ef] transition border-b border-black/5 last:border-b-0">
               <span className="flex items-center justify-between gap-3"><span className="font-medium text-sm text-black">{place.name}</span>{place.rating && <span className="shrink-0 text-sm font-semibold text-black">★ {place.rating.toFixed(1)}</span>}</span>
