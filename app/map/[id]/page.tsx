@@ -23,7 +23,7 @@ export default function EventPage() {
     <main className="min-h-screen bg-[#f7f4ef] pb-20 pt-[calc(env(safe-area-inset-top)+68px)] text-black sm:pt-32">
       <article className="mx-auto max-w-4xl px-4 sm:px-6">
         <Link href="/map" className="text-sm font-semibold text-black/60">← Все события</Link>
-        <div className="mt-3 overflow-hidden rounded-[22px] sm:rounded-[30px] bg-white p-4 sm:p-6 shadow-[0_18px_55px_rgba(0,0,0,.06)] sm:p-10">
+        <div className="mt-3 overflow-hidden alma-paper rounded-[22px] sm:rounded-[30px] bg-white p-4 sm:p-6 shadow-[0_18px_55px_rgba(0,0,0,.06)] sm:p-10">
           <div className="-mx-4 -mt-4 mb-4 h-[190px] sm:-mx-6 sm:-mt-6 overflow-hidden sm:-mx-10 sm:-mt-10 sm:h-[360px]">
             <img src={event.image} alt={event.title} className="h-full w-full object-cover" />
           </div>
