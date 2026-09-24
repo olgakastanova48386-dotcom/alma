@@ -35,6 +35,16 @@ body {
   box-shadow: inset 0 2px 0 rgba(255,255,255,1), inset 0 -2px 3px rgba(70,55,42,.07), 0 5px 0 rgba(72,58,47,.08), 0 18px 32px rgba(58,45,36,.13);
 }
 
+.alma-photo-card {
+  border: 1px solid rgba(53,43,36,.12);
+  box-shadow: 0 5px 0 rgba(65,52,42,.1), 0 18px 34px rgba(48,39,33,.2);
+  transition: transform .22s ease, box-shadow .22s ease;
+}
+.alma-photo-card:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 rgba(65,52,42,.1), 0 8px 18px rgba(48,39,33,.17);
+}
+
 .alma-pressable {
   background-image: linear-gradient(180deg, rgba(255,255,255,.28), rgba(0,0,0,.07));
   box-shadow: inset 0 2px 0 rgba(255,255,255,.58), inset 0 -2px 2px rgba(0,0,0,.13), 0 4px 0 rgba(0,0,0,.18), 0 12px 22px rgba(0,0,0,.18);
