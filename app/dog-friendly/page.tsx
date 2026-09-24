@@ -31,7 +31,7 @@ export default function DogFriendlyPage() {
       ?.id;
 
   return (
-    <main className="min-h-screen bg-[#f7f4ef] pt-[88px] sm:pt-[104px] pb-10 sm:pb-24 text-black">
+    <main className="min-h-screen bg-[#f7f4ef] pt-[calc(env(safe-area-inset-top)+96px)] sm:pt-[104px] pb-10 sm:pb-24 text-black">
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="relative overflow-visible rounded-[20px] sm:rounded-[28px] bg-[#dfe8d8] px-4 py-3 pr-[112px] min-h-[125px] sm:px-8 sm:py-5 sm:pr-[220px] sm:min-h-[170px] md:min-h-[185px] md:pr-[310px] lg:min-h-[190px] lg:px-9 lg:py-6 lg:pr-[390px]">
           <div className="relative z-10 flex min-h-[101px] items-center sm:min-h-[130px] md:min-h-[145px] lg:min-h-[142px] lg:max-w-[68%]">
