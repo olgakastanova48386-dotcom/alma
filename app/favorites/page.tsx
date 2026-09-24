@@ -81,9 +81,9 @@ export default function FavoritesPage() {
     }
   }
 
-  if (!loaded) return <main className="min-h-screen bg-[#f7f4ef] pt-36 pb-20"><div className="max-w-7xl mx-auto px-4 sm:px-6"><p className="text-neutral-500">Загружаем избранное…</p></div></main>;
+  if (!loaded) return <main className="min-h-screen bg-[#f7f4ef] pt-[calc(env(safe-area-inset-top)+96px)] sm:pt-36 pb-20"><div className="max-w-7xl mx-auto px-4 sm:px-6"><p className="text-neutral-500">Загружаем избранное…</p></div></main>;
 
-  return <main className="min-h-screen bg-[#f7f4ef] pt-[92px] sm:pt-36 pb-24"><div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  return <main className="min-h-screen bg-[#f7f4ef] pt-[calc(env(safe-area-inset-top)+96px)] sm:pt-36 pb-24"><div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6"><div><h1 className="text-[34px] sm:text-5xl lg:text-6xl font-bold tracking-tight">Избранное</h1><p className="mt-3 text-sm leading-6 sm:text-lg text-neutral-500 max-w-2xl">{signedIn ? "Сохранённые места привязаны к вашему аккаунту ALMA." : "Сейчас места сохранены на этом устройстве. Войдите, чтобы они были доступны в аккаунте."}</p>{!signedIn&&<Link href="/login?next=%2Ffavorites" className="inline-flex mt-4 text-sm font-semibold underline underline-offset-4">Войти в аккаунт</Link>}</div>{favoritePlaces.length>0&&<div className="self-start lg:self-auto rounded-full bg-white border border-black/5 shadow-sm px-5 py-3 text-sm">Сохранено: <strong>{favoritePlaces.length}</strong></div>}</div>
 
     {favoritePlaces.length===0?<section className="mt-7 sm:mt-16"><div className="rounded-[28px] bg-white border border-black/5 p-6 sm:p-14 lg:p-16 text-center"><div className="mx-auto w-16 h-16 rounded-full bg-[#f3f1ed] flex items-center justify-center text-3xl">♡</div><h2 className="mt-6 text-2xl sm:text-4xl font-bold">Пока ничего не сохранено</h2><p className="mt-4 text-neutral-500 text-sm sm:text-lg leading-6 sm:leading-8 max-w-xl mx-auto">Открой понравившееся место и нажми «В избранное». Оно появится здесь.</p><Link href="/#alma-filters" className="inline-flex mt-8 rounded-full bg-black text-white px-7 py-4 font-medium hover:opacity-80 transition">Найти место</Link></div></section>:
