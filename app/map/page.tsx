@@ -18,7 +18,6 @@ export default function MapPage() {
         <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <h1 className="text-[clamp(44px,6vw,76px)] font-bold leading-[.95] tracking-[-0.055em]">События</h1>
-            <p className="mt-3 max-w-3xl text-[15px] leading-6 text-neutral-600 sm:text-lg">Выставки, фестивали, маркеты, кино и другие события в Санкт-Петербурге</p>
           </div>
           <label className="flex h-12 w-full items-center gap-3 rounded-full bg-[#ebe7e1] px-5 lg:max-w-[390px]">
             <span className="text-lg">⌕</span>
