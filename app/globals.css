@@ -102,25 +102,32 @@ body {
   z-index: 0;
   pointer-events: none;
   inset: -90px 0 0;
-  height: 155px;
-  opacity: .6;
+  height: 170px;
+  opacity: .94;
   background-image:
-    radial-gradient(ellipse 3px 5px at 12% 18%, rgba(255,255,255,.9) 20%, rgba(144,157,153,.35) 54%, transparent 85%),
-    radial-gradient(ellipse 3px 6px at 39% 62%, rgba(255,255,255,.95) 20%, rgba(144,157,153,.35) 55%, transparent 84%),
-    radial-gradient(ellipse 2px 4px at 72% 30%, rgba(255,255,255,.92) 24%, rgba(144,157,153,.3) 56%, transparent 85%),
-    radial-gradient(ellipse 3px 5px at 91% 74%, rgba(255,255,255,.9) 20%, rgba(144,157,153,.35) 54%, transparent 85%),
-    linear-gradient(180deg, transparent 15%, rgba(255,255,255,.22) 39%, transparent 69%);
-  background-size: 100% 100%,100% 100%,100% 100%,100% 100%, 2px 100%;
-  background-position: center,center,center,center,72% 0;
+    radial-gradient(ellipse 6px 10px at 14% 18%, #fff 7%, rgba(133,151,147,.55) 58%, transparent 88%),
+    radial-gradient(ellipse 5px 9px at 31% 70%, #fff 8%, rgba(133,151,147,.54) 60%, transparent 88%),
+    radial-gradient(ellipse 6px 11px at 49% 34%, #fff 8%, rgba(133,151,147,.52) 59%, transparent 88%),
+    radial-gradient(ellipse 5px 9px at 67% 83%, #fff 8%, rgba(133,151,147,.54) 59%, transparent 88%),
+    radial-gradient(ellipse 6px 10px at 86% 46%, #fff 8%, rgba(133,151,147,.55) 59%, transparent 88%),
+    linear-gradient(180deg, transparent, rgba(255,255,255,.6), transparent),
+    linear-gradient(180deg, transparent, rgba(255,255,255,.52), transparent),
+    linear-gradient(180deg, transparent, rgba(255,255,255,.55), transparent);
+  background-size: 100% 100%,100% 100%,100% 100%,100% 100%,100% 100%, 2px 72px, 2px 62px, 2px 78px;
+  background-position: center,center,center,center,center, 14% 8%, 49% 24%, 86% 36%;
   background-repeat: no-repeat;
-  filter: drop-shadow(0 1px 1px rgba(75,88,85,.22));
-  animation: alma-glass-drip 7.5s linear infinite;
+  filter: drop-shadow(0 2px 2px rgba(53,72,68,.4));
+  animation: alma-glass-drip 4.4s linear infinite;
 }
 .alma-foggy-glass > * { position: relative; z-index: 1; }
 
 @keyframes alma-glass-drip {
   from { transform: translateY(-30px); }
   to { transform: translateY(190px); }
+}
+@keyframes alma-hero-drip {
+  from { transform: translateY(-90px); }
+  to { transform: translateY(330px); }
 }
 
 @media (max-width: 767px) {
@@ -140,12 +147,21 @@ body {
     inset: -110px 0 0;
     z-index: 3;
     pointer-events: none;
-    opacity: .36;
+    opacity: .72;
     background-image:
-      radial-gradient(ellipse 4px 8px at 15% 15%, rgba(255,255,255,.8) 12%, rgba(31,38,37,.2) 66%, transparent 88%),
-      radial-gradient(ellipse 3px 7px at 63% 38%, rgba(255,255,255,.8) 12%, rgba(31,38,37,.2) 66%, transparent 88%),
-      radial-gradient(ellipse 4px 9px at 86% 72%, rgba(255,255,255,.8) 12%, rgba(31,38,37,.2) 66%, transparent 88%);
-    animation: alma-glass-drip 12s linear infinite;
+      radial-gradient(ellipse 6px 12px at 13% 15%, rgba(255,255,255,.96) 8%, rgba(21,36,36,.5) 68%, transparent 90%),
+      radial-gradient(ellipse 5px 10px at 35% 55%, rgba(255,255,255,.96) 8%, rgba(21,36,36,.48) 68%, transparent 90%),
+      radial-gradient(ellipse 7px 13px at 58% 28%, rgba(255,255,255,.95) 8%, rgba(21,36,36,.5) 68%, transparent 90%),
+      radial-gradient(ellipse 5px 11px at 78% 76%, rgba(255,255,255,.95) 8%, rgba(21,36,36,.48) 68%, transparent 90%),
+      radial-gradient(ellipse 6px 12px at 91% 43%, rgba(255,255,255,.96) 8%, rgba(21,36,36,.5) 68%, transparent 90%),
+      linear-gradient(180deg, transparent, rgba(255,255,255,.42), transparent),
+      linear-gradient(180deg, transparent, rgba(255,255,255,.36), transparent),
+      linear-gradient(180deg, transparent, rgba(255,255,255,.4), transparent);
+    background-size: 100% 100%,100% 100%,100% 100%,100% 100%,100% 100%, 2px 100px, 2px 75px, 2px 90px;
+    background-position: center,center,center,center,center, 13% 6%, 58% 22%, 91% 36%;
+    background-repeat: no-repeat;
+    filter: drop-shadow(0 2px 2px rgba(8,19,20,.6));
+    animation: alma-hero-drip 6s linear infinite;
   }
 }
 @media (prefers-reduced-motion: reduce) {
