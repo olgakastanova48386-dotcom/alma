@@ -80,7 +80,6 @@ body {
 
 /* Frosted glass with slow, decorative water trails. Content stays above the effect. */
 .alma-foggy-glass {
-  position: relative;
   isolation: isolate;
   overflow: hidden;
   background-color: rgba(246,247,245,.8);
