@@ -105,7 +105,6 @@ export default function Header() {
 
   const [user, setUser] = useState<User | null>(null);
   const [authLoaded, setAuthLoaded] = useState(false);
-  const [scrolledPastHero, setScrolledPastHero] = useState(false);
 
   const authScreen =
     pathname.startsWith("/login") ||
@@ -141,24 +140,14 @@ export default function Header() {
     };
   }, []);
 
-  useEffect(() => {
-    const updateScroll = () => {
-      const heroHeight = document.querySelector(".alma-home-hero")?.getBoundingClientRect().height ?? 320;
-      setScrolledPastHero(window.scrollY > heroHeight - 60);
-    };
-    updateScroll();
-    window.addEventListener("scroll", updateScroll, { passive: true });
-    return () => window.removeEventListener("scroll", updateScroll);
-  }, [pathname]);
-
   return (
-    <header className="fixed top-0 left-0 w-full z-[9999]">
+    <header className="absolute top-0 left-0 z-[9999] w-full md:fixed">
       <div className="max-w-7xl mx-auto mt-[calc(env(safe-area-inset-top)+10px)] md:mt-4 px-2.5 md:px-6">
         <div className="px-3 py-1.5 md:rounded-full md:border md:border-black/5 md:bg-white/92 md:px-8 md:py-3 md:shadow-lg md:backdrop-blur-xl">
 
           {/* Mobile: only the logo stays above the page. */}
           <div className="flex h-11 items-center md:hidden">
-            <Link href="/" aria-label="ALMA — главная" className={`pl-1 text-[18px] font-bold tracking-[0.2em] ${pathname === "/" && !scrolledPastHero ? "text-white drop-shadow-[0_1px_5px_rgba(0,0,0,.7)]" : "text-black"}`}>alma</Link>
+            <Link href="/" aria-label="ALMA — главная" className={`pl-1 text-[18px] font-bold tracking-[0.2em] ${pathname === "/" ? "text-white drop-shadow-[0_1px_5px_rgba(0,0,0,.7)]" : "text-black"}`}>alma</Link>
           </div>
 
           {/* DESKTOP */}
