@@ -8,7 +8,7 @@ export default function AboutPage() {
   return (
     <main className="min-h-screen bg-[#f7f4ef] px-4 pb-10 pt-[calc(env(safe-area-inset-top)+68px)] text-black sm:px-6 sm:pb-14 md:pt-28 lg:px-8">
       <div className="mx-auto max-w-6xl">
-        <div className="grid items-center gap-4 rounded-[22px] bg-white p-4 shadow-[0_18px_50px_rgba(0,0,0,.06)] sm:p-7 md:grid-cols-[minmax(0,1fr)_230px] md:gap-9 lg:p-9">
+        <div className="grid items-center gap-4 alma-paper rounded-[22px] bg-white p-4 shadow-[0_18px_50px_rgba(0,0,0,.06)] sm:p-7 md:grid-cols-[minmax(0,1fr)_230px] md:gap-9 lg:p-9">
           <div>
             <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-neutral-400">О проекте</p>
             <h1 className="mt-2 max-w-3xl text-[clamp(25px,6vw,52px)] font-bold leading-[1.02] tracking-[-0.035em]">
@@ -33,7 +33,7 @@ export default function AboutPage() {
 
         <div className="mt-3 grid gap-2 sm:grid-cols-3 sm:gap-4">
           {principles.map((item, index) => (
-            <article key={item.title} className="rounded-[18px] bg-white p-4 ring-1 ring-black/5">
+            <article key={item.title} className="alma-paper rounded-[18px] bg-white p-4 ring-1 ring-black/5">
               <div className="flex items-center gap-3">
                 <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-black text-xs font-semibold text-white">{index + 1}</span>
                 <h2 className="text-lg font-semibold tracking-tight">{item.title}</h2>
