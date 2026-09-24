@@ -20,7 +20,7 @@ export default function MapPage() {
           <div>
             <h1 className="text-[clamp(32px,6vw,76px)] font-bold leading-[.95] tracking-[-0.055em]">События</h1>
           </div>
-          <label className="flex h-11 w-full items-center gap-3 rounded-full bg-[#ebe7e1] px-4 lg:max-w-[390px]">
+          <label className="alma-well flex h-11 w-full items-center gap-3 rounded-full bg-[#ebe7e1] px-4 lg:max-w-[390px]">
             <span className="text-lg">⌕</span>
             <input aria-label="Поиск событий" placeholder="Поиск событий" value={query} onChange={(event) => setQuery(event.target.value)} className="w-full bg-transparent text-sm outline-none placeholder:text-neutral-500" />
           </label>
