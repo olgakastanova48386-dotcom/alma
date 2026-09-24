@@ -326,3 +326,12 @@ select:-webkit-autofill {
   .alma-route-stop { break-inside: avoid; page-break-inside: avoid; }
   .alma-route-stop img { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
 }
+
+/* White editorial hero with a freely wandering red ink stroke. */
+.alma-chaos-art { position: relative; width: 100%; height: 100%; overflow: hidden; background: #fbfaf7; touch-action: pan-y; }
+.alma-chaos-canvas { display: block; width: 100%; height: 100%; }
+@media (max-width: 767px) {
+  .alma-home-hero { background: #fbfaf7 !important; }
+  .alma-home-hero h1 { color: #171717 !important; text-shadow: none !important; }
+  .alma-home-hero p { color: #454545 !important; }
+}
