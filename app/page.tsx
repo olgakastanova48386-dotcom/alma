@@ -80,6 +80,7 @@ function AnimatedCityScene({ isDay, cloudy }: { isDay: boolean; cloudy: boolean 
           <stop offset=".64" stopColor={skyBottom} />
           <stop offset="1" stopColor={isDay ? "#9b8390" : "#283146"} />
         </linearGradient>
+        <linearGradient id="alma-animated-reflection" x1="0" y1="0" x2="0" y2="1"><stop stopColor="#f8d7a0" stopOpacity=".65" /><stop offset="1" stopColor="#f8d7a0" stopOpacity="0" /></linearGradient>
         <radialGradient id="alma-animated-halo">
           <stop stopColor={isDay ? "#ffe1b3" : "#f1d49b"} stopOpacity=".58" />
           <stop offset="1" stopColor="#ffe1b3" stopOpacity="0" />
@@ -127,12 +128,14 @@ function AnimatedCityScene({ isDay, cloudy }: { isDay: boolean; cloudy: boolean 
         {[112, 338, 563, 788, 1012].map((x) => <g key={x}><path d={`M${x} 546v-29`} stroke="#2a3038" strokeWidth="4" /><circle cx={x} cy="514" r="5" /><circle cx={x} cy="514" r="22" fill="#f4c784" opacity=".12" /></g>)}
       </g>
       <rect y="662" width="1200" height="138" fill="url(#alma-animated-water)" />
+      <path className="alma-city-water-glow" d="M593 575h55l145 225H454Z" fill="url(#alma-animated-reflection)" opacity=".48" />
+      <path className="alma-city-water-glow" d="M815 580h31l91 220H727Z" fill="url(#alma-animated-reflection)" opacity=".3" />
       <g className="alma-city-reflections" stroke={isDay ? "#f2d3a5" : "#efc990"} strokeLinecap="round" opacity=".47" fill="none">
         <path d="M80 686h36m34 10h90m-82 21h47m285-32h130m-95 21h100m110-26h60m-23 34h112m150-19h80m-48 31h120" strokeWidth="3" />
-        <path d="M92 744h72m90-24h48m275 34h102m114-12h47m160-32h90" strokeWidth="2" />
+        <path d="M92 744h72m90-24h48m275 34h102m114-12h47m160-32h90m-490 26h95m72 13h72m-170-10h40" strokeWidth="2" />
       </g>
       <g className="alma-city-boat" fill={isDay ? "#1b3546" : "#0c1a28"}>
-        <path d="M270 692h96l-15 17h-62Z" /><path d="M318 692v-48m0 6 32 37h-32Z" stroke={isDay ? "#ead7bf" : "#d0c2b7"} strokeWidth="3" fill="none" />
+        <path d="M565 722h126l-18 20h-90Z" /><path d="M625 722v-62m0 8 42 45h-42Z" stroke={isDay ? "#ead7bf" : "#d0c2b7"} strokeWidth="3" fill="none" />
       </g>
       <rect y="763" width="1200" height="37" fill={isDay ? "#1e3445" : "#071421"} opacity=".45" />
     </svg>
@@ -219,9 +222,9 @@ export default function HomePage() {
 
                 {weather && weatherInfo && <div className="absolute right-4 top-[calc(env(safe-area-inset-top)+76px)] z-20 md:hidden"><div className="inline-flex items-center gap-1.5 rounded-full bg-black/72 px-2.5 py-1.5 text-white shadow-sm backdrop-blur-md"><span className="text-sm leading-none">{weatherInfo.icon}</span><span className="text-xs font-semibold">{Math.round(weather.temperature) > 0 ? "+" : ""}{Math.round(weather.temperature)}°</span><span className="h-3 w-px bg-white/20" /><span className="text-[11px] text-white/75">{weatherInfo.text}</span></div></div>}
 
-        <div className="absolute inset-x-0 bottom-3 z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-4 md:relative md:inset-auto md:bottom-auto lg:px-8"><div className="max-w-[760px]">
+        <div className="absolute inset-x-0 bottom-3 z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-4 md:relative md:inset-auto md:bottom-auto lg:px-8"><div className="max-w-[650px]">
           {weather && weatherInfo && <div className="hidden md:block mb-3"><div className="inline-flex items-center gap-2.5 rounded-full bg-black/80 backdrop-blur-md text-white px-3.5 md:px-4 py-2.5 shadow-sm"><span className="text-lg leading-none">{weatherInfo.icon}</span><span className="font-semibold">{Math.round(weather.temperature) > 0 ? "+" : ""}{Math.round(weather.temperature)}°</span><span className="w-px h-4 bg-white/20" /><span className="text-sm text-white/75">{weatherInfo.text}</span><span className="hidden xs:inline text-xs text-white/40">Петербург</span></div></div>}
-          <h1 className="mt-0 md:mt-7 max-w-full text-[clamp(25px,7vw,82px)] font-bold leading-[1.02] md:leading-[0.98] tracking-tight text-white md:text-black drop-shadow-[0_2px_12px_rgba(0,0,0,.28)] md:drop-shadow-none break-words">Места, в которые<br />хочется вернуться</h1>
+          <h1 className="mt-0 md:mt-7 max-w-full text-[clamp(25px,7vw,82px)] md:text-[clamp(52px,5vw,70px)] font-bold leading-[1.02] md:leading-[0.98] tracking-tight text-white md:text-black drop-shadow-[0_2px_12px_rgba(0,0,0,.28)] md:drop-shadow-none break-words">Места, в которые<br />хочется вернуться</h1>
           <p className="mt-1.5 md:mt-7 max-w-[94%] md:max-w-xl text-[13px] md:text-xl leading-[1.35] md:leading-8 text-white/82 md:text-neutral-600"><span className="md:hidden">ALMA помогает находить места Петербурга<br />по настроению, бюджету, компании и времени.</span><span className="hidden md:inline">ALMA помогает находить места Петербурга по настроению, бюджету, компании и времени.</span></p>
           <div className="mt-2.5 md:mt-9 grid grid-cols-3 gap-1.5 md:flex md:flex-wrap md:gap-3">
             <button type="button" onClick={scrollToFilters} className="alma-pressable min-w-0 overflow-hidden whitespace-nowrap rounded-full bg-white text-black md:bg-black md:text-white px-1.5 md:px-7 py-2.5 md:py-4 text-[12px] md:text-base font-semibold leading-none hover:opacity-80 hover:scale-[1.02] transition">Найти место</button>
