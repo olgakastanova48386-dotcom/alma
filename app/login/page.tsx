@@ -36,7 +36,7 @@ function LoginContent() {
     }
   }
   return (
-    <main className="min-h-screen bg-[#f7f4ef] flex items-center justify-center px-4 pt-24 pb-12">
+    <main className="min-h-screen bg-[#f7f4ef] flex items-center justify-center px-4 pt-[calc(env(safe-area-inset-top)+96px)] sm:pt-24 pb-12">
       <div className="bg-white p-8 sm:p-10 rounded-[30px] shadow-xl w-full max-w-[430px] border border-black/5">
         <p className="text-xs uppercase tracking-[.22em] text-neutral-400 text-center">
           ALMA
