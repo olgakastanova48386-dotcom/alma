@@ -61,7 +61,7 @@ export default function ProfilePage() {
   return (
     <main className="min-h-screen bg-[#f7f4ef] pt-[calc(env(safe-area-inset-top)+68px)] sm:pt-36 pb-24 px-4">
       <div className="max-w-3xl mx-auto px-1 sm:px-0">
-        <div className="mt-0 alma-paper alma-paper alma-paper alma-paper rounded-[22px] sm:rounded-[34px] bg-white border border-black/5 shadow-sm p-4 sm:p-10">
+        <div className="mt-0 alma-paper rounded-[22px] sm:rounded-[34px] bg-white border border-black/5 shadow-sm p-4 sm:p-10">
           <div className="flex items-center gap-2.5 sm:gap-5">
             <div className="h-11 w-11 sm:h-20 sm:w-20 shrink-0 rounded-full bg-black text-white flex items-center justify-center text-lg sm:text-3xl font-semibold uppercase">{user.name.trim().charAt(0) || "A"}</div>
             <h1 className="min-w-0 flex-1 text-[18px] leading-tight sm:text-4xl font-bold break-words">{user.name}</h1>
@@ -71,7 +71,7 @@ export default function ProfilePage() {
           </div>
         </div>
 
-                <section className="mt-3 sm:mt-6 rounded-[22px] sm:rounded-[34px] bg-white border border-black/5 shadow-sm p-4 sm:p-6">
+                <section className="mt-3 sm:mt-6 alma-paper rounded-[22px] sm:rounded-[34px] bg-white border border-black/5 shadow-sm p-4 sm:p-6">
           <div className="flex items-center gap-4 sm:gap-6">
             <img
               src="/alma-qr.svg"
@@ -87,7 +87,7 @@ export default function ProfilePage() {
         </section>
 
 {user.gender === "female" && (
-          <section className="mt-3 sm:mt-6 rounded-[22px] sm:rounded-[34px] bg-white border border-black/5 shadow-sm p-4 sm:p-7">
+          <section className="mt-3 sm:mt-6 alma-paper rounded-[22px] sm:rounded-[34px] bg-white border border-black/5 shadow-sm p-4 sm:p-7">
             <div className="flex items-start gap-3">
               <div className="shrink-0 h-10 w-10 rounded-full bg-[#f4d9df] text-[#6f2437] flex items-center justify-center text-xl shadow-sm ring-1 ring-[#dca9b5]/60" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true" className="h-6 w-6" fill="currentColor"><path d="M12 2.5 19 5.4v5.4c0 4.8-2.9 8.8-7 10.7-4.1-1.9-7-5.9-7-10.7V5.4L12 2.5Z"/><circle cx="12" cy="10.2" r="2.1" fill="#f4d9df"/><path d="M11.2 11.8h1.6l.7 4h-3l.7-4Z" fill="#f4d9df"/></svg></div>
               <div className="min-w-0 flex-1">
@@ -110,7 +110,7 @@ export default function ProfilePage() {
           </section>
         )}
 
-        <div className="mt-3 sm:mt-6 rounded-[22px] sm:rounded-[34px] bg-white border border-black/5 shadow-sm p-4 sm:p-10">
+        <div className="mt-3 sm:mt-6 alma-paper rounded-[22px] sm:rounded-[34px] bg-white border border-black/5 shadow-sm p-4 sm:p-10">
           <div>
             <p className="text-xs uppercase tracking-[0.16em] text-neutral-400">Аккаунт</p>
             
