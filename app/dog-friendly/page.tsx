@@ -33,8 +33,8 @@ export default function DogFriendlyPage() {
   return (
     <main className="min-h-screen bg-[#f7f4ef] pt-[calc(env(safe-area-inset-top)+68px)] sm:pt-[104px] pb-10 sm:pb-24 text-black">
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative overflow-hidden rounded-[22px] sm:overflow-visible sm:rounded-[28px] bg-[#dfe8d8] px-4 py-3 min-h-[126px] sm:px-8 sm:py-5 sm:pr-[220px] sm:min-h-[170px] md:min-h-[185px] md:pr-[310px] lg:min-h-[190px] lg:px-9 lg:py-6 lg:pr-[390px]">
-          <div className="relative z-10 flex min-h-[102px] items-start pt-2 sm:min-h-[130px] md:min-h-[145px] lg:min-h-[142px] lg:max-w-[68%]">
+        <div className="relative overflow-hidden rounded-[22px] sm:overflow-visible sm:rounded-[28px] bg-[#dfe8d8] px-4 py-3 min-h-[118px] sm:px-8 sm:py-5 sm:pr-[220px] sm:min-h-[170px] md:min-h-[185px] md:pr-[310px] lg:min-h-[190px] lg:px-9 lg:py-6 lg:pr-[390px]">
+          <div className="relative z-10 flex min-h-[94px] items-start pt-2 sm:min-h-[130px] md:min-h-[145px] lg:min-h-[142px] lg:max-w-[68%]">
             <h1 className="mt-0 max-w-full text-[clamp(18px,5.7vw,23px)] sm:text-[28px] md:text-[34px] lg:text-[48px] font-bold tracking-tight leading-[1.08]">
               <span className="block whitespace-nowrap">Петербург вместе</span>
               <span className="block">с собакой</span>
@@ -49,7 +49,7 @@ export default function DogFriendlyPage() {
           <img
             src="/images/alma-dog.webp"
             alt="Пёс ALMA"
-            className="pointer-events-none absolute bottom-0 right-0 z-20 block h-[126px] w-[39%] max-h-none object-contain object-bottom drop-shadow-[0_10px_16px_rgba(0,0,0,0.14)] sm:bottom-[-18px] sm:right-[-8px] sm:w-[240px] sm:max-h-none md:bottom-[-20px] md:right-[4px] md:w-[360px] md:max-h-none lg:bottom-[-42px] lg:right-[18px] lg:w-[430px] lg:max-h-none"
+            className="pointer-events-none absolute bottom-0 right-0 z-20 block h-[118px] w-[39%] max-h-none object-contain object-bottom drop-shadow-[0_10px_16px_rgba(0,0,0,0.14)] sm:bottom-[-18px] sm:right-[-8px] sm:w-[240px] sm:max-h-none md:bottom-[-20px] md:right-[4px] md:w-[360px] md:max-h-none lg:bottom-[-42px] lg:right-[18px] lg:w-[430px] lg:max-h-none"
           />
         </div>
         <div className="relative z-30 mx-auto mt-2 w-full rounded-[16px] sm:rounded-[20px] bg-transparent sm:bg-white border-0 sm:border sm:border-black/5 p-0 sm:p-2 sm:mt-5 sm:w-[94%] sm:rounded-[22px] sm:p-5">
@@ -118,7 +118,7 @@ export default function DogFriendlyPage() {
                         {place.name}
                       </h2>
                     </div>
-                    <span className="shrink-0 rounded-full bg-[#dfe8d8] px-2 py-1 text-[10px] sm:px-3 sm:py-2 sm:text-xs font-medium">
+                    <span className="hidden sm:inline-flex shrink-0 rounded-full bg-[#dfe8d8] px-2 py-1 text-[10px] sm:px-3 sm:py-2 sm:text-xs font-medium">
                       🐾 Dog Friendly
                     </span>
                   </div>
@@ -134,7 +134,7 @@ export default function DogFriendlyPage() {
                     </span>
                   </div>
                   <p className="mt-2 sm:mt-4 text-[13px] leading-5 sm:text-base text-neutral-600">{place.address}</p>
-                  <div className="mt-2.5 sm:mt-5 flex flex-wrap gap-1.5 sm:gap-2">
+                  <div className="mt-2 sm:mt-5 flex flex-wrap gap-1.5 sm:gap-2">
                     <span className="rounded-full bg-[#f3f1ed] px-3 py-1.5 text-xs">
                       {place.budget}
                     </span>
