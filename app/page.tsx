@@ -106,6 +106,8 @@ export default function HomePage() {
   const [weather, setWeather] = useState<Weather | null>(null);
   const [mobileReady, setMobileReady] = useState(false);
   const [splashMinElapsed, setSplashMinElapsed] = useState(false);
+  const [splashDone, setSplashDone] = useState(false);
+  const [loadingProgress, setLoadingProgress] = useState(0);
 
   useEffect(() => {
     const loadWeather = async () => {
@@ -118,15 +120,21 @@ export default function HomePage() {
         const isDay = data?.current?.is_day;
         if (typeof temperature === "number" && typeof code === "number" && typeof isDay === "number") {
           setWeather({ temperature, code, isDay: isDay === 1 });
+          setLoadingProgress((value) => Math.max(value, 45));
         }
       } catch {}
     };
     loadWeather();
+    const fallback = window.setTimeout(() => setMobileReady(true), 5000);
+    return () => window.clearTimeout(fallback);
   }, []);
 
   useEffect(() => {
     const minTimer = window.setTimeout(() => setSplashMinElapsed(true), 1400);
-    return () => window.clearTimeout(minTimer);
+    const progressTimer = window.setInterval(() => {
+      setLoadingProgress((value) => Math.min(92, value + Math.max(1, Math.round((92 - value) * 0.09))));
+    }, 70);
+    return () => { window.clearTimeout(minTimer); window.clearInterval(progressTimer); };
   }, []);
 
   useEffect(() => {
@@ -138,13 +146,21 @@ export default function HomePage() {
     const hour = Number(new Intl.DateTimeFormat("en-GB", { timeZone: "Europe/Moscow", hour: "2-digit", hour12: false }).format(new Date()));
     const theme = getHeroTheme(weather.code, weather.isDay, hour);
     const image = new Image();
-    const finish = () => setMobileReady(true);
+    setLoadingProgress((value) => Math.max(value, 65));
+    const finish = () => { setLoadingProgress((value) => Math.max(value, 92)); setMobileReady(true); };
     image.onload = finish;
     image.onerror = finish;
     image.src = `${theme.image}?v=20260923-cloudy-2`;
     const timeout = window.setTimeout(finish, 3500);
     return () => window.clearTimeout(timeout);
   }, [weather]);
+
+  useEffect(() => {
+    if (!mobileReady || !splashMinElapsed) return;
+    setLoadingProgress(100);
+    const doneTimer = window.setTimeout(() => setSplashDone(true), 400);
+    return () => window.clearTimeout(doneTimer);
+  }, [mobileReady, splashMinElapsed]);
 
   const scrollToFilters = () => document.getElementById("alma-filters")?.scrollIntoView({ behavior: "smooth", block: "start" });
   const scrollToPhotozones = () => document.getElementById("alma-photozones")?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -159,7 +175,19 @@ export default function HomePage() {
 
   return (
     <>
-      {!(mobileReady && splashMinElapsed) && <div className="fixed inset-0 z-[99999] flex md:hidden flex-col items-center justify-center bg-[#f7f4ef] text-black"><div className="text-[34px] font-bold tracking-[-0.06em]">ALMA</div><div className="mt-5 flex items-center gap-2 text-[12px] font-medium tracking-[0.12em] text-neutral-500"><span className="h-1.5 w-1.5 animate-pulse rounded-full bg-black/45" />Загрузка…</div></div>}
+      {!splashDone && (
+        <div className="fixed inset-0 z-[99999] flex md:hidden flex-col items-center justify-center bg-[#f7f4ef] text-black" style={{ backgroundImage: "radial-gradient(circle at 50% 45%, #fff 0%, #f7f4ef 70%)" }}>
+          <div className="text-[33px] font-bold tracking-[0.18em]">alma</div>
+          <div role="progressbar" aria-label="Загрузка ALMA" aria-valuemin={0} aria-valuemax={100} aria-valuenow={loadingProgress} className="relative mt-7 flex h-[112px] w-[112px] items-center justify-center">
+            <svg viewBox="0 0 112 112" className="absolute inset-0 h-full w-full -rotate-90" aria-hidden="true">
+              <circle cx="56" cy="56" r="48" fill="none" stroke="#e9e5df" strokeWidth="3" />
+              <circle cx="56" cy="56" r="48" fill="none" stroke="#242321" strokeWidth="3" strokeLinecap="round" strokeDasharray={301.6} strokeDashoffset={301.6 * (1 - loadingProgress / 100)} className="transition-all duration-500 ease-out" />
+            </svg>
+            <span className="text-[25px] font-semibold tracking-tight tabular-nums">{loadingProgress}<span className="ml-0.5 text-sm text-neutral-500">%</span></span>
+          </div>
+          <p className="mt-6 text-[12px] font-medium tracking-[0.04em] text-neutral-500">Готовим места для тебя</p>
+        </div>
+      )}
       <main className="min-h-screen overflow-x-hidden bg-[#f7f4ef] text-black">
       <section className="alma-home-hero relative h-[390px] sm:h-[430px] md:h-auto md:min-h-[680px] flex items-start md:items-center pt-0 md:pt-28 pb-0 overflow-hidden bg-[#f7f4ef] text-black">
         <div className="alma-home-hero-image md:hidden absolute inset-0 overflow-hidden bg-[#171614]"><img key={`mobile-bg-${heroTheme.image}`} src={`${heroTheme.image}?v=20260923-cloudy-2`} alt={heroTheme.label} className="absolute inset-0 h-full w-full object-cover brightness-[1.08] contrast-[0.9] saturate-[0.88] transition-opacity duration-700" style={{ objectPosition: "center 42%" }} /></div>
