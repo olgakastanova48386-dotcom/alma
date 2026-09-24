@@ -139,7 +139,7 @@ export default function PlacePage() {
   );
 
   return (
-    <main className="min-h-screen bg-[#f7f4ef] pt-[88px] sm:pt-36 pb-20">
+    <main className="min-h-screen bg-[#f7f4ef] pt-[calc(env(safe-area-inset-top)+96px)] sm:pt-36 pb-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-4 sm:mb-7">
           <Link
