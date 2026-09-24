@@ -167,37 +167,121 @@ select:-webkit-autofill {
   .alma-route-actions button, .alma-route-actions a { min-height: 44px; }
 }
 
-/* A tactile, abstract light sculpture on the home screen. */
+/* Animated ALMA route — inspired by hand-drawn motion, kept intentionally minimal. */
 .alma-home-hero-image.alma-aura-host { pointer-events: auto !important; }
-.alma-aura { --move-x: 0px; --move-y: 0px; --light: #edb9ad; --mid: #916d83; --edge: #6c779c; position: relative; width: 100%; height: 100%; overflow: hidden; cursor: pointer; touch-action: pan-y; isolation: isolate; background: radial-gradient(ellipse at 58% 47%, #283044 0%, #171d2a 46%, #0d1622 100%); transition: background .6s ease; }
-.alma-aura[data-mood="1"] { --light: #e6d5a9; --mid: #899a82; --edge: #718fa0; }
-.alma-aura[data-mood="2"] { --light: #b8cbd3; --mid: #9e8cb6; --edge: #d5a5a3; }
-.alma-aura:focus-visible { outline: 3px solid #f4d69e; outline-offset: -6px; }
-.alma-aura-grain { position: absolute; inset: 0; z-index: 5; pointer-events: none; opacity: .15; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E"); }
-.alma-aura-glow { position: absolute; width: 48%; aspect-ratio: 1; border-radius: 50%; filter: blur(55px); pointer-events: none; transition: background .8s ease; }
-.alma-aura-glow-one { left: 19%; top: 7%; background: color-mix(in srgb, var(--mid) 34%, transparent); animation: alma-aura-drift-one 12s ease-in-out infinite alternate; }
-.alma-aura-glow-two { right: -12%; bottom: 0; background: color-mix(in srgb, var(--light) 27%, transparent); animation: alma-aura-drift-two 14s ease-in-out infinite alternate; }
-.alma-aura-glow-three { left: -18%; bottom: -20%; background: color-mix(in srgb, var(--edge) 37%, transparent); animation: alma-aura-drift-one 18s ease-in-out infinite alternate-reverse; }
-.alma-aura-stage { position: absolute; width: min(75%, 420px); aspect-ratio: 1; left: 50%; top: 47%; transform: translate(calc(-50% + var(--move-x)), calc(-50% + var(--move-y))); transition: transform .32s cubic-bezier(.2,.8,.2,1); pointer-events: none; }
-.alma-aura-form { position: absolute; inset: 17%; border-radius: 43% 57% 58% 42% / 42% 45% 55% 58%; transform: rotate(-22deg); background: radial-gradient(circle at 27% 23%, #fff9ef 0%, var(--light) 11%, var(--mid) 43%, #323e59 73%, #101c30 100%); box-shadow: inset 12px 15px 24px rgba(255,255,255,.52), inset -18px -24px 28px rgba(9,15,31,.7), 0 36px 56px rgba(3,8,19,.56), 0 0 65px color-mix(in srgb, var(--mid) 42%, transparent); animation: alma-aura-morph 9s ease-in-out infinite alternate; transition: background .8s ease, box-shadow .8s ease; }
-.alma-aura-form-inner { position: absolute; inset: 9%; border-radius: inherit; border: 1px solid rgba(255,255,255,.25); box-shadow: inset 4px 7px 13px rgba(255,255,255,.28); }
-.alma-aura-form-highlight { position: absolute; width: 36%; height: 15%; top: 15%; left: 18%; border-radius: 50%; background: #fff; opacity: .48; filter: blur(15px); transform: rotate(-26deg); }
-.alma-aura-ring { position: absolute; border: 1px solid rgba(242,229,224,.25); border-radius: 50%; box-shadow: 0 0 21px rgba(237,211,204,.08), inset 0 0 20px rgba(237,211,204,.05); }
-.alma-aura-ring-one { inset: 4%; transform: rotate(-27deg) scaleY(.73); animation: alma-aura-orbit 17s linear infinite; }
-.alma-aura-ring-two { inset: -7%; transform: rotate(44deg) scaleY(.65); border-color: rgba(242,229,224,.14); animation: alma-aura-orbit-reverse 22s linear infinite; }
-.alma-aura-spark { position: absolute; width: 5px; height: 5px; border-radius: 50%; background: #f9ebe1; box-shadow: 0 0 15px 5px rgba(244,204,193,.55); animation: alma-aura-twinkle 4s ease-in-out infinite alternate; }
-.alma-aura-spark-one { top: 12%; left: 75%; } .alma-aura-spark-two { top: 73%; left: 9%; animation-delay: 1.2s; } .alma-aura-spark-three { top: 81%; right: 12%; animation-delay: 2.4s; }
-.alma-aura-touch-wave { position: absolute; inset: 18%; border: 1px solid rgba(255,235,217,.4); border-radius: 50%; opacity: 0; animation: alma-aura-wave .8s ease-out both; }
-.alma-aura-hint { position: absolute; bottom: 20px; right: 22px; z-index: 6; color: rgba(255,255,255,.7); font-size: 11px; letter-spacing: .04em; }
-@keyframes alma-aura-morph { 0% { border-radius: 43% 57% 58% 42% / 42% 45% 55% 58%; transform: rotate(-22deg) scale(.96); } 50% { border-radius: 55% 45% 40% 60% / 52% 38% 62% 48%; transform: rotate(2deg) scale(1.05); } 100% { border-radius: 38% 62% 53% 47% / 59% 51% 49% 41%; transform: rotate(22deg) scale(.97); } }
-@keyframes alma-aura-orbit { from { transform: rotate(-27deg) scaleY(.73); } to { transform: rotate(333deg) scaleY(.73); } }
-@keyframes alma-aura-orbit-reverse { from { transform: rotate(44deg) scaleY(.65); } to { transform: rotate(-316deg) scaleY(.65); } }
-@keyframes alma-aura-drift-one { from { transform: translate(-5%, 0) scale(.9); } to { transform: translate(12%, 12%) scale(1.16); } }
-@keyframes alma-aura-drift-two { from { transform: translate(10%, 10%) scale(1.08); } to { transform: translate(-13%, -8%) scale(.86); } }
-@keyframes alma-aura-twinkle { from { opacity: .2; transform: scale(.7); } to { opacity: 1; transform: scale(1.4); } }
-@keyframes alma-aura-wave { from { opacity: .75; transform: scale(.8); } to { opacity: 0; transform: scale(1.75); } }
-@media (max-width: 767px) { .alma-aura-stage { width: min(64vw, 320px); top: 43%; left: 54%; } .alma-aura-hint { top: 38%; bottom: auto; right: 16px; font-size: 10px; opacity: .76; } }
-@media (prefers-reduced-motion: reduce) { .alma-aura * { animation: none !important; } .alma-aura-stage { transition: none; } }
+.alma-route-art {
+  --route-x: 0px;
+  --route-y: 0px;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 68% 28%, rgba(255,238,221,.92), transparent 24%),
+    radial-gradient(circle at 18% 78%, rgba(240,247,215,.75), transparent 30%),
+    #fbfaf7;
+  isolation: isolate;
+}
+.alma-route-art::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: .18;
+  background-image: radial-gradient(rgba(35,31,27,.18) .45px, transparent .65px);
+  background-size: 5px 5px;
+  mix-blend-mode: multiply;
+}
+.alma-route-svg {
+  position: absolute;
+  width: 118%;
+  height: 104%;
+  left: -8%;
+  top: -5%;
+  overflow: visible;
+  transform: translate(var(--route-x), var(--route-y));
+  transition: transform .38s cubic-bezier(.2,.8,.2,1);
+  filter: drop-shadow(0 12px 18px rgba(118,68,48,.12));
+}
+.alma-route-ghost {
+  fill: none;
+  stroke: rgba(44,39,35,.08);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.alma-route-main {
+  fill: none;
+  stroke: url(#almaRouteGradient);
+  stroke-width: 28;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: alma-route-draw 4.8s cubic-bezier(.65,0,.25,1) infinite;
+}
+.alma-route-head {
+  fill: none;
+  stroke: #ff5f67;
+  stroke-width: 5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: .075 .925;
+  stroke-dashoffset: 1;
+  animation: alma-route-head 4.8s cubic-bezier(.65,0,.25,1) infinite;
+}
+.alma-route-dot {
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  background: #181714;
+  box-shadow: 0 0 0 7px rgba(255,255,255,.72), 0 8px 22px rgba(0,0,0,.13);
+  opacity: 0;
+  animation: alma-route-place 4.8s ease infinite;
+}
+.alma-route-dot-one { left: 39%; top: 52%; animation-delay: .8s; }
+.alma-route-dot-two { left: 61%; top: 39%; animation-delay: 1.55s; }
+.alma-route-dot-three { left: 79%; top: 25%; animation-delay: 2.25s; }
+.alma-route-caption {
+  position: absolute;
+  right: 22px;
+  bottom: 20px;
+  z-index: 2;
+  font-size: 10px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: rgba(30,28,25,.48);
+}
+@keyframes alma-route-draw {
+  0%, 8% { stroke-dashoffset: 1; stroke-width: 7; }
+  58% { stroke-dashoffset: 0; stroke-width: 28; }
+  78% { stroke-dashoffset: 0; stroke-width: 28; opacity: 1; }
+  94%, 100% { stroke-dashoffset: -1; stroke-width: 7; opacity: .1; }
+}
+@keyframes alma-route-head {
+  0%, 8% { stroke-dashoffset: 1; opacity: 0; }
+  14% { opacity: 1; }
+  58% { stroke-dashoffset: 0; opacity: 1; }
+  72%, 100% { stroke-dashoffset: -.3; opacity: 0; }
+}
+@keyframes alma-route-place {
+  0%, 28% { opacity: 0; transform: scale(.5); }
+  38%, 72% { opacity: .9; transform: scale(1); }
+  86%, 100% { opacity: 0; transform: scale(.65); }
+}
+@media (max-width: 767px) {
+  .alma-route-svg { width: 154%; height: 92%; left: -28%; top: -5%; }
+  .alma-route-caption { right: 14px; bottom: 14px; font-size: 8px; letter-spacing: .11em; }
+  .alma-route-dot-one { left: 34%; top: 48%; }
+  .alma-route-dot-two { left: 58%; top: 38%; }
+  .alma-route-dot-three { left: 78%; top: 27%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .alma-route-svg { transition: none; }
+  .alma-route-main { animation: none; stroke-dashoffset: 0; }
+  .alma-route-head, .alma-route-dot { animation: none; opacity: .7; }
+}
 
 @keyframes alma-cta-shine {
   0%, 58% {
