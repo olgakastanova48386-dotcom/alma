@@ -61,7 +61,7 @@ export default function ProfilePage() {
   return (
     <main className="min-h-screen bg-[#f7f4ef] pt-[calc(env(safe-area-inset-top)+68px)] sm:pt-36 pb-24 px-4">
       <div className="max-w-3xl mx-auto px-1 sm:px-0">
-        <div className="mt-0 rounded-[22px] sm:rounded-[34px] bg-white border border-black/5 shadow-sm p-4 sm:p-10">
+        <div className="mt-0 alma-paper alma-paper alma-paper alma-paper rounded-[22px] sm:rounded-[34px] bg-white border border-black/5 shadow-sm p-4 sm:p-10">
           <div className="flex items-center gap-2.5 sm:gap-5">
             <div className="h-11 w-11 sm:h-20 sm:w-20 shrink-0 rounded-full bg-black text-white flex items-center justify-center text-lg sm:text-3xl font-semibold uppercase">{user.name.trim().charAt(0) || "A"}</div>
             <h1 className="min-w-0 flex-1 text-[18px] leading-tight sm:text-4xl font-bold break-words">{user.name}</h1>
