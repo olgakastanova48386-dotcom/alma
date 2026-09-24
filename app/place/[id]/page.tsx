@@ -126,7 +126,7 @@ export default function PlacePage() {
               href="/map"
               className="inline-flex mt-8 rounded-full bg-black text-white px-6 py-3.5 font-medium hover:opacity-80 transition"
             >
-              ← Вернуться к карте
+              ← К местам на карте
             </Link>
           </div>
         </div>
@@ -139,7 +139,7 @@ export default function PlacePage() {
   );
 
   return (
-    <main className="min-h-screen bg-[#f7f4ef] pt-28 sm:pt-36 pb-20">
+    <main className="min-h-screen bg-[#f7f4ef] pt-[88px] sm:pt-36 pb-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-4 sm:mb-7">
           <Link
