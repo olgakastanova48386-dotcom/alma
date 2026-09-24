@@ -29,15 +29,15 @@ body {
 
 /* Tactile surfaces: fine paper grain, a lit edge, and a soft raised shadow. */
 .alma-paper {
-  background-image: radial-gradient(rgba(64, 52, 45, .035) .55px, transparent .7px), linear-gradient(155deg, rgba(255,255,255,.72), rgba(255,255,255,0) 58%);
-  background-size: 6px 6px, 100% 100%;
-  border-color: rgba(77, 62, 52, .08);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.96), inset 0 -1px 0 rgba(70,55,42,.05), 0 4px 0 rgba(72,58,47,.035), 0 12px 28px rgba(58,45,36,.065);
+  background-image: radial-gradient(rgba(68, 53, 42, .09) .55px, transparent .95px), linear-gradient(145deg, rgba(255,255,255,.92) 0%, rgba(255,255,255,.12) 52%, rgba(229,222,212,.14) 100%);
+  background-size: 5px 5px, 100% 100%;
+  border-color: rgba(77, 62, 52, .13);
+  box-shadow: inset 0 2px 0 rgba(255,255,255,1), inset 0 -2px 3px rgba(70,55,42,.07), 0 5px 0 rgba(72,58,47,.08), 0 18px 32px rgba(58,45,36,.13);
 }
 
 .alma-pressable {
-  background-image: linear-gradient(180deg, rgba(255,255,255,.18), rgba(0,0,0,.04));
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.48), inset 0 -1px 0 rgba(0,0,0,.09), 0 3px 0 rgba(0,0,0,.12), 0 8px 16px rgba(0,0,0,.10);
+  background-image: linear-gradient(180deg, rgba(255,255,255,.28), rgba(0,0,0,.07));
+  box-shadow: inset 0 2px 0 rgba(255,255,255,.58), inset 0 -2px 2px rgba(0,0,0,.13), 0 4px 0 rgba(0,0,0,.18), 0 12px 22px rgba(0,0,0,.18);
   transition: transform .16s ease, box-shadow .16s ease;
 }
 .alma-pressable:active {
@@ -49,23 +49,23 @@ body {
   background-color: rgba(255,255,255,.84);
   background-image: linear-gradient(135deg, rgba(255,255,255,.66) 0%, rgba(255,255,255,.08) 42%, rgba(255,255,255,.26) 100%);
   border: 1px solid rgba(255,255,255,.8);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.98), inset 0 -1px 0 rgba(62,53,47,.08), 0 10px 28px rgba(48,39,33,.13);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.98), inset 0 -1px 0 rgba(62,53,47,.08), 0 5px 0 rgba(60,48,39,.08), 0 20px 38px rgba(48,39,33,.2);
   -webkit-backdrop-filter: blur(18px);
   backdrop-filter: blur(18px);
 }
 
 .alma-well {
   background-image: linear-gradient(150deg, rgba(235,230,223,.6), rgba(255,255,255,.54));
-  box-shadow: inset 0 2px 5px rgba(61,49,40,.11), inset 0 -1px 0 rgba(255,255,255,.95), 0 1px 0 rgba(255,255,255,.8);
+  box-shadow: inset 0 3px 8px rgba(61,49,40,.19), inset 0 -1px 0 rgba(255,255,255,.95), 0 1px 0 rgba(255,255,255,.8);
 }
 
 .alma-satin {
-  background-image: radial-gradient(ellipse at 26% -15%, rgba(255,255,255,.56), transparent 56%), linear-gradient(120deg, rgba(255,255,255,.13), transparent 50%, rgba(70,83,66,.07));
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.86), inset 0 -1px 0 rgba(64,75,58,.07), 0 10px 25px rgba(55,68,48,.08);
+  background-image: radial-gradient(ellipse at 26% -15%, rgba(255,255,255,.8), transparent 59%), linear-gradient(120deg, rgba(255,255,255,.13), transparent 50%, rgba(70,83,66,.07));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.86), inset 0 -1px 0 rgba(64,75,58,.07), 0 4px 0 rgba(64,75,58,.07), 0 16px 30px rgba(55,68,48,.15);
 }
 
 .alma-glow {
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.72), inset 0 -1px 0 rgba(134,92,19,.16), 0 3px 0 rgba(130,91,28,.25), 0 8px 22px rgba(201,153,66,.24), 0 0 22px rgba(246,211,143,.22);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.72), inset 0 -1px 0 rgba(134,92,19,.16), 0 3px 0 rgba(130,91,28,.25), 0 12px 28px rgba(201,153,66,.36), 0 0 30px rgba(246,211,143,.33);
 }
 
 @media (prefers-reduced-motion: reduce) {
