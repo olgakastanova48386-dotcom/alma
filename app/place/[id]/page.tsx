@@ -141,7 +141,7 @@ export default function PlacePage() {
   return (
     <main className="min-h-screen bg-[#f7f4ef] pt-[calc(env(safe-area-inset-top)+68px)] sm:pt-36 pb-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="mb-4 sm:mb-7">
+        <div className="mb-2 sm:mb-7">
           <Link
             href="/map"
             className="inline-flex items-center gap-2 text-sm text-neutral-500 hover:text-black transition"
@@ -150,9 +150,9 @@ export default function PlacePage() {
             <span>Вернуться к карте мест</span>
           </Link>
         </div>
-        <section className="grid lg:grid-cols-[1.08fr_0.92fr] gap-5 sm:gap-8 lg:gap-12 items-stretch">
+        <section className="grid lg:grid-cols-[1.08fr_0.92fr] gap-3 sm:gap-8 lg:gap-12 items-stretch">
           <div>
-            <div className="relative min-h-[230px] sm:min-h-[560px] lg:min-h-[700px] rounded-[22px] sm:rounded-[40px] overflow-hidden bg-neutral-200">
+            <div className="relative min-h-[185px] sm:min-h-[560px] lg:min-h-[700px] rounded-[22px] sm:rounded-[40px] overflow-hidden bg-neutral-200">
               {heroImage ? (
                 <img
                   src={heroImage}
@@ -200,7 +200,7 @@ export default function PlacePage() {
 
           <div className="flex flex-col justify-between py-1 lg:py-3">
             <div>
-              <h1 className="text-[28px] sm:text-5xl lg:text-[58px] font-bold leading-[1.02] tracking-tight text-neutral-900">
+              <h1 className="text-[25px] sm:text-5xl lg:text-[58px] font-bold leading-[1.02] tracking-tight text-neutral-900">
                 {place.name}
               </h1>
               {place.rating && (
