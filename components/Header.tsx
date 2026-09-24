@@ -206,7 +206,7 @@ export default function Header() {
 
         </div>
       </div>
-          {!authScreen && <nav aria-label="Основная навигация" className="alma-paper fixed inset-x-3 bottom-[calc(10px+env(safe-area-inset-bottom))] z-[10000] mx-auto grid max-w-[480px] grid-cols-5 rounded-[24px] border border-black/10 bg-white/95 px-1.5 py-1.5 shadow-[0_12px_40px_rgba(0,0,0,.16)] backdrop-blur-xl md:hidden">
+          {!authScreen && <nav aria-label="Основная навигация" className="alma-glass fixed inset-x-3 bottom-[calc(10px+env(safe-area-inset-bottom))] z-[10000] mx-auto grid max-w-[480px] grid-cols-5 rounded-[24px] border border-black/10 bg-white/95 px-1.5 py-1.5 shadow-[0_12px_40px_rgba(0,0,0,.16)] backdrop-blur-xl md:hidden">
             {[
               { href: "/", label: "Главная", icon: <HomeIcon /> },
               { href: "/map", label: "События", icon: <EventsIcon /> },
