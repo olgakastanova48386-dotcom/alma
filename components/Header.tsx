@@ -148,8 +148,9 @@ export default function Header() {
           {/* MOBILE: a clear header and an app-style bottom navigation. */}
           <div className="flex h-11 items-center justify-between md:hidden">
             <Link href="/" aria-label="ALMA — главная" className="pl-1 text-[18px] font-bold tracking-[0.2em] text-black">alma</Link>
-            {!authScreen && <Link href={user ? "/profile" : "/login"} aria-label={user ? "Профиль" : "Войти"} className="flex min-h-11 items-center gap-1.5 rounded-full bg-black px-3 text-xs font-semibold text-white">
-              <ProfileIcon /><span className="max-w-[90px] truncate">{user ? user.name : "Войти"}</span>
+            {!authScreen && <Link href="/about" className="ml-auto mr-2 rounded-full px-2 py-2 text-[12px] font-medium text-neutral-700">О проекте</Link>}
+            {!authScreen && <Link href={user ? "/profile" : "/login"} aria-label={user ? "Профиль" : "Войти"} className="flex min-h-11 min-w-11 items-center justify-center gap-1 rounded-full bg-black px-2 text-xs font-semibold text-white">
+              <ProfileIcon /><span className="max-w-[68px] truncate">{user ? user.name : "Войти"}</span>
             </Link>}
           </div>
 
@@ -218,7 +219,7 @@ export default function Header() {
               { href: user ? "/profile" : "/login", label: "Профиль", icon: <ProfileIcon /> },
             ].map(({ href, label, icon }) => {
               const active = isCurrentRoute(pathname, href);
-              return <Link key={label} href={href} aria-label={label} aria-current={active ? "page" : undefined} className={`flex min-h-[56px] min-w-0 flex-col items-center justify-center gap-0.5 rounded-[18px] text-[10px] font-medium leading-none ${active ? "bg-[#f3e9e6] text-black" : "text-neutral-600"}`}>
+              return <Link key={label} href={href} aria-label={label} aria-current={active ? "page" : undefined} className={`flex min-h-[56px] min-w-0 flex-col items-center justify-center gap-0.5 rounded-[18px] text-[11px] font-medium leading-none ${active ? "bg-[#f3e9e6] text-black" : "text-neutral-600"}`}>
                 {icon}<span className="truncate">{label}</span>
               </Link>;
             })}
