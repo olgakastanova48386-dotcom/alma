@@ -519,7 +519,7 @@ export default function SurprisePage() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
   return (
-    <main className="min-h-screen bg-[#f7f4ef] pt-24 sm:pt-32 pb-20 sm:pb-24">
+    <main className="min-h-screen bg-[#f7f4ef] pt-[calc(env(safe-area-inset-top)+96px)] sm:pt-32 pb-20 sm:pb-24">
       <section className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="max-w-3xl">
           <div className="inline-flex rounded-full bg-black text-white px-3.5 sm:px-4 py-2 text-xs sm:text-sm">
