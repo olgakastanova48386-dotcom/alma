@@ -38,7 +38,6 @@ const placeIds: Record<string, number> = {
 };
 
 type Weather = { temperature: number; code: number; isDay: boolean };
-type HeroTheme = { image: string; position: string; label: string };
 
 function getPetersburgIsDay() {
   const hour = Number(
@@ -66,39 +65,78 @@ function getWeatherInfo(code: number, isDay: boolean) {
   return { icon: "🌤️", text: "Погода" };
 }
 
-function getHeroTheme(code: number | undefined, isDay: boolean, hour: number): HeroTheme {
-  const isDrizzle = [51, 53, 55, 56, 57].includes(code ?? -1);
+function AnimatedCityScene({ isDay, cloudy }: { isDay: boolean; cloudy: boolean }) {
+  const skyTop = isDay ? "#426c84" : "#091625";
+  const skyBottom = isDay ? "#c7a995" : "#57435b";
+  const cityBack = isDay ? "#677485" : "#283347";
+  const cityFront = isDay ? "#384a5b" : "#172333";
+  const windowLight = isDay ? "#f2dbac" : "#f5cf85";
 
-  const isEveningOrNight = hour >= 18 || hour < 7;
-
-  if (isDrizzle && isEveningOrNight) {
-    return { image: "/images/дождь в питере ночь.jpg", position: "center 45%", label: "Морось в Петербурге" };
-  }
-
-  if (isDrizzle) {
-    return { image: "/images/питер морось.jpg", position: "center 48%", label: "Морось в Петербурге" };
-  }
-
-  if (!isDay) {
-    if (false) {
-      return { image: "/images/дождь в питере ночь.jpg", position: "center 45%", label: "Морось в Петербурге" };
-    }
-
-    if ([45, 48, 61, 63, 65, 66, 67, 71, 73, 75, 77, 80, 81, 82, 85, 86, 95, 96, 99].includes(code ?? -1)) {
-      return { image: "/images/ночной питербург.jpg", position: "center 42%", label: "Ночной Петербург" };
-    }
-
-    return { image: "/images/питер ночью.jpg", position: "center 45%", label: "Петербург ночью" };
-  }
-
-  if (code === 0) return { image: "/images/питер главная фотка 4.jpg", position: "center 42%", label: "Ясный Петербург" };
-  if ([1, 2].includes(code ?? -1)) return { image: "/images/облачно день.jpg", position: "center 42%", label: "Петербург в переменной облачности" };
-  if (code === 3) return { image: "/images/облачно день.jpg", position: "center 42%", label: "Облачный Петербург" };
-  if ([45, 48].includes(code ?? -1)) return { image: "/images/пиер главная фотка 3.jpg", position: "center 42%", label: "Петербург в тумане" };
-  if ([61, 63, 65, 66, 67, 80, 81, 82].includes(code ?? -1)) return { image: "/images/питер главная фотка 5.jpg", position: "center 46%", label: "Петербург под дождём" };
-  if ([71, 73, 75, 77, 85, 86].includes(code ?? -1)) return { image: "/images/питер главная фотка 2.jpg", position: "center 42%", label: "Снежный Петербург" };
-  if ([95, 96, 99].includes(code ?? -1)) return { image: "/images/пиер главная фотка 3.jpg", position: "center 42%", label: "Драматичный Петербург" };
-  return { image: "/images/питер главная фотка.jpg", position: "center 42%", label: "Петербург сегодня" };
+  return (
+    <svg className="alma-city-scene" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Анимированный Петербург: собор, мост и отражения на воде">
+      <defs>
+        <linearGradient id="alma-animated-sky" x1="0" y1="0" x2="0" y2="1">
+          <stop stopColor={skyTop} />
+          <stop offset=".64" stopColor={skyBottom} />
+          <stop offset="1" stopColor={isDay ? "#9b8390" : "#283146"} />
+        </linearGradient>
+        <radialGradient id="alma-animated-halo">
+          <stop stopColor={isDay ? "#ffe1b3" : "#f1d49b"} stopOpacity=".58" />
+          <stop offset="1" stopColor="#ffe1b3" stopOpacity="0" />
+        </radialGradient>
+        <linearGradient id="alma-animated-water" x1="0" y1="0" x2="0" y2="1">
+          <stop stopColor={isDay ? "#536f7c" : "#22394a"} />
+          <stop offset="1" stopColor={isDay ? "#263c51" : "#091a2b"} />
+        </linearGradient>
+        <mask id="alma-animated-bridge-cutouts">
+          <rect width="1200" height="150" y="550" fill="white" />
+          <path d="M35 665a105 105 0 0 1 210 0ZM260 665a105 105 0 0 1 210 0ZM485 665a105 105 0 0 1 210 0ZM710 665a105 105 0 0 1 210 0ZM935 665a105 105 0 0 1 210 0Z" fill="black" />
+        </mask>
+      </defs>
+      <rect width="1200" height="800" fill="url(#alma-animated-sky)" />
+      <ellipse className="alma-city-halo" cx="830" cy="192" rx="290" ry="240" fill="url(#alma-animated-halo)" />
+      <circle className="alma-city-light" cx="830" cy="192" r={isDay ? "53" : "39"} fill={isDay ? "#f8dfb2" : "#f5e6c5"} opacity={isDay ? ".82" : ".9"} />
+      <g className="alma-city-cloud-a" opacity={cloudy ? ".34" : ".16"} fill="#e8e4e0">
+        <path d="M-100 190c74-38 132-42 212-8 82-53 147-36 218-4 68-15 112 2 160 32-157 39-378 34-590-20Z" />
+        <path d="M620 140c72-25 123-15 165 12 86-36 158-25 230 21 79-9 118 8 166 38-187 20-388 15-561-71Z" />
+      </g>
+      <g className="alma-city-cloud-b" opacity={cloudy ? ".22" : ".1"} fill="#f6e9d9">
+        <path d="M30 281c154-35 248-22 352 14 75-18 149-13 229 22-208 35-421 17-581-36Z" />
+      </g>
+      <path d="M0 464V353h58v-43h27v43h102v-69h38v69h83v-34h62v34h115v-21h78v132Zm700 0V344h49v-56h24v56h67v-30h43v30h98v-70h36v70h74v-34h47v34h62v120Z" fill={cityBack} />
+      <path d="M0 542V400h74v-36h107v36h92v-58h54v58h150v142Zm746 0V391h75v-49h68v49h105v-31h67v31h139v151Z" fill={cityFront} />
+      <g fill={windowLight} className="alma-city-windows" opacity={isDay ? ".42" : ".78"}>
+        <path d="M50 433h6v11h-6zm32 0h6v11h-6zm32 0h6v11h-6zm32 0h6v11h-6zm-96 35h6v11h-6zm64 0h6v11h-6zm32 0h6v11h-6zm150-62h6v11h-6zm32 0h6v11h-6zm32 0h6v11h-6zm160 31h6v11h-6zm32 0h6v11h-6zm32 0h6v11h-6zm309-20h6v11h-6zm32 0h6v11h-6zm32 0h6v11h-6zm126-19h6v11h-6zm32 0h6v11h-6zm32 0h6v11h-6zm-64 33h6v11h-6zm32 0h6v11h-6z" />
+      </g>
+      <g className="alma-city-dome">
+        <path d="M542 360c3-66 27-110 66-123 42 13 66 57 69 123Z" fill={isDay ? "#b2a28d" : "#a28a76"} />
+        <path d="M549 359c8-56 27-95 59-107 35 12 55 51 62 107" fill="none" stroke={isDay ? "#e5d5b6" : "#d6b991"} strokeWidth="8" opacity=".7" />
+        <path d="M592 234v-22h32v22m-16-23v-51m-10 19h20" stroke="#e8c99d" strokeWidth="6" fill="none" />
+        <rect x="520" y="359" width="178" height="24" fill={isDay ? "#a39283" : "#695d60"} />
+        <path d="M505 403h208l-24-24H529Z" fill={isDay ? "#c5b4a1" : "#8b7672"} />
+        <rect x="511" y="403" width="196" height="139" fill={isDay ? "#9b928c" : "#554f5b"} />
+        <path d="M523 422h172m-172 90h172" stroke={isDay ? "#ded0bd" : "#ad9a8e"} strokeWidth="7" />
+        {Array.from({ length: 7 }, (_, index) => <rect key={index} x={530 + index * 25} y="430" width="8" height="83" fill={isDay ? "#d5c5af" : "#978d87"} />)}
+        <path d="M485 542h251v17H485Z" fill={cityFront} />
+      </g>
+      <path d="M0 555H1200v105H0Z" fill="url(#alma-animated-water)" />
+      <path d="M0 550h1200v112H0Z" fill={cityFront} mask="url(#alma-animated-bridge-cutouts)" />
+      <path d="M0 548h1200m0 16H0" stroke={isDay ? "#c6ad91" : "#b69377"} strokeWidth="5" opacity=".8" />
+      <path d="M0 568h1200" stroke="#d7b38b" strokeWidth="2" strokeDasharray="4 11" opacity=".5" />
+      <g className="alma-city-lamps" fill="#f5d9a7">
+        {[112, 338, 563, 788, 1012].map((x) => <g key={x}><path d={`M${x} 546v-29`} stroke="#2a3038" strokeWidth="4" /><circle cx={x} cy="514" r="5" /><circle cx={x} cy="514" r="22" fill="#f4c784" opacity=".12" /></g>)}
+      </g>
+      <rect y="662" width="1200" height="138" fill="url(#alma-animated-water)" />
+      <g className="alma-city-reflections" stroke={isDay ? "#f2d3a5" : "#efc990"} strokeLinecap="round" opacity=".47" fill="none">
+        <path d="M80 686h36m34 10h90m-82 21h47m285-32h130m-95 21h100m110-26h60m-23 34h112m150-19h80m-48 31h120" strokeWidth="3" />
+        <path d="M92 744h72m90-24h48m275 34h102m114-12h47m160-32h90" strokeWidth="2" />
+      </g>
+      <g className="alma-city-boat" fill={isDay ? "#1b3546" : "#0c1a28"}>
+        <path d="M270 692h96l-15 17h-62Z" /><path d="M318 692v-48m0 6 32 37h-32Z" stroke={isDay ? "#ead7bf" : "#d0c2b7"} strokeWidth="3" fill="none" />
+      </g>
+      <rect y="763" width="1200" height="37" fill={isDay ? "#1e3445" : "#071421"} opacity=".45" />
+    </svg>
+  );
 }
 
 export default function HomePage() {
@@ -125,8 +163,6 @@ export default function HomePage() {
       } catch {}
     };
     loadWeather();
-    const fallback = window.setTimeout(() => setMobileReady(true), 5000);
-    return () => window.clearTimeout(fallback);
   }, []);
 
   useEffect(() => {
@@ -138,22 +174,9 @@ export default function HomePage() {
   }, []);
 
   useEffect(() => {
-    if (window.matchMedia("(min-width: 768px)").matches) {
-      setMobileReady(true);
-      return;
-    }
-    if (!weather) return;
-    const hour = Number(new Intl.DateTimeFormat("en-GB", { timeZone: "Europe/Moscow", hour: "2-digit", hour12: false }).format(new Date()));
-    const theme = getHeroTheme(weather.code, weather.isDay, hour);
-    const image = new Image();
-    setLoadingProgress((value) => Math.max(value, 65));
-    const finish = () => { setLoadingProgress((value) => Math.max(value, 92)); setMobileReady(true); };
-    image.onload = finish;
-    image.onerror = finish;
-    image.src = `${theme.image}?v=20260923-cloudy-2`;
-    const timeout = window.setTimeout(finish, 3500);
-    return () => window.clearTimeout(timeout);
-  }, [weather]);
+    const timer = window.setTimeout(() => { setLoadingProgress((value) => Math.max(value, 92)); setMobileReady(true); }, 450);
+    return () => window.clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     if (!mobileReady || !splashMinElapsed) return;
@@ -170,8 +193,7 @@ export default function HomePage() {
   };
   const isDay = weather?.isDay ?? getPetersburgIsDay();
   const weatherInfo = weather ? getWeatherInfo(weather.code, isDay) : null;
-  const petersburgHour = Number(new Intl.DateTimeFormat("en-GB", { timeZone: "Europe/Moscow", hour: "2-digit", hour12: false }).format(new Date()));
-  const heroTheme = getHeroTheme(weather?.code, isDay, petersburgHour);
+  const cloudy = weather ? weather.code !== 0 : true;
 
   return (
     <>
@@ -190,10 +212,10 @@ export default function HomePage() {
       )}
       <main className="min-h-screen overflow-x-hidden bg-[#f7f4ef] text-black">
       <section className="alma-home-hero relative h-[390px] sm:h-[430px] md:h-auto md:min-h-[680px] flex items-start md:items-center pt-0 md:pt-28 pb-0 overflow-hidden bg-[#f7f4ef] text-black">
-        <div className="alma-home-hero-image md:hidden absolute inset-0 overflow-hidden bg-[#171614]"><img key={`mobile-bg-${heroTheme.image}`} src={`${heroTheme.image}?v=20260923-cloudy-2`} alt={heroTheme.label} className="absolute inset-0 h-full w-full object-cover brightness-[1.08] contrast-[0.9] saturate-[0.88] transition-opacity duration-700" style={{ objectPosition: "center 42%" }} /></div>
-        <div className="md:hidden absolute inset-0 bg-gradient-to-b from-black/5 via-transparent to-[#171614]/78" />
+        <div className="alma-home-hero-image md:hidden absolute inset-0 overflow-hidden bg-[#101e2b]"><AnimatedCityScene isDay={isDay} cloudy={cloudy} /></div>
+        <div className="md:hidden absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-[#101720]/78" />
         <div className="hidden md:block absolute inset-0 bg-[#f7f4ef]" />
-        <div className="hidden md:block absolute z-[2] right-[2%] lg:right-[7%] xl:right-[10%] top-32 bottom-0 w-[360px] lg:w-[440px] xl:w-[490px] pointer-events-none"><div className="relative h-full w-full overflow-hidden rounded-[36px] lg:rounded-[42px] shadow-[0_35px_80px_rgba(0,0,0,.20)] ring-1 ring-black/5 bg-neutral-200"><img key={heroTheme.image} src={`${heroTheme.image}?v=20260923-cloudy-2`} alt={heroTheme.label} className="h-full w-full object-cover transition-opacity duration-700" style={{ objectPosition: heroTheme.position }} /><div className="absolute inset-0 bg-gradient-to-t from-black/18 via-transparent to-white/5" /></div></div>
+        <div className="hidden md:block absolute z-[2] right-[2%] lg:right-[7%] xl:right-[10%] top-32 bottom-0 w-[360px] lg:w-[440px] xl:w-[490px] pointer-events-none"><div className="relative h-full w-full overflow-hidden rounded-[36px] lg:rounded-[42px] shadow-[0_35px_80px_rgba(0,0,0,.20)] ring-1 ring-black/5 bg-[#101e2b]"><AnimatedCityScene isDay={isDay} cloudy={cloudy} /></div></div>
 
                 {weather && weatherInfo && <div className="absolute right-4 top-[calc(env(safe-area-inset-top)+76px)] z-20 md:hidden"><div className="inline-flex items-center gap-1.5 rounded-full bg-black/72 px-2.5 py-1.5 text-white shadow-sm backdrop-blur-md"><span className="text-sm leading-none">{weatherInfo.icon}</span><span className="text-xs font-semibold">{Math.round(weather.temperature) > 0 ? "+" : ""}{Math.round(weather.temperature)}°</span><span className="h-3 w-px bg-white/20" /><span className="text-[11px] text-white/75">{weatherInfo.text}</span></div></div>}
 
@@ -207,7 +229,7 @@ export default function HomePage() {
             <button type="button" onClick={scrollToPhotozones} className="alma-pressable min-w-0 overflow-hidden whitespace-nowrap rounded-full bg-black/55 md:bg-white/80 backdrop-blur-md border border-white/25 md:border-black/10 text-white md:text-black px-1.5 md:px-7 py-2.5 md:py-4 text-[12px] md:text-base font-medium leading-none hover:scale-[1.02] transition shadow-sm">📸 Фотозоны</button>
           </div>
         </div></div>
-        <div className="absolute z-10 bottom-8 right-8 hidden lg:flex items-center gap-3 text-xs uppercase tracking-[0.22em] text-neutral-500"><span className="w-8 h-px bg-black/20" />{heroTheme.label}</div>
+        <div className="absolute z-10 bottom-8 right-8 hidden lg:flex items-center gap-3 text-xs uppercase tracking-[0.22em] text-neutral-500"><span className="w-8 h-px bg-black/20" />Петербург в движении</div>
       </section>
 
       <div id="alma-filters" className="relative z-10 bg-[#f7f4ef] pt-5 sm:pt-6 md:pt-12 lg:pt-14">
