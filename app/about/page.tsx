@@ -24,7 +24,7 @@ export default function AboutPage() {
             </div>
           </div>
 
-          <div className="mx-auto w-full max-w-[170px] md:max-w-[230px] rounded-[18px] bg-[#f7f4ef] p-3 md:p-4 text-center ring-1 ring-black/5">
+          <div className="alma-satin mx-auto w-full max-w-[170px] md:max-w-[230px] rounded-[18px] bg-[#f7f4ef] p-3 md:p-4 text-center ring-1 ring-black/5">
             <img src="/alma-qr.svg" alt="QR-код со ссылкой на ALMA" className="mx-auto aspect-square w-full max-w-[135px] md:max-w-[170px] rounded-[14px] bg-white p-2" />
             <p className="mt-3 text-sm font-semibold">Открыть ALMA</p>
             <p className="mt-1 text-xs leading-5 text-neutral-500">Наведи камеру другого телефона</p>
