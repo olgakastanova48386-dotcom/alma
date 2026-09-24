@@ -49,12 +49,16 @@ function MapIcon() {
 
 function PawIcon() {
   return (
-    <svg viewBox="0 0 24 24" aria-hidden="true" className="h-[21px] w-[21px]" fill="currentColor">
-      <ellipse cx="8" cy="7.2" rx="2" ry="2.7" transform="rotate(-18 8 7.2)" />
-      <ellipse cx="16" cy="7.2" rx="2" ry="2.7" transform="rotate(18 16 7.2)" />
-      <ellipse cx="5.2" cy="11.7" rx="1.8" ry="2.4" transform="rotate(-30 5.2 11.7)" />
-      <ellipse cx="18.8" cy="11.7" rx="1.8" ry="2.4" transform="rotate(30 18.8 11.7)" />
-      <path d="M12 10.8c-3 0-5.7 2.7-5.7 5.5 0 1.9 1.4 3.2 3.1 3.2 1 0 1.7-.55 2.6-.55s1.6.55 2.6.55c1.7 0 3.1-1.3 3.1-3.2 0-2.8-2.7-5.5-5.7-5.5Z" />
+    <svg viewBox="0 0 24 24" aria-hidden="true" className="h-[23px] w-[23px]">
+      <mask id="alma-nav-paw-heart">
+        <rect width="24" height="24" fill="white" />
+        <ellipse cx="8.1" cy="10.25" rx="1.15" ry="1.7" transform="rotate(-18 8.1 10.25)" fill="black" />
+        <ellipse cx="10.65" cy="8.3" rx="1.15" ry="1.7" fill="black" />
+        <ellipse cx="13.35" cy="8.3" rx="1.15" ry="1.7" fill="black" />
+        <ellipse cx="15.9" cy="10.25" rx="1.15" ry="1.7" transform="rotate(18 15.9 10.25)" fill="black" />
+        <path d="M12 11.25c-2.1 0-3.6 1.65-4.05 3.5-.3 1.2.1 2.55 1.1 2.9.75.26 1.35-.06 2.05-.38.42-.2.65-.27.9-.27s.48.07.9.27c.7.32 1.3.64 2.05.38 1-.35 1.4-1.7 1.1-2.9-.45-1.85-1.95-3.5-4.05-3.5Z" fill="black" />
+      </mask>
+      <path d="M12 21.2 3.5 13.2C.3 10.1 1.2 5.05 4.8 3.65 7.4 2.65 10.05 3.8 12 6.1c1.95-2.3 4.6-3.45 7.2-2.45 3.6 1.4 4.5 6.45 1.3 9.55L12 21.2Z" fill="currentColor" mask="url(#alma-nav-paw-heart)" />
     </svg>
   );
 }
