@@ -175,6 +175,7 @@ select:-webkit-autofill {
 .alma-city-light { animation: alma-city-light 5s ease-in-out infinite alternate; }
 .alma-city-windows { animation: alma-city-windows 4.8s ease-in-out infinite alternate; }
 .alma-city-reflections { animation: alma-water-flow 6s ease-in-out infinite alternate; }
+.alma-city-water-glow { animation: alma-water-glow 5.5s ease-in-out infinite alternate; }
 .alma-city-boat { animation: alma-boat-glide 28s linear infinite alternate; }
 @keyframes alma-cloud-drift { from { transform: translateX(-46px); } to { transform: translateX(86px); } }
 @keyframes alma-cloud-drift-reverse { from { transform: translateX(68px); } to { transform: translateX(-84px); } }
@@ -182,6 +183,7 @@ select:-webkit-autofill {
 @keyframes alma-city-light { from { opacity: .7; } to { opacity: 1; } }
 @keyframes alma-city-windows { from { opacity: .52; } to { opacity: .88; } }
 @keyframes alma-water-flow { from { transform: translateX(-28px) scaleX(.97); opacity: .26; } to { transform: translateX(38px) scaleX(1.02); opacity: .64; } }
+@keyframes alma-water-glow { from { opacity: .18; transform: scaleX(.88); } to { opacity: .56; transform: scaleX(1.15); } }
 @keyframes alma-boat-glide { from { transform: translateX(-220px); } to { transform: translateX(370px); } }
 @media (prefers-reduced-motion: reduce) {
   .alma-city-scene * { animation: none !important; }
