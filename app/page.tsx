@@ -186,7 +186,7 @@ export default function HomePage() {
         <div className="alma-home-hero-image alma-aura-host md:hidden absolute inset-0 overflow-hidden bg-[#101e2b]"><InteractiveAura /></div>
         <div className="md:hidden pointer-events-none absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-[#101720]/78" />
         <div className="hidden md:block absolute inset-0 bg-[#f7f4ef]" />
-        <div className="hidden md:block absolute z-[2] right-[2%] lg:right-[7%] xl:right-[10%] top-32 bottom-0 w-[360px] lg:w-[440px] xl:w-[490px]"><div className="relative h-full w-full overflow-hidden rounded-[36px] lg:rounded-[42px] shadow-[0_35px_80px_rgba(0,0,0,.20)] ring-1 ring-black/5 bg-[#101e2b]"><InteractiveAura /></div></div>
+        <div className="hidden md:block absolute z-[11] right-[2%] lg:right-[7%] xl:right-[10%] top-32 bottom-0 w-[360px] lg:w-[440px] xl:w-[490px]"><div className="relative h-full w-full overflow-hidden rounded-[36px] lg:rounded-[42px] shadow-[0_35px_80px_rgba(0,0,0,.20)] ring-1 ring-black/5 bg-[#101e2b]"><InteractiveAura /></div></div>
 
                 {weather && weatherInfo && <div className="absolute right-4 top-[calc(env(safe-area-inset-top)+76px)] z-20 md:hidden"><div className="inline-flex items-center gap-1.5 rounded-full bg-black/72 px-2.5 py-1.5 text-white shadow-sm backdrop-blur-md"><span className="text-sm leading-none">{weatherInfo.icon}</span><span className="text-xs font-semibold">{Math.round(weather.temperature) > 0 ? "+" : ""}{Math.round(weather.temperature)}°</span><span className="h-3 w-px bg-white/20" /><span className="text-[11px] text-white/75">{weatherInfo.text}</span></div></div>}
 
@@ -200,7 +200,7 @@ export default function HomePage() {
             <button type="button" onClick={scrollToPhotozones} className="alma-pressable min-w-0 overflow-hidden whitespace-nowrap rounded-full bg-black/55 md:bg-white/80 backdrop-blur-md border border-white/25 md:border-black/10 text-white md:text-black px-1.5 md:px-7 py-2.5 md:py-4 text-[12px] md:text-base font-medium leading-none hover:scale-[1.02] transition shadow-sm">📸 Фотозоны</button>
           </div>
         </div></div>
-        <div className="absolute z-10 bottom-8 right-8 hidden lg:flex items-center gap-3 text-xs uppercase tracking-[0.22em] text-neutral-500"><span className="w-8 h-px bg-black/20" />Петербург в движении</div>
+        <div className="absolute z-10 bottom-8 right-8 hidden lg:flex items-center gap-3 text-xs uppercase tracking-[0.22em] text-neutral-500"><span className="w-8 h-px bg-black/20" />ALMA в движении</div>
       </section>
 
       <div id="alma-filters" className="relative z-10 bg-[#f7f4ef] pt-5 sm:pt-6 md:pt-12 lg:pt-14">
