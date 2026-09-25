@@ -159,11 +159,11 @@ export default function HomePage() {
               </div>
               <div className="alma-soft-note">ПО НАСТРОЕНИЮ <span>·</span> ПО БЮДЖЕТУ <span>·</span> БЕЗ ЛИШНИХ ПЛАНОВ</div>
             </div>
-            <div className="alma-soft-art" aria-label="Живая нейро-скульптура ALMA">
+            <div className="alma-soft-art" aria-label="Живой цифровой цветок ALMA">
               <div className="alma-soft-stage">
                 <div className="alma-soft-stage-head"><span>ALMA <small>ГОРОД ЧУВСТВУЕТ ТЕБЯ</small></span><span className="alma-soft-stage-mark">✳</span></div>
                 <NeuralSculpture />
-                <p>Почувствуй движение.<br />Найди своё направление.</p>
+                <p>Город расцветает<br />под твоё настроение.</p>
                 <span className="alma-soft-stage-arrow" aria-hidden="true">↗</span>
               </div>
               <div className="alma-soft-weather"><img src={heroImage} alt="Петербург сегодня" /><span>{weather && weatherInfo ? `${weatherInfo.text} · ${Math.round(weather.temperature) > 0 ? "+" : ""}${Math.round(weather.temperature)}°` : "Петербург сегодня"}</span></div>

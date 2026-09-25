@@ -2,32 +2,185 @@
 
 import { useEffect, useRef } from "react";
 
+type Point = { x: number; y: number };
+
 export default function NeuralSculpture() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
-    const context = canvas.getContext("2d", { alpha: true });
-    if (!context) return;
-
+    const ctx = canvas?.getContext("2d");
+    if (!canvas || !ctx) return;
     const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    let width = 0;
-    let height = 0;
-    let frame = 0;
-    let visible = true;
-    let pointerX = 0;
-    let pointerY = 0;
-    let aimX = 0;
-    let aimY = 0;
     const start = performance.now();
-    const palette = [
-      ["#f6a57c", "#e66f75", "#a95073"],
-      ["#b8d7ce", "#72bdb8", "#547b9b"],
-      ["#f4d098", "#ef9c72", "#bb6582"],
-      ["#d5b8e5", "#a593d6", "#737eb7"],
-      ["#c7e0ae", "#8bc49f", "#6b9d9f"],
-    ];
+    let width = 0, height = 0, frame = 0, visible = true;
+    let pointerX = 0, pointerY = 0, aimX = 0, aimY = 0;
+
+    function stroke(points: Point[], color: string, lineWidth = 1) {
+      if (!ctx || !points.length) return;
+      ctx.beginPath();
+      ctx.moveTo(points[0].x, points[0].y);
+      for (let i = 1; i < points.length; i++) ctx.lineTo(points[i].x, points[i].y);
+      ctx.strokeStyle = color;
+      ctx.lineWidth = lineWidth;
+      ctx.stroke();
+    }
+
+    function draw(now: number) {
+      if (!ctx || !width || !height) return;
+      const time = motion.matches ? 0 : (now - start) / 1000;
+      pointerX += (aimX - pointerX) * .055;
+      pointerY += (aimY - pointerY) * .055;
+      ctx.clearRect(0, 0, width, height);
+      ctx.save();
+      ctx.translate(width * .51 + pointerX * 10, height * .48 + pointerY * 7);
+      const scale = Math.min(width / 470, height / 420);
+      ctx.scale(scale, scale);
+
+      // Delicate geometry sits behind the flower like an instrument display.
+      ctx.strokeStyle = "#a9b6df1b";
+      ctx.lineWidth = .7;
+      for (const radius of [112, 167, 212]) {
+        ctx.beginPath();
+        ctx.arc(0, -10, radius, -Math.PI * .91, Math.PI * .61);
+        ctx.stroke();
+      }
+      for (let n = -2; n <= 2; n++) {
+        stroke([{ x: n * 84, y: -208 }, { x: n * 84, y: 196 }], "#a9b6df0d");
+        stroke([{ x: -230, y: n * 82 }, { x: 230, y: n * 82 }], "#a9b6df0d");
+      }
+
+      // Stem and a pair of translucent leaves.
+      ctx.beginPath();
+      ctx.moveTo(0, 8);
+      ctx.bezierCurveTo(-13, 64, -10, 128, 12, 217);
+      ctx.strokeStyle = "#a9e1f078";
+      ctx.lineWidth = 6;
+      ctx.shadowColor = "#7dd9f5";
+      ctx.shadowBlur = 10;
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = "#ecedffab";
+      ctx.stroke();
+      for (const side of [-1, 1]) {
+        const tip = { x: side * 129, y: 125 + side * 22 };
+        ctx.beginPath();
+        ctx.moveTo(side * 2, 133);
+        ctx.bezierCurveTo(side * 45, 92, side * 97, 86 + side * 14, tip.x, tip.y);
+        ctx.bezierCurveTo(side * 111, 158 + side * 18, side * 65, 185, side * 2, 133);
+        const fill = ctx.createLinearGradient(0, 120, tip.x, 160);
+        fill.addColorStop(0, "#867bb234");
+        fill.addColorStop(.62, side < 0 ? "#36e6f940" : "#c792f440");
+        fill.addColorStop(1, "#80cdea18");
+        ctx.fillStyle = fill;
+        ctx.fill();
+        ctx.strokeStyle = "#b7dafa78";
+        ctx.stroke();
+        for (let v = 1; v < 10; v++) {
+          const t = v / 10, x = side * (8 + t * 113);
+          const y = 135 - 23 * Math.sin(t * Math.PI) + side * t * 16;
+          stroke([{ x: side * 6, y: 136 }, { x, y }], "#b8e9ff2b", .7);
+          stroke([{ x: side * 6, y: 136 }, { x, y: y + 18 * Math.sin(t * Math.PI) }], "#b8e9ff25", .7);
+        }
+      }
+
+      // Five broad petals are drawn as deforming, translucent wire meshes.
+      const petals = [
+        { angle: -Math.PI / 2, length: 170, breadth: 88, phase: 0 },
+        { angle: -2.62, length: 170, breadth: 90, phase: 1.8 },
+        { angle: -.53, length: 170, breadth: 90, phase: 3.4 },
+        { angle: 2.37, length: 157, breadth: 82, phase: 2.6 },
+        { angle: .77, length: 157, breadth: 82, phase: 4.8 },
+      ];
+      petals.forEach((petal, index) => {
+        const breathe = 1 + Math.sin(time * .7 + petal.phase) * .025;
+        const angle = petal.angle + Math.sin(time * .46 + petal.phase) * .025 + pointerX * .035;
+        const axis = { x: Math.cos(angle), y: Math.sin(angle) };
+        const across = { x: -axis.y, y: axis.x };
+        const point = (u: number, v: number): Point => {
+          const spread = Math.pow(Math.sin(Math.PI * u), .56) * petal.breadth;
+          const ripple = Math.sin(u * 16 + v * 4 + time * .85 + petal.phase) * (3 + 4 * u);
+          const radius = u * petal.length * breathe + ripple * Math.abs(v);
+          const widthAt = spread * v * (1 + .09 * Math.sin(u * 11 + time * .6 + petal.phase));
+          return {
+            x: axis.x * radius + across.x * widthAt + pointerX * u * 3,
+            y: axis.y * radius + across.y * widthAt + Math.sin(u * Math.PI) * v * v * 9,
+          };
+        };
+        const edge: Point[] = [];
+        for (let i = 0; i <= 48; i++) edge.push(point(i / 48, -1));
+        for (let i = 48; i >= 0; i--) edge.push(point(i / 48, 1));
+        ctx.beginPath();
+        ctx.moveTo(edge[0].x, edge[0].y);
+        edge.slice(1).forEach((p) => ctx.lineTo(p.x, p.y));
+        ctx.closePath();
+        const fill = ctx.createLinearGradient(0, 0, axis.x * petal.length, axis.y * petal.length);
+        fill.addColorStop(0, "#b9a3da4d");
+        fill.addColorStop(.32, index % 2 ? "#b478d45d" : "#63bff066");
+        fill.addColorStop(.68, index % 2 ? "#56e9f586" : "#d6a4f292");
+        fill.addColorStop(1, "#74dffd40");
+        ctx.fillStyle = fill;
+        ctx.shadowColor = index % 2 ? "#a380ed88" : "#64def488";
+        ctx.shadowBlur = 18;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+        ctx.strokeStyle = "#b8dfffab";
+        ctx.lineWidth = 1.3;
+        ctx.stroke();
+        ctx.globalCompositeOperation = "screen";
+        for (let i = 1; i < 20; i++) {
+          const row: Point[] = [];
+          for (let j = 0; j <= 22; j++) row.push(point(i / 20, j / 11 - 1));
+          stroke(row, i % 4 === 0 ? "#c9ddff5b" : "#c0d5fc36", .65);
+        }
+        for (let j = -10; j <= 10; j++) {
+          const strand: Point[] = [];
+          for (let i = 0; i <= 28; i++) strand.push(point(i / 28, j / 10));
+          stroke(strand, j % 5 === 0 ? "#d7e6ff70" : "#b8d9ff3f", .65);
+        }
+        for (let band = 0; band < 3; band++) {
+          const u = .57 + band * .115 + .018 * Math.sin(time * .6 + petal.phase);
+          const stripe: Point[] = [];
+          for (let j = -14; j <= 14; j++) stripe.push(point(u + .034 * Math.sin(j * .2 + band), j / 17));
+          ctx.shadowColor = band === 1 ? "#fc8edb" : "#56f7ff";
+          ctx.shadowBlur = 14;
+          stroke(stripe, band === 1 ? "#f59bd68a" : "#77f7ffad", band === 0 ? 6 : 3.5);
+          ctx.shadowBlur = 0;
+        }
+        ctx.globalCompositeOperation = "source-over";
+      });
+
+      // Fine glowing stamens make the center unmistakably botanical.
+      const heart = ctx.createRadialGradient(0, 0, 0, 0, 0, 42);
+      heart.addColorStop(0, "#ffffffd9");
+      heart.addColorStop(.38, "#e6b1ef91");
+      heart.addColorStop(1, "#ebceff00");
+      ctx.fillStyle = heart;
+      ctx.beginPath();
+      ctx.arc(0, 0, 42, 0, Math.PI * 2);
+      ctx.fill();
+      for (let i = 0; i < 17; i++) {
+        const angle = -Math.PI + i / 16 * Math.PI * 1.95;
+        const distance = 32 + (i * 19) % 31;
+        const x = Math.cos(angle) * distance, y = Math.sin(angle) * distance * .76 - 6;
+        ctx.beginPath();
+        ctx.moveTo(0, 5);
+        ctx.quadraticCurveTo(x * .45, y * .15 - 14, x, y);
+        ctx.strokeStyle = "#e4f6ffb5";
+        ctx.lineWidth = i % 3 === 0 ? 1.6 : .95;
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.ellipse(x, y, 2.8, 5, angle, 0, Math.PI * 2);
+        ctx.fillStyle = i % 4 === 0 ? "#a6faff" : "#f3dcff";
+        ctx.shadowColor = ctx.fillStyle;
+        ctx.shadowBlur = 9;
+        ctx.fill();
+      }
+      ctx.shadowBlur = 0;
+      ctx.restore();
+      if (!motion.matches && visible) frame = requestAnimationFrame(draw);
+    }
 
     const resize = () => {
       const bounds = canvas.getBoundingClientRect();
@@ -36,108 +189,15 @@ export default function NeuralSculpture() {
       height = bounds.height;
       canvas.width = Math.round(width * ratio);
       canvas.height = Math.round(height * ratio);
-      context.setTransform(ratio, 0, 0, ratio, 0, 0);
+      ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
       if (motion.matches) draw(start);
     };
-
     const move = (event: PointerEvent) => {
       const bounds = canvas.getBoundingClientRect();
       aimX = Math.max(-1, Math.min(1, (event.clientX - bounds.left) / bounds.width * 2 - 1));
       aimY = Math.max(-1, Math.min(1, (event.clientY - bounds.top) / bounds.height * 2 - 1));
     };
     const reset = () => { aimX = 0; aimY = 0; };
-
-    function draw(now: number) {
-      if (!context || !width || !height) return;
-      const time = motion.matches ? 0 : (now - start) / 1000;
-      pointerX += (aimX - pointerX) * .065;
-      pointerY += (aimY - pointerY) * .065;
-      context.clearRect(0, 0, width, height);
-      const scale = Math.min(width / 510, height / 460);
-      const centerX = width * .51 + pointerX * 17;
-      const centerY = height * .51 + pointerY * 10;
-      context.save();
-      context.translate(centerX, centerY);
-      context.scale(scale, scale);
-
-      const glow = context.createRadialGradient(0, -8, 10, 0, -8, 190);
-      glow.addColorStop(0, "#eec6d481");
-      glow.addColorStop(.55, "#c3d9df4c");
-      glow.addColorStop(1, "#e9eaec00");
-      context.fillStyle = glow;
-      context.beginPath();
-      context.arc(0, -8, 190, 0, Math.PI * 2);
-      context.fill();
-
-      // Five lit ribbons twist around each other. Their outlines and highlights
-      // give the sculpture depth without an image or a video download.
-      for (let layer = 0; layer < palette.length; layer++) {
-        const phase = layer * 1.18;
-        const depth = .72 + layer * .12;
-        const points: { x: number; y: number; size: number }[] = [];
-        for (let step = 0; step <= 44; step++) {
-          const y = -165 + step * 7.5;
-          const wave = Math.sin(y * .017 + phase + time * .43) * (59 + layer * 4);
-          const curl = Math.cos(y * .031 - phase * .7 + time * .27) * 21;
-          const x = wave + curl + (layer - 2) * 13 + pointerX * (layer - 2) * 11;
-          const size = 11 + 18 * (1 + Math.sin(y * .022 - phase + time * .31)) / 2;
-          points.push({ x, y, size: size * depth });
-        }
-        context.beginPath();
-        points.forEach((p, index) => index ? context.lineTo(p.x - p.size, p.y) : context.moveTo(p.x - p.size, p.y));
-        for (let index = points.length - 1; index >= 0; index--) {
-          const p = points[index];
-          context.lineTo(p.x + p.size, p.y);
-        }
-        context.closePath();
-        const gradient = context.createLinearGradient(-140, -170, 130, 175);
-        gradient.addColorStop(0, palette[layer][0]);
-        gradient.addColorStop(.51, palette[layer][1]);
-        gradient.addColorStop(1, palette[layer][2]);
-        context.globalAlpha = .83;
-        context.shadowColor = palette[layer][1] + "88";
-        context.shadowBlur = 20;
-        context.shadowOffsetY = 12;
-        context.fillStyle = gradient;
-        context.fill();
-        context.shadowBlur = 0;
-        context.shadowOffsetY = 0;
-        context.globalAlpha = .72;
-        context.strokeStyle = "#ffffffaa";
-        context.lineWidth = 2.2;
-        context.beginPath();
-        points.forEach((p, index) => index ? context.lineTo(p.x - p.size * .62, p.y) : context.moveTo(p.x - p.size * .62, p.y));
-        context.stroke();
-        context.globalAlpha = 1;
-      }
-
-      const nodes = Array.from({ length: 34 }, (_, index) => {
-        const y = -145 + index * 9;
-        const x = Math.sin(y * .026 + index * 1.7 + time * .3) * 95 + pointerX * 15;
-        return { x, y, radius: index % 7 === 0 ? 4 : 2 };
-      });
-      context.lineWidth = 1;
-      nodes.forEach((point, index) => {
-        for (const other of nodes.slice(index + 1, index + 4)) {
-          if (Math.hypot(point.x - other.x, point.y - other.y) > 112) continue;
-          context.strokeStyle = "#ffffff72";
-          context.beginPath();
-          context.moveTo(point.x, point.y);
-          context.lineTo(other.x, other.y);
-          context.stroke();
-        }
-        context.fillStyle = index % 7 === 0 ? "#fffdf0" : "#ffffffb8";
-        context.shadowColor = "#ffffff";
-        context.shadowBlur = index % 7 === 0 ? 13 : 4;
-        context.beginPath();
-        context.arc(point.x, point.y, point.radius, 0, Math.PI * 2);
-        context.fill();
-      });
-      context.shadowBlur = 0;
-      context.restore();
-      if (!motion.matches && visible) frame = requestAnimationFrame(draw);
-    }
-
     const observer = new IntersectionObserver(([entry]) => {
       visible = entry.isIntersecting;
       cancelAnimationFrame(frame);

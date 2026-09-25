@@ -483,3 +483,14 @@ select:-webkit-autofill {
 .alma-soft-stage { background: radial-gradient(ellipse at 53% 52%, #f7f3f7 0%, #e9eaec 47%, #dce0e3 100%); }
 .alma-soft-stage-mark { color: #b583bd; }
 @media (max-width: 767px) { .alma-neural-canvas { top: 53px; height: calc(100% - 103px); } }
+
+/* An illuminated specimen inset into the same softly sculpted home surface. */
+.alma-soft-stage { border-color: #e9edf5; background: radial-gradient(ellipse at 52% 45%, #22293c 0%, #111722 47%, #0b0f18 100%); box-shadow: inset 2px 2px 6px #ffffff26, inset -6px -8px 16px #090e18, 14px 18px 28px #bcc0c69c, -12px -12px 26px #ffffff; }
+.alma-soft-stage:before { border-color: #e8f2ff27; }
+.alma-soft-stage-head { color: #eef5ff; }
+.alma-soft-stage-head small { color: #a3b3cc; }
+.alma-soft-stage-mark { background: #222d3b; color: #b2eff4; box-shadow: inset 2px 2px 5px #080d16, inset -2px -2px 4px #ffffff1c; }
+.alma-soft-stage p { color: #b8c5d8; }
+.alma-soft-stage-arrow { color: #d9f4ff; box-shadow: inset 3px 3px 8px #090e19, inset -3px -3px 8px #ffffff19; }
+.alma-neural-canvas { top: 49px; height: calc(100% - 54px); filter: none; }
+@media (max-width: 767px) { .alma-neural-canvas { top: 41px; height: calc(100% - 44px); } }
