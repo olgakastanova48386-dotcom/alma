@@ -168,9 +168,10 @@ select:-webkit-autofill {
 }
 
 /* ALMA hero experiment 5 — fabric physically pinched by the cursor. */
-.alma-page-interaction{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.alma-page-interaction{position:absolute;inset:0;z-index:2;overflow:hidden;pointer-events:none}
+.alma-home-page>section,.alma-home-page>header,.alma-home-page>footer,.alma-home-page>div:not(.alma-page-interaction){position:relative;z-index:3}
 .alma-page-interaction .alma-magnetic-field{--field-x:72%;--field-y:34%;position:absolute;inset:0;overflow:hidden;pointer-events:none;background:#f7f4ef;isolation:isolate}
-.alma-field-grid{position:absolute;inset:-6%;background-image:radial-gradient(circle,rgba(93,55,67,.32) 1.15px,transparent 1.4px);background-size:24px 24px;opacity:.62;mask-image:linear-gradient(to bottom,rgba(0,0,0,.9),rgba(0,0,0,.45))}
+.alma-field-grid{position:absolute;inset:-6%;background-image:radial-gradient(circle,rgba(92,42,61,.48) 1.6px,transparent 1.9px);background-size:22px 22px;opacity:.82;mask-image:linear-gradient(to bottom,rgba(0,0,0,.9),rgba(0,0,0,.45))}
 .alma-field-warp{position:absolute;left:var(--field-x);top:var(--field-y);width:430px;height:430px;transform:translate(-50%,-50%);border-radius:50%;background:repeating-radial-gradient(circle,transparent 0 17px,rgba(128,64,85,.12) 19px,rgba(255,255,255,.5) 23px,transparent 28px);filter:blur(.25px);mix-blend-mode:multiply;mask-image:radial-gradient(circle,#000 0 48%,transparent 72%);animation:alma-field-breathe 4.8s ease-in-out infinite}
 .alma-field-core{position:absolute;left:var(--field-x);top:var(--field-y);width:115px;height:115px;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.9) 0 8%,rgba(172,91,116,.20) 28%,rgba(106,48,67,.09) 47%,transparent 68%);filter:blur(3px)}
 @keyframes alma-field-breathe{50%{transform:translate(-50%,-50%) scale(1.08) rotate(2deg)}}
