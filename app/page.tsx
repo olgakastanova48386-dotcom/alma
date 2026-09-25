@@ -66,94 +66,28 @@ function getWeatherInfo(code: number, isDay: boolean) {
 }
 
 function InteractiveAura() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    let raf = 0;
-    let w = 0;
-    let h = 0;
-    let last = 0;
-    let age = 0;
-    let nextTurn = 0;
-    let targetAngle = 0;
-    let head = { x: 0, y: 0, angle: 0 };
-    let points: { x: number; y: number; width: number }[] = [];
-
-    const reset = () => {
-      age = 0;
-      nextTurn = 0;
-      targetAngle = (Math.random() - 0.5) * 0.5;
-      head = { x: -35, y: h * (0.24 + Math.random() * 0.18), angle: targetAngle };
-      points = [{ x: head.x, y: head.y, width: 2 }];
-    };
-
-    const resize = () => {
-      const rect = canvas.getBoundingClientRect();
-      w = rect.width;
-      h = rect.height;
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      canvas.width = Math.round(w * dpr);
-      canvas.height = Math.round(h * dpr);
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      reset();
-    };
-
-    const tick = (time: number) => {
-      const dt = Math.min((time - (last || time)) / 16.67, 1.8);
-      last = time;
-      age += dt;
-      ctx.clearRect(0, 0, w, h);
-
-      if (age >= nextTurn) {
-        targetAngle += (Math.random() - 0.5) * 1.5;
-        targetAngle = Math.max(-1.05, Math.min(1.05, targetAngle));
-        nextTurn = age + 8 + Math.random() * 25;
-      }
-      if (head.y < h * 0.1) targetAngle = Math.abs(targetAngle) * 0.8 + 0.2;
-      if (head.y > h * 0.58) targetAngle = -Math.abs(targetAngle) * 0.8 - 0.2;
-
-      head.angle += (targetAngle - head.angle) * 0.055 * dt;
-      const speed = Math.max(1.45, w / 260) * dt;
-      head.x += Math.cos(head.angle) * speed;
-      head.y += Math.sin(head.angle) * speed;
-
-      const thickness = Math.min(31, 1.8 + Math.pow(points.length / 18, 1.08));
-      points.push({ x: head.x, y: head.y, width: thickness });
-
-      ctx.strokeStyle = "#ff0a1f";
-      ctx.lineCap = "round";
-      ctx.lineJoin = "round";
-      for (let i = 1; i < points.length; i++) {
-        const a = points[i - 1];
-        const b = points[i];
-        ctx.lineWidth = b.width;
-        ctx.beginPath();
-        ctx.moveTo(a.x, a.y);
-        ctx.lineTo(b.x, b.y);
-        ctx.stroke();
-      }
-
-      if (head.x > w + 70 || points.length > 760) reset();
-      raf = window.requestAnimationFrame(tick);
-    };
-
-    resize();
-    window.addEventListener("resize", resize);
-    raf = window.requestAnimationFrame(tick);
-    return () => {
-      window.cancelAnimationFrame(raf);
-      window.removeEventListener("resize", resize);
-    };
-  }, []);
+  const words = [
+    { text: "куда", className: "alma-reveal-word word-where" },
+    { text: "сегодня", className: "alma-reveal-word word-today" },
+    { text: "пойдём", className: "alma-reveal-word word-go" },
+    { text: "с тобой?", className: "alma-reveal-word word-you" },
+  ];
 
   return (
-    <div className="alma-route-art" aria-hidden="true">
-      <canvas ref={canvasRef} className="alma-route-canvas" />
+    <div className="alma-reveal-art" aria-hidden="true">
+      <div className="alma-reveal-cloud">
+        <span className="alma-blur-stroke stroke-1" />
+        <span className="alma-blur-stroke stroke-2" />
+        <span className="alma-blur-stroke stroke-3" />
+        <span className="alma-blur-stroke stroke-4" />
+        <span className="alma-blur-stroke stroke-5" />
+        <span className="alma-blur-stroke stroke-6" />
+        <span className="alma-blur-stroke stroke-7" />
+        <span className="alma-blur-stroke stroke-8" />
+        <span className="alma-blur-stroke stroke-9" />
+        <span className="alma-blur-stroke stroke-10" />
+        {words.map((word) => <span key={word.text} className={word.className}>{word.text}</span>)}
+      </div>
     </div>
   );
 }
