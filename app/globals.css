@@ -167,24 +167,76 @@ select:-webkit-autofill {
   .alma-route-actions button, .alma-route-actions a { min-height: 44px; }
 }
 
-/* ALMA hero: clean white field with a live, hand-drawn red line. */
+/* ALMA hero — soft blurred strokes revealing a phrase. */
 .alma-home-hero-image.alma-aura-host { pointer-events: none !important; }
-.alma-route-art {
+.alma-reveal-art {
   position: relative;
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background: #fff;
+  background: #f3f0e9;
 }
-.alma-route-canvas {
+.alma-reveal-cloud {
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+  left: 50%;
+  top: 45%;
+  width: min(78%, 660px);
+  aspect-ratio: 1.5 / 1;
+  transform: translate(-50%, -50%);
+}
+.alma-blur-stroke {
+  position: absolute;
   display: block;
+  height: 13%;
+  border-radius: 999px;
+  background: #c76778;
+  filter: blur(13px);
+  opacity: .88;
+  transform-origin: center;
+  animation: alma-stroke-breathe 5.8s ease-in-out infinite alternate;
+}
+.stroke-1 { width: 34%; left: 5%; top: 23%; transform: rotate(5deg); animation-delay: -.5s; }
+.stroke-2 { width: 40%; left: 31%; top: 14%; transform: rotate(-2deg); animation-delay: -2.2s; }
+.stroke-3 { width: 29%; right: 3%; top: 28%; transform: rotate(4deg); animation-delay: -1.1s; }
+.stroke-4 { width: 45%; left: 9%; top: 39%; transform: rotate(-3deg); animation-delay: -3.1s; }
+.stroke-5 { width: 38%; right: 9%; top: 43%; transform: rotate(2deg); animation-delay: -.2s; }
+.stroke-6 { width: 36%; left: 22%; top: 55%; transform: rotate(-1deg); animation-delay: -1.7s; }
+.stroke-7 { width: 34%; right: 5%; top: 59%; transform: rotate(3deg); animation-delay: -2.7s; }
+.stroke-8 { width: 25%; left: 7%; top: 66%; transform: rotate(4deg); animation-delay: -.9s; }
+.stroke-9 { width: 42%; left: 31%; top: 73%; transform: rotate(-4deg); animation-delay: -3.6s; }
+.stroke-10 { width: 21%; right: 17%; top: 18%; transform: rotate(8deg); animation-delay: -1.4s; }
+.alma-reveal-word {
+  position: absolute;
+  z-index: 2;
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 400;
+  color: #34272b;
+  white-space: nowrap;
+  opacity: .22;
+  filter: blur(.2px);
+  animation: alma-word-reveal 8s ease-in-out infinite;
+}
+.word-where { left: 39%; top: 18%; font-size: clamp(20px,3vw,38px); animation-delay: 0s; }
+.word-today { left: 45%; top: 42%; font-size: clamp(21px,3.2vw,40px); animation-delay: 1.4s; }
+.word-go { left: 24%; top: 57%; font-size: clamp(19px,2.8vw,35px); animation-delay: 2.8s; }
+.word-you { left: 51%; top: 70%; font-size: clamp(20px,3vw,38px); animation-delay: 4.2s; }
+@keyframes alma-stroke-breathe {
+  0% { filter: blur(15px); opacity: .74; scale: .96; }
+  55% { filter: blur(10px); opacity: .91; scale: 1.025; }
+  100% { filter: blur(17px); opacity: .8; scale: .985; }
+}
+@keyframes alma-word-reveal {
+  0%, 13%, 82%, 100% { opacity: .2; filter: blur(1.2px); }
+  27%, 61% { opacity: 1; filter: blur(0); }
 }
 @media (max-width: 767px) {
-  .alma-home-hero-image.alma-aura-host { background: #fff !important; }
+  .alma-home-hero-image.alma-aura-host { background: #f3f0e9 !important; }
+  .alma-reveal-cloud { width: 88%; top: 42%; }
+  .alma-blur-stroke { filter: blur(10px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .alma-blur-stroke, .alma-reveal-word { animation: none; }
+  .alma-reveal-word { opacity: .82; filter: none; }
 }
 
 @keyframes alma-cta-shine {
