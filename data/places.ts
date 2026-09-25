@@ -967,7 +967,7 @@ export const places: Place[] = [
     budget: "Бесплатно",
     company: ["Один", "Пара", "Друзья", "Семья"],
     duration: "2–4 часа",
-    image: "/images/nikolskie.jpg",
+    image: "/place-images/places-46.jpg",
     lat: 59.9195,
     lng: 30.3018,
     description: "Добавить в прогулку красивый исторический двор с меняющейся сезонной программой.",
