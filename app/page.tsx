@@ -66,28 +66,52 @@ function getWeatherInfo(code: number, isDay: boolean) {
 }
 
 function InteractiveAura() {
-  const words = [
-    { text: "куда", className: "alma-reveal-word word-where" },
-    { text: "сегодня", className: "alma-reveal-word word-today" },
-    { text: "пойдём", className: "alma-reveal-word word-go" },
-    { text: "с тобой?", className: "alma-reveal-word word-you" },
+  const phrases = [
+    ["не знаю", "куда", "но хочу", "куда-нибудь"],
+    ["может,", "просто", "пойдём?"],
+    ["куда тебя", "тянет", "сегодня?"],
+    ["ALMA", "уже кое-что", "нашла"],
   ];
+  const [phrase, setPhrase] = useState(0);
+  const artRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => setPhrase((value) => (value + 1) % phrases.length), 7200);
+    return () => window.clearInterval(timer);
+  }, []);
+
+  const moveFog = (event: React.PointerEvent<HTMLDivElement>) => {
+    const bounds = event.currentTarget.getBoundingClientRect();
+    const x = ((event.clientX - bounds.left) / bounds.width) * 100;
+    const y = ((event.clientY - bounds.top) / bounds.height) * 100;
+    artRef.current?.style.setProperty("--reveal-x", x.toFixed(1) + "%");
+    artRef.current?.style.setProperty("--reveal-y", y.toFixed(1) + "%");
+    artRef.current?.style.setProperty("--reveal-size", "92px");
+  };
 
   return (
-    <div className="alma-reveal-art" aria-hidden="true">
-      <div className="alma-reveal-cloud">
-        <span className="alma-blur-stroke stroke-1" />
-        <span className="alma-blur-stroke stroke-2" />
-        <span className="alma-blur-stroke stroke-3" />
-        <span className="alma-blur-stroke stroke-4" />
-        <span className="alma-blur-stroke stroke-5" />
-        <span className="alma-blur-stroke stroke-6" />
-        <span className="alma-blur-stroke stroke-7" />
-        <span className="alma-blur-stroke stroke-8" />
-        <span className="alma-blur-stroke stroke-9" />
-        <span className="alma-blur-stroke stroke-10" />
-        {words.map((word) => <span key={word.text} className={word.className}>{word.text}</span>)}
+    <div
+      ref={artRef}
+      className="alma-living-art"
+      aria-hidden="true"
+      onPointerMove={moveFog}
+      onPointerDown={moveFog}
+      onPointerLeave={() => artRef.current?.style.setProperty("--reveal-size", "0px")}
+    >
+      <div className="alma-secret-copy" key={phrase}>
+        {phrases[phrase].map((line, index) => (
+          <span key={line} className={"alma-secret-line alma-secret-line-" + (index + 1)}>{line}</span>
+        ))}
       </div>
+      <div className="alma-fog-layer">
+        <span className="alma-fog fog-a" />
+        <span className="alma-fog fog-b" />
+        <span className="alma-fog fog-c" />
+        <span className="alma-fog fog-d" />
+        <span className="alma-fog fog-e" />
+        <span className="alma-fog fog-f" />
+      </div>
+      <span className="alma-art-whisper">проведи пальцем</span>
     </div>
   );
 }
