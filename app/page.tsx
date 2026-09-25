@@ -67,71 +67,35 @@ function getWeatherInfo(code: number, isDay: boolean) {
 
 function InteractiveAura() {
   const surfaceRef = useRef<HTMLDivElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     const surface = surfaceRef.current;
-    const canvas = canvasRef.current;
-    if (!surface || !canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    let w=0,h=0,dpr=1,raf=0;
-    let mx=.72,my=.28,tx=mx,ty=my,pmx=mx,pmy=my,energy=0;
-    const resize=()=>{
-      const r=surface.getBoundingClientRect();
-      dpr=Math.min(window.devicePixelRatio||1,2); w=r.width; h=r.height;
-      canvas.width=Math.round(w*dpr); canvas.height=Math.round(h*dpr);
-      canvas.style.width=w+"px"; canvas.style.height=h+"px";
-      ctx.setTransform(dpr,0,0,dpr,0,0);
-    };
+    if (!surface) return;
+    let x=72,y=34,tx=x,ty=y,raf=0;
     const track=(ev:PointerEvent)=>{
       const r=surface.getBoundingClientRect();
-      if(ev.clientX<r.left||ev.clientX>r.right||ev.clientY<r.top||ev.clientY>r.bottom) return;
-      tx=(ev.clientX-r.left)/r.width; ty=(ev.clientY-r.top)/r.height;
-      const speed=Math.hypot(tx-pmx,ty-pmy);
-      energy=Math.min(1,energy+speed*11+.08);
-      pmx=tx;pmy=ty;
+      if(ev.clientX<r.left||ev.clientX>r.right||ev.clientY<r.top||ev.clientY>r.bottom)return;
+      tx=(ev.clientX-r.left)/r.width*100;
+      ty=(ev.clientY-r.top)/r.height*100;
     };
-    const draw=()=>{
-      mx+=(tx-mx)*.17; my+=(ty-my)*.17; energy*=.94;
-      ctx.clearRect(0,0,w,h);
-      const x=mx*w,y=my*h;
-      const reach=Math.max(260,Math.min(w,h)*.58);
-      const folds=18;
-      for(let i=0;i<folds;i++){
-        const a=(Math.PI*2/folds)*i + Math.sin(i*2.31)*.12;
-        const wobble=Math.sin(i*4.17+mx*8-my*6);
-        const len=reach*(.66+(i%5)*.075)*(1+energy*.16);
-        const spread=.18+.055*(i%3);
-        const ex=x+Math.cos(a)*len, ey=y+Math.sin(a)*len*.68;
-        const nx=-Math.sin(a), ny=Math.cos(a);
-        const bend=(18+energy*38)*wobble;
-        const cx=x+(ex-x)*.48+nx*bend, cy=y+(ey-y)*.48+ny*bend*.6;
-        const grad=ctx.createLinearGradient(x,y,ex,ey);
-        grad.addColorStop(0,"rgba(95,42,59,"+(0.19+energy*.11)+")");
-        grad.addColorStop(.22,"rgba(255,255,255,.58)");
-        grad.addColorStop(.5,"rgba(129,61,82,.13)");
-        grad.addColorStop(1,"rgba(255,255,255,0)");
-        ctx.beginPath();ctx.moveTo(x,y);ctx.quadraticCurveTo(cx,cy,ex,ey);
-        ctx.lineWidth=10+spread*18;ctx.strokeStyle=grad;ctx.lineCap="round";ctx.stroke();
-        ctx.beginPath();ctx.moveTo(x+nx*5,y+ny*5);ctx.quadraticCurveTo(cx+nx*8,cy+ny*8,ex,ey);
-        ctx.lineWidth=3.5;ctx.strokeStyle="rgba(255,255,255,.42)";ctx.stroke();
-      }
-      const pinch=ctx.createRadialGradient(x,y,2,x,y,70+energy*35);
-      pinch.addColorStop(0,"rgba(92,39,56,.30)");
-      pinch.addColorStop(.12,"rgba(255,255,255,.72)");
-      pinch.addColorStop(.36,"rgba(153,75,99,.16)");
-      pinch.addColorStop(1,"rgba(255,255,255,0)");
-      ctx.fillStyle=pinch;ctx.beginPath();ctx.arc(x,y,72+energy*35,0,Math.PI*2);ctx.fill();
-      raf=requestAnimationFrame(draw);
+    const animate=()=>{
+      x+=(tx-x)*.11;y+=(ty-y)*.11;
+      surface.style.setProperty("--field-x",x+"%");
+      surface.style.setProperty("--field-y",y+"%");
+      raf=requestAnimationFrame(animate);
     };
-    resize(); window.addEventListener("resize",resize); window.addEventListener("pointermove",track,{passive:true});
-    raf=requestAnimationFrame(draw);
-    return()=>{window.removeEventListener("resize",resize);window.removeEventListener("pointermove",track);cancelAnimationFrame(raf)};
+    window.addEventListener("pointermove",track,{passive:true});
+    raf=requestAnimationFrame(animate);
+    return()=>{window.removeEventListener("pointermove",track);cancelAnimationFrame(raf)};
   },[]);
 
-  return <div ref={surfaceRef} className="alma-cloth-surface" aria-hidden="true"><div className="alma-cloth-sheet"/><canvas ref={canvasRef} className="alma-cloth-canvas"/><div className="alma-cloth-texture"/></div>;
+  return (
+    <div ref={surfaceRef} className="alma-magnetic-field" aria-hidden="true">
+      <div className="alma-field-grid"/>
+      <div className="alma-field-warp"/>
+      <div className="alma-field-core"/>
+    </div>
+  );
 }
 
 export default function HomePage() {
