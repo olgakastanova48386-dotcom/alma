@@ -137,8 +137,10 @@ export default function UnifiedMap() {
     let cancelled = false;
     // Load Leaflet from ALMA's own build so blocked third-party CDNs cannot
     // leave the map permanently stuck on its loading screen.
-    import("leaflet").then((leaflet) => {
+    import("leaflet").then((module) => {
       if (cancelled) return;
+      const leaflet = (module as unknown as { default?: typeof module }).default ?? module;
+      if (typeof leaflet.map !== "function") return;
       window.L = leaflet;
       setReady(true);
     });
@@ -149,7 +151,7 @@ export default function UnifiedMap() {
     if (!ready || !container.current || map.current) return;
     map.current = window.L.map(container.current, { zoomControl: false }).setView([59.9386, 30.3141], 11);
     const currentMap = map.current;
-    window.L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 19, attribution: "© OpenStreetMap" }).addTo(map.current);
+    window.L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 19, attribution: "© OpenStreetMap" }).addTo(map.current);
     window.L.control.zoom({ position: "bottomright" }).addTo(map.current);
     const onZoom = () => setMapZoom(map.current?.getZoom() ?? 11);
     map.current.on("zoomend", onZoom);
