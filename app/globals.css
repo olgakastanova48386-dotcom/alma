@@ -196,28 +196,13 @@ select:-webkit-autofill {
   transition:opacity .22s ease,transform .25s ease; will-change:left,top,transform;
 }
 @media (hover:hover) and (pointer:fine) {
-  .alma-home-hero { cursor: none; }
-  .alma-metal-cursor {
-    position:absolute; z-index:30; left:var(--flow-x); top:var(--flow-y);
-    width:22px; height:22px; border-radius:52% 48% 55% 45% / 44% 52% 48% 56%;
-    transform:translate(-50%,-50%) rotate(-12deg);
-    pointer-events:none; opacity:0;
-    background:
-      radial-gradient(circle at 31% 25%, #fff 0 8%, rgba(255,255,255,.9) 9%, transparent 24%),
-      radial-gradient(circle at 65% 70%, #3f4145 0 12%, #8d9197 31%, #e8eaec 58%, #6f7378 82%, #26282b 100%);
-    border:1px solid rgba(255,255,255,.82);
-    box-shadow:inset 2px 2px 4px rgba(255,255,255,.95), inset -3px -4px 5px rgba(20,22,24,.38), 0 5px 9px rgba(36,31,33,.24);
-    transition:opacity .16s ease, width .12s ease, height .12s ease;
-    will-change:left,top,transform;
+  .alma-home-hero, .alma-home-hero * {
+    cursor: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'><defs><linearGradient id='m' x1='5' y1='3' x2='23' y2='27' gradientUnits='userSpaceOnUse'><stop stop-color='%23fff'/><stop offset='.22' stop-color='%23d9dce0'/><stop offset='.48' stop-color='%237a7e84'/><stop offset='.68' stop-color='%23f7f8f9'/><stop offset='1' stop-color='%2344484d'/></linearGradient><filter id='s' x='-30%25' y='-30%25' width='180%25' height='180%25'><feDropShadow dx='1.4' dy='2' stdDeviation='1.1' flood-color='%23000' flood-opacity='.38'/></filter></defs><path filter='url(%23s)' d='M4.2 2.7 25 17.1l-9.3 1.2 5.2 9-4.1 2.3-5.1-9.1-6.1 7.1L4.2 2.7Z' fill='url(%23m)' stroke='%23fff' stroke-width='1.15' stroke-linejoin='round'/><path d='m7.1 6.9 12.2 8.5-6.1.8-4.5 5.1L7.1 6.9Z' fill='none' stroke='%23ffffff' stroke-opacity='.55' stroke-width='.8'/></svg>") 4 3, auto !important;
   }
-  .alma-flow-surface.is-flowing .alma-metal-cursor { opacity:1; }
-  .alma-metal-cursor-glint {
-    position:absolute; width:7px; height:3px; left:4px; top:4px; border-radius:999px;
-    background:rgba(255,255,255,.95); filter:blur(.35px); transform:rotate(-20deg);
-  }
-  .alma-home-hero:active .alma-metal-cursor { width:18px; height:18px; }
 }
-@media (hover:none),(pointer:coarse) { .alma-metal-cursor { display:none; } }
+@media (hover:none),(pointer:coarse) {
+  .alma-home-hero, .alma-home-hero * { cursor:auto; }
+}
 
 .alma-flow-core {
   position:absolute; left:var(--flow-x); top:var(--flow-y); width:22px; height:22px;
