@@ -178,7 +178,7 @@ select:-webkit-autofill {
   inset: 0;
   overflow: hidden;
   background:
-    radial-gradient(circle at 74% 38%, rgba(185,118,137,.12), transparent 25%),
+    radial-gradient(circle at 74% 38%, rgba(172,72,103,.25), transparent 30%),
     radial-gradient(circle at 55% 72%, rgba(255,255,255,.9), transparent 35%),
     #f7f4ef;
   touch-action: pan-y;
@@ -188,11 +188,11 @@ select:-webkit-autofill {
   position: absolute;
   inset: -15%;
   background:
-    radial-gradient(circle 150px at var(--flow-x) var(--flow-y), rgba(176,91,115,.23), rgba(255,255,255,.36) 33%, transparent 70%);
+    radial-gradient(circle 150px at var(--flow-x) var(--flow-y), rgba(163,61,92,.48), rgba(255,255,255,.45) 36%, transparent 70%);
   filter: blur(15px);
   transform: translate3d(var(--flow-dx),var(--flow-dy),0) scale(1.05);
   transition: transform .75s cubic-bezier(.18,.75,.22,1), filter .5s ease;
-  opacity: .72;
+  opacity: .95;
 }
 .alma-flow-surface.is-flowing .alma-flow-field {
   filter: blur(7px);
@@ -214,7 +214,7 @@ select:-webkit-autofill {
     0 18px 60px rgba(91,57,67,.08);
   backdrop-filter: blur(2px);
   -webkit-backdrop-filter: blur(2px);
-  opacity: .22;
+  opacity: .55;
   transition: left .22s ease-out, top .22s ease-out, transform .5s ease, opacity .4s ease;
 }
 .alma-flow-surface.is-flowing .alma-flow-caustic {
@@ -225,7 +225,7 @@ select:-webkit-autofill {
   position: absolute;
   border-radius: 50%;
   filter: blur(48px);
-  opacity: .42;
+  opacity: .68;
   animation: alma-flow-drift 9s ease-in-out infinite alternate;
 }
 .flow-light-a {
@@ -233,7 +233,7 @@ select:-webkit-autofill {
   aspect-ratio: 1;
   right: 5%;
   top: 5%;
-  background: rgba(183,113,132,.16);
+  background: rgba(168,70,100,.32);
 }
 .flow-light-b {
   width: 31%;
