@@ -448,13 +448,33 @@ select:-webkit-autofill {
   .alma-soft-button, .alma-home-page .alma-photo-card { transition: none !important; }
 }
 
-/* A glossy sculpted ring gives the home screen one memorable moving object. */
-.alma-soft-donut-space { position: absolute; inset: 0; display: grid; place-items: center; perspective: 950px; }
-.alma-soft-donut { position: relative; z-index: 2; display: block; width: min(62%, 295px); aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle at 26% 18%, #fff7da 0%, #ffd695 23%, transparent 56%), conic-gradient(from 25deg, #a95c3d, #e58d50 52deg, #f8b769 108deg, #e6a35e 185deg, #c97949 256deg, #f5c275 316deg, #a95c3d); box-shadow: inset -23px -23px 30px #9f583a82, inset 16px 19px 25px #fff0c6bd, 24px 37px 25px #6a55525c, 0 0 0 1px #ffffff99; animation: alma-donut-float 6s ease-in-out infinite; will-change: transform; }
-.alma-soft-donut:after { content: ""; position: absolute; inset: 10%; border-radius: 50%; background: conic-gradient(from -55deg, transparent 0 30deg, #ffffffad 50deg 72deg, transparent 95deg 230deg, #fff6d266 270deg 300deg, transparent 320deg); mask: radial-gradient(circle, transparent 0 55%, #000 59% 66%, transparent 71%); filter: blur(4px); pointer-events: none; }
-.alma-soft-donut-hole { position: absolute; z-index: 3; top: 33%; left: 33%; width: 34%; height: 34%; border-radius: 50%; background: #e5e7e9; box-shadow: inset 11px 12px 16px #96553d, inset -8px -9px 11px #fff2d9, 0 1px 3px #864b3680; }
-.alma-soft-donut-shadow { position: absolute; z-index: 1; left: 27%; bottom: 53px; width: 50%; height: 35px; border-radius: 50%; background: #7d767966; filter: blur(16px); animation: alma-donut-shadow 6s ease-in-out infinite; }
-@keyframes alma-donut-float { 0%,100% { transform: translate3d(var(--atlas-x1),var(--atlas-y1),0) rotateX(43deg) rotateZ(-22deg); } 50% { transform: translate3d(var(--atlas-x2),calc(var(--atlas-y2) - 28px),0) rotateX(49deg) rotateZ(14deg); } }
-@keyframes alma-donut-shadow { 50% { opacity: .5; transform: scale(.75); } }
-@media (max-width: 767px) { .alma-soft-donut { width: min(65%, 235px); } .alma-soft-donut-shadow { bottom: 44px; } }
-@media (prefers-reduced-motion: reduce) { .alma-soft-donut, .alma-soft-donut-shadow { animation: none !important; } .alma-soft-donut { transform: rotateX(43deg) rotateZ(-22deg); } }
+/* The route itself becomes the moving object in the opening screen. */
+.alma-route-thread { position: absolute; z-index: 1; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.alma-route-thread path { fill: none; stroke: #9caea8; stroke-width: 2.5; stroke-linecap: round; stroke-dasharray: 3 13; animation: alma-route-flow 2.4s linear infinite; }
+.alma-route-stops { position: absolute; z-index: 2; inset: 0; }
+.alma-route-tile { position: absolute; display: flex; align-items: center; gap: 12px; width: min(53%, 260px); min-width: 204px; height: 94px; padding: 9px; border: 1px solid #fff; border-radius: 21px; background: #e9eaec; color: #33383a; text-align: left; box-shadow: inset 2px 2px 3px #fff, inset -2px -2px 5px #cbd0d3, 8px 11px 16px #b9bfc4, -6px -6px 13px #fff; will-change: transform; }
+.alma-route-tile img { flex: none; width: 72px; height: 72px; border-radius: 14px; object-fit: cover; box-shadow: inset 0 1px 2px #fff, 2px 3px 6px #a6adb366; }
+.alma-route-tile span { min-width: 0; }
+.alma-route-tile small { display: block; margin-bottom: 6px; color: #939a9c; font-size: 9px; font-weight: 800; letter-spacing: .13em; }
+.alma-route-tile strong { display: block; font-size: 14px; line-height: 1.1; font-weight: 650; }
+.alma-route-tile i { align-self: flex-start; margin-left: auto; font-size: 17px; font-style: normal; color: #8d9993; }
+.alma-route-tile:focus-visible { outline: 2px solid #4d7b65; outline-offset: 5px; }
+.alma-route-tile-one { top: 95px; left: 9%; animation: alma-route-one 5.2s ease-in-out infinite; }
+.alma-route-tile-two { top: 202px; right: 8%; animation: alma-route-two 6s ease-in-out infinite; }
+.alma-route-tile-three { top: 310px; left: 13%; animation: alma-route-three 5.5s ease-in-out infinite; }
+.alma-route-tile:hover { animation-play-state: paused; filter: brightness(1.03); }
+@keyframes alma-route-one { 0%,100% { transform: translate3d(var(--atlas-x1),var(--atlas-y1),0) rotate(-4deg); } 50% { transform: translate3d(var(--atlas-x1),calc(var(--atlas-y1) - 10px),0) rotate(-1deg); } }
+@keyframes alma-route-two { 0%,100% { transform: translate3d(var(--atlas-x2),var(--atlas-y2),0) rotate(4deg); } 50% { transform: translate3d(var(--atlas-x2),calc(var(--atlas-y2) + 11px),0) rotate(1deg); } }
+@keyframes alma-route-three { 0%,100% { transform: translate3d(var(--atlas-x3),var(--atlas-y3),0) rotate(-2deg); } 50% { transform: translate3d(var(--atlas-x3),calc(var(--atlas-y3) - 8px),0) rotate(2deg); } }
+@keyframes alma-route-flow { to { stroke-dashoffset: -16; } }
+@media (max-width: 767px) {
+  .alma-route-tile { width: 62%; min-width: 0; height: 70px; gap: 8px; padding: 6px; border-radius: 16px; }
+  .alma-route-tile img { width: 56px; height: 56px; border-radius: 11px; }
+  .alma-route-tile small { font-size: 7px; margin-bottom: 4px; }
+  .alma-route-tile strong { font-size: 11px; }
+  .alma-route-tile i { font-size: 14px; }
+  .alma-route-tile-one { top: 75px; left: 7%; }
+  .alma-route-tile-two { top: 160px; right: 5%; }
+  .alma-route-tile-three { top: 244px; left: 9%; }
+}
+@media (prefers-reduced-motion: reduce) { .alma-route-tile, .alma-route-thread path { animation: none !important; } }

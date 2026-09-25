@@ -186,11 +186,16 @@ export default function HomePage() {
               </div>
               <div className="alma-soft-note">ПО НАСТРОЕНИЮ <span>·</span> ПО БЮДЖЕТУ <span>·</span> БЕЗ ЛИШНИХ ПЛАНОВ</div>
             </div>
-            <div ref={heroArtRef} className="alma-soft-art" aria-label="Подвижная композиция ALMA">
+            <div ref={heroArtRef} className="alma-soft-art" aria-label="Идея маршрута по Петербургу">
               <div className="alma-soft-stage">
-                <div className="alma-soft-stage-head"><span>ALMA <small>ДЛЯ ТЕБЯ</small></span><span className="alma-soft-stage-mark">✳</span></div>
-                <div className="alma-soft-donut-space" aria-hidden="true"><span className="alma-soft-donut"><span className="alma-soft-donut-hole" /></span><span className="alma-soft-donut-shadow" /></div>
-                <p>Место найдётся.<br />Стоит только захотеть.</p>
+                <div className="alma-soft-stage-head"><span>ALMA <small>ОДИН ДЕНЬ · ТРИ МЕСТА</small></span><span className="alma-soft-stage-mark">✳</span></div>
+                <svg className="alma-route-thread" viewBox="0 0 600 480" preserveAspectRatio="none" aria-hidden="true"><path d="M165 160 C 240 180, 280 236, 413 247 S 442 340, 176 372" /></svg>
+                <div className="alma-route-stops">
+                  <button type="button" onClick={() => openPlace("Кафе Зингер")} className="alma-route-tile alma-route-tile-one"><img src="/images/кафе зингер.jpg" alt="" /><span><small>01 / КОФЕ</small><strong>Кафе Зингер</strong></span><i aria-hidden="true">↗</i></button>
+                  <button type="button" onClick={() => openPlace("Новая Голландия")} className="alma-route-tile alma-route-tile-two"><img src="/images/new-holland.jpg" alt="" /><span><small>02 / ПРОГУЛКА</small><strong>Новая Голландия</strong></span><i aria-hidden="true">↗</i></button>
+                  <button type="button" onClick={() => openPlace("Дворцовая площадь")} className="alma-route-tile alma-route-tile-three"><img src="/images/дворцовая площадь.jpg" alt="" /><span><small>03 / КРАСИВЫЙ ВИД</small><strong>Дворцовая площадь</strong></span><i aria-hidden="true">↗</i></button>
+                </div>
+                <p>Маршрут начинается с одного шага.</p>
                 <span className="alma-soft-stage-arrow" aria-hidden="true">↗</span>
               </div>
               <div className="alma-soft-weather"><img src={heroImage} alt="Петербург сегодня" /><span>{weather && weatherInfo ? `${weatherInfo.text} · ${Math.round(weather.temperature) > 0 ? "+" : ""}${Math.round(weather.temperature)}°` : "Петербург сегодня"}</span></div>
