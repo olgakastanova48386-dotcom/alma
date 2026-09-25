@@ -66,19 +66,19 @@ function getWeatherInfo(code: number, isDay: boolean) {
 }
 
 function InteractiveAura() {
-  const phrases = [
+  const phrases = useMemo(() => [
     ["не знаю", "куда", "но хочу", "куда-нибудь"],
     ["может,", "просто", "пойдём?"],
     ["куда тебя", "тянет", "сегодня?"],
     ["ALMA", "уже кое-что", "нашла"],
-  ];
+  ], []);
   const [phrase, setPhrase] = useState(0);
   const artRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const timer = window.setInterval(() => setPhrase((value) => (value + 1) % phrases.length), 7200);
     return () => window.clearInterval(timer);
-  }, []);
+  }, [phrases.length]);
 
   const moveFog = (event: React.PointerEvent<HTMLDivElement>) => {
     const bounds = event.currentTarget.getBoundingClientRect();
