@@ -7,9 +7,21 @@ const targetRestaurantFallback = dataPath.endsWith("mapPlaces.ts");
 await fs.mkdir(outDir, { recursive: true });
 let source = await fs.readFile(dataPath, "utf8");
 
-const cards = [...source.matchAll(/\{\s*id:\s*(\d+),[\s\S]*?name:\s*"([^"]+)"[\s\S]*?image:\s*"([^"]*)"([\s\S]*?)\n\s*\}/g)]
-  .map(m => ({ full:m[0], id:Number(m[1]), name:m[2], image:m[3] }))
-  .filter(p => !p.image || p.image === "/images/hero.jpg" || p.image === "/images/loft.jpg" || /^https?:\/\//.test(p.image) || (targetRestaurantFallback && p.image === "/images/restaurant.jpg"));
+const parsedCards = [...source.matchAll(/\{\s*id:\s*(\d+),[\s\S]*?name:\s*"([^"]+)"[\s\S]*?image:\s*"([^"]*)"([\s\S]*?)\n\s*\}/g)]
+  .map(m => ({ full:m[0], id:Number(m[1]), name:m[2], image:m[3] }));
+
+const cards = [];
+for (const p of parsedCards) {
+  let brokenLocal = false;
+  if (p.image.startsWith("/")) {
+    const localPath = path.join("public", decodeURIComponent(p.image).replace(/^\/+/, ""));
+    try { await fs.access(localPath); } catch { brokenLocal = true; }
+  }
+  const knownGeneric = p.image === "/images/hero.jpg" ||
+    p.image === "/images/loft.jpg" ||
+    (targetRestaurantFallback && (p.image === "/images/restaurant.jpg" || p.image === "/images/new-holland.jpg"));
+  if (!p.image || brokenLocal || knownGeneric || /^https?:\/\//.test(p.image)) cards.push(p);
+}
 
 async function commonsPhoto(name) {
   try {
