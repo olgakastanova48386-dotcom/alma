@@ -195,6 +195,30 @@ select:-webkit-autofill {
   backdrop-filter:blur(2px); -webkit-backdrop-filter:blur(2px); opacity:.34;
   transition:opacity .22s ease,transform .25s ease; will-change:left,top,transform;
 }
+@media (hover:hover) and (pointer:fine) {
+  .alma-home-hero { cursor: none; }
+  .alma-metal-cursor {
+    position:absolute; z-index:30; left:var(--flow-x); top:var(--flow-y);
+    width:22px; height:22px; border-radius:52% 48% 55% 45% / 44% 52% 48% 56%;
+    transform:translate(-50%,-50%) rotate(-12deg);
+    pointer-events:none; opacity:0;
+    background:
+      radial-gradient(circle at 31% 25%, #fff 0 8%, rgba(255,255,255,.9) 9%, transparent 24%),
+      radial-gradient(circle at 65% 70%, #3f4145 0 12%, #8d9197 31%, #e8eaec 58%, #6f7378 82%, #26282b 100%);
+    border:1px solid rgba(255,255,255,.82);
+    box-shadow:inset 2px 2px 4px rgba(255,255,255,.95), inset -3px -4px 5px rgba(20,22,24,.38), 0 5px 9px rgba(36,31,33,.24);
+    transition:opacity .16s ease, width .12s ease, height .12s ease;
+    will-change:left,top,transform;
+  }
+  .alma-flow-surface.is-flowing .alma-metal-cursor { opacity:1; }
+  .alma-metal-cursor-glint {
+    position:absolute; width:7px; height:3px; left:4px; top:4px; border-radius:999px;
+    background:rgba(255,255,255,.95); filter:blur(.35px); transform:rotate(-20deg);
+  }
+  .alma-home-hero:active .alma-metal-cursor { width:18px; height:18px; }
+}
+@media (hover:none),(pointer:coarse) { .alma-metal-cursor { display:none; } }
+
 .alma-flow-core {
   position:absolute; left:var(--flow-x); top:var(--flow-y); width:22px; height:22px;
   transform:translate(-50%,-50%); border-radius:50%; pointer-events:none;
