@@ -147,7 +147,7 @@ export default function Header() {
 
           {/* Mobile: only the logo stays above the page. */}
           <div className="flex h-11 items-center md:hidden">
-            <Link href="/" aria-label="ALMA — главная" className={`pl-1 text-[18px] font-bold tracking-[0.2em] ${pathname === "/" ? "text-white drop-shadow-[0_1px_5px_rgba(0,0,0,.7)]" : "text-black"}`}>alma</Link>
+            <Link href="/" aria-label="ALMA — главная" className={`pl-1 text-[18px] font-black tracking-[0.12em] ${pathname === "/" ? "text-white drop-shadow-[0_2px_5px_rgba(0,0,0,.8)]" : "text-[#20211f]"}`}>ALMA</Link>
           </div>
 
           {/* DESKTOP */}
@@ -157,7 +157,7 @@ export default function Header() {
               href="/"
               className="text-lg sm:text-2xl font-bold tracking-[0.28em]"
             >
-              alma
+              ALMA
             </Link>
 
             <nav className="flex items-center gap-5 lg:gap-7 text-sm md:text-base text-gray-600">

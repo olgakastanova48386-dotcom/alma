@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useEffect, useMemo, useRef, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import UnifiedMap from "@/components/UnifiedMap";
 
@@ -65,37 +65,14 @@ function getWeatherInfo(code: number, isDay: boolean) {
   return { icon: "🌤️", text: "Погода" };
 }
 
-function InteractiveAura() {
-  const surfaceRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const surface = surfaceRef.current;
-    if (!surface) return;
-    let x=72,y=34,tx=x,ty=y,raf=0;
-    const track=(ev:PointerEvent)=>{
-      const r=surface.getBoundingClientRect();
-      if(ev.clientX<r.left||ev.clientX>r.right||ev.clientY<r.top||ev.clientY>r.bottom)return;
-      tx=(ev.clientX-r.left)/r.width*100;
-      ty=(ev.clientY-r.top)/r.height*100;
-    };
-    const animate=()=>{
-      x+=(tx-x)*.11;y+=(ty-y)*.11;
-      surface.style.setProperty("--field-x",x+"%");
-      surface.style.setProperty("--field-y",y+"%");
-      raf=requestAnimationFrame(animate);
-    };
-    window.addEventListener("pointermove",track,{passive:true});
-    raf=requestAnimationFrame(animate);
-    return()=>{window.removeEventListener("pointermove",track);cancelAnimationFrame(raf)};
-  },[]);
-
-  return (
-    <div ref={surfaceRef} className="alma-magnetic-field" aria-hidden="true">
-      <div className="alma-field-grid"/>
-      <div className="alma-field-warp"/>
-      <div className="alma-field-core"/>
-    </div>
-  );
+function getHeroImage(weather: Weather | null) {
+  const hour = Number(new Intl.DateTimeFormat("en-GB", { timeZone: "Europe/Moscow", hour: "2-digit", hour12: false }).format(new Date()));
+  const rainy = weather && [51, 53, 55, 56, 57, 61, 63, 65, 66, 67, 80, 81, 82].includes(weather.code);
+  if (rainy) return hour >= 20 || hour < 7 ? "/images/дождь в питере ночь.jpg" : "/images/питер морось.jpg";
+  if (hour < 7 || hour >= 22) return "/images/ночной питербург.jpg";
+  if (hour < 11) return "/images/утро питера.jpg";
+  if (hour >= 18) return "/images/закат в питере.jpg";
+  return weather?.code === 3 ? "/images/облачно день.jpg" : "/images/питер главная фотка.jpg";
 }
 
 export default function HomePage() {
@@ -139,19 +116,18 @@ export default function HomePage() {
 
   useEffect(() => {
     if (!mobileReady || !splashMinElapsed) return;
-    setLoadingProgress(100);
-    const doneTimer = window.setTimeout(() => setSplashDone(true), 400);
+    const doneTimer = window.setTimeout(() => { setLoadingProgress(100); setSplashDone(true); }, 400);
     return () => window.clearTimeout(doneTimer);
   }, [mobileReady, splashMinElapsed]);
 
   const scrollToFilters = () => document.getElementById("alma-filters")?.scrollIntoView({ behavior: "smooth", block: "start" });
-  const scrollToPhotozones = () => document.getElementById("alma-photozones")?.scrollIntoView({ behavior: "smooth", block: "start" });
   const openPlace = (title: string) => {
     const id = placeIds[title];
     router.push(id ? `/place/${id}` : "/#alma-filters");
   };
   const isDay = weather?.isDay ?? getPetersburgIsDay();
   const weatherInfo = weather ? getWeatherInfo(weather.code, isDay) : null;
+  const heroImage = getHeroImage(weather);
 
   return (
     <>
@@ -169,29 +145,33 @@ export default function HomePage() {
         </div>
       )}
       <main className="alma-home-page relative min-h-screen overflow-x-hidden bg-transparent text-black">
-      <div className="alma-page-interaction"><InteractiveAura /></div>
-      <section className="alma-home-hero relative h-[540px] sm:h-[570px] md:h-auto md:min-h-[680px] flex items-start md:items-center pt-0 md:pt-28 pb-0 overflow-hidden bg-[#f7f4ef] text-black">
-        
-        <div className="md:hidden pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#f7f4ef]/10" />
-        <div className="hidden md:block absolute inset-0 bg-[#f7f4ef]" />
-        
-
-                {weather && weatherInfo && <div className="absolute right-4 top-[calc(env(safe-area-inset-top)+76px)] z-20 md:hidden"><div className="inline-flex items-center gap-1.5 rounded-full bg-black/72 px-2.5 py-1.5 text-white shadow-sm backdrop-blur-md"><span className="text-sm leading-none">{weatherInfo.icon}</span><span className="text-xs font-semibold">{Math.round(weather.temperature) > 0 ? "+" : ""}{Math.round(weather.temperature)}°</span><span className="h-3 w-px bg-white/20" /><span className="text-[11px] text-white/75">{weatherInfo.text}</span></div></div>}
-
-        <div className="absolute inset-x-0 top-[342px] md:top-auto md:bottom-auto z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-4 md:relative md:inset-auto lg:px-8"><div className="max-w-[650px]">
-          {weather && weatherInfo && <div className="hidden md:block mb-3"><div className="inline-flex items-center gap-2.5 rounded-full bg-black/80 backdrop-blur-md text-white px-3.5 md:px-4 py-2.5 shadow-sm"><span className="text-lg leading-none">{weatherInfo.icon}</span><span className="font-semibold">{Math.round(weather.temperature) > 0 ? "+" : ""}{Math.round(weather.temperature)}°</span><span className="w-px h-4 bg-white/20" /><span className="text-sm text-white/75">{weatherInfo.text}</span><span className="hidden xs:inline text-xs text-white/40">Петербург</span></div></div>}
-          <h1 className="mt-0 md:mt-7 max-w-full text-[clamp(25px,7vw,82px)] md:text-[clamp(52px,5vw,70px)] font-bold leading-[1.02] md:leading-[0.98] tracking-tight text-black drop-shadow-none break-words">Места, в которые<br />хочется вернуться</h1>
-          <p className="mt-1.5 md:mt-7 max-w-[94%] md:max-w-xl text-[13px] md:text-xl leading-[1.35] md:leading-8 text-neutral-600"><span className="md:hidden">ALMA помогает находить места Петербурга<br />по настроению, бюджету, компании и времени.</span><span className="hidden md:inline">ALMA помогает находить места Петербурга по настроению, бюджету, компании и времени.</span></p>
-          <div className="mt-2.5 md:mt-9 grid grid-cols-3 gap-1.5 md:flex md:flex-wrap md:gap-3">
-            <button type="button" onClick={scrollToFilters} className="alma-pressable min-w-0 overflow-hidden whitespace-nowrap rounded-full bg-white text-black md:bg-black md:text-white px-1.5 md:px-7 py-2.5 md:py-4 text-[12px] md:text-base font-semibold leading-none hover:opacity-80 hover:scale-[1.02] transition">Найти место</button>
-            <button type="button" onClick={() => router.push("/surprise?new=1")} className="alma-glow group relative min-w-0 overflow-hidden whitespace-nowrap rounded-full border border-[#f4d37c] bg-[#f4d37c] px-3 py-2.5 text-[11px] font-bold leading-none text-black shadow-[0_14px_32px_-10px_rgba(118,82,0,.38)] ring-2 ring-[#f4d37c]/35 transition duration-300 hover:-translate-y-0.5 hover:scale-[1.06] hover:bg-[#ffe39a] hover:shadow-[0_12px_38px_rgba(244,211,124,.72)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#f4d37c]/50 md:px-7 md:py-4 md:text-base"><span className="alma-cta-shine pointer-events-none absolute -inset-y-2 -left-1/2 w-1/3 bg-gradient-to-r from-transparent via-white/85 to-transparent blur-[1px]" aria-hidden="true"/><span className="relative z-10"><span className="mr-1.5" aria-hidden="true">✦</span>Удиви меня</span></button>
-            <button type="button" onClick={scrollToPhotozones} className="alma-pressable min-w-0 overflow-hidden whitespace-nowrap rounded-full bg-white/85 backdrop-blur-md border border-black/10 text-black px-1.5 md:px-7 py-2.5 md:py-4 text-[12px] md:text-base font-medium leading-none hover:scale-[1.02] transition shadow-sm">📸 Фотозоны</button>
+      <section className="alma-home-hero alma-atlas-hero">
+        <div className="alma-atlas-inner">
+          <div className="alma-atlas-copy">
+            <div className="alma-atlas-kicker"><span /> ТВОЙ ГОРОД · ТВОЙ РИТМ</div>
+            <h1>Выйди.<br /><em>Почувствуй.</em><br />Найди.</h1>
+            <p>Места Петербурга под твоё настроение. От тихого кофе до прогулки, которую захочется повторить.</p>
+            <div className="alma-atlas-actions">
+              <button type="button" onClick={scrollToFilters} className="alma-atlas-primary">Найти место <span aria-hidden="true">↗</span></button>
+              <button type="button" onClick={() => router.push("/surprise?new=1")} className="alma-atlas-secondary">Удиви меня <span aria-hidden="true">↗</span></button>
+            </div>
           </div>
-        </div></div>
-        <div className="absolute z-10 bottom-8 right-8 hidden lg:flex items-center gap-3 text-xs uppercase tracking-[0.22em] text-neutral-500"><span className="w-8 h-px bg-black/20" />ALMA в движении</div>
+          <div className="alma-atlas-art" aria-label="Фотографии Петербурга">
+            <img className="alma-atlas-backdrop" src={heroImage} alt="" aria-hidden="true" />
+            <span className="alma-atlas-letter" aria-hidden="true">A</span>
+            <div className="alma-atlas-photo alma-atlas-photo-main"><img src={heroImage} alt="Петербург сейчас" /></div>
+            <div className="alma-atlas-photo alma-atlas-photo-second"><img src="/images/new-holland.jpg" alt="Новая Голландия" /></div>
+            <div className="alma-atlas-photo alma-atlas-photo-third"><img src="/images/кафе зингер.jpg" alt="Кафе Зингер" /></div>
+            {weather && weatherInfo && <div className="alma-atlas-weather">{weatherInfo.icon} {Math.round(weather.temperature) > 0 ? "+" : ""}{Math.round(weather.temperature)}° · {weatherInfo.text}</div>}
+            <div className="alma-atlas-stamp" aria-hidden="true">ГОРОД<br />ЖДЁТ<br />ТЕБЯ ↗</div>
+          </div>
+          <span className="alma-atlas-index">01 / 03 &nbsp; · &nbsp; ОТКРОЙ СВОЙ ПЕТЕРБУРГ</span>
+        </div>
       </section>
+      <div className="alma-atlas-ticker" aria-hidden="true"><span>КОФЕЙНИ　✳　ПРОГУЛКИ　✳　МЕСТА ДЛЯ ДВОИХ　✳　ПЛАН НА ДЕНЬ　✳　ПЕТЕРБУРГ ПОД ТВОЁ НАСТРОЕНИЕ　✳　</span></div>
 
-      <div id="alma-filters" className="relative z-10 bg-[#f7f4ef] pt-5 sm:pt-6 md:pt-12 lg:pt-14">
+      <div id="alma-filters" className="alma-atlas-map-section relative z-10 pt-5 sm:pt-6 md:pt-12 lg:pt-14">
+        <div className="alma-atlas-map-title max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><div><span>02 / ЖИВОЙ АТЛАС</span><h2>Где окажемся<br />сегодня?</h2></div><p>Выбирай настроение, время и компанию. Карта покажет подходящие места.</p></div>
         <Suspense fallback={<section className="mx-auto max-w-7xl px-4 pb-10 sm:px-6 lg:px-8"><div className="flex min-h-[560px] items-center justify-center rounded-[28px] bg-[#ebe8e3] text-neutral-500">Загружаем карту…</div></section>}>
           <UnifiedMap />
         </Suspense>
