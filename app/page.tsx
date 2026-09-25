@@ -67,104 +67,65 @@ function getWeatherInfo(code: number, isDay: boolean) {
 
 function InteractiveAura() {
   const surfaceRef = useRef<HTMLDivElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     const surface = surfaceRef.current;
-    const canvas = canvasRef.current;
-    if (!surface || !canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
+    if (!surface) return;
 
-    let points: { x: number; y: number; life: number; size: number }[] = [];
+    let targetX = 72;
+    let targetY = 38;
+    let currentX = targetX;
+    let currentY = targetY;
+    let targetVX = 0;
+    let targetVY = 0;
+    let currentVX = 0;
+    let currentVY = 0;
+    let lastX = 0;
+    let lastY = 0;
     let raf = 0;
-    let lastX = -100;
-    let lastY = -100;
-    let wasInside = false;
-
-    const resize = () => {
-      const r = surface.getBoundingClientRect();
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      canvas.width = Math.round(r.width * dpr);
-      canvas.height = Math.round(r.height * dpr);
-      canvas.style.width = r.width + "px";
-      canvas.style.height = r.height + "px";
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    };
 
     const track = (event: PointerEvent) => {
       const r = surface.getBoundingClientRect();
-      const inside = event.clientX >= r.left && event.clientX <= r.right && event.clientY >= r.top && event.clientY <= r.bottom;
-      if (!inside) {
-        wasInside = false;
-        lastX = -100;
-        lastY = -100;
-        return;
-      }
+      if (event.clientX < r.left || event.clientX > r.right || event.clientY < r.top || event.clientY > r.bottom) return;
       const x = event.clientX - r.left;
       const y = event.clientY - r.top;
-      if (!wasInside || lastX < 0) {
-        lastX = x;
-        lastY = y;
-        wasInside = true;
-        return;
-      }
-      const distance = Math.hypot(x - lastX, y - lastY);
-      if (distance >= 1) {
-        const spacing = 5;
-        const steps = Math.max(1, Math.min(36, Math.ceil(distance / spacing)));
-        for (let i = 1; i <= steps; i++) {
-          const t = i / steps;
-          points.push({
-            x: lastX + (x - lastX) * t,
-            y: lastY + (y - lastY) * t,
-            life: 1,
-            size: Math.min(7.2, 3.6 + distance * .012),
-          });
-        }
-        if (points.length > 420) points.splice(0, points.length - 420);
-      }
+      targetX = (x / r.width) * 100;
+      targetY = (y / r.height) * 100;
+      targetVX = Math.max(-18, Math.min(18, x - lastX));
+      targetVY = Math.max(-18, Math.min(18, y - lastY));
       lastX = x;
       lastY = y;
-      wasInside = true;
     };
 
-    const draw = () => {
-      const r = surface.getBoundingClientRect();
-      ctx.clearRect(0, 0, r.width, r.height);
-      ctx.lineCap = "round";
-      ctx.lineJoin = "round";
-      for (const p of points) {
-        p.life -= .018;
-        if (p.life <= 0) continue;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size * (0.65 + p.life * .35), 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(137, 43, 72, ${Math.min(.48, p.life * .48)})`;
-        ctx.shadowBlur = 12;
-        ctx.shadowColor = `rgba(174, 74, 105, ${p.life * .22})`;
-        ctx.fill();
-      }
-      ctx.shadowBlur = 0;
-      points = points.filter(p => p.life > 0);
-      raf = requestAnimationFrame(draw);
+    const animate = () => {
+      currentX += (targetX - currentX) * .105;
+      currentY += (targetY - currentY) * .105;
+      currentVX += (targetVX - currentVX) * .08;
+      currentVY += (targetVY - currentVY) * .08;
+      targetVX *= .91;
+      targetVY *= .91;
+      surface.style.setProperty("--silk-x", currentX + "%");
+      surface.style.setProperty("--silk-y", currentY + "%");
+      surface.style.setProperty("--silk-vx", currentVX.toFixed(2));
+      surface.style.setProperty("--silk-vy", currentVY.toFixed(2));
+      raf = requestAnimationFrame(animate);
     };
 
-    resize();
-    window.addEventListener("resize", resize);
     window.addEventListener("pointermove", track, { passive: true });
-    raf = requestAnimationFrame(draw);
+    raf = requestAnimationFrame(animate);
     return () => {
-      window.removeEventListener("resize", resize);
       window.removeEventListener("pointermove", track);
       cancelAnimationFrame(raf);
     };
   }, []);
 
   return (
-    <div ref={surfaceRef} className="alma-trail-surface" aria-hidden="true">
-      <div className="alma-trail-ambient ambient-a" />
-      <div className="alma-trail-ambient ambient-b" />
-      <canvas ref={canvasRef} className="alma-berry-trail" />
+    <div ref={surfaceRef} className="alma-silk-surface" aria-hidden="true">
+      <div className="alma-silk-base" />
+      <div className="alma-silk-fold fold-a" />
+      <div className="alma-silk-fold fold-b" />
+      <div className="alma-silk-highlight" />
+      <div className="alma-silk-grain" />
     </div>
   );
 }
