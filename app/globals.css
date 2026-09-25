@@ -167,94 +167,59 @@ select:-webkit-autofill {
   .alma-route-actions button, .alma-route-actions a { min-height: 44px; }
 }
 
-/* ALMA hero experiment 1 — living flowing surface. */
+/* ALMA hero experiment 1 — stable living glass surface. */
 .alma-home-hero-image.alma-aura-host { pointer-events: auto !important; }
 .alma-flow-surface {
-  --flow-x: 72%;
-  --flow-y: 43%;
-  --flow-dx: 0px;
-  --flow-dy: 0px;
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
+  --flow-x: 72%; --flow-y: 43%; --flow-dx: 0px; --flow-dy: 0px;
+  position:absolute; inset:0; overflow:hidden; isolation:isolate; touch-action:pan-y;
   background:
-    radial-gradient(circle at 74% 38%, rgba(172,72,103,.25), transparent 30%),
-    radial-gradient(circle at 55% 72%, rgba(255,255,255,.9), transparent 35%),
+    radial-gradient(circle at 75% 35%, rgba(174,86,111,.20), transparent 27%),
+    radial-gradient(circle at 58% 72%, rgba(255,255,255,.92), transparent 34%),
     #f7f4ef;
-  touch-action: pan-y;
-  isolation: isolate;
 }
+.alma-flow-ambient { position:absolute; border-radius:50%; filter:blur(55px); pointer-events:none; animation:alma-ambient 8s ease-in-out infinite alternate; }
+.ambient-a { width:38%; aspect-ratio:1; right:3%; top:4%; background:rgba(169,73,102,.25); }
+.ambient-b { width:30%; aspect-ratio:1; right:29%; bottom:3%; background:rgba(213,173,184,.23); animation-delay:-3.5s; }
 .alma-flow-field {
-  position: absolute;
-  inset: -15%;
-  background:
-    radial-gradient(circle 150px at var(--flow-x) var(--flow-y), rgba(163,61,92,.48), rgba(255,255,255,.45) 36%, transparent 70%);
-  filter: blur(15px);
-  transform: translate3d(var(--flow-dx),var(--flow-dy),0) scale(1.05);
-  transition: transform .75s cubic-bezier(.18,.75,.22,1), filter .5s ease;
-  opacity: .95;
+  position:absolute; inset:-12%; pointer-events:none;
+  background:radial-gradient(circle 190px at var(--flow-x) var(--flow-y), rgba(159,56,88,.42) 0%, rgba(197,126,146,.23) 30%, rgba(255,255,255,.12) 55%, transparent 72%);
+  filter:blur(12px); transform:translate3d(var(--flow-dx),var(--flow-dy),0);
+  transition:filter .3s ease, opacity .3s ease; opacity:.82;
 }
-.alma-flow-surface.is-flowing .alma-flow-field {
-  filter: blur(7px);
-  transform: translate3d(var(--flow-dx),var(--flow-dy),0) scale(1.1);
-  opacity: 1;
+.alma-flow-glass {
+  position:absolute; width:290px; height:290px; left:var(--flow-x); top:var(--flow-y);
+  transform:translate(-50%,-50%); border-radius:50%; pointer-events:none;
+  background:radial-gradient(circle at 35% 28%, rgba(255,255,255,.32), transparent 42%);
+  border:1px solid rgba(255,255,255,.48);
+  box-shadow:inset 14px 10px 34px rgba(255,255,255,.48), inset -18px -12px 38px rgba(139,57,81,.09), 0 20px 60px rgba(90,55,65,.08);
+  backdrop-filter:blur(2px); -webkit-backdrop-filter:blur(2px); opacity:.34;
+  transition:left .12s linear,top .12s linear,opacity .3s ease,transform .35s ease;
 }
-.alma-flow-caustic {
-  position: absolute;
-  width: 250px;
-  height: 250px;
-  left: var(--flow-x);
-  top: var(--flow-y);
-  border-radius: 50%;
-  transform: translate(-50%,-50%) scale(.82);
-  border: 1px solid rgba(255,255,255,.68);
-  box-shadow:
-    inset 18px 12px 34px rgba(255,255,255,.68),
-    inset -20px -12px 36px rgba(154,78,99,.09),
-    0 18px 60px rgba(91,57,67,.08);
-  backdrop-filter: blur(2px);
-  -webkit-backdrop-filter: blur(2px);
-  opacity: .55;
-  transition: left .22s ease-out, top .22s ease-out, transform .5s ease, opacity .4s ease;
+.alma-flow-ring {
+  position:absolute; left:var(--flow-x); top:var(--flow-y); width:130px; height:130px;
+  border-radius:50%; border:1px solid rgba(157,62,90,.17); transform:translate(-50%,-50%) scale(.7);
+  opacity:0; pointer-events:none;
 }
-.alma-flow-surface.is-flowing .alma-flow-caustic {
-  opacity: .7;
-  transform: translate(-50%,-50%) scale(1.04);
+.alma-flow-surface.is-flowing .alma-flow-field { filter:blur(6px); opacity:1; }
+.alma-flow-surface.is-flowing .alma-flow-glass { opacity:.68; transform:translate(-50%,-50%) scale(1.06); }
+.alma-flow-surface.is-flowing .ring-one { animation:alma-flow-ripple 1.35s ease-out infinite; }
+.alma-flow-surface.is-flowing .ring-two { animation:alma-flow-ripple 1.35s .55s ease-out infinite; }
+@keyframes alma-flow-ripple { 0%{opacity:.42;transform:translate(-50%,-50%) scale(.55)} 100%{opacity:0;transform:translate(-50%,-50%) scale(2.15)} }
+@keyframes alma-ambient { from{transform:translate3d(-6%,-4%,0) scale(.94)} to{transform:translate3d(9%,7%,0) scale(1.09)} }
+@media (max-width:767px) {
+  .alma-flow-surface{min-height:100%;--flow-x:58%;--flow-y:29%}
+  .alma-flow-field{background:radial-gradient(circle 125px at var(--flow-x) var(--flow-y),rgba(159,56,88,.43),rgba(197,126,146,.20) 38%,transparent 72%);filter:blur(9px)}
+  .alma-flow-glass{width:180px;height:180px}
+  .alma-flow-ring{width:95px;height:95px}
+  .ambient-a{width:62%;right:-10%;top:3%}.ambient-b{width:50%;right:42%;bottom:35%}
 }
-.alma-flow-light {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(48px);
-  opacity: .68;
-  animation: alma-flow-drift 9s ease-in-out infinite alternate;
+@media (hover:none),(pointer:coarse) {
+  .alma-flow-glass{opacity:.48}
+  .alma-flow-field{opacity:.92}
 }
-.flow-light-a {
-  width: 38%;
-  aspect-ratio: 1;
-  right: 5%;
-  top: 5%;
-  background: rgba(168,70,100,.32);
-}
-.flow-light-b {
-  width: 31%;
-  aspect-ratio: 1;
-  right: 30%;
-  bottom: 2%;
-  background: rgba(255,255,255,.92);
-  animation-delay: -4s;
-}
-@keyframes alma-flow-drift {
-  from { transform: translate3d(-7%,-4%,0) scale(.94); }
-  to { transform: translate3d(10%,8%,0) scale(1.12); }
-}
-@media (max-width: 767px) {
-  .alma-flow-surface { min-height: 100%; }
-  .alma-flow-caustic { width: 165px; height: 165px; }
-  .alma-flow-field { filter: blur(11px); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .alma-flow-light { animation: none; }
-  .alma-flow-field, .alma-flow-caustic { transition: none; }
+@media (prefers-reduced-motion:reduce) {
+  .alma-flow-ambient,.alma-flow-ring{animation:none!important}
+  .alma-flow-glass,.alma-flow-field{transition:none}
 }
 
 @keyframes alma-cta-shine {
