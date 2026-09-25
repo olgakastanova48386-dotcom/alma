@@ -167,24 +167,47 @@ select:-webkit-autofill {
   .alma-route-actions button, .alma-route-actions a { min-height: 44px; }
 }
 
-/* ALMA hero experiment 3 — fading berry ink trail. */
-.alma-trail-surface {
+/* ALMA hero experiment 5 — tactile silk surface. */
+.alma-silk-surface {
+  --silk-x:72%; --silk-y:38%; --silk-vx:0; --silk-vy:0;
   position:absolute; inset:0; overflow:hidden; pointer-events:none; isolation:isolate;
+  background:#f7f4ef;
+}
+.alma-silk-base {
+  position:absolute; inset:-12%;
   background:
-    radial-gradient(circle at 77% 33%, rgba(174,86,111,.10), transparent 30%),
-    radial-gradient(circle at 57% 73%, rgba(255,255,255,.94), transparent 36%),
-    #f7f4ef;
+    radial-gradient(ellipse at var(--silk-x) var(--silk-y), rgba(255,255,255,.98) 0 5%, rgba(244,224,230,.72) 14%, rgba(159,70,96,.20) 29%, transparent 48%),
+    linear-gradient(118deg, #f8f5f0 7%, #efe2e4 33%, #fbf8f3 53%, #ead8dd 72%, #f8f5f0 94%);
+  filter:saturate(.9);
+  transform:translate3d(calc(var(--silk-vx) * .20px),calc(var(--silk-vy) * .16px),0) scale(1.08);
+  transition:filter .25s ease;
 }
-.alma-trail-ambient { position:absolute; border-radius:50%; filter:blur(66px); opacity:.42; animation:alma-trail-drift 11s ease-in-out infinite alternate; }
-.alma-trail-ambient.ambient-a { width:34%; aspect-ratio:1; right:3%; top:5%; background:rgba(169,73,102,.16); }
-.alma-trail-ambient.ambient-b { width:27%; aspect-ratio:1; right:34%; bottom:5%; background:rgba(219,185,194,.21); animation-delay:-4s; }
-.alma-berry-trail { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; }
-@keyframes alma-trail-drift { from{transform:translate3d(-5%,-3%,0) scale(.96)} to{transform:translate3d(8%,6%,0) scale(1.08)} }
+.alma-silk-fold { position:absolute; inset:-28%; mix-blend-mode:multiply; filter:blur(20px); opacity:.48; will-change:transform; }
+.alma-silk-fold.fold-a {
+  background:conic-gradient(from 212deg at var(--silk-x) var(--silk-y), transparent 0 20deg, rgba(112,50,69,.13) 31deg, transparent 43deg 76deg, rgba(170,92,115,.11) 88deg, transparent 105deg 360deg);
+  transform:translate3d(calc(var(--silk-vx) * .9px),calc(var(--silk-vy) * .65px),0) rotate(calc(var(--silk-vx) * .10deg));
+}
+.alma-silk-fold.fold-b {
+  background:conic-gradient(from 36deg at var(--silk-x) var(--silk-y), transparent 0 30deg, rgba(255,255,255,.86) 42deg, transparent 58deg 112deg, rgba(115,51,71,.10) 124deg, transparent 145deg 360deg);
+  mix-blend-mode:soft-light; filter:blur(13px); opacity:.9;
+  transform:translate3d(calc(var(--silk-vx) * -.55px),calc(var(--silk-vy) * -.42px),0);
+}
+.alma-silk-highlight {
+  position:absolute; width:46%; aspect-ratio:1.55; left:var(--silk-x); top:var(--silk-y);
+  transform:translate(-50%,-50%) rotate(calc(-12deg + var(--silk-vx) * .16deg)) skewX(calc(var(--silk-vx) * .12deg));
+  border-radius:48% 52% 45% 55% / 57% 42% 58% 43%;
+  background:linear-gradient(128deg, rgba(255,255,255,.76), rgba(255,255,255,.06) 39%, rgba(135,56,80,.13) 63%, transparent 79%);
+  filter:blur(15px); opacity:.82; will-change:left,top,transform;
+}
+.alma-silk-grain { position:absolute; inset:0; opacity:.09; background-image:repeating-linear-gradient(112deg, rgba(83,49,58,.13) 0 1px, transparent 1px 5px); mix-blend-mode:multiply; }
 @media (max-width:767px) {
-  .alma-trail-ambient.ambient-a{width:60%;right:-12%;top:3%}
-  .alma-trail-ambient.ambient-b{width:48%;right:44%;bottom:36%}
+  .alma-silk-highlight{width:74%}
+  .alma-silk-fold{inset:-40%}
+  .alma-silk-grain{opacity:.06}
 }
-@media (prefers-reduced-motion:reduce) { .alma-trail-ambient{animation:none} }
+@media (prefers-reduced-motion:reduce) {
+  .alma-silk-base,.alma-silk-fold,.alma-silk-highlight{transform:none!important}
+}
 
 @media (hover:hover) and (pointer:fine) {
   .alma-home-hero, .alma-home-hero * {
@@ -194,6 +217,7 @@ select:-webkit-autofill {
 @media (hover:none),(pointer:coarse) {
   .alma-home-hero, .alma-home-hero * { cursor:auto; }
 }
+
 
 
 
