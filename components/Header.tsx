@@ -29,24 +29,6 @@ function HomeIcon() {
   );
 }
 
-function MapIcon() {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      aria-hidden="true"
-      className="h-[20px] w-[20px]"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.9"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M12 21s6-5.2 6-11a6 6 0 1 0-12 0c0 5.8 6 11 6 11Z" />
-      <circle cx="12" cy="10" r="2.25" />
-    </svg>
-  );
-}
-
 function PawIcon() {
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true" className="h-[23px] w-[23px]" fill="currentColor">
@@ -65,15 +47,6 @@ function EventsIcon() {
       <rect x="3.5" y="5.5" width="17" height="15" rx="3" />
       <path d="M7.5 3.5v4M16.5 3.5v4M3.5 10h17" />
       <path d="m12 13 .7 1.45 1.6.23-1.15 1.12.27 1.58L12 16.63l-1.42.75.27-1.58-1.15-1.12 1.6-.23L12 13Z" />
-    </svg>
-  );
-}
-
-function CameraIcon() {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden="true" className="h-[20px] w-[20px]" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M4 7.5h3.3l1.6-2h6.2l1.6 2H20a1.5 1.5 0 0 1 1.5 1.5v9A1.5 1.5 0 0 1 20 19.5H4A1.5 1.5 0 0 1 2.5 18V9A1.5 1.5 0 0 1 4 7.5Z" />
-      <circle cx="12" cy="13.2" r="3.25" />
     </svg>
   );
 }
@@ -219,17 +192,16 @@ export default function Header() {
 
         </div>
       </div>
-          {!authScreen && <nav aria-label="Основная навигация" className="alma-glass fixed inset-x-3 bottom-[calc(10px+env(safe-area-inset-bottom))] z-[10000] mx-auto grid max-w-[480px] grid-cols-6 rounded-[24px] border border-black/10 bg-white/95 px-1.5 py-1.5 shadow-[0_12px_40px_rgba(0,0,0,.16)] backdrop-blur-xl md:hidden">
+          {!authScreen && <nav aria-label="Основная навигация" className="alma-glass fixed inset-x-3 bottom-[calc(10px+env(safe-area-inset-bottom))] z-[10000] mx-auto grid max-w-[480px] grid-cols-5 rounded-[24px] border border-black/10 bg-white/95 px-1.5 py-1.5 shadow-[0_12px_40px_rgba(0,0,0,.16)] backdrop-blur-xl md:hidden">
             {[
               { href: "/", label: "Главная", icon: <HomeIcon /> },
               { href: "/map", label: "События", icon: <EventsIcon /> },
-              { href: "/photozones", label: "Фото", ariaLabel: "Фотолокации", icon: <CameraIcon /> },
               { href: "/dog-friendly", label: "С собакой", icon: <PawIcon /> },
               { href: "/favorites", label: "Избранное", icon: <HeartIcon /> },
               { href: user ? "/profile" : "/login", label: "Профиль", icon: <ProfileIcon /> },
-            ].map(({ href, label, icon, ariaLabel }) => {
+            ].map(({ href, label, icon }) => {
               const active = isCurrentRoute(pathname, href);
-              return <Link key={label} href={href} aria-label={ariaLabel || label} aria-current={active ? "page" : undefined} className={`flex min-h-[56px] min-w-0 flex-col items-center justify-center gap-0.5 rounded-[18px] text-[10px] font-medium leading-none ${active ? "bg-[#f3e9e6] text-black" : "text-neutral-600"}`}>
+              return <Link key={label} href={href} aria-label={label} aria-current={active ? "page" : undefined} className={`flex min-h-[56px] min-w-0 flex-col items-center justify-center gap-0.5 rounded-[18px] text-[11px] font-medium leading-none ${active ? "bg-[#f3e9e6] text-black" : "text-neutral-600"}`}>
                 {icon}<span className="truncate">{label}</span>
               </Link>;
             })}

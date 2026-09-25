@@ -155,6 +155,7 @@ export default function HomePage() {
               <div className="alma-soft-actions">
                 <button type="button" onClick={scrollToFilters} className="alma-soft-button alma-soft-button-main">Найти место <span aria-hidden="true">↗</span></button>
                 <button type="button" onClick={() => router.push("/surprise?new=1")} className="alma-soft-button alma-soft-button-quiet">Удиви меня <span aria-hidden="true">✦</span></button>
+                <button type="button" onClick={() => router.push("/photozones")} className="alma-soft-button alma-soft-button-quiet md:hidden">Фотолокации <span aria-hidden="true">↗</span></button>
               </div>
               <div className="alma-soft-note">ПО НАСТРОЕНИЮ <span>·</span> ПО БЮДЖЕТУ <span>·</span> БЕЗ ЛИШНИХ ПЛАНОВ</div>
             </div>
