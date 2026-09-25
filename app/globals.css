@@ -167,34 +167,40 @@ select:-webkit-autofill {
   .alma-route-actions button, .alma-route-actions a { min-height: 44px; }
 }
 
-/* ALMA hero experiment 1 — stable living glass surface. */
-.alma-home-hero-image.alma-aura-host { pointer-events: auto !important; }
-.alma-flow-surface {
-  --flow-x: 72%; --flow-y: 43%; --flow-dx: 0px; --flow-dy: 0px;
-  position:absolute; inset:0; overflow:hidden; isolation:isolate; touch-action:pan-y;
+/* ALMA hero experiment 2 — click ripple on a calm surface. */
+.alma-ripple-surface {
+  position:absolute; inset:0; overflow:hidden; pointer-events:none; isolation:isolate;
   background:
-    radial-gradient(circle at 75% 35%, rgba(174,86,111,.20), transparent 27%),
-    radial-gradient(circle at 58% 72%, rgba(255,255,255,.92), transparent 34%),
+    radial-gradient(circle at 76% 32%, rgba(174,86,111,.12), transparent 29%),
+    radial-gradient(circle at 58% 74%, rgba(255,255,255,.92), transparent 36%),
     #f7f4ef;
 }
-.alma-flow-ambient { position:absolute; border-radius:50%; filter:blur(55px); pointer-events:none; animation:alma-ambient 8s ease-in-out infinite alternate; }
-.ambient-a { width:38%; aspect-ratio:1; right:3%; top:4%; background:rgba(169,73,102,.25); }
-.ambient-b { width:30%; aspect-ratio:1; right:29%; bottom:3%; background:rgba(213,173,184,.23); animation-delay:-3.5s; }
-.alma-flow-field {
-  position:absolute; inset:-12%; pointer-events:none;
-  background:radial-gradient(circle 190px at var(--flow-x) var(--flow-y), rgba(159,56,88,.42) 0%, rgba(197,126,146,.23) 30%, rgba(255,255,255,.12) 55%, transparent 72%);
-  filter:blur(12px); transform:translate3d(var(--flow-dx),var(--flow-dy),0);
-  transition:filter .3s ease, opacity .3s ease; opacity:.82;
+.alma-ripple-ambient { position:absolute; border-radius:50%; filter:blur(62px); opacity:.5; animation:alma-ripple-drift 10s ease-in-out infinite alternate; }
+.alma-ripple-ambient.ambient-a { width:34%; aspect-ratio:1; right:4%; top:7%; background:rgba(169,73,102,.18); }
+.alma-ripple-ambient.ambient-b { width:28%; aspect-ratio:1; right:34%; bottom:4%; background:rgba(219,185,194,.24); animation-delay:-4s; }
+.alma-click-ripple { position:absolute; width:1px; height:1px; pointer-events:none; }
+.alma-click-ripple i {
+  position:absolute; left:0; top:0; width:46px; height:46px; border-radius:50%;
+  transform:translate(-50%,-50%) scale(.15); opacity:0;
+  border:1px solid rgba(139,51,78,.42);
+  box-shadow:0 0 20px rgba(177,92,116,.10), inset 0 0 12px rgba(255,255,255,.65);
 }
-.alma-flow-glass {
-  position:absolute; width:190px; height:190px; left:var(--flow-x); top:var(--flow-y);
-  transform:translate(-50%,-50%); border-radius:50%; pointer-events:none;
-  background:radial-gradient(circle at 35% 28%, rgba(255,255,255,.32), transparent 42%);
-  border:1px solid rgba(255,255,255,.48);
-  box-shadow:inset 14px 10px 34px rgba(255,255,255,.48), inset -18px -12px 38px rgba(139,57,81,.09), 0 20px 60px rgba(90,55,65,.08);
-  backdrop-filter:blur(2px); -webkit-backdrop-filter:blur(2px); opacity:.34;
-  transition:opacity .22s ease,transform .25s ease; will-change:left,top,transform;
+.alma-click-ripple.is-rippling i { animation:alma-click-wave 1.25s cubic-bezier(.12,.65,.25,1) forwards; }
+.alma-click-ripple.is-rippling i:nth-child(2) { animation-delay:.12s; }
+.alma-click-ripple.is-rippling i:nth-child(3) { animation-delay:.24s; }
+@keyframes alma-click-wave {
+  0% { opacity:.58; transform:translate(-50%,-50%) scale(.18); }
+  65% { opacity:.22; }
+  100% { opacity:0; transform:translate(-50%,-50%) scale(5.6); }
 }
+@keyframes alma-ripple-drift { from{transform:translate3d(-5%,-3%,0) scale(.96)} to{transform:translate3d(8%,6%,0) scale(1.08)} }
+@media (max-width:767px) {
+  .alma-ripple-ambient.ambient-a{width:60%;right:-12%;top:3%}
+  .alma-ripple-ambient.ambient-b{width:48%;right:44%;bottom:36%}
+  .alma-click-ripple i{width:38px;height:38px}
+}
+@media (prefers-reduced-motion:reduce) { .alma-ripple-ambient{animation:none} .alma-click-ripple i{animation-duration:.01ms!important} }
+
 @media (hover:hover) and (pointer:fine) {
   .alma-home-hero, .alma-home-hero * {
     cursor: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'><defs><linearGradient id='chrome' x1='5' y1='4' x2='27' y2='27' gradientUnits='userSpaceOnUse'><stop offset='0' stop-color='%23ffffff'/><stop offset='.18' stop-color='%23dce9f1'/><stop offset='.42' stop-color='%237d858c'/><stop offset='.58' stop-color='%23f9fbfc'/><stop offset='.76' stop-color='%236d5a52'/><stop offset='1' stop-color='%232f3336'/></linearGradient><linearGradient id='edge' x1='7' y1='5' x2='24' y2='28'><stop stop-color='%23ffffff'/><stop offset='.5' stop-color='%23989da1'/><stop offset='1' stop-color='%2335383a'/></linearGradient><filter id='shadow' x='-40%25' y='-40%25' width='200%25' height='200%25'><feDropShadow dx='1.3' dy='2.2' stdDeviation='1.25' flood-color='%23000000' flood-opacity='.38'/></filter></defs><path filter='url(%23shadow)' d='M3.8 2.8 28.2 14.3 18 17.2 24.7 27.1 20.5 29.3 14.1 19.3 7.1 27.1 3.8 2.8Z' fill='url(%23chrome)' stroke='url(%23edge)' stroke-width='1.6' stroke-linejoin='round'/><path d='M6.2 6.2 23.7 14.2 15.7 16.4 10.2 22.4 6.2 6.2Z' fill='%23ffffff' fill-opacity='.12' stroke='%23ffffff' stroke-opacity='.7' stroke-width='.75'/><path d='M17.1 17.8 22.3 26.1' stroke='%23ffffff' stroke-opacity='.48' stroke-width='.8'/></svg>") 4 3, pointer !important;
@@ -204,39 +210,6 @@ select:-webkit-autofill {
   .alma-home-hero, .alma-home-hero * { cursor:auto; }
 }
 
-.alma-flow-core {
-  position:absolute; left:var(--flow-x); top:var(--flow-y); width:22px; height:22px;
-  transform:translate(-50%,-50%); border-radius:50%; pointer-events:none;
-  background:rgba(147,45,77,.22); box-shadow:0 0 34px 18px rgba(171,77,105,.14);
-  opacity:.35; transition:opacity .2s ease;
-}
-.alma-flow-surface.is-flowing .alma-flow-core { opacity:.9; }
-.alma-flow-ring {
-  position:absolute; left:var(--flow-x); top:var(--flow-y); width:82px; height:82px;
-  border-radius:50%; border:1px solid rgba(157,62,90,.17); transform:translate(-50%,-50%) scale(.7);
-  opacity:0; pointer-events:none;
-}
-.alma-flow-surface.is-flowing .alma-flow-field { filter:blur(6px); opacity:1; }
-.alma-flow-surface.is-flowing .alma-flow-glass { opacity:.68; transform:translate(-50%,-50%) scale(1.06); }
-.alma-flow-surface.is-flowing .ring-one { animation:alma-flow-ripple 1.35s ease-out infinite; }
-.alma-flow-surface.is-flowing .ring-two { animation:alma-flow-ripple 1.35s .55s ease-out infinite; }
-@keyframes alma-flow-ripple { 0%{opacity:.42;transform:translate(-50%,-50%) scale(.55)} 100%{opacity:0;transform:translate(-50%,-50%) scale(2.15)} }
-@keyframes alma-ambient { from{transform:translate3d(-6%,-4%,0) scale(.94)} to{transform:translate3d(9%,7%,0) scale(1.09)} }
-@media (max-width:767px) {
-  .alma-flow-surface{min-height:100%;--flow-x:58%;--flow-y:29%}
-  .alma-flow-field{background:radial-gradient(circle 125px at var(--flow-x) var(--flow-y),rgba(159,56,88,.43),rgba(197,126,146,.20) 38%,transparent 72%);filter:blur(9px)}
-  .alma-flow-glass{width:125px;height:125px}
-  .alma-flow-ring{width:62px;height:62px}
-  .ambient-a{width:62%;right:-10%;top:3%}.ambient-b{width:50%;right:42%;bottom:35%}
-}
-@media (hover:none),(pointer:coarse) {
-  .alma-flow-glass{opacity:.48}
-  .alma-flow-field{opacity:.92}
-}
-@media (prefers-reduced-motion:reduce) {
-  .alma-flow-ambient,.alma-flow-ring{animation:none!important}
-  .alma-flow-glass,.alma-flow-field{transition:none}
-}
 
 @keyframes alma-cta-shine {
   0%, 58% {
