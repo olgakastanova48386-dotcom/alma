@@ -169,17 +169,11 @@ select:-webkit-autofill {
 
 /* ALMA hero experiment 5 — fabric physically pinched by the cursor. */
 .alma-page-interaction{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}
-.alma-page-interaction .alma-cloth-surface{position:absolute;inset:0}
-.alma-home-hero,.alma-home-hero~*{position:relative;z-index:1}
-
-.alma-cloth-surface{--cloth-x:72%;--cloth-y:38%;--cloth-vx:0;--cloth-vy:0;position:absolute;inset:0;overflow:hidden;pointer-events:none;isolation:isolate;background:#f5f0eb}
-.alma-cloth-sheet{position:absolute;inset:-12%;background:linear-gradient(122deg,#f8f4ef 0%,#eadadd 25%,#faf7f2 48%,#e4cdd3 67%,#f7f2ed 100%);transform:translate3d(calc(var(--cloth-vx)*.18px),calc(var(--cloth-vy)*.15px),0) scale(1.08)}
-.alma-cloth-pinch{position:absolute;left:var(--cloth-x);top:var(--cloth-y);width:62%;aspect-ratio:1;transform:translate(-50%,-50%) rotate(calc(var(--cloth-vx)*.12deg));background:repeating-conic-gradient(from 8deg at 50% 50%,rgba(78,35,49,.22) 0 4deg,rgba(255,255,255,.72) 6deg 11deg,rgba(147,75,96,.14) 14deg 19deg,transparent 22deg 31deg);mask-image:radial-gradient(circle,black 0 7%,rgba(0,0,0,.92) 19%,rgba(0,0,0,.55) 40%,transparent 68%);filter:blur(5px);opacity:.88;will-change:left,top,transform}
-.alma-cloth-ridges{position:absolute;left:var(--cloth-x);top:var(--cloth-y);width:74%;aspect-ratio:1.25;transform:translate(-50%,-50%) skewX(calc(var(--cloth-vx)*.18deg)) rotate(-8deg);background:repeating-radial-gradient(ellipse at 50% 50%,transparent 0 20px,rgba(93,40,57,.13) 25px,rgba(255,255,255,.48) 34px,transparent 48px);mask-image:radial-gradient(ellipse,black 0 10%,rgba(0,0,0,.75) 40%,transparent 72%);filter:blur(4px);opacity:.82}
-.alma-cloth-light{position:absolute;left:var(--cloth-x);top:var(--cloth-y);width:24%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.94) 0 5%,rgba(255,255,255,.34) 15%,rgba(110,47,66,.20) 28%,transparent 57%);filter:blur(8px);box-shadow:0 20px 55px rgba(104,44,63,.12)}
-.alma-cloth-texture{position:absolute;inset:0;background-image:repeating-linear-gradient(105deg,rgba(80,51,59,.07) 0 1px,transparent 1px 4px),repeating-linear-gradient(15deg,rgba(255,255,255,.18) 0 1px,transparent 1px 6px);opacity:.32;mix-blend-mode:multiply}
-@media(max-width:767px){.alma-cloth-pinch{width:105%}.alma-cloth-ridges{width:118%}.alma-cloth-light{width:40%}}
-@media(prefers-reduced-motion:reduce){.alma-cloth-sheet,.alma-cloth-pinch,.alma-cloth-ridges{transform:none!important}}
+.alma-page-interaction .alma-cloth-surface{position:absolute;inset:0;overflow:hidden;pointer-events:none;isolation:isolate;background:#f5f0eb}
+.alma-cloth-sheet{position:absolute;inset:-8%;background:linear-gradient(122deg,#f8f4ef 0%,#eadadd 27%,#faf7f2 49%,#e4cdd3 69%,#f7f2ed 100%);filter:saturate(.82)}
+.alma-cloth-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;mix-blend-mode:multiply}
+.alma-cloth-texture{position:absolute;inset:0;pointer-events:none;background-image:repeating-linear-gradient(105deg,rgba(80,51,59,.055) 0 1px,transparent 1px 4px),repeating-linear-gradient(15deg,rgba(255,255,255,.16) 0 1px,transparent 1px 6px);opacity:.28;mix-blend-mode:multiply}
+@media(prefers-reduced-motion:reduce){.alma-cloth-canvas{display:none}}
 
 @media (hover:hover) and (pointer:fine) {
   .alma-home-page, .alma-home-page * {
