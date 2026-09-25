@@ -96,7 +96,6 @@ function InteractiveAura() {
       targetRef.current.x = Math.max(0, Math.min(100, ((event.clientX - bounds.left) / bounds.width) * 100));
       targetRef.current.y = Math.max(0, Math.min(100, ((event.clientY - bounds.top) / bounds.height) * 100));
       node.classList.add("is-flowing");
-      node.classList.add("has-metal-cursor");
     };
 
     window.addEventListener("pointermove", track, { passive: true });
@@ -118,7 +117,6 @@ function InteractiveAura() {
       <div className="alma-flow-ring ring-two" />
       <div className="alma-flow-glass" />
       <div className="alma-flow-core" />
-      <div className="alma-metal-cursor"><span className="alma-metal-cursor-glint" /></div>
     </div>
   );
 }
