@@ -67,56 +67,41 @@ function getWeatherInfo(code: number, isDay: boolean) {
 
 function InteractiveAura() {
   const surfaceRef = useRef<HTMLDivElement>(null);
-  const targetRef = useRef({ x: 72, y: 43 });
-  const currentRef = useRef({ x: 72, y: 43 });
-  const rafRef = useRef<number | null>(null);
+  const rippleRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const node = surfaceRef.current;
-    if (!node) return;
+    const surface = surfaceRef.current;
+    const ripple = rippleRef.current;
+    if (!surface || !ripple) return;
 
-    const animate = () => {
-      const current = currentRef.current;
-      const target = targetRef.current;
-      current.x += (target.x - current.x) * 0.18;
-      current.y += (target.y - current.y) * 0.18;
-      node.style.setProperty("--flow-x", current.x.toFixed(2) + "%");
-      node.style.setProperty("--flow-y", current.y.toFixed(2) + "%");
-      rafRef.current = requestAnimationFrame(animate);
+    const place = (event: PointerEvent) => {
+      const bounds = surface.getBoundingClientRect();
+      if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) return false;
+      const x = event.clientX - bounds.left;
+      const y = event.clientY - bounds.top;
+      ripple.style.left = x + "px";
+      ripple.style.top = y + "px";
+      return true;
     };
 
-    const track = (event: PointerEvent) => {
-      const bounds = node.getBoundingClientRect();
-      const inside = event.clientX >= bounds.left && event.clientX <= bounds.right &&
-        event.clientY >= bounds.top && event.clientY <= bounds.bottom;
-      if (!inside) {
-        node.classList.remove("is-flowing");
-        return;
-      }
-      targetRef.current.x = Math.max(0, Math.min(100, ((event.clientX - bounds.left) / bounds.width) * 100));
-      targetRef.current.y = Math.max(0, Math.min(100, ((event.clientY - bounds.top) / bounds.height) * 100));
-      node.classList.add("is-flowing");
+    const pulse = (event: PointerEvent) => {
+      if (!place(event)) return;
+      ripple.classList.remove("is-rippling");
+      void ripple.offsetWidth;
+      ripple.classList.add("is-rippling");
     };
 
-    window.addEventListener("pointermove", track, { passive: true });
-    window.addEventListener("pointerdown", track, { passive: true });
-    rafRef.current = requestAnimationFrame(animate);
-    return () => {
-      window.removeEventListener("pointermove", track);
-      window.removeEventListener("pointerdown", track);
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    };
+    window.addEventListener("pointerdown", pulse, { passive: true });
+    return () => window.removeEventListener("pointerdown", pulse);
   }, []);
 
   return (
-    <div ref={surfaceRef} className="alma-flow-surface" aria-hidden="true">
-      <div className="alma-flow-ambient ambient-a" />
-      <div className="alma-flow-ambient ambient-b" />
-      <div className="alma-flow-field" />
-      <div className="alma-flow-ring ring-one" />
-      <div className="alma-flow-ring ring-two" />
-      <div className="alma-flow-glass" />
-      <div className="alma-flow-core" />
+    <div ref={surfaceRef} className="alma-ripple-surface" aria-hidden="true">
+      <div className="alma-ripple-ambient ambient-a" />
+      <div className="alma-ripple-ambient ambient-b" />
+      <div ref={rippleRef} className="alma-click-ripple">
+        <i /><i /><i />
+      </div>
     </div>
   );
 }
