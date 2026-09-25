@@ -69,6 +69,15 @@ function EventsIcon() {
   );
 }
 
+function CameraIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" className="h-[20px] w-[20px]" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M4 7.5h3.3l1.6-2h6.2l1.6 2H20a1.5 1.5 0 0 1 1.5 1.5v9A1.5 1.5 0 0 1 20 19.5H4A1.5 1.5 0 0 1 2.5 18V9A1.5 1.5 0 0 1 4 7.5Z" />
+      <circle cx="12" cy="13.2" r="3.25" />
+    </svg>
+  );
+}
+
 function HeartIcon() {
   return (
     <svg
@@ -143,7 +152,7 @@ export default function Header() {
   return (
     <header className={`absolute top-0 left-0 z-[9999] w-full md:fixed ${pathname === "/" ? "alma-atlas-header" : ""}`}>
       <div className="max-w-7xl mx-auto mt-[calc(env(safe-area-inset-top)+10px)] md:mt-4 px-2.5 md:px-6">
-        <div className="px-3 py-1.5 md:rounded-full md:border md:border-black/5 md:bg-white/92 md:px-8 md:py-3 md:shadow-lg md:backdrop-blur-xl">
+        <div className="px-3 py-1.5 md:rounded-full md:border md:border-black/5 md:bg-white/92 md:px-4 lg:px-8 md:py-3 md:shadow-lg md:backdrop-blur-xl">
 
           {/* Mobile: only the logo stays above the page. */}
           <div className="flex h-11 items-center md:hidden">
@@ -160,7 +169,7 @@ export default function Header() {
               ALMA
             </Link>
 
-            <nav className="flex items-center gap-5 lg:gap-7 text-sm md:text-base text-gray-600">
+            <nav className="flex items-center gap-2 lg:gap-5 text-xs lg:text-sm text-gray-600 whitespace-nowrap">
 
               <Link href="/" className="hover:text-black">
                 Главная
@@ -168,6 +177,10 @@ export default function Header() {
 
               <Link href="/map" className="hover:text-black">
                 События
+              </Link>
+
+              <Link href="/photozones" className="hover:text-black">
+                Фотолокации
               </Link>
 
               <Link href="/dog-friendly" className="hover:text-black">
@@ -188,7 +201,7 @@ export default function Header() {
             {authLoaded && user ? (
               <Link
                 href="/profile"
-                className="inline-flex items-center gap-2 rounded-full bg-black text-white px-5 py-2.5"
+                className="inline-flex items-center gap-2 rounded-full bg-black text-white px-3 lg:px-5 py-2.5"
               >
                 <ProfileIcon />
                 <span>{user.name}</span>
@@ -196,7 +209,7 @@ export default function Header() {
             ) : (
               <Link
                 href="/login"
-                className="rounded-full bg-black text-white px-5 py-2.5"
+                className="rounded-full bg-black text-white px-3 lg:px-5 py-2.5"
               >
                 Войти
               </Link>
@@ -206,16 +219,17 @@ export default function Header() {
 
         </div>
       </div>
-          {!authScreen && <nav aria-label="Основная навигация" className="alma-glass fixed inset-x-3 bottom-[calc(10px+env(safe-area-inset-bottom))] z-[10000] mx-auto grid max-w-[480px] grid-cols-5 rounded-[24px] border border-black/10 bg-white/95 px-1.5 py-1.5 shadow-[0_12px_40px_rgba(0,0,0,.16)] backdrop-blur-xl md:hidden">
+          {!authScreen && <nav aria-label="Основная навигация" className="alma-glass fixed inset-x-3 bottom-[calc(10px+env(safe-area-inset-bottom))] z-[10000] mx-auto grid max-w-[480px] grid-cols-6 rounded-[24px] border border-black/10 bg-white/95 px-1.5 py-1.5 shadow-[0_12px_40px_rgba(0,0,0,.16)] backdrop-blur-xl md:hidden">
             {[
               { href: "/", label: "Главная", icon: <HomeIcon /> },
               { href: "/map", label: "События", icon: <EventsIcon /> },
+              { href: "/photozones", label: "Фото", ariaLabel: "Фотолокации", icon: <CameraIcon /> },
               { href: "/dog-friendly", label: "С собакой", icon: <PawIcon /> },
               { href: "/favorites", label: "Избранное", icon: <HeartIcon /> },
               { href: user ? "/profile" : "/login", label: "Профиль", icon: <ProfileIcon /> },
-            ].map(({ href, label, icon }) => {
+            ].map(({ href, label, icon, ariaLabel }) => {
               const active = isCurrentRoute(pathname, href);
-              return <Link key={label} href={href} aria-label={label} aria-current={active ? "page" : undefined} className={`flex min-h-[56px] min-w-0 flex-col items-center justify-center gap-0.5 rounded-[18px] text-[11px] font-medium leading-none ${active ? "bg-[#f3e9e6] text-black" : "text-neutral-600"}`}>
+              return <Link key={label} href={href} aria-label={ariaLabel || label} aria-current={active ? "page" : undefined} className={`flex min-h-[56px] min-w-0 flex-col items-center justify-center gap-0.5 rounded-[18px] text-[10px] font-medium leading-none ${active ? "bg-[#f3e9e6] text-black" : "text-neutral-600"}`}>
                 {icon}<span className="truncate">{label}</span>
               </Link>;
             })}

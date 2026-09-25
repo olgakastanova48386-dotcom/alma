@@ -150,7 +150,6 @@ export default function HomePage() {
         <div className="alma-soft-shell">
           <div className="alma-soft-grid">
             <div className="alma-soft-copy">
-              <span className="alma-soft-eyebrow"><span className="alma-soft-dot" /> ТВОЙ ПЕТЕРБУРГ, ТВОЙ РИТМ</span>
               <h1>Город под<br /><em>твоё</em><br />настроение.</h1>
               <p>Выбери, чего хочется сегодня. ALMA найдёт место, прогулку или готовый маршрут.</p>
               <div className="alma-soft-actions">
@@ -174,7 +173,7 @@ export default function HomePage() {
       </section>
 
       <div id="alma-filters" className="alma-atlas-map-section relative z-10 pt-5 sm:pt-6 md:pt-12 lg:pt-14">
-        <div className="alma-atlas-map-title max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><div><span>02 / ЖИВОЙ АТЛАС</span><h2>Где окажемся<br />сегодня?</h2></div><p>Выбирай настроение, время и компанию. Карта покажет подходящие места.</p></div>
+        <div className="alma-atlas-map-title max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><div><h2>Где окажемся<br />сегодня?</h2></div><p>Выбирай настроение, время и компанию. Карта покажет подходящие места.</p></div>
         <Suspense fallback={<section className="mx-auto max-w-7xl px-4 pb-10 sm:px-6 lg:px-8"><div className="flex min-h-[560px] items-center justify-center rounded-[28px] bg-[#ebe8e3] text-neutral-500">Загружаем карту…</div></section>}>
           <UnifiedMap />
         </Suspense>

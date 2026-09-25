@@ -134,48 +134,35 @@ export default function UnifiedMap() {
   }, []);
 
   useEffect(() => {
-    if (!document.querySelector('link[data-leaflet-css="true"]')) {
-      const l = document.createElement("link");
-      l.rel = "stylesheet";
-      l.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
-      l.dataset.leafletCss = "true";
-      l.onerror = () => { l.href = "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css"; };
-      document.head.appendChild(l);
-    }
-    if (window.L) {
-      queueMicrotask(() => setReady(true));
-      return;
-    }
-    const old = document.querySelector('script[data-leaflet-js="true"]') as HTMLScriptElement | null;
-    if (old) {
-      old.addEventListener("load", () => setReady(true));
-      return;
-    }
-    const s = document.createElement("script");
-    s.src = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";
-    s.async = true;
-    s.dataset.leafletJs = "true";
-    s.onload = () => setReady(true);
-    s.onerror = () => {
-      s.remove();
-      const fallback = document.createElement("script");
-      fallback.src = "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js";
-      fallback.async = true;
-      fallback.dataset.leafletJs = "true";
-      fallback.onload = () => setReady(true);
-      document.body.appendChild(fallback);
-    };
-    document.body.appendChild(s);
+    let cancelled = false;
+    // Load Leaflet from ALMA's own build so blocked third-party CDNs cannot
+    // leave the map permanently stuck on its loading screen.
+    import("leaflet").then((leaflet) => {
+      if (cancelled) return;
+      window.L = leaflet;
+      setReady(true);
+    });
+    return () => { cancelled = true; };
   }, []);
 
   useEffect(() => {
     if (!ready || !container.current || map.current) return;
     map.current = window.L.map(container.current, { zoomControl: false }).setView([59.9386, 30.3141], 11);
+    const currentMap = map.current;
     window.L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 19, attribution: "© OpenStreetMap" }).addTo(map.current);
     window.L.control.zoom({ position: "bottomright" }).addTo(map.current);
     const onZoom = () => setMapZoom(map.current?.getZoom() ?? 11);
     map.current.on("zoomend", onZoom);
-    return () => map.current?.off("zoomend", onZoom);
+    const resizeObserver = new ResizeObserver(() => currentMap.invalidateSize({ pan: false }));
+    resizeObserver.observe(container.current);
+    const refresh = window.setTimeout(() => currentMap.invalidateSize({ pan: false }), 200);
+    return () => {
+      window.clearTimeout(refresh);
+      resizeObserver.disconnect();
+      currentMap.off("zoomend", onZoom);
+      currentMap.remove();
+      map.current = null;
+    };
   }, [ready]);
 
   const buildRoute = async (place: MapPlace) => {

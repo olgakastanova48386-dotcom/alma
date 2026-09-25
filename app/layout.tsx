@@ -10,6 +10,7 @@ import PwaInstaller from "@/components/PwaInstaller";
 import LiveAppRefresh from "@/components/LiveAppRefresh";
 import PageViewTracker from "@/components/PageViewTracker";
 import "./globals.css";
+import "leaflet/dist/leaflet.css";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
