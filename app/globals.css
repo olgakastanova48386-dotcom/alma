@@ -513,3 +513,37 @@ select:-webkit-autofill {
 @media (prefers-reduced-motion: reduce) {
   .alma-reference-flower-image, .alma-reference-flower-light { animation: none; }
 }
+
+
+/* 2026-09-26 — liquid editorial hero, built entirely with CSS (no generated imagery). */
+.alma-soft-stage{
+  background:#efefed!important;
+  border-color:rgba(255,255,255,.85)!important;
+  box-shadow:0 30px 70px rgba(28,32,38,.16),inset 0 1px 0 #fff!important;
+}
+.alma-soft-stage:before{border-color:rgba(20,20,20,.08)!important}
+.alma-soft-stage-head{color:#0b0b0c!important;mix-blend-mode:multiply}
+.alma-soft-stage-head small{color:#666!important}
+.alma-soft-stage-mark{background:rgba(255,255,255,.45)!important;color:#111!important;backdrop-filter:blur(16px);box-shadow:0 8px 30px rgba(0,0,0,.08)!important}
+.alma-soft-stage p{color:#161616!important;text-shadow:none!important;mix-blend-mode:multiply}
+.alma-soft-stage-arrow{color:#111!important;box-shadow:inset 0 0 0 1px rgba(0,0,0,.12)!important}
+.alma-liquid-scene{--mx:0px;--my:0px;position:absolute;inset:0;overflow:hidden;isolation:isolate}
+.alma-liquid{position:absolute;filter:saturate(1.08);will-change:transform,border-radius}
+.alma-liquid:before{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(145deg,rgba(255,255,255,.7),transparent 24% 67%,rgba(15,30,45,.22));mix-blend-mode:soft-light}
+.alma-liquid:after{content:"";position:absolute;inset:2%;border-radius:inherit;box-shadow:inset 18px 16px 28px rgba(255,255,255,.34),inset -24px -24px 40px rgba(20,27,39,.22);opacity:.8}
+.alma-liquid-a{width:72%;height:43%;left:6%;top:16%;border-radius:45% 55% 62% 38%/55% 42% 58% 45%;background:radial-gradient(circle at 20% 20%,#ffb02e 0 11%,transparent 35%),radial-gradient(circle at 49% 45%,#ff7084 0 12%,transparent 38%),radial-gradient(circle at 78% 69%,#57c5dd 0 13%,transparent 40%),radial-gradient(circle at 83% 35%,#35445c 0 12%,transparent 42%),linear-gradient(135deg,#ffd58a,#e5d7e0 46%,#6bb9d2 77%,#3d4856);box-shadow:20px 31px 31px rgba(42,45,54,.32),-18px -16px 40px rgba(255,174,68,.18);transform:translate3d(var(--mx),var(--my),0) rotate(5deg);animation:alma-liquid-a 10s ease-in-out infinite alternate}
+.alma-liquid-b{width:67%;height:37%;right:4%;bottom:10%;border-radius:61% 39% 49% 51%/43% 57% 43% 57%;background:radial-gradient(circle at 16% 45%,#d8eee0 0 10%,transparent 34%),radial-gradient(circle at 70% 43%,#ff7785 0 12%,transparent 37%),radial-gradient(circle at 47% 19%,#d9f1f2 0 12%,transparent 38%),linear-gradient(145deg,#cfe5dc,#f0e7e3 45%,#f17b89 72%,#a97176);box-shadow:22px 30px 29px rgba(79,47,54,.28),-15px -12px 36px rgba(255,255,255,.65);transform:translate3d(calc(var(--mx) * -.7),calc(var(--my) * -.7),0) rotate(-7deg);animation:alma-liquid-b 12s ease-in-out infinite alternate}
+.alma-liquid-grain{position:absolute;inset:0;z-index:3;opacity:.16;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");mix-blend-mode:overlay}
+.alma-liquid-word{position:absolute;z-index:4;color:#090909;font-weight:400;letter-spacing:.03em;line-height:.8;mix-blend-mode:multiply;pointer-events:none}
+.alma-liquid-word-top{top:24%;left:23%;font-size:clamp(45px,6vw,82px)}
+.alma-liquid-word-bottom{left:25%;bottom:18%;font-size:clamp(44px,6.4vw,88px)}
+.alma-liquid-word-bottom span{display:block}.alma-liquid-word-bottom span:last-child{filter:blur(5px);opacity:.78}
+@keyframes alma-liquid-a{0%{border-radius:45% 55% 62% 38%/55% 42% 58% 45%;transform:translate3d(var(--mx),var(--my),0) rotate(5deg) scale(1)}100%{border-radius:58% 42% 46% 54%/44% 61% 39% 56%;transform:translate3d(var(--mx),calc(var(--my) - 8px),0) rotate(1deg) scale(1.025)}}
+@keyframes alma-liquid-b{0%{border-radius:61% 39% 49% 51%/43% 57% 43% 57%;transform:translate3d(calc(var(--mx) * -.7),calc(var(--my) * -.7),0) rotate(-7deg)}100%{border-radius:43% 57% 62% 38%/57% 39% 61% 43%;transform:translate3d(calc(var(--mx) * -.7),calc(var(--my) * -.7 - 7px),0) rotate(-3deg) scale(1.03)}}
+@media(max-width:767px){
+ .alma-liquid-a{width:82%;height:42%;left:3%;top:17%}
+ .alma-liquid-b{width:79%;height:35%;right:0;bottom:11%}
+ .alma-liquid-word-top{top:25%;left:16%;font-size:43px}
+ .alma-liquid-word-bottom{left:17%;bottom:19%;font-size:42px}
+}
+@media(prefers-reduced-motion:reduce){.alma-liquid{animation:none!important}}
