@@ -183,6 +183,7 @@ select:-webkit-autofill {
   width: min(78%, 660px);
   aspect-ratio: 1.5 / 1;
   transform: translate(-50%, -50%);
+  overflow: visible;
 }
 .alma-blur-stroke {
   position: absolute;
@@ -231,8 +232,22 @@ select:-webkit-autofill {
 }
 @media (max-width: 767px) {
   .alma-home-hero-image.alma-aura-host { background: #f3f0e9 !important; }
-  .alma-reveal-cloud { width: 88%; top: 42%; }
-  .alma-blur-stroke { filter: blur(10px); }
+  .alma-reveal-art { min-height: 310px; }
+  .alma-reveal-cloud {
+    width: 76%;
+    max-width: 320px;
+    top: 52%;
+    left: 50%;
+  }
+  .alma-blur-stroke { filter: blur(9px); }
+  .alma-reveal-word {
+    line-height: 1;
+    font-size: 19px !important;
+  }
+  .word-where { left: 35%; top: 17%; }
+  .word-today { left: 43%; top: 41%; }
+  .word-go { left: 19%; top: 58%; }
+  .word-you { left: 50%; top: 72%; }
 }
 @media (prefers-reduced-motion: reduce) {
   .alma-blur-stroke, .alma-reveal-word { animation: none; }
