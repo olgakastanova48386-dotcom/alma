@@ -177,11 +177,7 @@ select:-webkit-autofill {
 .alma-field-core{display:none}
 @media(max-width:767px){.alma-field-grid{background-size:24px 24px}.alma-field-warp{width:280px;height:280px}}
 
-@media (hover:hover) and (pointer:fine) {
-  .alma-home-page, .alma-home-page * {
-    cursor: url("/images/alma-cursor-reference.png") 12 6, pointer !important;
-  }
-}
+
 @media (hover:none),(pointer:coarse) {
   .alma-home-page, .alma-home-page * { cursor:auto; }
 }
