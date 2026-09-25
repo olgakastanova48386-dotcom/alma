@@ -1,0 +1,20 @@
+{
+  "expo": {
+    "name": "ALMA",
+    "slug": "alma-mobile",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "scheme": "alma",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.alma.city"
+    },
+    "android": {
+      "package": "com.alma.city",
+      "adaptiveIcon": {
+        "backgroundColor": "#F3EEE6"
+      }
+    }
+  }
+}
