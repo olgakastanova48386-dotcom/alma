@@ -67,22 +67,32 @@ function getWeatherInfo(code: number, isDay: boolean) {
 
 function InteractiveAura() {
   const surfaceRef = useRef<HTMLDivElement>(null);
+  const rafRef = useRef<number | null>(null);
 
-  const moveSurface = (event: React.PointerEvent<HTMLDivElement>) => {
-    const bounds = event.currentTarget.getBoundingClientRect();
-    const x = ((event.clientX - bounds.left) / bounds.width) * 100;
-    const y = ((event.clientY - bounds.top) / bounds.height) * 100;
-    const dx = ((event.clientX - bounds.left) / bounds.width - 0.5) * 16;
-    const dy = ((event.clientY - bounds.top) / bounds.height - 0.5) * 12;
+  const setPoint = (clientX: number, clientY: number, active = true) => {
     const node = surfaceRef.current;
-    node?.style.setProperty("--flow-x", x.toFixed(1) + "%");
-    node?.style.setProperty("--flow-y", y.toFixed(1) + "%");
-    node?.style.setProperty("--flow-dx", dx.toFixed(1) + "px");
-    node?.style.setProperty("--flow-dy", dy.toFixed(1) + "px");
-    node?.classList.add("is-flowing");
+    if (!node) return;
+    const bounds = node.getBoundingClientRect();
+    const x = Math.max(0, Math.min(100, ((clientX - bounds.left) / bounds.width) * 100));
+    const y = Math.max(0, Math.min(100, ((clientY - bounds.top) / bounds.height) * 100));
+    const dx = (x / 100 - 0.5) * 22;
+    const dy = (y / 100 - 0.5) * 16;
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    rafRef.current = requestAnimationFrame(() => {
+      node.style.setProperty("--flow-x", x.toFixed(1) + "%");
+      node.style.setProperty("--flow-y", y.toFixed(1) + "%");
+      node.style.setProperty("--flow-dx", dx.toFixed(1) + "px");
+      node.style.setProperty("--flow-dy", dy.toFixed(1) + "px");
+      if (active) node.classList.add("is-flowing");
+    });
   };
 
+  const moveSurface = (event: React.PointerEvent<HTMLDivElement>) => setPoint(event.clientX, event.clientY);
   const calmSurface = () => surfaceRef.current?.classList.remove("is-flowing");
+
+  useEffect(() => () => {
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
+  }, []);
 
   return (
     <div
@@ -93,11 +103,14 @@ function InteractiveAura() {
       onPointerDown={moveSurface}
       onPointerLeave={calmSurface}
       onPointerUp={calmSurface}
+      onPointerCancel={calmSurface}
     >
-      <div className="alma-flow-light flow-light-a" />
-      <div className="alma-flow-light flow-light-b" />
+      <div className="alma-flow-ambient ambient-a" />
+      <div className="alma-flow-ambient ambient-b" />
       <div className="alma-flow-field" />
-      <div className="alma-flow-caustic" />
+      <div className="alma-flow-ring ring-one" />
+      <div className="alma-flow-ring ring-two" />
+      <div className="alma-flow-glass" />
     </div>
   );
 }
