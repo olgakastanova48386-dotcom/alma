@@ -67,64 +67,56 @@ function getWeatherInfo(code: number, isDay: boolean) {
 
 function InteractiveAura() {
   const surfaceRef = useRef<HTMLDivElement>(null);
+  const targetRef = useRef({ x: 72, y: 43 });
+  const currentRef = useRef({ x: 72, y: 43 });
   const rafRef = useRef<number | null>(null);
 
-  const setPoint = (clientX: number, clientY: number, active = true) => {
+  useEffect(() => {
     const node = surfaceRef.current;
     if (!node) return;
-    const bounds = node.getBoundingClientRect();
-    const x = Math.max(0, Math.min(100, ((clientX - bounds.left) / bounds.width) * 100));
-    const y = Math.max(0, Math.min(100, ((clientY - bounds.top) / bounds.height) * 100));
-    const dx = (x / 100 - 0.5) * 22;
-    const dy = (y / 100 - 0.5) * 16;
-    if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    rafRef.current = requestAnimationFrame(() => {
-      node.style.setProperty("--flow-x", x.toFixed(1) + "%");
-      node.style.setProperty("--flow-y", y.toFixed(1) + "%");
-      node.style.setProperty("--flow-dx", dx.toFixed(1) + "px");
-      node.style.setProperty("--flow-dy", dy.toFixed(1) + "px");
-      if (active) node.classList.add("is-flowing");
-    });
-  };
 
-  const moveSurface = (event: React.PointerEvent<HTMLDivElement>) => setPoint(event.clientX, event.clientY);
-  const calmSurface = () => surfaceRef.current?.classList.remove("is-flowing");
+    const animate = () => {
+      const current = currentRef.current;
+      const target = targetRef.current;
+      current.x += (target.x - current.x) * 0.18;
+      current.y += (target.y - current.y) * 0.18;
+      node.style.setProperty("--flow-x", current.x.toFixed(2) + "%");
+      node.style.setProperty("--flow-y", current.y.toFixed(2) + "%");
+      rafRef.current = requestAnimationFrame(animate);
+    };
 
-  useEffect(() => {
-    const trackPointer = (event: PointerEvent) => {
-      const node = surfaceRef.current;
-      if (!node) return;
+    const track = (event: PointerEvent) => {
       const bounds = node.getBoundingClientRect();
-      if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) {
+      const inside = event.clientX >= bounds.left && event.clientX <= bounds.right &&
+        event.clientY >= bounds.top && event.clientY <= bounds.bottom;
+      if (!inside) {
         node.classList.remove("is-flowing");
         return;
       }
-      setPoint(event.clientX, event.clientY);
+      targetRef.current.x = Math.max(0, Math.min(100, ((event.clientX - bounds.left) / bounds.width) * 100));
+      targetRef.current.y = Math.max(0, Math.min(100, ((event.clientY - bounds.top) / bounds.height) * 100));
+      node.classList.add("is-flowing");
     };
-    window.addEventListener("pointermove", trackPointer, { passive: true });
+
+    window.addEventListener("pointermove", track, { passive: true });
+    window.addEventListener("pointerdown", track, { passive: true });
+    rafRef.current = requestAnimationFrame(animate);
     return () => {
-      window.removeEventListener("pointermove", trackPointer);
+      window.removeEventListener("pointermove", track);
+      window.removeEventListener("pointerdown", track);
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
   }, []);
 
   return (
-    <div
-      ref={surfaceRef}
-      className="alma-flow-surface"
-      aria-hidden="true"
-      onPointerMove={moveSurface}
-      onPointerDown={moveSurface}
-      onPointerLeave={calmSurface}
-      onPointerUp={calmSurface}
-      onPointerCancel={calmSurface}
-    >
+    <div ref={surfaceRef} className="alma-flow-surface" aria-hidden="true">
       <div className="alma-flow-ambient ambient-a" />
       <div className="alma-flow-ambient ambient-b" />
       <div className="alma-flow-field" />
       <div className="alma-flow-ring ring-one" />
       <div className="alma-flow-ring ring-two" />
       <div className="alma-flow-glass" />
+      <div className="alma-flow-core" />
     </div>
   );
 }
