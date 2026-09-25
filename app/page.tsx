@@ -67,93 +67,93 @@ function getWeatherInfo(code: number, isDay: boolean) {
 
 function InteractiveAura() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const pointerRef = useRef<{ x: number; y: number } | null>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-    let frame = 0;
-    let width = 0;
-    let height = 0;
-    let raf = 0;
-    let last = 0;
-    let tick = 0;
-    let x = 0;
-    let y = 0;
-    let angle = -.3;
-    const trail: { x: number; y: number }[] = [];
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const resize = () => {
-      const bounds = canvas.getBoundingClientRect();
-      width = bounds.width;
-      height = bounds.height;
-      const ratio = Math.min(window.devicePixelRatio || 1, 2);
-      canvas.width = Math.round(width * ratio);
-      canvas.height = Math.round(height * ratio);
-      ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
-      x = width * .22;
-      y = height * .43;
-      trail.length = 0;
-    };
-    const observer = new ResizeObserver(resize);
-    observer.observe(canvas);
-    resize();
 
-    const draw = (now: number) => {
-      raf = window.requestAnimationFrame(draw);
-      if (now - last < 30) return;
-      const delta = Math.min((now - last || 33) / 33, 2);
-      last = now;
-      tick += delta;
-      ctx.clearRect(0, 0, width, height);
-      if (!reducedMotion) {
-        // Several incommensurate waves keep the movement irregular rather than looping a fixed SVG path.
-        angle += (.028 * Math.sin(tick * .031) + .043 * Math.sin(tick * .017 + 2.1) + .025 * Math.sin(tick * .071 + 1.4)) * delta;
-        const pointer = pointerRef.current;
-        if (pointer) {
-          const desired = Math.atan2(pointer.y - y, pointer.x - x);
-          angle += Math.atan2(Math.sin(desired - angle), Math.cos(desired - angle)) * .013 * delta;
-        }
-        const speed = Math.min(width, height) * .012 * delta;
-        x += Math.cos(angle) * speed;
-        y += Math.sin(angle) * speed;
-        if (x < -30 || x > width + 30 || y < -30 || y > height + 30 || trail.length > 240) {
-          x = width * (.15 + Math.random() * .7);
-          y = height * (.18 + Math.random() * .58);
-          angle = Math.random() * Math.PI * 2;
-          trail.length = 0;
-        }
-        trail.push({ x, y });
-        if (trail.length > 115) trail.shift();
-      } else if (!trail.length) {
-        for (let i = 0; i < 95; i++) trail.push({ x: width * (.08 + i / 110), y: height * (.45 + .12 * Math.sin(i * .085)) });
+    let raf = 0;
+    let w = 0;
+    let h = 0;
+    let last = 0;
+    let age = 0;
+    let nextTurn = 0;
+    let targetAngle = 0;
+    let head = { x: 0, y: 0, angle: 0 };
+    let points: { x: number; y: number; width: number }[] = [];
+
+    const reset = () => {
+      age = 0;
+      nextTurn = 0;
+      targetAngle = (Math.random() - 0.5) * 0.5;
+      head = { x: -35, y: h * (0.24 + Math.random() * 0.18), angle: targetAngle };
+      points = [{ x: head.x, y: head.y, width: 2 }];
+    };
+
+    const resize = () => {
+      const rect = canvas.getBoundingClientRect();
+      w = rect.width;
+      h = rect.height;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.round(w * dpr);
+      canvas.height = Math.round(h * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      reset();
+    };
+
+    const tick = (time: number) => {
+      const dt = Math.min((time - (last || time)) / 16.67, 1.8);
+      last = time;
+      age += dt;
+      ctx.clearRect(0, 0, w, h);
+
+      if (age >= nextTurn) {
+        targetAngle += (Math.random() - 0.5) * 1.5;
+        targetAngle = Math.max(-1.05, Math.min(1.05, targetAngle));
+        nextTurn = age + 8 + Math.random() * 25;
       }
+      if (head.y < h * 0.1) targetAngle = Math.abs(targetAngle) * 0.8 + 0.2;
+      if (head.y > h * 0.58) targetAngle = -Math.abs(targetAngle) * 0.8 - 0.2;
+
+      head.angle += (targetAngle - head.angle) * 0.055 * dt;
+      const speed = Math.max(1.45, w / 260) * dt;
+      head.x += Math.cos(head.angle) * speed;
+      head.y += Math.sin(head.angle) * speed;
+
+      const thickness = Math.min(31, 1.8 + Math.pow(points.length / 18, 1.08));
+      points.push({ x: head.x, y: head.y, width: thickness });
+
+      ctx.strokeStyle = "#ff0a1f";
       ctx.lineCap = "round";
       ctx.lineJoin = "round";
-      // Thick older tail, hairline moving tip; a single vivid red like the reference.
-      for (let i = 1; i < trail.length; i++) {
-        const age = (trail.length - i) / Math.max(1, trail.length);
+      for (let i = 1; i < points.length; i++) {
+        const a = points[i - 1];
+        const b = points[i];
+        ctx.lineWidth = b.width;
         ctx.beginPath();
-        ctx.moveTo(trail[i - 1].x, trail[i - 1].y);
-        ctx.lineTo(trail[i].x, trail[i].y);
-        ctx.lineWidth = 1.6 + Math.pow(age, 2.2) * 29;
-        ctx.strokeStyle = "#ff202b";
+        ctx.moveTo(a.x, a.y);
+        ctx.lineTo(b.x, b.y);
         ctx.stroke();
       }
-      frame++;
+
+      if (head.x > w + 70 || points.length > 760) reset();
+      raf = window.requestAnimationFrame(tick);
     };
-    raf = window.requestAnimationFrame(draw);
-    return () => { window.cancelAnimationFrame(raf); observer.disconnect(); };
+
+    resize();
+    window.addEventListener("resize", resize);
+    raf = window.requestAnimationFrame(tick);
+    return () => {
+      window.cancelAnimationFrame(raf);
+      window.removeEventListener("resize", resize);
+    };
   }, []);
 
   return (
-    <div className="alma-chaos-art" onPointerMove={(event) => {
-      const bounds = event.currentTarget.getBoundingClientRect();
-      pointerRef.current = { x: event.clientX - bounds.left, y: event.clientY - bounds.top };
-    }} onPointerLeave={() => { pointerRef.current = null; }}>
-      <canvas ref={canvasRef} className="alma-chaos-canvas" aria-label="Хаотично движущаяся красная линия" role="img" />
+    <div className="alma-route-art" aria-hidden="true">
+      <canvas ref={canvasRef} className="alma-route-canvas" />
     </div>
   );
 }
