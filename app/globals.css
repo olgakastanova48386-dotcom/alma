@@ -169,11 +169,13 @@ select:-webkit-autofill {
 
 /* ALMA hero experiment 5 — fabric physically pinched by the cursor. */
 .alma-page-interaction{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}
-.alma-page-interaction .alma-cloth-surface{position:absolute;inset:0;overflow:hidden;pointer-events:none;isolation:isolate;background:#f5f0eb}
-.alma-cloth-sheet{position:absolute;inset:-8%;background:linear-gradient(122deg,#f8f4ef 0%,#eadadd 27%,#faf7f2 49%,#e4cdd3 69%,#f7f2ed 100%);filter:saturate(.82)}
-.alma-cloth-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;mix-blend-mode:multiply}
-.alma-cloth-texture{position:absolute;inset:0;pointer-events:none;background-image:repeating-linear-gradient(105deg,rgba(80,51,59,.055) 0 1px,transparent 1px 4px),repeating-linear-gradient(15deg,rgba(255,255,255,.16) 0 1px,transparent 1px 6px);opacity:.28;mix-blend-mode:multiply}
-@media(prefers-reduced-motion:reduce){.alma-cloth-canvas{display:none}}
+.alma-page-interaction .alma-magnetic-field{--field-x:72%;--field-y:34%;position:absolute;inset:0;overflow:hidden;pointer-events:none;background:#f7f4ef;isolation:isolate}
+.alma-field-grid{position:absolute;inset:-6%;background-image:radial-gradient(circle,rgba(93,55,67,.32) 1.15px,transparent 1.4px);background-size:24px 24px;opacity:.62;mask-image:linear-gradient(to bottom,rgba(0,0,0,.9),rgba(0,0,0,.45))}
+.alma-field-warp{position:absolute;left:var(--field-x);top:var(--field-y);width:430px;height:430px;transform:translate(-50%,-50%);border-radius:50%;background:repeating-radial-gradient(circle,transparent 0 17px,rgba(128,64,85,.12) 19px,rgba(255,255,255,.5) 23px,transparent 28px);filter:blur(.25px);mix-blend-mode:multiply;mask-image:radial-gradient(circle,#000 0 48%,transparent 72%);animation:alma-field-breathe 4.8s ease-in-out infinite}
+.alma-field-core{position:absolute;left:var(--field-x);top:var(--field-y);width:115px;height:115px;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.9) 0 8%,rgba(172,91,116,.20) 28%,rgba(106,48,67,.09) 47%,transparent 68%);filter:blur(3px)}
+@keyframes alma-field-breathe{50%{transform:translate(-50%,-50%) scale(1.08) rotate(2deg)}}
+@media(max-width:767px){.alma-field-grid{background-size:20px 20px}.alma-field-warp{width:300px;height:300px}}
+@media(prefers-reduced-motion:reduce){.alma-field-warp{animation:none}}
 
 @media (hover:hover) and (pointer:fine) {
   .alma-home-page, .alma-home-page * {
