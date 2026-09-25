@@ -48,15 +48,17 @@ void main() {
   // Fix the center and let the outer surfaces unfurl by a few pixels.
   float tip = smoothstep(115., 390., distance(source, vec2(560., 735.)));
   float t = u_time;
+  source = vec2(560., 735.) + (source - vec2(560., 735.)) *
+    (1. - .015 * sin(t * .7));
   vec2 displacement = vec2(0.);
-  displacement += top * vec2(sin(t * .83) * 13., cos(t * .72) * 13.);
-  displacement += left * vec2(sin(t * .68 + 1.5) * 17., cos(t * .8 + 1.5) * 10.);
-  displacement += right * vec2(sin(t * .7 + 3.2) * 16., cos(t * .76 + 3.2) * 11.);
-  displacement += lowerLeft * vec2(sin(t * .74 + 2.3) * 12., cos(t * .64 + 2.3) * 11.);
-  displacement += lowerRight * vec2(sin(t * .79 + 4.2) * 12., cos(t * .71 + 4.2) * 10.);
-  displacement *= tip * .65;
-  displacement += u_pointer * (7. + 12. * tip);
-  displacement.x += sin(source.y * .045 + t * 1.2 + source.x * .008) * bloom * tip * 2.5;
+  displacement += top * vec2(sin(t * .83) * 34., cos(t * .72) * 31.);
+  displacement += left * vec2(sin(t * .68 + 1.5) * 43., cos(t * .8 + 1.5) * 26.);
+  displacement += right * vec2(sin(t * .7 + 3.2) * 41., cos(t * .76 + 3.2) * 28.);
+  displacement += lowerLeft * vec2(sin(t * .74 + 2.3) * 32., cos(t * .64 + 2.3) * 28.);
+  displacement += lowerRight * vec2(sin(t * .79 + 4.2) * 32., cos(t * .71 + 4.2) * 25.);
+  displacement *= tip * .78;
+  displacement += u_pointer * (12. + 24. * tip);
+  displacement.x += sin(source.y * .045 + t * 1.2 + source.x * .008) * bloom * tip * 4.;
   source -= displacement;
 
   vec2 uv = vec2(source.x / 1152., 1. - source.y / 2048.);
@@ -66,8 +68,8 @@ void main() {
   float alpha = smoothstep(.07, .265, brightness) * specimen;
   // Moving light travels across the real cyan and lilac filaments.
   float shimmer = .5 + .5 * sin(source.x * .026 - source.y * .014 + t * 1.15);
-  color += vec3(.018, .062, .075) * shimmer * bloom * brightness;
-  color += vec3(.042, .012, .058) * (1. - shimmer) * bloom * brightness;
+  color += vec3(.032, .12, .14) * shimmer * bloom * brightness;
+  color += vec3(.09, .023, .11) * (1. - shimmer) * bloom * brightness;
   outColor = vec4(color * 1.04, alpha);
 }`;
 
