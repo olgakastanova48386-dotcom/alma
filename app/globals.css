@@ -269,12 +269,19 @@ select:-webkit-autofill {
 }
 @media (max-width: 767px) {
   .alma-home-hero-image.alma-aura-host { background: #f1eee7 !important; }
-  .alma-living-art { min-height: 310px; }
-  .alma-secret-line-1 { left: 15%; top: 24%; font-size: 21px; }
-  .alma-secret-line-2 { left: 43%; top: 39%; font-size: 34px; }
-  .alma-secret-line-3 { left: 23%; top: 56%; font-size: 23px; }
-  .alma-secret-line-4 { left: 47%; top: 70%; font-size: 20px; }
-  .alma-fog { filter: blur(13px); }
+  .alma-living-art { min-height: 360px; }
+  .alma-secret-line-1 { left: 24%; top: 27%; font-size: 18px; }
+  .alma-secret-line-2 { left: 49%; top: 40%; font-size: 31px; }
+  .alma-secret-line-3 { left: 29%; top: 56%; font-size: 20px; }
+  .alma-secret-line-4 { left: 48%; top: 69%; font-size: 18px; }
+  .alma-fog { filter: blur(11px); }
+  .fog-a { width: 46%; height: 15%; left: 13%; top: 29%; }
+  .fog-b { width: 47%; height: 16%; right: 9%; top: 37%; }
+  .fog-c { width: 53%; height: 16%; left: 23%; top: 49%; }
+  .fog-d { width: 39%; height: 15%; right: 13%; top: 61%; }
+  .fog-e { width: 25%; height: 15%; left: 15%; top: 60%; }
+  .fog-f { width: 32%; height: 14%; left: 38%; top: 23%; }
+  .alma-art-whisper { bottom: 10px; right: 16px; font-size: 8px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .alma-fog, .alma-secret-line, .alma-secret-copy { animation: none; }
