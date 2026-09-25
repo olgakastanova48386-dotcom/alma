@@ -167,39 +167,24 @@ select:-webkit-autofill {
   .alma-route-actions button, .alma-route-actions a { min-height: 44px; }
 }
 
-/* ALMA hero experiment 2 — click ripple on a calm surface. */
-.alma-ripple-surface {
+/* ALMA hero experiment 3 — fading berry ink trail. */
+.alma-trail-surface {
   position:absolute; inset:0; overflow:hidden; pointer-events:none; isolation:isolate;
   background:
-    radial-gradient(circle at 76% 32%, rgba(174,86,111,.12), transparent 29%),
-    radial-gradient(circle at 58% 74%, rgba(255,255,255,.92), transparent 36%),
+    radial-gradient(circle at 77% 33%, rgba(174,86,111,.10), transparent 30%),
+    radial-gradient(circle at 57% 73%, rgba(255,255,255,.94), transparent 36%),
     #f7f4ef;
 }
-.alma-ripple-ambient { position:absolute; border-radius:50%; filter:blur(62px); opacity:.5; animation:alma-ripple-drift 10s ease-in-out infinite alternate; }
-.alma-ripple-ambient.ambient-a { width:34%; aspect-ratio:1; right:4%; top:7%; background:rgba(169,73,102,.18); }
-.alma-ripple-ambient.ambient-b { width:28%; aspect-ratio:1; right:34%; bottom:4%; background:rgba(219,185,194,.24); animation-delay:-4s; }
-.alma-click-ripple { position:absolute; width:1px; height:1px; pointer-events:none; }
-.alma-click-ripple i {
-  position:absolute; left:0; top:0; width:46px; height:46px; border-radius:50%;
-  transform:translate(-50%,-50%) scale(.15); opacity:0;
-  border:1px solid rgba(139,51,78,.42);
-  box-shadow:0 0 20px rgba(177,92,116,.10), inset 0 0 12px rgba(255,255,255,.65);
-}
-.alma-click-ripple.is-rippling i { animation:alma-click-wave 1.25s cubic-bezier(.12,.65,.25,1) forwards; }
-.alma-click-ripple.is-rippling i:nth-child(2) { animation-delay:.12s; }
-.alma-click-ripple.is-rippling i:nth-child(3) { animation-delay:.24s; }
-@keyframes alma-click-wave {
-  0% { opacity:.58; transform:translate(-50%,-50%) scale(.18); }
-  65% { opacity:.22; }
-  100% { opacity:0; transform:translate(-50%,-50%) scale(5.6); }
-}
-@keyframes alma-ripple-drift { from{transform:translate3d(-5%,-3%,0) scale(.96)} to{transform:translate3d(8%,6%,0) scale(1.08)} }
+.alma-trail-ambient { position:absolute; border-radius:50%; filter:blur(66px); opacity:.42; animation:alma-trail-drift 11s ease-in-out infinite alternate; }
+.alma-trail-ambient.ambient-a { width:34%; aspect-ratio:1; right:3%; top:5%; background:rgba(169,73,102,.16); }
+.alma-trail-ambient.ambient-b { width:27%; aspect-ratio:1; right:34%; bottom:5%; background:rgba(219,185,194,.21); animation-delay:-4s; }
+.alma-berry-trail { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; }
+@keyframes alma-trail-drift { from{transform:translate3d(-5%,-3%,0) scale(.96)} to{transform:translate3d(8%,6%,0) scale(1.08)} }
 @media (max-width:767px) {
-  .alma-ripple-ambient.ambient-a{width:60%;right:-12%;top:3%}
-  .alma-ripple-ambient.ambient-b{width:48%;right:44%;bottom:36%}
-  .alma-click-ripple i{width:38px;height:38px}
+  .alma-trail-ambient.ambient-a{width:60%;right:-12%;top:3%}
+  .alma-trail-ambient.ambient-b{width:48%;right:44%;bottom:36%}
 }
-@media (prefers-reduced-motion:reduce) { .alma-ripple-ambient{animation:none} .alma-click-ripple i{animation-duration:.01ms!important} }
+@media (prefers-reduced-motion:reduce) { .alma-trail-ambient{animation:none} }
 
 @media (hover:hover) and (pointer:fine) {
   .alma-home-hero, .alma-home-hero * {
@@ -209,6 +194,7 @@ select:-webkit-autofill {
 @media (hover:none),(pointer:coarse) {
   .alma-home-hero, .alma-home-hero * { cursor:auto; }
 }
+
 
 
 @keyframes alma-cta-shine {
