@@ -80,6 +80,7 @@ function InteractiveAura() {
     let raf = 0;
     let lastX = -100;
     let lastY = -100;
+    let wasInside = false;
 
     const resize = () => {
       const r = surface.getBoundingClientRect();
@@ -93,24 +94,39 @@ function InteractiveAura() {
 
     const track = (event: PointerEvent) => {
       const r = surface.getBoundingClientRect();
-      if (event.clientX < r.left || event.clientX > r.right || event.clientY < r.top || event.clientY > r.bottom) return;
+      const inside = event.clientX >= r.left && event.clientX <= r.right && event.clientY >= r.top && event.clientY <= r.bottom;
+      if (!inside) {
+        wasInside = false;
+        lastX = -100;
+        lastY = -100;
+        return;
+      }
       const x = event.clientX - r.left;
       const y = event.clientY - r.top;
-      const speed = Math.hypot(x - lastX, y - lastY);
-      if (speed > 3 && speed < 220) {
-        const steps = Math.min(5, Math.max(1, Math.floor(speed / 12)));
-        for (let i = 0; i < steps; i++) {
-          const t = (i + 1) / steps;
+      if (!wasInside || lastX < 0) {
+        lastX = x;
+        lastY = y;
+        wasInside = true;
+        return;
+      }
+      const distance = Math.hypot(x - lastX, y - lastY);
+      if (distance >= 1) {
+        const spacing = 5;
+        const steps = Math.max(1, Math.min(36, Math.ceil(distance / spacing)));
+        for (let i = 1; i <= steps; i++) {
+          const t = i / steps;
           points.push({
-            x: lastX < 0 ? x : lastX + (x - lastX) * t,
-            y: lastY < 0 ? y : lastY + (y - lastY) * t,
+            x: lastX + (x - lastX) * t,
+            y: lastY + (y - lastY) * t,
             life: 1,
-            size: Math.min(8.5, 3.2 + speed * .025),
+            size: Math.min(7.2, 3.6 + distance * .012),
           });
         }
-        if (points.length > 130) points.splice(0, points.length - 130);
+        if (points.length > 420) points.splice(0, points.length - 420);
       }
-      lastX = x; lastY = y;
+      lastX = x;
+      lastY = y;
+      wasInside = true;
     };
 
     const draw = () => {
