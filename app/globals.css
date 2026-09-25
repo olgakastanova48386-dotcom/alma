@@ -167,116 +167,94 @@ select:-webkit-autofill {
   .alma-route-actions button, .alma-route-actions a { min-height: 44px; }
 }
 
-/* ALMA hero — interactive liquid-glass lens. */
+/* ALMA hero experiment 1 — living flowing surface. */
 .alma-home-hero-image.alma-aura-host { pointer-events: auto !important; }
-.alma-liquid-stage {
-  --lens-x: 0px;
-  --lens-y: 0px;
-  position: relative;
-  width: 100%;
-  height: 100%;
+.alma-flow-surface {
+  --flow-x: 72%;
+  --flow-y: 43%;
+  --flow-dx: 0px;
+  --flow-dy: 0px;
+  position: absolute;
+  inset: 0;
   overflow: hidden;
   background:
-    radial-gradient(circle at 22% 20%, rgba(255,255,255,.98), transparent 25%),
-    radial-gradient(circle at 80% 78%, rgba(216,188,193,.20), transparent 31%),
-    #f2efe9;
+    radial-gradient(circle at 74% 38%, rgba(185,118,137,.12), transparent 25%),
+    radial-gradient(circle at 55% 72%, rgba(255,255,255,.9), transparent 35%),
+    #f7f4ef;
   touch-action: pan-y;
   isolation: isolate;
 }
-.alma-liquid-halo {
+.alma-flow-field {
   position: absolute;
-  width: 68%;
-  aspect-ratio: 1;
-  left: 50%;
-  top: 48%;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(157,74,94,.17), rgba(157,74,94,.05) 48%, transparent 70%);
-  filter: blur(20px);
-  transform: translate(-50%,-50%);
-  animation: alma-halo-breathe 7s ease-in-out infinite alternate;
-}
-.alma-liquid-lens {
-  position: absolute;
-  left: 50%;
-  top: 48%;
-  width: min(61%, 350px);
-  aspect-ratio: 1.18 / 1;
-  border-radius: 48% 52% 55% 45% / 43% 46% 54% 57%;
-  transform: translate(calc(-50% + var(--lens-x)), calc(-50% + var(--lens-y))) rotate(-4deg);
-  transition: transform .55s cubic-bezier(.2,.8,.2,1);
+  inset: -15%;
   background:
-    radial-gradient(circle at 30% 22%, rgba(255,255,255,.94), rgba(255,255,255,.28) 19%, transparent 36%),
-    radial-gradient(circle at 67% 73%, rgba(141,57,80,.22), transparent 42%),
-    linear-gradient(145deg, rgba(255,255,255,.58), rgba(190,139,153,.22));
-  border: 1px solid rgba(255,255,255,.78);
+    radial-gradient(circle 150px at var(--flow-x) var(--flow-y), rgba(176,91,115,.23), rgba(255,255,255,.36) 33%, transparent 70%);
+  filter: blur(15px);
+  transform: translate3d(var(--flow-dx),var(--flow-dy),0) scale(1.05);
+  transition: transform .75s cubic-bezier(.18,.75,.22,1), filter .5s ease;
+  opacity: .72;
+}
+.alma-flow-surface.is-flowing .alma-flow-field {
+  filter: blur(7px);
+  transform: translate3d(var(--flow-dx),var(--flow-dy),0) scale(1.1);
+  opacity: 1;
+}
+.alma-flow-caustic {
+  position: absolute;
+  width: 250px;
+  height: 250px;
+  left: var(--flow-x);
+  top: var(--flow-y);
+  border-radius: 50%;
+  transform: translate(-50%,-50%) scale(.82);
+  border: 1px solid rgba(255,255,255,.68);
   box-shadow:
-    inset 12px 13px 24px rgba(255,255,255,.72),
-    inset -14px -17px 30px rgba(121,60,78,.15),
-    0 25px 55px rgba(83,55,62,.17),
-    0 3px 9px rgba(80,48,57,.10);
-  backdrop-filter: blur(12px) saturate(1.18);
-  -webkit-backdrop-filter: blur(12px) saturate(1.18);
-  animation: alma-liquid-morph 8.5s ease-in-out infinite alternate;
-  overflow: hidden;
+    inset 18px 12px 34px rgba(255,255,255,.68),
+    inset -20px -12px 36px rgba(154,78,99,.09),
+    0 18px 60px rgba(91,57,67,.08);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  opacity: .22;
+  transition: left .22s ease-out, top .22s ease-out, transform .5s ease, opacity .4s ease;
 }
-.alma-liquid-glint {
+.alma-flow-surface.is-flowing .alma-flow-caustic {
+  opacity: .7;
+  transform: translate(-50%,-50%) scale(1.04);
+}
+.alma-flow-light {
   position: absolute;
-  width: 43%;
-  height: 12%;
-  left: 13%;
-  top: 12%;
-  border-radius: 999px;
-  background: rgba(255,255,255,.72);
-  filter: blur(8px);
-  transform: rotate(-13deg);
+  border-radius: 50%;
+  filter: blur(48px);
+  opacity: .42;
+  animation: alma-flow-drift 9s ease-in-out infinite alternate;
 }
-.alma-liquid-word {
-  position: absolute;
-  font-family: Georgia, "Times New Roman", serif;
-  color: rgba(48,31,36,.68);
-  font-size: clamp(14px,2.4vw,25px);
-  letter-spacing: -.025em;
-  opacity: 0;
-  filter: blur(4px);
-  animation: alma-liquid-words 12s ease-in-out infinite;
+.flow-light-a {
+  width: 38%;
+  aspect-ratio: 1;
+  right: 5%;
+  top: 5%;
+  background: rgba(183,113,132,.16);
 }
-.word-a { left: 20%; top: 33%; animation-delay: 0s; }
-.word-b { right: 22%; top: 30%; animation-delay: -9s; }
-.word-c { left: 31%; bottom: 27%; animation-delay: -6s; }
-.word-d { right: 15%; bottom: 35%; animation-delay: -3s; }
-.alma-liquid-caption {
-  position: absolute;
-  right: 18px;
-  bottom: 13px;
-  font-size: 8px;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-  color: rgba(48,31,36,.30);
+.flow-light-b {
+  width: 31%;
+  aspect-ratio: 1;
+  right: 30%;
+  bottom: 2%;
+  background: rgba(255,255,255,.92);
+  animation-delay: -4s;
 }
-@keyframes alma-liquid-morph {
-  0% { border-radius: 48% 52% 55% 45% / 43% 46% 54% 57%; }
-  35% { border-radius: 56% 44% 47% 53% / 51% 58% 42% 49%; }
-  68% { border-radius: 43% 57% 59% 41% / 57% 43% 52% 48%; }
-  100% { border-radius: 53% 47% 43% 57% / 45% 55% 46% 54%; }
-}
-@keyframes alma-halo-breathe {
-  from { opacity: .55; transform: translate(-50%,-50%) scale(.91); }
-  to { opacity: 1; transform: translate(-50%,-50%) scale(1.08); }
-}
-@keyframes alma-liquid-words {
-  0%, 18%, 62%, 100% { opacity: 0; filter: blur(5px); transform: translateY(4px); }
-  28%, 49% { opacity: .88; filter: blur(0); transform: translateY(0); }
+@keyframes alma-flow-drift {
+  from { transform: translate3d(-7%,-4%,0) scale(.94); }
+  to { transform: translate3d(10%,8%,0) scale(1.12); }
 }
 @media (max-width: 767px) {
-  .alma-home-hero-image.alma-aura-host { background: #f2efe9 !important; }
-  .alma-liquid-stage { min-height: 330px; }
-  .alma-liquid-lens { width: 59%; top: 49%; }
-  .alma-liquid-halo { width: 74%; top: 49%; }
-  .alma-liquid-word { font-size: 15px; }
+  .alma-flow-surface { min-height: 100%; }
+  .alma-flow-caustic { width: 165px; height: 165px; }
+  .alma-flow-field { filter: blur(11px); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .alma-liquid-lens, .alma-liquid-halo, .alma-liquid-word { animation: none; }
-  .alma-liquid-word.word-a { opacity: .7; filter: none; }
+  .alma-flow-light { animation: none; }
+  .alma-flow-field, .alma-flow-caustic { transition: none; }
 }
 
 @keyframes alma-cta-shine {
