@@ -85,13 +85,14 @@ export default function NeuralSculpture() {
         }
       }
 
-      // Five broad petals are drawn as deforming, translucent wire meshes.
+      // Each petal opens like a ruffled glass trumpet: a narrow throat at
+      // the center, a wide folded lip, and iridescence running through it.
       const petals = [
-        { angle: -Math.PI / 2, length: 170, breadth: 88, phase: 0 },
-        { angle: -2.62, length: 170, breadth: 90, phase: 1.8 },
-        { angle: -.53, length: 170, breadth: 90, phase: 3.4 },
-        { angle: 2.37, length: 157, breadth: 82, phase: 2.6 },
-        { angle: .77, length: 157, breadth: 82, phase: 4.8 },
+        { angle: -Math.PI / 2, length: 163, breadth: 88, phase: 0 },
+        { angle: -2.64, length: 176, breadth: 86, phase: 1.8 },
+        { angle: -.50, length: 176, breadth: 86, phase: 3.4 },
+        { angle: 2.28, length: 144, breadth: 91, phase: 2.6 },
+        { angle: .86, length: 144, breadth: 91, phase: 4.8 },
       ];
       petals.forEach((petal, index) => {
         const breathe = 1 + Math.sin(time * .7 + petal.phase) * .025;
@@ -99,48 +100,72 @@ export default function NeuralSculpture() {
         const axis = { x: Math.cos(angle), y: Math.sin(angle) };
         const across = { x: -axis.y, y: axis.x };
         const point = (u: number, v: number): Point => {
-          const spread = Math.pow(Math.sin(Math.PI * u), .56) * petal.breadth;
-          const ripple = Math.sin(u * 16 + v * 4 + time * .85 + petal.phase) * (3 + 4 * u);
-          const radius = u * petal.length * breathe + ripple * Math.abs(v);
-          const widthAt = spread * v * (1 + .09 * Math.sin(u * 11 + time * .6 + petal.phase));
+          const spread = Math.pow(u, .78) * petal.breadth;
+          const ripple = (Math.sin(v * 10 + petal.phase + time * .45) * 8 +
+            Math.sin(v * 19 - petal.phase) * 3) * u * u;
+          const radius = u * petal.length * breathe + ripple -
+            16 * u * u * v * v;
+          const widthAt = spread * v * (1 + .055 * Math.sin(u * 12 + v * 5 + time * .5));
           return {
-            x: axis.x * radius + across.x * widthAt + pointerX * u * 3,
-            y: axis.y * radius + across.y * widthAt + Math.sin(u * Math.PI) * v * v * 9,
+            x: axis.x * radius + across.x * widthAt + pointerX * u * 3 +
+              across.x * 14 * Math.sin(u * Math.PI) * (v * v - .3),
+            y: axis.y * radius + across.y * widthAt +
+              14 * Math.sin(u * Math.PI) * (1 - v * v),
           };
         };
         const edge: Point[] = [];
         for (let i = 0; i <= 48; i++) edge.push(point(i / 48, -1));
+        for (let j = 1; j <= 40; j++) edge.push(point(1, j / 20 - 1));
         for (let i = 48; i >= 0; i--) edge.push(point(i / 48, 1));
         ctx.beginPath();
         ctx.moveTo(edge[0].x, edge[0].y);
         edge.slice(1).forEach((p) => ctx.lineTo(p.x, p.y));
         ctx.closePath();
-        const fill = ctx.createLinearGradient(0, 0, axis.x * petal.length, axis.y * petal.length);
-        fill.addColorStop(0, "#b9a3da4d");
-        fill.addColorStop(.32, index % 2 ? "#b478d45d" : "#63bff066");
-        fill.addColorStop(.68, index % 2 ? "#56e9f586" : "#d6a4f292");
-        fill.addColorStop(1, "#74dffd40");
+        const fill = ctx.createLinearGradient(
+          -across.x * petal.breadth * .9, -across.y * petal.breadth * .9,
+          across.x * petal.breadth * .9, across.y * petal.breadth * .9,
+        );
+        fill.addColorStop(0, "#638db86e");
+        fill.addColorStop(.17, "#6ed6e86e");
+        fill.addColorStop(.34, "#9976c4aa");
+        fill.addColorStop(.48, "#b1dff18c");
+        fill.addColorStop(.65, "#407ead9a");
+        fill.addColorStop(.83, "#de91c481");
+        fill.addColorStop(1, "#88d5f19c");
         ctx.fillStyle = fill;
         ctx.shadowColor = index % 2 ? "#a380ed88" : "#64def488";
         ctx.shadowBlur = 18;
         ctx.fill();
         ctx.shadowBlur = 0;
-        ctx.strokeStyle = "#b8dfffab";
+        ctx.strokeStyle = "#d4e6ffcf";
         ctx.lineWidth = 1.3;
         ctx.stroke();
         ctx.globalCompositeOperation = "screen";
+        // Long silk folds travel from the throat to the ruffled lip.
+        for (let fold = -5; fold <= 5; fold++) {
+          const v = fold / 6;
+          const ribbon: Point[] = [];
+          for (let s = 0; s <= 26; s++) {
+            const u = .13 + s / 26 * .86;
+            ribbon.push(point(u, v + .025 * Math.sin(u * 13 + fold * 2.1)));
+          }
+          ctx.shadowColor = fold % 3 === 0 ? "#f1a5e8" : "#53efff";
+          ctx.shadowBlur = 15;
+          stroke(ribbon, fold % 3 === 0 ? "#ffb1e75e" : "#77efff70", fold % 3 === 0 ? 9 : 5);
+          ctx.shadowBlur = 0;
+        }
         for (let i = 1; i < 20; i++) {
           const row: Point[] = [];
           for (let j = 0; j <= 22; j++) row.push(point(i / 20, j / 11 - 1));
-          stroke(row, i % 4 === 0 ? "#c9ddff5b" : "#c0d5fc36", .65);
+          stroke(row, i % 4 === 0 ? "#d8e5ff78" : "#bdd7ff4f", .65);
         }
         for (let j = -10; j <= 10; j++) {
           const strand: Point[] = [];
           for (let i = 0; i <= 28; i++) strand.push(point(i / 28, j / 10));
-          stroke(strand, j % 5 === 0 ? "#d7e6ff70" : "#b8d9ff3f", .65);
+          stroke(strand, j % 5 === 0 ? "#e4ebff94" : "#bfdfff67", .65);
         }
         for (let band = 0; band < 3; band++) {
-          const u = .57 + band * .115 + .018 * Math.sin(time * .6 + petal.phase);
+          const u = .58 + band * .125 + .018 * Math.sin(time * .6 + petal.phase);
           const stripe: Point[] = [];
           for (let j = -14; j <= 14; j++) stripe.push(point(u + .034 * Math.sin(j * .2 + band), j / 17));
           ctx.shadowColor = band === 1 ? "#fc8edb" : "#56f7ff";
@@ -149,6 +174,13 @@ export default function NeuralSculpture() {
           ctx.shadowBlur = 0;
         }
         ctx.globalCompositeOperation = "source-over";
+        // Curled-back underside at the lip gives the petals their thickness.
+        const lip: Point[] = [];
+        for (let j = 0; j <= 32; j++) lip.push(point(1, j / 16 - 1));
+        ctx.shadowColor = index % 2 ? "#b998f5" : "#85ecff";
+        ctx.shadowBlur = 9;
+        stroke(lip, "#c8e6f9b4", 1.7);
+        ctx.shadowBlur = 0;
       });
 
       // Fine glowing stamens make the center unmistakably botanical.
