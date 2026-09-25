@@ -71,61 +71,38 @@ function InteractiveAura() {
   useEffect(() => {
     const surface = surfaceRef.current;
     if (!surface) return;
+    let tx=72, ty=38, x=tx, y=ty, vx=0, vy=0, tvx=0, tvy=0, lx=0, ly=0, raf=0;
 
-    let targetX = 72;
-    let targetY = 38;
-    let currentX = targetX;
-    let currentY = targetY;
-    let targetVX = 0;
-    let targetVY = 0;
-    let currentVX = 0;
-    let currentVY = 0;
-    let lastX = 0;
-    let lastY = 0;
-    let raf = 0;
-
-    const track = (event: PointerEvent) => {
-      const r = surface.getBoundingClientRect();
-      if (event.clientX < r.left || event.clientX > r.right || event.clientY < r.top || event.clientY > r.bottom) return;
-      const x = event.clientX - r.left;
-      const y = event.clientY - r.top;
-      targetX = (x / r.width) * 100;
-      targetY = (y / r.height) * 100;
-      targetVX = Math.max(-18, Math.min(18, x - lastX));
-      targetVY = Math.max(-18, Math.min(18, y - lastY));
-      lastX = x;
-      lastY = y;
+    const track=(event:PointerEvent)=>{
+      const r=surface.getBoundingClientRect();
+      if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom) return;
+      const px=event.clientX-r.left, py=event.clientY-r.top;
+      tx=px/r.width*100; ty=py/r.height*100;
+      tvx=Math.max(-26,Math.min(26,px-lx)); tvy=Math.max(-26,Math.min(26,py-ly));
+      lx=px; ly=py;
     };
-
-    const animate = () => {
-      currentX += (targetX - currentX) * .105;
-      currentY += (targetY - currentY) * .105;
-      currentVX += (targetVX - currentVX) * .08;
-      currentVY += (targetVY - currentVY) * .08;
-      targetVX *= .91;
-      targetVY *= .91;
-      surface.style.setProperty("--silk-x", currentX + "%");
-      surface.style.setProperty("--silk-y", currentY + "%");
-      surface.style.setProperty("--silk-vx", currentVX.toFixed(2));
-      surface.style.setProperty("--silk-vy", currentVY.toFixed(2));
-      raf = requestAnimationFrame(animate);
+    const animate=()=>{
+      x+=(tx-x)*.14; y+=(ty-y)*.14;
+      vx+=(tvx-vx)*.12; vy+=(tvy-vy)*.12;
+      tvx*=.86; tvy*=.86;
+      surface.style.setProperty("--cloth-x",x+"%");
+      surface.style.setProperty("--cloth-y",y+"%");
+      surface.style.setProperty("--cloth-vx",vx.toFixed(2));
+      surface.style.setProperty("--cloth-vy",vy.toFixed(2));
+      raf=requestAnimationFrame(animate);
     };
-
-    window.addEventListener("pointermove", track, { passive: true });
-    raf = requestAnimationFrame(animate);
-    return () => {
-      window.removeEventListener("pointermove", track);
-      cancelAnimationFrame(raf);
-    };
-  }, []);
+    window.addEventListener("pointermove",track,{passive:true});
+    raf=requestAnimationFrame(animate);
+    return()=>{window.removeEventListener("pointermove",track);cancelAnimationFrame(raf)};
+  },[]);
 
   return (
-    <div ref={surfaceRef} className="alma-silk-surface" aria-hidden="true">
-      <div className="alma-silk-base" />
-      <div className="alma-silk-fold fold-a" />
-      <div className="alma-silk-fold fold-b" />
-      <div className="alma-silk-highlight" />
-      <div className="alma-silk-grain" />
+    <div ref={surfaceRef} className="alma-cloth-surface" aria-hidden="true">
+      <div className="alma-cloth-sheet" />
+      <div className="alma-cloth-pinch" />
+      <div className="alma-cloth-ridges" />
+      <div className="alma-cloth-light" />
+      <div className="alma-cloth-texture" />
     </div>
   );
 }
