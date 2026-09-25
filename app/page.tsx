@@ -1,8 +1,9 @@
 "use client";
 
-import { Suspense, useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import UnifiedMap from "@/components/UnifiedMap";
+import NeuralSculpture from "@/components/NeuralSculpture";
 
 const places = [
   { title: "Русский музей", category: "Музей", image: "/images/русский музей.jpg" },
@@ -77,39 +78,11 @@ function getHeroImage(weather: Weather | null) {
 
 export default function HomePage() {
   const router = useRouter();
-  const heroArtRef = useRef<HTMLDivElement>(null);
   const [weather, setWeather] = useState<Weather | null>(null);
   const [mobileReady, setMobileReady] = useState(false);
   const [splashMinElapsed, setSplashMinElapsed] = useState(false);
   const [splashDone, setSplashDone] = useState(false);
   const [loadingProgress, setLoadingProgress] = useState(0);
-
-  useEffect(() => {
-    const art = heroArtRef.current;
-    if (!art || !window.matchMedia("(pointer: fine) and (prefers-reduced-motion: no-preference)").matches) return;
-    let frame = 0;
-    const move = (event: PointerEvent) => {
-      const bounds = art.getBoundingClientRect();
-      const x = Math.max(-1, Math.min(1, ((event.clientX - bounds.left) / bounds.width - .5) * 2));
-      const y = Math.max(-1, Math.min(1, ((event.clientY - bounds.top) / bounds.height - .5) * 2));
-      cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(() => {
-        art.style.setProperty("--atlas-x1", `${(x * 16).toFixed(1)}px`);
-        art.style.setProperty("--atlas-y1", `${(y * 14).toFixed(1)}px`);
-        art.style.setProperty("--atlas-x2", `${(x * -22).toFixed(1)}px`);
-        art.style.setProperty("--atlas-y2", `${(y * -18).toFixed(1)}px`);
-        art.style.setProperty("--atlas-x3", `${(x * 10).toFixed(1)}px`);
-        art.style.setProperty("--atlas-y3", `${(y * 10).toFixed(1)}px`);
-      });
-    };
-    const reset = () => {
-      cancelAnimationFrame(frame);
-      for (const name of ["--atlas-x1", "--atlas-y1", "--atlas-x2", "--atlas-y2", "--atlas-x3", "--atlas-y3"]) art.style.setProperty(name, "0px");
-    };
-    art.addEventListener("pointermove", move, { passive: true });
-    art.addEventListener("pointerleave", reset);
-    return () => { cancelAnimationFrame(frame); art.removeEventListener("pointermove", move); art.removeEventListener("pointerleave", reset); };
-  }, []);
 
   useEffect(() => {
     const loadWeather = async () => {
@@ -186,16 +159,11 @@ export default function HomePage() {
               </div>
               <div className="alma-soft-note">ПО НАСТРОЕНИЮ <span>·</span> ПО БЮДЖЕТУ <span>·</span> БЕЗ ЛИШНИХ ПЛАНОВ</div>
             </div>
-            <div ref={heroArtRef} className="alma-soft-art" aria-label="Идея маршрута по Петербургу">
+            <div className="alma-soft-art" aria-label="Живая нейро-скульптура ALMA">
               <div className="alma-soft-stage">
-                <div className="alma-soft-stage-head"><span>ALMA <small>ОДИН ДЕНЬ · ТРИ МЕСТА</small></span><span className="alma-soft-stage-mark">✳</span></div>
-                <svg className="alma-route-thread" viewBox="0 0 600 480" preserveAspectRatio="none" aria-hidden="true"><path d="M165 160 C 240 180, 280 236, 413 247 S 442 340, 176 372" /></svg>
-                <div className="alma-route-stops">
-                  <button type="button" onClick={() => openPlace("Кафе Зингер")} className="alma-route-tile alma-route-tile-one"><img src="/images/кафе зингер.jpg" alt="" /><span><small>01 / КОФЕ</small><strong>Кафе Зингер</strong></span><i aria-hidden="true">↗</i></button>
-                  <button type="button" onClick={() => openPlace("Новая Голландия")} className="alma-route-tile alma-route-tile-two"><img src="/images/new-holland.jpg" alt="" /><span><small>02 / ПРОГУЛКА</small><strong>Новая Голландия</strong></span><i aria-hidden="true">↗</i></button>
-                  <button type="button" onClick={() => openPlace("Дворцовая площадь")} className="alma-route-tile alma-route-tile-three"><img src="/images/дворцовая площадь.jpg" alt="" /><span><small>03 / КРАСИВЫЙ ВИД</small><strong>Дворцовая площадь</strong></span><i aria-hidden="true">↗</i></button>
-                </div>
-                <p>Маршрут начинается с одного шага.</p>
+                <div className="alma-soft-stage-head"><span>ALMA <small>ГОРОД ЧУВСТВУЕТ ТЕБЯ</small></span><span className="alma-soft-stage-mark">✳</span></div>
+                <NeuralSculpture />
+                <p>Почувствуй движение.<br />Найди своё направление.</p>
                 <span className="alma-soft-stage-arrow" aria-hidden="true">↗</span>
               </div>
               <div className="alma-soft-weather"><img src={heroImage} alt="Петербург сегодня" /><span>{weather && weatherInfo ? `${weatherInfo.text} · ${Math.round(weather.temperature) > 0 ? "+" : ""}${Math.round(weather.temperature)}°` : "Петербург сегодня"}</span></div>
