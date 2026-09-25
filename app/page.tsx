@@ -67,41 +67,88 @@ function getWeatherInfo(code: number, isDay: boolean) {
 
 function InteractiveAura() {
   const surfaceRef = useRef<HTMLDivElement>(null);
-  const rippleRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     const surface = surfaceRef.current;
-    const ripple = rippleRef.current;
-    if (!surface || !ripple) return;
+    const canvas = canvasRef.current;
+    if (!surface || !canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
 
-    const place = (event: PointerEvent) => {
-      const bounds = surface.getBoundingClientRect();
-      if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) return false;
-      const x = event.clientX - bounds.left;
-      const y = event.clientY - bounds.top;
-      ripple.style.left = x + "px";
-      ripple.style.top = y + "px";
-      return true;
+    let points: { x: number; y: number; life: number; size: number }[] = [];
+    let raf = 0;
+    let lastX = -100;
+    let lastY = -100;
+
+    const resize = () => {
+      const r = surface.getBoundingClientRect();
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.round(r.width * dpr);
+      canvas.height = Math.round(r.height * dpr);
+      canvas.style.width = r.width + "px";
+      canvas.style.height = r.height + "px";
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
 
-    const pulse = (event: PointerEvent) => {
-      if (!place(event)) return;
-      ripple.classList.remove("is-rippling");
-      void ripple.offsetWidth;
-      ripple.classList.add("is-rippling");
+    const track = (event: PointerEvent) => {
+      const r = surface.getBoundingClientRect();
+      if (event.clientX < r.left || event.clientX > r.right || event.clientY < r.top || event.clientY > r.bottom) return;
+      const x = event.clientX - r.left;
+      const y = event.clientY - r.top;
+      const speed = Math.hypot(x - lastX, y - lastY);
+      if (speed > 3 && speed < 220) {
+        const steps = Math.min(5, Math.max(1, Math.floor(speed / 12)));
+        for (let i = 0; i < steps; i++) {
+          const t = (i + 1) / steps;
+          points.push({
+            x: lastX < 0 ? x : lastX + (x - lastX) * t,
+            y: lastY < 0 ? y : lastY + (y - lastY) * t,
+            life: 1,
+            size: Math.min(8.5, 3.2 + speed * .025),
+          });
+        }
+        if (points.length > 130) points.splice(0, points.length - 130);
+      }
+      lastX = x; lastY = y;
     };
 
-    window.addEventListener("pointerdown", pulse, { passive: true });
-    return () => window.removeEventListener("pointerdown", pulse);
+    const draw = () => {
+      const r = surface.getBoundingClientRect();
+      ctx.clearRect(0, 0, r.width, r.height);
+      ctx.lineCap = "round";
+      ctx.lineJoin = "round";
+      for (const p of points) {
+        p.life -= .018;
+        if (p.life <= 0) continue;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size * (0.65 + p.life * .35), 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(137, 43, 72, ${Math.min(.48, p.life * .48)})`;
+        ctx.shadowBlur = 12;
+        ctx.shadowColor = `rgba(174, 74, 105, ${p.life * .22})`;
+        ctx.fill();
+      }
+      ctx.shadowBlur = 0;
+      points = points.filter(p => p.life > 0);
+      raf = requestAnimationFrame(draw);
+    };
+
+    resize();
+    window.addEventListener("resize", resize);
+    window.addEventListener("pointermove", track, { passive: true });
+    raf = requestAnimationFrame(draw);
+    return () => {
+      window.removeEventListener("resize", resize);
+      window.removeEventListener("pointermove", track);
+      cancelAnimationFrame(raf);
+    };
   }, []);
 
   return (
-    <div ref={surfaceRef} className="alma-ripple-surface" aria-hidden="true">
-      <div className="alma-ripple-ambient ambient-a" />
-      <div className="alma-ripple-ambient ambient-b" />
-      <div ref={rippleRef} className="alma-click-ripple">
-        <i /><i /><i />
-      </div>
+    <div ref={surfaceRef} className="alma-trail-surface" aria-hidden="true">
+      <div className="alma-trail-ambient ambient-a" />
+      <div className="alma-trail-ambient ambient-b" />
+      <canvas ref={canvasRef} className="alma-berry-trail" />
     </div>
   );
 }
