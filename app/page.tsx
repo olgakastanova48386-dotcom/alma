@@ -176,10 +176,10 @@ export default function HomePage() {
       )}
       <main className="min-h-screen overflow-x-hidden bg-[#f7f4ef] text-black">
       <section className="alma-home-hero relative h-[540px] sm:h-[570px] md:h-auto md:min-h-[680px] flex items-start md:items-center pt-0 md:pt-28 pb-0 overflow-hidden bg-[#f7f4ef] text-black">
-        <div className="alma-home-hero-image alma-aura-host md:hidden absolute inset-x-0 top-0 h-[330px] overflow-hidden bg-[#f3f0e9]"><InteractiveAura /></div>
-        <div className="md:hidden pointer-events-none absolute inset-x-0 top-0 h-[330px] bg-gradient-to-b from-transparent via-transparent to-[#f7f4ef]/12" />
+        <div className="alma-home-hero-image alma-aura-host md:hidden absolute inset-0 overflow-hidden bg-transparent"><InteractiveAura /></div>
+        <div className="md:hidden pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#f7f4ef]/10" />
         <div className="hidden md:block absolute inset-0 bg-[#f7f4ef]" />
-        <div className="hidden md:block absolute z-[11] right-[2%] lg:right-[7%] xl:right-[10%] top-32 bottom-0 w-[360px] lg:w-[440px] xl:w-[490px]"><div className="relative h-full w-full overflow-hidden rounded-[36px] lg:rounded-[42px] shadow-[0_35px_80px_rgba(0,0,0,.20)] ring-1 ring-black/5 bg-[#fbfaf7]"><InteractiveAura /></div></div>
+        <div className="hidden md:block absolute inset-0 z-[1] overflow-hidden"><InteractiveAura /></div>
 
                 {weather && weatherInfo && <div className="absolute right-4 top-[calc(env(safe-area-inset-top)+76px)] z-20 md:hidden"><div className="inline-flex items-center gap-1.5 rounded-full bg-black/72 px-2.5 py-1.5 text-white shadow-sm backdrop-blur-md"><span className="text-sm leading-none">{weatherInfo.icon}</span><span className="text-xs font-semibold">{Math.round(weather.temperature) > 0 ? "+" : ""}{Math.round(weather.temperature)}°</span><span className="h-3 w-px bg-white/20" /><span className="text-[11px] text-white/75">{weatherInfo.text}</span></div></div>}
 
