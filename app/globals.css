@@ -193,8 +193,15 @@ select:-webkit-autofill {
   border:1px solid rgba(255,255,255,.48);
   box-shadow:inset 14px 10px 34px rgba(255,255,255,.48), inset -18px -12px 38px rgba(139,57,81,.09), 0 20px 60px rgba(90,55,65,.08);
   backdrop-filter:blur(2px); -webkit-backdrop-filter:blur(2px); opacity:.34;
-  transition:left .12s linear,top .12s linear,opacity .3s ease,transform .35s ease;
+  transition:opacity .22s ease,transform .25s ease; will-change:left,top,transform;
 }
+.alma-flow-core {
+  position:absolute; left:var(--flow-x); top:var(--flow-y); width:22px; height:22px;
+  transform:translate(-50%,-50%); border-radius:50%; pointer-events:none;
+  background:rgba(147,45,77,.22); box-shadow:0 0 34px 18px rgba(171,77,105,.14);
+  opacity:.35; transition:opacity .2s ease;
+}
+.alma-flow-surface.is-flowing .alma-flow-core { opacity:.9; }
 .alma-flow-ring {
   position:absolute; left:var(--flow-x); top:var(--flow-y); width:130px; height:130px;
   border-radius:50%; border:1px solid rgba(157,62,90,.17); transform:translate(-50%,-50%) scale(.7);
