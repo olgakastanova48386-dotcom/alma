@@ -66,52 +66,40 @@ function getWeatherInfo(code: number, isDay: boolean) {
 }
 
 function InteractiveAura() {
-  const phrases = useMemo(() => [
-    ["не знаю", "куда", "но хочу", "куда-нибудь"],
-    ["может,", "просто", "пойдём?"],
-    ["куда тебя", "тянет", "сегодня?"],
-    ["ALMA", "уже кое-что", "нашла"],
-  ], []);
-  const [phrase, setPhrase] = useState(0);
-  const artRef = useRef<HTMLDivElement>(null);
+  const lensRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const timer = window.setInterval(() => setPhrase((value) => (value + 1) % phrases.length), 7200);
-    return () => window.clearInterval(timer);
-  }, [phrases.length]);
-
-  const moveFog = (event: React.PointerEvent<HTMLDivElement>) => {
+  const moveLens = (event: React.PointerEvent<HTMLDivElement>) => {
     const bounds = event.currentTarget.getBoundingClientRect();
-    const x = ((event.clientX - bounds.left) / bounds.width) * 100;
-    const y = ((event.clientY - bounds.top) / bounds.height) * 100;
-    artRef.current?.style.setProperty("--reveal-x", x.toFixed(1) + "%");
-    artRef.current?.style.setProperty("--reveal-y", y.toFixed(1) + "%");
-    artRef.current?.style.setProperty("--reveal-size", "92px");
+    const x = ((event.clientX - bounds.left) / bounds.width - 0.5) * 18;
+    const y = ((event.clientY - bounds.top) / bounds.height - 0.5) * 14;
+    lensRef.current?.style.setProperty("--lens-x", x.toFixed(1) + "px");
+    lensRef.current?.style.setProperty("--lens-y", y.toFixed(1) + "px");
+  };
+
+  const resetLens = () => {
+    lensRef.current?.style.setProperty("--lens-x", "0px");
+    lensRef.current?.style.setProperty("--lens-y", "0px");
   };
 
   return (
     <div
-      ref={artRef}
-      className="alma-living-art"
+      ref={lensRef}
+      className="alma-liquid-stage"
       aria-hidden="true"
-      onPointerMove={moveFog}
-      onPointerDown={moveFog}
-      onPointerLeave={() => artRef.current?.style.setProperty("--reveal-size", "0px")}
+      onPointerMove={moveLens}
+      onPointerDown={moveLens}
+      onPointerLeave={resetLens}
+      onPointerUp={resetLens}
     >
-      <div className="alma-secret-copy" key={phrase}>
-        {phrases[phrase].map((line, index) => (
-          <span key={line} className={"alma-secret-line alma-secret-line-" + (index + 1)}>{line}</span>
-        ))}
+      <div className="alma-liquid-halo" />
+      <div className="alma-liquid-lens">
+        <span className="alma-liquid-glint" />
+        <span className="alma-liquid-word word-a">гулять</span>
+        <span className="alma-liquid-word word-b">есть</span>
+        <span className="alma-liquid-word word-c">смотреть</span>
+        <span className="alma-liquid-word word-d">случайно</span>
       </div>
-      <div className="alma-fog-layer">
-        <span className="alma-fog fog-a" />
-        <span className="alma-fog fog-b" />
-        <span className="alma-fog fog-c" />
-        <span className="alma-fog fog-d" />
-        <span className="alma-fog fog-e" />
-        <span className="alma-fog fog-f" />
-      </div>
-      <span className="alma-art-whisper">проведи пальцем</span>
+      <span className="alma-liquid-caption">коснись</span>
     </div>
   );
 }
@@ -188,14 +176,14 @@ export default function HomePage() {
       )}
       <main className="min-h-screen overflow-x-hidden bg-[#f7f4ef] text-black">
       <section className="alma-home-hero relative h-[540px] sm:h-[570px] md:h-auto md:min-h-[680px] flex items-start md:items-center pt-0 md:pt-28 pb-0 overflow-hidden bg-[#f7f4ef] text-black">
-        <div className="alma-home-hero-image alma-aura-host md:hidden absolute inset-x-0 top-0 h-[360px] overflow-hidden bg-[#f3f0e9]"><InteractiveAura /></div>
-        <div className="md:hidden pointer-events-none absolute inset-x-0 top-0 h-[360px] bg-gradient-to-b from-transparent via-transparent to-[#f7f4ef]/20" />
+        <div className="alma-home-hero-image alma-aura-host md:hidden absolute inset-x-0 top-0 h-[330px] overflow-hidden bg-[#f3f0e9]"><InteractiveAura /></div>
+        <div className="md:hidden pointer-events-none absolute inset-x-0 top-0 h-[330px] bg-gradient-to-b from-transparent via-transparent to-[#f7f4ef]/12" />
         <div className="hidden md:block absolute inset-0 bg-[#f7f4ef]" />
         <div className="hidden md:block absolute z-[11] right-[2%] lg:right-[7%] xl:right-[10%] top-32 bottom-0 w-[360px] lg:w-[440px] xl:w-[490px]"><div className="relative h-full w-full overflow-hidden rounded-[36px] lg:rounded-[42px] shadow-[0_35px_80px_rgba(0,0,0,.20)] ring-1 ring-black/5 bg-[#fbfaf7]"><InteractiveAura /></div></div>
 
                 {weather && weatherInfo && <div className="absolute right-4 top-[calc(env(safe-area-inset-top)+76px)] z-20 md:hidden"><div className="inline-flex items-center gap-1.5 rounded-full bg-black/72 px-2.5 py-1.5 text-white shadow-sm backdrop-blur-md"><span className="text-sm leading-none">{weatherInfo.icon}</span><span className="text-xs font-semibold">{Math.round(weather.temperature) > 0 ? "+" : ""}{Math.round(weather.temperature)}°</span><span className="h-3 w-px bg-white/20" /><span className="text-[11px] text-white/75">{weatherInfo.text}</span></div></div>}
 
-        <div className="absolute inset-x-0 top-[372px] md:top-auto md:bottom-auto z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-4 md:relative md:inset-auto lg:px-8"><div className="max-w-[650px]">
+        <div className="absolute inset-x-0 top-[342px] md:top-auto md:bottom-auto z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-4 md:relative md:inset-auto lg:px-8"><div className="max-w-[650px]">
           {weather && weatherInfo && <div className="hidden md:block mb-3"><div className="inline-flex items-center gap-2.5 rounded-full bg-black/80 backdrop-blur-md text-white px-3.5 md:px-4 py-2.5 shadow-sm"><span className="text-lg leading-none">{weatherInfo.icon}</span><span className="font-semibold">{Math.round(weather.temperature) > 0 ? "+" : ""}{Math.round(weather.temperature)}°</span><span className="w-px h-4 bg-white/20" /><span className="text-sm text-white/75">{weatherInfo.text}</span><span className="hidden xs:inline text-xs text-white/40">Петербург</span></div></div>}
           <h1 className="mt-0 md:mt-7 max-w-full text-[clamp(25px,7vw,82px)] md:text-[clamp(52px,5vw,70px)] font-bold leading-[1.02] md:leading-[0.98] tracking-tight text-black drop-shadow-none break-words">Места, в которые<br />хочется вернуться</h1>
           <p className="mt-1.5 md:mt-7 max-w-[94%] md:max-w-xl text-[13px] md:text-xl leading-[1.35] md:leading-8 text-neutral-600"><span className="md:hidden">ALMA помогает находить места Петербурга<br />по настроению, бюджету, компании и времени.</span><span className="hidden md:inline">ALMA помогает находить места Петербурга по настроению, бюджету, компании и времени.</span></p>
