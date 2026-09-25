@@ -90,8 +90,22 @@ function InteractiveAura() {
   const moveSurface = (event: React.PointerEvent<HTMLDivElement>) => setPoint(event.clientX, event.clientY);
   const calmSurface = () => surfaceRef.current?.classList.remove("is-flowing");
 
-  useEffect(() => () => {
-    if (rafRef.current) cancelAnimationFrame(rafRef.current);
+  useEffect(() => {
+    const trackPointer = (event: PointerEvent) => {
+      const node = surfaceRef.current;
+      if (!node) return;
+      const bounds = node.getBoundingClientRect();
+      if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) {
+        node.classList.remove("is-flowing");
+        return;
+      }
+      setPoint(event.clientX, event.clientY);
+    };
+    window.addEventListener("pointermove", trackPointer, { passive: true });
+    return () => {
+      window.removeEventListener("pointermove", trackPointer);
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
   }, []);
 
   return (
