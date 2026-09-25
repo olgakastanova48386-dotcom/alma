@@ -204,7 +204,7 @@ export default function HomePage() {
           <p className="mt-6 text-[12px] font-medium tracking-[0.04em] text-neutral-500">Готовим места для тебя</p>
         </div>
       )}
-      <main className="min-h-screen overflow-x-hidden bg-[#f7f4ef] text-black">
+      <main className="alma-home-page relative min-h-screen overflow-x-hidden bg-transparent text-black">
       <div className="alma-page-interaction"><InteractiveAura /></div>
       <section className="alma-home-hero relative h-[540px] sm:h-[570px] md:h-auto md:min-h-[680px] flex items-start md:items-center pt-0 md:pt-28 pb-0 overflow-hidden bg-[#f7f4ef] text-black">
         
