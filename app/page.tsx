@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import UnifiedMap from "@/components/UnifiedMap";
 
@@ -77,11 +77,39 @@ function getHeroImage(weather: Weather | null) {
 
 export default function HomePage() {
   const router = useRouter();
+  const heroArtRef = useRef<HTMLDivElement>(null);
   const [weather, setWeather] = useState<Weather | null>(null);
   const [mobileReady, setMobileReady] = useState(false);
   const [splashMinElapsed, setSplashMinElapsed] = useState(false);
   const [splashDone, setSplashDone] = useState(false);
   const [loadingProgress, setLoadingProgress] = useState(0);
+
+  useEffect(() => {
+    const art = heroArtRef.current;
+    if (!art || !window.matchMedia("(pointer: fine) and (prefers-reduced-motion: no-preference)").matches) return;
+    let frame = 0;
+    const move = (event: PointerEvent) => {
+      const bounds = art.getBoundingClientRect();
+      const x = Math.max(-1, Math.min(1, ((event.clientX - bounds.left) / bounds.width - .5) * 2));
+      const y = Math.max(-1, Math.min(1, ((event.clientY - bounds.top) / bounds.height - .5) * 2));
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        art.style.setProperty("--atlas-x1", `${(x * 16).toFixed(1)}px`);
+        art.style.setProperty("--atlas-y1", `${(y * 14).toFixed(1)}px`);
+        art.style.setProperty("--atlas-x2", `${(x * -22).toFixed(1)}px`);
+        art.style.setProperty("--atlas-y2", `${(y * -18).toFixed(1)}px`);
+        art.style.setProperty("--atlas-x3", `${(x * 10).toFixed(1)}px`);
+        art.style.setProperty("--atlas-y3", `${(y * 10).toFixed(1)}px`);
+      });
+    };
+    const reset = () => {
+      cancelAnimationFrame(frame);
+      for (const name of ["--atlas-x1", "--atlas-y1", "--atlas-x2", "--atlas-y2", "--atlas-x3", "--atlas-y3"]) art.style.setProperty(name, "0px");
+    };
+    art.addEventListener("pointermove", move, { passive: true });
+    art.addEventListener("pointerleave", reset);
+    return () => { cancelAnimationFrame(frame); art.removeEventListener("pointermove", move); art.removeEventListener("pointerleave", reset); };
+  }, []);
 
   useEffect(() => {
     const loadWeather = async () => {
@@ -145,30 +173,32 @@ export default function HomePage() {
         </div>
       )}
       <main className="alma-home-page relative min-h-screen overflow-x-hidden bg-transparent text-black">
-      <section className="alma-home-hero alma-atlas-hero">
-        <div className="alma-atlas-inner">
-          <div className="alma-atlas-copy">
-            <div className="alma-atlas-kicker"><span /> ТВОЙ ГОРОД · ТВОЙ РИТМ</div>
-            <h1>Выйди.<br /><em>Почувствуй.</em><br />Найди.</h1>
-            <p>Места Петербурга под твоё настроение. От тихого кофе до прогулки, которую захочется повторить.</p>
-            <div className="alma-atlas-actions">
-              <button type="button" onClick={scrollToFilters} className="alma-atlas-primary">Найти место <span aria-hidden="true">↗</span></button>
-              <button type="button" onClick={() => router.push("/surprise?new=1")} className="alma-atlas-secondary">Удиви меня <span aria-hidden="true">↗</span></button>
+      <section className="alma-home-hero alma-soft-hero">
+        <div className="alma-soft-shell">
+          <div className="alma-soft-grid">
+            <div className="alma-soft-copy">
+              <span className="alma-soft-eyebrow"><span className="alma-soft-dot" /> ТВОЙ ПЕТЕРБУРГ, ТВОЙ РИТМ</span>
+              <h1>Город под<br /><em>твоё</em><br />настроение.</h1>
+              <p>Выбери, чего хочется сегодня. ALMA найдёт место, прогулку или готовый маршрут.</p>
+              <div className="alma-soft-actions">
+                <button type="button" onClick={scrollToFilters} className="alma-soft-button alma-soft-button-main">Найти место <span aria-hidden="true">↗</span></button>
+                <button type="button" onClick={() => router.push("/surprise?new=1")} className="alma-soft-button alma-soft-button-quiet">Удиви меня <span aria-hidden="true">✦</span></button>
+              </div>
+              <div className="alma-soft-note">ПО НАСТРОЕНИЮ <span>·</span> ПО БЮДЖЕТУ <span>·</span> БЕЗ ЛИШНИХ ПЛАНОВ</div>
+            </div>
+            <div ref={heroArtRef} className="alma-soft-art" aria-label="Подвижная композиция ALMA">
+              <div className="alma-soft-stage">
+                <div className="alma-soft-stage-head"><span>ALMA <small>ДЛЯ ТЕБЯ</small></span><span className="alma-soft-stage-mark">✳</span></div>
+                <div className="alma-soft-donut-space" aria-hidden="true"><span className="alma-soft-donut"><span className="alma-soft-donut-hole" /></span><span className="alma-soft-donut-shadow" /></div>
+                <p>Место найдётся.<br />Стоит только захотеть.</p>
+                <span className="alma-soft-stage-arrow" aria-hidden="true">↗</span>
+              </div>
+              <div className="alma-soft-weather"><img src={heroImage} alt="Петербург сегодня" /><span>{weather && weatherInfo ? `${weatherInfo.text} · ${Math.round(weather.temperature) > 0 ? "+" : ""}${Math.round(weather.temperature)}°` : "Петербург сегодня"}</span></div>
+              <div className="alma-soft-float-label" aria-hidden="true">01 / ИССЛЕДУЙ ГОРОД</div>
             </div>
           </div>
-          <div className="alma-atlas-art" aria-label="Фотографии Петербурга">
-            <img className="alma-atlas-backdrop" src={heroImage} alt="" aria-hidden="true" />
-            <span className="alma-atlas-letter" aria-hidden="true">A</span>
-            <div className="alma-atlas-photo alma-atlas-photo-main"><img src={heroImage} alt="Петербург сейчас" /></div>
-            <div className="alma-atlas-photo alma-atlas-photo-second"><img src="/images/new-holland.jpg" alt="Новая Голландия" /></div>
-            <div className="alma-atlas-photo alma-atlas-photo-third"><img src="/images/кафе зингер.jpg" alt="Кафе Зингер" /></div>
-            {weather && weatherInfo && <div className="alma-atlas-weather">{weatherInfo.icon} {Math.round(weather.temperature) > 0 ? "+" : ""}{Math.round(weather.temperature)}° · {weatherInfo.text}</div>}
-            <div className="alma-atlas-stamp" aria-hidden="true">ГОРОД<br />ЖДЁТ<br />ТЕБЯ ↗</div>
-          </div>
-          <span className="alma-atlas-index">01 / 03 &nbsp; · &nbsp; ОТКРОЙ СВОЙ ПЕТЕРБУРГ</span>
         </div>
       </section>
-      <div className="alma-atlas-ticker" aria-hidden="true"><span>КОФЕЙНИ　✳　ПРОГУЛКИ　✳　МЕСТА ДЛЯ ДВОИХ　✳　ПЛАН НА ДЕНЬ　✳　ПЕТЕРБУРГ ПОД ТВОЁ НАСТРОЕНИЕ　✳　</span></div>
 
       <div id="alma-filters" className="alma-atlas-map-section relative z-10 pt-5 sm:pt-6 md:pt-12 lg:pt-14">
         <div className="alma-atlas-map-title max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><div><span>02 / ЖИВОЙ АТЛАС</span><h2>Где окажемся<br />сегодня?</h2></div><p>Выбирай настроение, время и компанию. Карта покажет подходящие места.</p></div>

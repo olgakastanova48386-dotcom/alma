@@ -141,7 +141,7 @@ export default function Header() {
   }, []);
 
   return (
-    <header className="absolute top-0 left-0 z-[9999] w-full md:fixed">
+    <header className={`absolute top-0 left-0 z-[9999] w-full md:fixed ${pathname === "/" ? "alma-atlas-header" : ""}`}>
       <div className="max-w-7xl mx-auto mt-[calc(env(safe-area-inset-top)+10px)] md:mt-4 px-2.5 md:px-6">
         <div className="px-3 py-1.5 md:rounded-full md:border md:border-black/5 md:bg-white/92 md:px-8 md:py-3 md:shadow-lg md:backdrop-blur-xl">
 
