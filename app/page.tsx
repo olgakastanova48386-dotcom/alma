@@ -66,40 +66,38 @@ function getWeatherInfo(code: number, isDay: boolean) {
 }
 
 function InteractiveAura() {
-  const lensRef = useRef<HTMLDivElement>(null);
+  const surfaceRef = useRef<HTMLDivElement>(null);
 
-  const moveLens = (event: React.PointerEvent<HTMLDivElement>) => {
+  const moveSurface = (event: React.PointerEvent<HTMLDivElement>) => {
     const bounds = event.currentTarget.getBoundingClientRect();
-    const x = ((event.clientX - bounds.left) / bounds.width - 0.5) * 18;
-    const y = ((event.clientY - bounds.top) / bounds.height - 0.5) * 14;
-    lensRef.current?.style.setProperty("--lens-x", x.toFixed(1) + "px");
-    lensRef.current?.style.setProperty("--lens-y", y.toFixed(1) + "px");
+    const x = ((event.clientX - bounds.left) / bounds.width) * 100;
+    const y = ((event.clientY - bounds.top) / bounds.height) * 100;
+    const dx = ((event.clientX - bounds.left) / bounds.width - 0.5) * 16;
+    const dy = ((event.clientY - bounds.top) / bounds.height - 0.5) * 12;
+    const node = surfaceRef.current;
+    node?.style.setProperty("--flow-x", x.toFixed(1) + "%");
+    node?.style.setProperty("--flow-y", y.toFixed(1) + "%");
+    node?.style.setProperty("--flow-dx", dx.toFixed(1) + "px");
+    node?.style.setProperty("--flow-dy", dy.toFixed(1) + "px");
+    node?.classList.add("is-flowing");
   };
 
-  const resetLens = () => {
-    lensRef.current?.style.setProperty("--lens-x", "0px");
-    lensRef.current?.style.setProperty("--lens-y", "0px");
-  };
+  const calmSurface = () => surfaceRef.current?.classList.remove("is-flowing");
 
   return (
     <div
-      ref={lensRef}
-      className="alma-liquid-stage"
+      ref={surfaceRef}
+      className="alma-flow-surface"
       aria-hidden="true"
-      onPointerMove={moveLens}
-      onPointerDown={moveLens}
-      onPointerLeave={resetLens}
-      onPointerUp={resetLens}
+      onPointerMove={moveSurface}
+      onPointerDown={moveSurface}
+      onPointerLeave={calmSurface}
+      onPointerUp={calmSurface}
     >
-      <div className="alma-liquid-halo" />
-      <div className="alma-liquid-lens">
-        <span className="alma-liquid-glint" />
-        <span className="alma-liquid-word word-a">гулять</span>
-        <span className="alma-liquid-word word-b">есть</span>
-        <span className="alma-liquid-word word-c">смотреть</span>
-        <span className="alma-liquid-word word-d">случайно</span>
-      </div>
-      <span className="alma-liquid-caption">коснись</span>
+      <div className="alma-flow-light flow-light-a" />
+      <div className="alma-flow-light flow-light-b" />
+      <div className="alma-flow-field" />
+      <div className="alma-flow-caustic" />
     </div>
   );
 }
