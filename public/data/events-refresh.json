@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-28T12:02:13.578Z",
+  "updatedAt": "2026-09-28T12:43:44.385Z",
   "events": {
     "fin-zaliv-house-party": {
       "source": "https://sevcableport.ru/afisha/finskij-zaliv-under-haus-pati/",
@@ -23,8 +23,8 @@
     },
     "viktor-tsoi-legenda": {
       "source": "https://sevcableport.ru/afisha/",
-      "ok": false,
-      "error": "fetch failed"
+      "image": "https://media-1.gorbilet.com/3b/a5/fb/DSCF5703_Preview.jpg",
+      "ok": true
     },
     "growbox-market": {
       "source": "https://sevcableport.ru/afisha/",
