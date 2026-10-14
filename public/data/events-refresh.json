@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-14T19:31:04.724Z",
+  "updatedAt": "2026-10-14T22:44:53.741Z",
   "events": {
     "fin-zaliv-house-party": {
       "source": "https://sevcableport.ru/afisha/finskij-zaliv-under-haus-pati/",
@@ -13,8 +13,8 @@
     },
     "spiexff": {
       "source": "https://sevcableport.ru/afisha/sankt-peterburgskij-mezhdunarodnyj-festival-eksperimentalnogo-kino-spiexff/",
-      "image": "https://static.tildacdn.com/tild3766-3666-4164-a537-363637333932/JPEG_SPIEXFF4_000911.jpg",
-      "ok": true
+      "ok": false,
+      "error": "fetch failed"
     },
     "waterfront-workouts": {
       "source": "https://sevcableport.ru/afisha/trenirovki-na-naberezhnoj/",
