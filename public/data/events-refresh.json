@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-07T07:22:53.226Z",
+  "updatedAt": "2026-11-07T14:13:13.417Z",
   "events": {
     "fin-zaliv-house-party": {
       "source": "https://sevcableport.ru/afisha/finskij-zaliv-under-haus-pati/",
@@ -39,7 +39,7 @@
     "picasso-paragraphs": {
       "source": "https://brusnitsyn.spb.ru/art-center",
       "ok": false,
-      "error": "event image not found"
+      "error": "image too small"
     },
     "through-universes": {
       "source": "https://brusnitsyn.spb.ru/art-center",
